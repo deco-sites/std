@@ -1,0 +1,25 @@
+{
+  "tasks": {
+    "start": "deno run -A --watch=sections/,static/,functions/ dev.ts",
+    "component": "deno eval 'import \"$live/scripts/component.ts\"'",
+    "check": "deno fmt && deno lint && deno check dev.ts main.ts"
+  },
+  "githooks": {
+    "pre-commit": "check"
+  },
+  "lint": {
+    "files": {
+      "exclude": ["static/"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "exclude": ["static/"]
+    }
+  },
+  "importMap": "./import_map.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  }
+}
