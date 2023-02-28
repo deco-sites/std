@@ -1,4 +1,4 @@
-/* Partytown 0.7.2 - MIT builder.io */
+/* Partytown 0.7.5 - MIT builder.io */
 (window => {
     const isPromise = v => "object" == typeof v && v && v.then;
     const noop = () => {};
@@ -130,7 +130,7 @@
             added.add(obj);
             for (propName in obj) {
                 if (isValidMemberName(propName)) {
-                    propValue = "path" === propName && obj instanceof Event ? obj.composedPath() : obj[propName];
+                    propValue = "path" === propName && getConstructorName(obj).endsWith("Event") ? obj.composedPath() : obj[propName];
                     (includeFunctions || "function" != typeof propValue) && (includeEmptyStrings || "" !== propValue) && (serializedObj[propName] = serializeForWorker(winId, propValue, added));
                 }
             }
@@ -345,15 +345,28 @@
             const doc = $window$.document;
             const history = $window$.history;
             const $parentWinId$ = windowIds.get($window$.parent);
-            const sendInitEnvData = () => worker.postMessage([ 5, {
-                $winId$: $winId$,
-                $parentWinId$: $parentWinId$,
-                $url$: doc.baseURI,
-                $visibilityState$: doc.visibilityState
-            } ]);
+            let initialised = false;
+            const onInitialisedQueue = [];
+            const onInitialised = callback => {
+                initialised ? callback() : onInitialisedQueue.push(callback);
+            };
+            const sendInitEnvData = () => {
+                worker.postMessage([ 5, {
+                    $winId$: $winId$,
+                    $parentWinId$: $parentWinId$,
+                    $url$: doc.baseURI,
+                    $visibilityState$: doc.visibilityState
+                } ]);
+                setTimeout((() => {
+                    initialised = true;
+                    onInitialisedQueue.forEach((callback => {
+                        callback();
+                    }));
+                }));
+            };
             const pushState = history.pushState.bind(history);
             const replaceState = history.replaceState.bind(history);
-            const onLocationChange = (type, state, newUrl, oldUrl) => {
+            const onLocationChange = (type, state, newUrl, oldUrl) => () => {
                 setTimeout((() => {
                     worker.postMessage([ 13, {
                         $winId$: $winId$,
@@ -367,17 +380,17 @@
             };
             history.pushState = (state, _, newUrl) => {
                 pushState(state, _, newUrl);
-                onLocationChange(0, state, null == newUrl ? void 0 : newUrl.toString());
+                onInitialised(onLocationChange(0, state, null == newUrl ? void 0 : newUrl.toString()));
             };
             history.replaceState = (state, _, newUrl) => {
                 replaceState(state, _, newUrl);
-                onLocationChange(1, state, null == newUrl ? void 0 : newUrl.toString());
+                onInitialised(onLocationChange(1, state, null == newUrl ? void 0 : newUrl.toString()));
             };
             $window$.addEventListener("popstate", (event => {
-                onLocationChange(2, event.state);
+                onInitialised(onLocationChange(2, event.state));
             }));
             $window$.addEventListener("hashchange", (event => {
-                onLocationChange(3, {}, event.newURL, event.oldURL);
+                onInitialised(onLocationChange(3, {}, event.newURL, event.oldURL));
             }));
             $window$.addEventListener("ptupdate", (() => {
                 readNextScript(worker, winCtxs[$winId$]);
@@ -544,14 +557,14 @@
         };
     })(((accessReq, responseCallback) => mainAccessHandler(worker, accessReq).then(responseCallback))).then((onMessageHandler => {
         if (onMessageHandler) {
-            worker = new Worker(libPath + "partytown-ww-atomics.js?v=0.7.2", {
+            worker = new Worker(libPath + "partytown-ww-atomics.js?v=0.7.5", {
                 name: "Partytown 🎉"
             });
             worker.onmessage = ev => {
                 const msg = ev.data;
                 12 === msg[0] ? mainAccessHandler(worker, msg[1]) : onMessageHandler(worker, msg);
             };
-            logMain("Created Partytown web worker (0.7.2)");
+            logMain("Created Partytown web worker (0.7.5)");
             worker.onerror = ev => console.error("Web Worker Error", ev);
             mainWindow.addEventListener("pt1", (ev => registerWindow(worker, getAndSetInstanceId(ev.detail.frameElement), ev.detail)));
         }
