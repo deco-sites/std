@@ -11,9 +11,9 @@ import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/index.tsx";
 import * as $4 from "./routes/inspect-vscode.ts";
 import * as $$0 from "./islands/LiveControls.tsx";
-import * as $$$0 from "./sections/Seo.tsx";
-import * as $$$1 from "./sections/SeoPDP.tsx";
-import * as $$$2 from "./sections/SeoPLP.tsx";
+import * as $$$0 from "./sections/SEO.tsx";
+import * as $$$1 from "./sections/SEOPDP.tsx";
+import * as $$$2 from "./sections/SEOPLP.tsx";
 import * as $$$3 from "./sections/configOCC.global.tsx";
 import * as $$$4 from "./sections/configShopify.global.tsx";
 import * as $$$5 from "./sections/configVTEX.global.tsx";
@@ -45,9 +45,9 @@ const manifest: DecoManifest = {
   },
   islands: { "./islands/LiveControls.tsx": $$0 },
   sections: {
-    "./sections/Seo.tsx": $$$0,
-    "./sections/SeoPDP.tsx": $$$1,
-    "./sections/SeoPLP.tsx": $$$2,
+    "./sections/SEO.tsx": $$$0,
+    "./sections/SEOPDP.tsx": $$$1,
+    "./sections/SEOPLP.tsx": $$$2,
     "./sections/configOCC.global.tsx": $$$3,
     "./sections/configShopify.global.tsx": $$$4,
     "./sections/configVTEX.global.tsx": $$$5,
@@ -72,9 +72,9 @@ const manifest: DecoManifest = {
     "$live/functions/MatchUserAgent.ts": $$$$15,
   },
   schemas: {
-    "./sections/Seo.tsx": {
+    "./sections/SEO.tsx": {
       "inputSchema": {
-        "title": " Seo",
+        "title": " S E O",
         "type": "object",
         "properties": {
           "title": {
@@ -117,9 +117,9 @@ const manifest: DecoManifest = {
       },
       "outputSchema": null,
     },
-    "./sections/SeoPDP.tsx": {
+    "./sections/SEOPDP.tsx": {
       "inputSchema": {
-        "title": " Seo P D P",
+        "title": " S E O P D P",
         "type": "object",
         "properties": {
           "page": {
@@ -159,9 +159,9 @@ const manifest: DecoManifest = {
       },
       "outputSchema": null,
     },
-    "./sections/SeoPLP.tsx": {
+    "./sections/SEOPLP.tsx": {
       "inputSchema": {
-        "title": " Seo P L P",
+        "title": " S E O P L P",
         "type": "object",
         "properties": {
           "page": {

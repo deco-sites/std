@@ -1,7 +1,7 @@
 import type { LoaderReturnType } from "$live/std/types.ts";
 
 import ScriptLDJson from "./ScriptLDJson.tsx";
-import BaseSeo from "./SeoBase.tsx";
+import SEOBase from "./SEOBase.tsx";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
 
 export interface Props {
@@ -32,7 +32,7 @@ function SeoPDP({ page, titleTemplate, description, ...baseSeo }: Props) {
 
   return (
     <>
-      <BaseSeo
+      <SEOBase
         {...baseSeo}
         title={title}
         description={desc}

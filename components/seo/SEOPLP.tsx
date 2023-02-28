@@ -1,7 +1,7 @@
 import type { LoaderReturnType } from "$live/std/types.ts";
 
 import ScriptLDJson from "./ScriptLDJson.tsx";
-import BaseSeo from "./SeoBase.tsx";
+import SEOBase from "./SEOBase.tsx";
 import type { ProductListingPage } from "../../commerce/types.ts";
 
 export interface Props {
@@ -18,7 +18,7 @@ function SeoPLP({ page, ...baseSeo }: Props) {
 
   return (
     <>
-      <BaseSeo {...baseSeo} />
+      <SEOBase {...baseSeo} />
       <ScriptLDJson {...breadcrumbList} />
     </>
   );

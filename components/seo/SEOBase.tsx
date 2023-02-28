@@ -8,7 +8,7 @@ export interface Props {
   themeColor?: string;
 }
 
-function BaseSeo({ title, description, imageUrl, themeColor, url }: Props) {
+function SEOBase({ title, description, imageUrl, themeColor, url }: Props) {
   return (
     <Head>
       {title && <title>{title}</title>}
@@ -25,4 +25,4 @@ function BaseSeo({ title, description, imageUrl, themeColor, url }: Props) {
   );
 }
 
-export default BaseSeo;
+export default SEOBase;
