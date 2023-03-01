@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "$live/std/types.ts";
+import type { LoaderFunction } from "$live/types.ts";
 import type { LiveState } from "$live/types.ts";
 
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";

@@ -1,4 +1,4 @@
-import type { LoaderReturnType } from "$live/std/types.ts";
+import type { LoaderReturnType } from "$live/types.ts";
 
 import ScriptLDJson from "./ScriptLDJson.tsx";
 import SEOBase from "./SEOBase.tsx";
