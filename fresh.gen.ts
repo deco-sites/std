@@ -17,7 +17,6 @@ import * as $$$2 from "./sections/SEOPLP.tsx";
 import * as $$$3 from "./sections/configOCC.global.tsx";
 import * as $$$4 from "./sections/configShopify.global.tsx";
 import * as $$$5 from "./sections/configVTEX.global.tsx";
-import * as $$$6 from "$live/sections/Head.tsx";
 import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
@@ -51,7 +50,6 @@ const manifest: DecoManifest = {
     "./sections/configOCC.global.tsx": $$$3,
     "./sections/configShopify.global.tsx": $$$4,
     "./sections/configVTEX.global.tsx": $$$5,
-    "$live/sections/Head.tsx": $$$6,
   },
   functions: {
     "./functions/occProductDetailsPage.ts": $$$$0,
@@ -662,86 +660,6 @@ const manifest: DecoManifest = {
         },
         "additionalProperties": true,
       },
-    },
-    "$live/sections/Head.tsx": {
-      "inputSchema": {
-        "title": " Head",
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Title",
-          },
-          "description": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Description",
-          },
-          "url": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Url",
-          },
-          "imageUrl": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Image Url",
-          },
-          "faviconUrl": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Favicon Url",
-          },
-          "styleUrls": {
-            "type": "array",
-            "items": {
-              "type": "string",
-            },
-            "title": "Style Urls",
-          },
-          "inlineStyles": {
-            "type": "array",
-            "items": {
-              "type": "string",
-            },
-            "title": "Inline Styles",
-          },
-          "scriptUrls": {
-            "type": "array",
-            "items": {
-              "type": "string",
-            },
-            "title": "Script Urls",
-          },
-          "inlineScripts": {
-            "type": "array",
-            "items": {
-              "type": "string",
-            },
-            "title": "Inline Scripts",
-          },
-          "themeColor": {
-            "type": [
-              "string",
-              "null",
-            ],
-            "title": "Theme Color",
-          },
-        },
-        "required": [],
-      },
-      "outputSchema": null,
     },
     "$live/functions/EffectSelectPage.ts": {
       "inputSchema": {
