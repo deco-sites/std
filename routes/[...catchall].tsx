@@ -32,7 +32,7 @@ const proxy: Handlers["GET"] = async (req, ctx) => {
   const responseHeaders = new Headers(response.headers);
 
   // Fix content-type for .d.ts files
-  if (fromUrl.pathname.endsWith(".d.ts")) {
+  if (fromUrl.pathname.endsWith(".d.ts") || response.url.endsWith(".d.ts")) {
     responseHeaders.set("content-type", "application/typescript");
   }
 
