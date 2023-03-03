@@ -147,7 +147,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
       url: getProductURL(url, product, sku.itemId),
       name: product.productName,
       additionalProperty: groupAdditionalProperty,
-      gtin: productReference,
+      model: productReference,
     },
     image: images.map(({ imageUrl, imageText }) => ({
       "@type": "ImageObject" as const,

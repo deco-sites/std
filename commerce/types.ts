@@ -234,7 +234,7 @@ export interface ProductGroup extends Omit<Thing, "@type"> {
    */
   additionalProperty: PropertyValue[];
   /** @docs https://schema.org/gtin */
-  gtin?: string;
+  model?: string;
 }
 
 export interface Product extends Omit<Thing, "@type"> {
