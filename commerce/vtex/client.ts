@@ -60,7 +60,7 @@ export const createClient = ({
   defaultHideUnnavailableItems = false,
 }: Partial<ConfigVTEX> = {}) => {
   const baseUrl =
-    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}`;
+    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`;
 
   const addDefaultFacets = (
     facets: SelectedFacet[],
@@ -115,7 +115,10 @@ export const createClient = ({
       .join("/");
 
     return fetchAPI(
-      `${baseUrl}/api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
+      new URL(
+        `./api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
+        baseUrl,
+      ).href,
     );
   };
 
@@ -131,7 +134,10 @@ export const createClient = ({
     });
 
     return fetchAPI(
-      `${baseUrl}/api/io/_v/api/intelligent-search/search_suggestions?${params.toString()}`,
+      new URL(
+        `./api/io/_v/api/intelligent-search/search_suggestions?${params.toString()}`,
+        baseUrl,
+      ).href,
     );
   };
 
@@ -143,7 +149,10 @@ export const createClient = ({
     });
 
     return fetchAPI(
-      `${baseUrl}/api/io/_v/api/intelligent-search/top_searches?${params.toString()}`,
+      new URL(
+        `./api/io/_v/api/intelligent-search/top_searches?${params.toString()}`,
+        baseUrl,
+      ).href,
     );
   };
 
@@ -172,7 +181,7 @@ export const createClient = ({
   ) => {
     const url = withLegacyParams(
       new URL(
-        `/api/catalog_system/pub/products/search/${term ?? ""}`,
+        `./api/catalog_system/pub/products/search/${term ?? ""}`,
         baseUrl,
       ),
       params,
@@ -188,7 +197,7 @@ export const createClient = ({
   ) => {
     const url = withLegacyParams(
       new URL(
-        `/api/catalog_system/pub/facets/search/${term ?? ""}`,
+        `./api/catalog_system/pub/facets/search/${term ?? ""}`,
         baseUrl,
       ),
       params,
@@ -199,7 +208,7 @@ export const createClient = ({
 
   const pageType = ({ slug }: { slug: string }) =>
     fetchAPI<PageType>(
-      `${baseUrl}/api/catalog_system/pub/portal/pagetype/${slug}`,
+      new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, baseUrl).href,
     );
 
   return {
