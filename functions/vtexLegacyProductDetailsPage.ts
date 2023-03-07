@@ -12,13 +12,13 @@ import type { ProductDetailsPage } from "../commerce/types.ts";
 const legacyProductPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configvtex: ConfigVTEX | undefined }>
+  LiveState<{ configVTEX: ConfigVTEX | undefined }>
 > = async (
   req,
   ctx,
 ) => {
-  const { configvtex } = ctx.state.global;
-  const vtex = createClient(configvtex);
+  const { configVTEX } = ctx.state.global;
+  const vtex = createClient(configVTEX);
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
 

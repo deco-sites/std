@@ -19,14 +19,14 @@ export interface Props {
 const searchLoader: LoaderFunction<
   Props,
   Product[],
-  LiveState<{ configshopify: ConfigShopify }>
+  LiveState<{ configShopify: ConfigShopify }>
 > = async (
   _req,
   ctx,
   props,
 ) => {
-  const { configshopify } = ctx.state.global;
-  const shopify = createClient(configshopify);
+  const { configShopify } = ctx.state.global;
+  const shopify = createClient(configShopify);
 
   const count = props.count ?? 12;
   const query = props.query || "";

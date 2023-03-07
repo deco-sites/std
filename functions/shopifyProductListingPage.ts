@@ -24,15 +24,15 @@ export interface Props {
 const searchLoader: LoaderFunction<
   Props,
   ProductListingPage,
-  LiveState<{ configshopify: ConfigShopify }>
+  LiveState<{ configShopify: ConfigShopify }>
 > = async (
   req,
   ctx,
   props,
 ) => {
   const url = new URL(req.url);
-  const { configshopify } = ctx.state.global;
-  const shopify = createClient(configshopify);
+  const { configShopify } = ctx.state.global;
+  const shopify = createClient(configShopify);
 
   const count = props.count ?? 12;
   const query = props.query || url.searchParams.get("q") || "";

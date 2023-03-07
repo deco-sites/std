@@ -12,15 +12,15 @@ import type { ProductDetailsPage } from "../commerce/types.ts";
 const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configvtex: ConfigVTEX | undefined }>
+  LiveState<{ configVTEX: ConfigVTEX | undefined }>
 > = async (
   req,
   ctx,
 ) => {
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
-  const { configvtex } = ctx.state.global;
-  const vtex = createClient(configvtex);
+  const { configVTEX } = ctx.state.global;
+  const vtex = createClient(configVTEX);
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: [product] } = await vtex.search.products({

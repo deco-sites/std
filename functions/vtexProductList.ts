@@ -4,7 +4,7 @@ import type { LiveState } from "$live/types.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import type { Product } from "../commerce/types.ts";
-import type { Sort } from "../commerce/vtex/types.ts";
+import type { SearchArgs, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /** @description query to use on search */
@@ -24,6 +24,13 @@ export interface Props {
     | "name:asc"
     | "release:desc"
     | "discount:desc";
+
+  // TODO: pattern property isn't being handled by RJSF
+  /**
+   * @description Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .
+   * @pattern \d*
+   */
+  collection?: string[];
 }
 
 /**
@@ -33,19 +40,29 @@ export interface Props {
 const productListLoader: LoaderFunction<
   Props,
   Product[],
-  LiveState<{ configvtex: ConfigVTEX | undefined }>
+  LiveState<{ configVTEX: ConfigVTEX | undefined }>
 > = async (
   req,
   ctx,
   props,
 ) => {
-  const { configvtex } = ctx.state.global;
-  const vtex = createClient(configvtex);
+  const { configVTEX } = ctx.state.global;
+  const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
   const count = props.count ?? 12;
   const query = props.query || "";
   const sort: Sort = props.sort || "";
+  const selectedFacets: SearchArgs["selectedFacets"] = [];
+
+  if (props.collection) {
+    props.collection.forEach((productClusterId) => {
+      selectedFacets.push({
+        key: "productClusterIds",
+        value: productClusterId,
+      });
+    });
+  }
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await vtex.search.products({
@@ -53,6 +70,7 @@ const productListLoader: LoaderFunction<
     page: 0,
     count,
     sort,
+    selectedFacets,
   });
 
   // Transform VTEX product format into schema.org's compatible format
