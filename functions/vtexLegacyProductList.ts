@@ -48,7 +48,6 @@ const legacyProductListLoader: LoaderFunction<
   props,
 ) => {
   const { configVTEX } = ctx.state.global;
-  console.log("Config vtex", ctx.state.global);
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
