@@ -12,10 +12,10 @@ import type { ProductDetailsPage } from "../commerce/types.ts";
 const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configocc: ConfigOCC }>
+  LiveState<{ configOCC: ConfigOCC }>
 > = async (_req, ctx) => {
-  const { configocc } = ctx.state.global;
-  const occ = createClient(configocc);
+  const { configOCC } = ctx.state.global;
+  const occ = createClient(configOCC);
 
   // search products on Oracle. Feel free to change any of these parameters
   const skuId = ctx.params.slug;
