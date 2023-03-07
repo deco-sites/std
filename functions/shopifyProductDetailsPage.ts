@@ -12,13 +12,13 @@ import type { ProductDetailsPage } from "../commerce/types.ts";
 const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configshopify: ConfigShopify }>
+  LiveState<{ configShopify: ConfigShopify }>
 > = async (
   _req,
   ctx,
 ) => {
-  const { configshopify } = ctx.state.global;
-  const shopify = createClient(configshopify);
+  const { configShopify } = ctx.state.global;
+  const shopify = createClient(configShopify);
 
   const slug = ctx.params.slug;
   const splitted = slug?.split("-");
