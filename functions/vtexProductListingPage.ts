@@ -67,15 +67,15 @@ const filtersFromPathname = (pages: PageType[]) =>
 const plpLoader: LoaderFunction<
   Props,
   ProductListingPage,
-  LiveState<{ configvtex?: ConfigVTEX }>
+  LiveState<{ configVTEX?: ConfigVTEX }>
 > = async (
   req,
   ctx,
   props,
 ) => {
-  const { configvtex } = ctx.state.global;
+  const { configVTEX } = ctx.state.global;
   const url = new URL(req.url);
-  const vtex = createClient(configvtex);
+  const vtex = createClient(configVTEX);
 
   const count = props.count ?? 12;
   const query = props.query || url.searchParams.get("q") || "";

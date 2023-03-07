@@ -40,14 +40,14 @@ export interface Props {
 const productListLoader: LoaderFunction<
   Props,
   Product[],
-  LiveState<{ configvtex: ConfigVTEX | undefined }>
+  LiveState<{ configVTEX: ConfigVTEX | undefined }>
 > = async (
   req,
   ctx,
   props,
 ) => {
-  const { configvtex } = ctx.state.global;
-  const vtex = createClient(configvtex);
+  const { configVTEX } = ctx.state.global;
+  const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
   const count = props.count ?? 12;

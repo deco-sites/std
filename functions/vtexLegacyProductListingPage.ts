@@ -108,15 +108,15 @@ const mapParamFromUrl = (pages: PageType[]) =>
 const legacyPLPLoader: LoaderFunction<
   Props,
   ProductListingPage,
-  LiveState<{ configvtex?: ConfigVTEX }>
+  LiveState<{ configVTEX?: ConfigVTEX }>
 > = async (
   req,
   ctx,
   props,
 ) => {
   const url = new URL(req.url);
-  const { configvtex } = ctx.state.global;
-  const vtex = createClient(configvtex);
+  const { configVTEX } = ctx.state.global;
+  const vtex = createClient(configVTEX);
 
   const count = props.count ?? 12;
   const term = props.term || ctx.params["0"] || "";
