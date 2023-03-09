@@ -43,7 +43,7 @@ async function legacyProductPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >
+  >,
 ): Promise<Product[]> {
   const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;

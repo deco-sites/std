@@ -15,8 +15,8 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >
-): Promise<ProductDetailsPage> {
+  >,
+): Promise<ProductDetailsPage | null> {
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
   const { configVTEX } = ctx.state.global;
@@ -33,7 +33,7 @@ async function productPageLoader(
 
   // Product not found, return the 404 status code
   if (!product) {
-    return null as unknown as ProductDetailsPage;
+    return null;
   }
 
   return toProductPage(product, skuId?.toString(), {

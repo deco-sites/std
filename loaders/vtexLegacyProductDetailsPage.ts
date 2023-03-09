@@ -1,6 +1,7 @@
 import type { LiveConfig, LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { ProductDetailsPage } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
 
@@ -16,8 +17,8 @@ async function legacyProductPageLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >
-) {
+  >,
+): Promise<ProductDetailsPage | null> {
   const { configVTEX } = global;
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
@@ -30,18 +31,13 @@ async function legacyProductPageLoader(
 
   // Product not found, return the 404 status code
   if (!product) {
-    return {
-      data: null,
-      status: 404,
-    };
+    return null;
   }
 
-  return {
-    data: toProductPage(product, skuId?.toString(), {
-      url,
-      priceCurrency: vtex.currency(),
-    }),
-  };
+  return toProductPage(product, skuId?.toString(), {
+    url,
+    priceCurrency: vtex.currency(),
+  });
 }
 
 export default legacyProductPageLoader;

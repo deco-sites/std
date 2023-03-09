@@ -28,7 +28,7 @@ async function searchLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
-  >
+  >,
 ): Promise<ProductListingPage> {
   const url = new URL(req.url);
   const { configShopify } = global;

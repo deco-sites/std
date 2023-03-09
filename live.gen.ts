@@ -132,17 +132,17 @@ const manifest = {
             },
             "$id": "./loaders/vtexProductListingPage.ts",
           },
-          "vtexLegacyProductDetailsPage.ts@5b08d6d4-6f88-4cf8-a7e9-272ee3446418":
+          "vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb":
             {
               "$id":
-                "./loaders/vtexLegacyProductDetailsPage.ts@5b08d6d4-6f88-4cf8-a7e9-272ee3446418",
+                "./loaders/vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb",
             },
           "vtexLegacyProductDetailsPage.ts": {
             "title": "./loaders/vtexLegacyProductDetailsPage.ts",
             "type": "object",
             "allOf": [{
               "$ref":
-                "#/definitions/./loaders/vtexLegacyProductDetailsPage.ts@5b08d6d4-6f88-4cf8-a7e9-272ee3446418",
+                "#/definitions/./loaders/vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb",
             }],
             "required": ["__resolveType"],
             "properties": {
@@ -244,16 +244,16 @@ const manifest = {
             },
             "$id": "./loaders/vtexProductList.ts",
           },
-          "occProductDetailsPage.ts@57a824dd-965e-495e-abcb-1edaf3ab6ee3": {
+          "occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648": {
             "$id":
-              "./loaders/occProductDetailsPage.ts@57a824dd-965e-495e-abcb-1edaf3ab6ee3",
+              "./loaders/occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648",
           },
           "occProductDetailsPage.ts": {
             "title": "./loaders/occProductDetailsPage.ts",
             "type": "object",
             "allOf": [{
               "$ref":
-                "#/definitions/./loaders/occProductDetailsPage.ts@57a824dd-965e-495e-abcb-1edaf3ab6ee3",
+                "#/definitions/./loaders/occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648",
             }],
             "required": ["__resolveType"],
             "properties": {
@@ -416,16 +416,16 @@ const manifest = {
             },
             "$id": "./loaders/shopifyProductList.ts",
           },
-          "shopifyProductDetailsPage.ts@1e915481-c660-432e-907a-fa0a58b3cf51": {
+          "shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07": {
             "$id":
-              "./loaders/shopifyProductDetailsPage.ts@1e915481-c660-432e-907a-fa0a58b3cf51",
+              "./loaders/shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07",
           },
           "shopifyProductDetailsPage.ts": {
             "title": "./loaders/shopifyProductDetailsPage.ts",
             "type": "object",
             "allOf": [{
               "$ref":
-                "#/definitions/./loaders/shopifyProductDetailsPage.ts@1e915481-c660-432e-907a-fa0a58b3cf51",
+                "#/definitions/./loaders/shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07",
             }],
             "required": ["__resolveType"],
             "properties": {
@@ -438,16 +438,16 @@ const manifest = {
           },
         },
         "islands": {
-          "LiveControls.tsx@1f51c250-198d-47d0-844d-c2deca070c97": {
+          "LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61": {
             "$id":
-              "./islands/LiveControls.tsx@1f51c250-198d-47d0-844d-c2deca070c97",
+              "./islands/LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61",
           },
           "LiveControls.tsx": {
             "title": "./islands/LiveControls.tsx",
             "type": "object",
             "allOf": [{
               "$ref":
-                "#/definitions/./islands/LiveControls.tsx@1f51c250-198d-47d0-844d-c2deca070c97",
+                "#/definitions/./islands/LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61",
             }],
             "required": ["__resolveType"],
             "properties": {

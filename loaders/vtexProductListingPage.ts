@@ -73,7 +73,7 @@ async function plpLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >
+  >,
 ): Promise<ProductListingPage> {
   const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;
@@ -86,10 +86,9 @@ async function plpLoader(
   const sort = (url.searchParams.get("sort") as Sort) || ("" as Sort);
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacetsFromParams = filtersFromSearchParams(url.searchParams);
-  const selectedFacets =
-    selectedFacetsFromParams.length === 0
-      ? filtersFromPathname(await pageTypesPromise)
-      : selectedFacetsFromParams;
+  const selectedFacets = selectedFacetsFromParams.length === 0
+    ? filtersFromPathname(await pageTypesPromise)
+    : selectedFacetsFromParams;
 
   const searchArgs = {
     query,
@@ -118,7 +117,7 @@ async function plpLoader(
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
-    url
+    url,
   );
 
   const hasNextPage = Boolean(pagination.next.proxyUrl);

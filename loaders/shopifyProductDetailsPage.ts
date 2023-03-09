@@ -13,8 +13,8 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configShopify?: ConfigShopify }>>
-  >
-): Promise<ProductDetailsPage> {
+  >,
+): Promise<ProductDetailsPage | null> {
   const { configShopify } = ctx.state.global;
   const shopify = createClient(configShopify);
 
@@ -28,9 +28,7 @@ async function productPageLoader(
   const data = await shopify.product(handle);
 
   if (!data?.product) {
-    throw new Error(
-      `shopifyProductDetailsPage: product ${maybeSkuId} not found`
-    );
+    return null;
   }
 
   return toProductPage(data.product, maybeSkuId);

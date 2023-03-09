@@ -23,7 +23,7 @@ async function searchLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
-  >
+  >,
 ): Promise<Product[]> {
   const { configShopify } = global;
   const shopify = createClient(configShopify);

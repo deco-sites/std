@@ -13,8 +13,8 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configOCC: ConfigOCC }>>
-  >
-): Promise<ProductDetailsPage> {
+  >,
+): Promise<ProductDetailsPage | null> {
   const { configOCC } = ctx.state.global;
   const occ = createClient(configOCC);
 
@@ -30,7 +30,7 @@ async function productPageLoader(
 
   // Product not found, return the 404 status code
   if (!data) {
-    throw new Error(`occProductPageLoader: product ${id} not found`);
+    return null;
   }
 
   // Convert the OCC product to schema.org format and return it
