@@ -685,8 +685,20 @@ const manifest: DecoManifest = {
     },
     "./functions/vtexSuggestions.ts": {
       "inputSchema": {
-        "type": "null",
         "title": "Vtex Suggestions",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Count",
+            "description": "limit the number of searches",
+            "default": "4",
+          },
+        },
+        "required": [],
       },
       "outputSchema": {
         "type": "object",
