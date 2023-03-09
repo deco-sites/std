@@ -1,19 +1,20 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
+import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
 
-import { slugify } from "../commerce/vtex/utils/slugify.ts";
+import type { Filter } from "../commerce/types.ts";
+import { ProductListingPage } from "../commerce/types.ts";
+import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import {
   filtersFromSearchParams,
   toFilter,
   toProduct,
 } from "../commerce/vtex/transform.ts";
+import type { PageType, Sort } from "../commerce/vtex/types.ts";
+import { slugify } from "../commerce/vtex/utils/slugify.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "./vtexLegacyProductListingPage.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import type { Filter, ProductListingPage } from "../commerce/types.ts";
-import type { PageType, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /**
@@ -53,10 +54,13 @@ const filtersFromPathname = (pages: PageType[]) =>
         return;
       }
 
-      return key && page.name && {
-        key,
-        value: slugify(page.name),
-      };
+      return (
+        key &&
+        page.name && {
+          key,
+          value: slugify(page.name),
+        }
+      );
     })
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
@@ -64,15 +68,14 @@ const filtersFromPathname = (pages: PageType[]) =>
  * @title Product listing page loader
  * @description Returns data ready for search pages like category,brand pages
  */
-const plpLoader: LoaderFunction<
-  Props,
-  ProductListingPage,
-  LiveState<{ configVTEX?: ConfigVTEX }>
-> = async (
-  req,
-  ctx,
-  props,
-) => {
+async function plpLoader(
+  req: Request,
+  ctx: HandlerContext<
+    unknown,
+    LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
+  >
+): Promise<ProductListingPage> {
+  const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
@@ -80,12 +83,13 @@ const plpLoader: LoaderFunction<
   const count = props.count ?? 12;
   const query = props.query || url.searchParams.get("q") || "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const sort = url.searchParams.get("sort") as Sort || "" as Sort;
+  const sort = (url.searchParams.get("sort") as Sort) || ("" as Sort);
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacetsFromParams = filtersFromSearchParams(url.searchParams);
-  const selectedFacets = selectedFacetsFromParams.length === 0
-    ? filtersFromPathname(await pageTypesPromise)
-    : selectedFacetsFromParams;
+  const selectedFacets =
+    selectedFacetsFromParams.length === 0
+      ? filtersFromPathname(await pageTypesPromise)
+      : selectedFacetsFromParams;
 
   const searchArgs = {
     query,
@@ -114,7 +118,7 @@ const plpLoader: LoaderFunction<
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
-    url,
+    url
   );
 
   const hasNextPage = Boolean(pagination.next.proxyUrl);
@@ -131,21 +135,19 @@ const plpLoader: LoaderFunction<
   }
 
   return {
-    data: {
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement,
-        numberOfItems: itemListElement.length,
-      },
-      filters,
-      products,
-      pageInfo: {
-        nextPage: hasNextPage ? `?${nextPage}` : undefined,
-        previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
-        currentPage: page,
-      },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement,
+      numberOfItems: itemListElement.length,
+    },
+    filters,
+    products,
+    pageInfo: {
+      nextPage: hasNextPage ? `?${nextPage}` : undefined,
+      previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
+      currentPage: page,
     },
   };
-};
+}
 
 export default plpLoader;

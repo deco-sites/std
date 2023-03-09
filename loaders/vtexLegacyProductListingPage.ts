@@ -1,15 +1,15 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
 
+import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import {
   ClientVTEX,
   ConfigVTEX,
   createClient,
 } from "../commerce/vtex/client.ts";
 import { legacyFacetToFilter, toProduct } from "../commerce/vtex/transform.ts";
-import { slugify } from "../commerce/vtex/utils/slugify.ts";
-import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import type { LegacySort, PageType } from "../commerce/vtex/types.ts";
+import { slugify } from "../commerce/vtex/utils/slugify.ts";
 
 export interface Props {
   /**
@@ -49,7 +49,7 @@ const SORT_TO_LEGACY_SORT: Record<string, string> = {
 
 export const pageTypesFromPathname = async (
   pathname: string,
-  vtex: ClientVTEX,
+  vtex: ClientVTEX
 ) => {
   const segments = pathname.split("/").filter(Boolean);
 
@@ -58,29 +58,30 @@ export const pageTypesFromPathname = async (
       vtex.catalog_system.pageType({
         slug: segments.slice(0, index + 1).join("/"),
       })
-    ),
+    )
   );
 
   return results.filter((result) => PAGE_TYPE_TO_MAP_PARAM[result.pageType]);
 };
 
 export const pageTypesToBreadcrumbList = (pages: PageType[], url: URL) => {
-  const filteredPages = pages
-    .filter(({ pageType }) =>
-      pageType === "Category" || pageType === "Department" ||
+  const filteredPages = pages.filter(
+    ({ pageType }) =>
+      pageType === "Category" ||
+      pageType === "Department" ||
       pageType === "SubCategory"
-    );
+  );
 
   return filteredPages.map((page, index) => {
     const position = index + 1;
     const slug = filteredPages.slice(0, position).map((x) => slugify(x.name!));
 
-    return ({
+    return {
       "@type": "ListItem" as const,
       name: page.name!,
       item: new URL(`/${slug.join("/")}`, url.origin).href,
       position,
-    });
+    };
   });
 };
 
@@ -97,23 +98,20 @@ const PAGE_TYPE_TO_MAP_PARAM = {
 };
 
 const mapParamFromUrl = (pages: PageType[]) =>
-  pages
-    .map((type) => PAGE_TYPE_TO_MAP_PARAM[type.pageType])
-    .join(",");
+  pages.map((type) => PAGE_TYPE_TO_MAP_PARAM[type.pageType]).join(",");
 
 /**
  * @title Product listing page loader
  * @description Returns data ready for search pages like category,brand pages
  */
-const legacyPLPLoader: LoaderFunction<
-  Props,
-  ProductListingPage,
-  LiveState<{ configVTEX?: ConfigVTEX }>
-> = async (
-  req,
-  ctx,
-  props,
-) => {
+async function legacyPLPLoader(
+  req: Request,
+  ctx: HandlerContext<
+    unknown,
+    LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
+  >
+): Promise<ProductListingPage> {
+  const props = ctx.state.$live;
   const url = new URL(req.url);
   const { configVTEX } = ctx.state.global;
   const vtex = createClient(configVTEX);
@@ -124,10 +122,12 @@ const legacyPLPLoader: LoaderFunction<
   const page = Number(url.searchParams.get("page")) || 0;
   const O = (url.searchParams.get("O") ||
     SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
-  const ft = props.ft || url.searchParams.get("ft") ||
-    url.searchParams.get("q") || "";
+  const ft =
+    props.ft || url.searchParams.get("ft") || url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
-  const map = props.map || url.searchParams.get("map") ||
+  const map =
+    props.map ||
+    url.searchParams.get("map") ||
     mapParamFromUrl(await pageTypesPromise);
   const _from = page * count;
   const _to = (page + 1) * count - 1;
@@ -158,12 +158,13 @@ const legacyPLPLoader: LoaderFunction<
     Departments: vtexFacets.Departments,
     Brands: vtexFacets.Brands,
     ...vtexFacets.SpecificationFilters,
-  }).map(([name, facets]) => legacyFacetToFilter(name, facets, url, map))
+  })
+    .map(([name, facets]) => legacyFacetToFilter(name, facets, url, map))
     .flat()
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
-    url,
+    url
   );
 
   const hasNextPage = Boolean(page < 50 && products.length === count);
@@ -180,21 +181,19 @@ const legacyPLPLoader: LoaderFunction<
   }
 
   return {
-    data: {
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement,
-        numberOfItems: itemListElement.length,
-      },
-      filters,
-      products,
-      pageInfo: {
-        nextPage: hasNextPage ? nextPage.toString() : undefined,
-        previousPage: hasPreviousPage ? previousPage.toString() : undefined,
-        currentPage: page,
-      },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement,
+      numberOfItems: itemListElement.length,
+    },
+    filters,
+    products,
+    pageInfo: {
+      nextPage: hasNextPage ? nextPage.toString() : undefined,
+      previousPage: hasPreviousPage ? previousPage.toString() : undefined,
+      currentPage: page,
     },
   };
-};
+}
 
 export default legacyPLPLoader;

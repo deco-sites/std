@@ -1,19 +1,20 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
-
-import { toProductPage } from "../commerce/occ/transform.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
 import { ConfigOCC, createClient } from "../commerce/occ/client.ts";
-import type { ProductDetailsPage } from "../commerce/types.ts";
+import { toProductPage } from "../commerce/occ/transform.ts";
+import { ProductDetailsPage } from "../commerce/types.ts";
 
 /**
  * @title Oracle Commerce Cloud Product Page Loader
  * @description Works on routes of type /:slug/p
  */
-const productPageLoader: LoaderFunction<
-  null,
-  ProductDetailsPage | null,
-  LiveState<{ configOCC: ConfigOCC }>
-> = async (_req, ctx) => {
+async function productPageLoader(
+  _req: Request,
+  ctx: HandlerContext<
+    unknown,
+    LiveConfig<unknown, LiveState<{ configOCC: ConfigOCC }>>
+  >
+): Promise<ProductDetailsPage> {
   const { configOCC } = ctx.state.global;
   const occ = createClient(configOCC);
 
@@ -29,14 +30,11 @@ const productPageLoader: LoaderFunction<
 
   // Product not found, return the 404 status code
   if (!data) {
-    return {
-      data: null,
-      status: 404,
-    };
+    throw new Error(`occProductPageLoader: product ${id} not found`);
   }
 
   // Convert the OCC product to schema.org format and return it
-  return { data: toProductPage(product, productSkuInventoryStatus) };
-};
+  return toProductPage(product, productSkuInventoryStatus);
+}
 
 export default productPageLoader;

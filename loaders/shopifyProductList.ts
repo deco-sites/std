@@ -1,9 +1,9 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
 
-import { toProduct } from "../commerce/shopify/transform.ts";
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import type { Product } from "../commerce/types.ts";
+import { toProduct } from "../commerce/shopify/transform.ts";
+import { Product } from "../commerce/types.ts";
 
 export interface Props {
   /** @description search term to use on search */
@@ -16,16 +16,16 @@ export interface Props {
  * @title Product list loader
  * @description Usefull for shelves and static galleries.
  */
-const searchLoader: LoaderFunction<
-  Props,
-  Product[],
-  LiveState<{ configShopify: ConfigShopify }>
-> = async (
-  _req,
-  ctx,
-  props,
-) => {
-  const { configShopify } = ctx.state.global;
+async function searchLoader(
+  _req: Request,
+  {
+    state: { global, $live: props },
+  }: HandlerContext<
+    unknown,
+    LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
+  >
+): Promise<Product[]> {
+  const { configShopify } = global;
   const shopify = createClient(configShopify);
 
   const count = props.count ?? 12;
@@ -44,9 +44,7 @@ const searchLoader: LoaderFunction<
     toProduct(p, p.variants.nodes[0])
   );
 
-  return {
-    data: products ?? [],
-  };
-};
+  return products ?? [];
+}
 
 export default searchLoader;

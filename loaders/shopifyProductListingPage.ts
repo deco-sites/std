@@ -1,9 +1,9 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
 
-import { toProduct } from "../commerce/shopify/transform.ts";
+import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import type { ProductListingPage } from "../commerce/types.ts";
+import { toProduct } from "../commerce/shopify/transform.ts";
+import { ProductListingPage } from "../commerce/types.ts";
 
 export interface Props {
   /**
@@ -21,17 +21,17 @@ export interface Props {
  * @title Product listing page loader
  * @description Returns data ready for search pages like category,brand pages
  */
-const searchLoader: LoaderFunction<
-  Props,
-  ProductListingPage,
-  LiveState<{ configShopify: ConfigShopify }>
-> = async (
-  req,
-  ctx,
-  props,
-) => {
+async function searchLoader(
+  req: Request,
+  {
+    state: { global, $live: props },
+  }: HandlerContext<
+    unknown,
+    LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
+  >
+): Promise<ProductListingPage> {
   const url = new URL(req.url);
-  const { configShopify } = ctx.state.global;
+  const { configShopify } = global;
   const shopify = createClient(configShopify);
 
   const count = props.count ?? 12;
@@ -65,22 +65,20 @@ const searchLoader: LoaderFunction<
   }
 
   return {
-    data: {
-      // TODO: Find out what's the right breadcrumb on shopify
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [],
-        numberOfItems: 0,
-      },
-      filters: [],
-      products: products ?? [],
-      pageInfo: {
-        nextPage: hasNextPage ? nextPage.toString() : undefined,
-        previousPage: hasPreviousPage ? previousPage.toString() : undefined,
-        currentPage: page,
-      },
+    // TODO: Find out what's the right breadcrumb on shopify
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [],
+      numberOfItems: 0,
+    },
+    filters: [],
+    products: products ?? [],
+    pageInfo: {
+      nextPage: hasNextPage ? nextPage.toString() : undefined,
+      previousPage: hasPreviousPage ? previousPage.toString() : undefined,
+      currentPage: page,
     },
   };
-};
+}
 
 export default searchLoader;

@@ -1,22 +1,20 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
-
-import { toProductPage } from "../commerce/shopify/transform.ts";
+import { LiveConfig, LiveState } from "$live/types.ts";
+import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import type { ProductDetailsPage } from "../commerce/types.ts";
+import { toProductPage } from "../commerce/shopify/transform.ts";
+import { ProductDetailsPage } from "../commerce/types.ts";
 
 /**
  * @title Shopify Product Page Loader
  * @description Works on routes of type /:slug/p
  */
-const productPageLoader: LoaderFunction<
-  null,
-  ProductDetailsPage | null,
-  LiveState<{ configShopify: ConfigShopify }>
-> = async (
-  _req,
-  ctx,
-) => {
+async function productPageLoader(
+  _req: Request,
+  ctx: HandlerContext<
+    unknown,
+    LiveConfig<unknown, LiveState<{ configShopify?: ConfigShopify }>>
+  >
+): Promise<ProductDetailsPage> {
   const { configShopify } = ctx.state.global;
   const shopify = createClient(configShopify);
 
@@ -30,15 +28,12 @@ const productPageLoader: LoaderFunction<
   const data = await shopify.product(handle);
 
   if (!data?.product) {
-    return {
-      data: null,
-      status: 404,
-    };
+    throw new Error(
+      `shopifyProductDetailsPage: product ${maybeSkuId} not found`
+    );
   }
 
-  const product = toProductPage(data.product, maybeSkuId);
-
-  return { data: product };
-};
+  return toProductPage(data.product, maybeSkuId);
+}
 
 export default productPageLoader;

@@ -1,18 +1,17 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveConfig, LiveState } from "$live/types.ts";
 
+import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import type { Product } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
-import type { Product } from "../commerce/types.ts";
-import type { LegacySort } from "../commerce/vtex/types.ts";
+import type { SearchArgs, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /** @description query to use on search */
   query: string;
   /** @description total number of items to display */
   count: number;
-  //  TODO: Allow writting enum names
-  // * @enumNames ["relevance", "greater discount", "arrivals", "name asc", "name desc", "most ordered", "price asc", "price desc"]
+  //* @enumNames ["relevance", "greater discount", "arrivals", "name asc", "name desc", "most ordered", "price asc", "price desc"]
   /**
    * @description search sort parameter
    */
@@ -35,42 +34,42 @@ export interface Props {
 }
 
 /**
- * @title Legacy product list loader
+ * @title Product list loader
  * @description Usefull for shelves and static galleries.
  */
-const legacyProductListLoader: LoaderFunction<
-  Props,
-  Product[],
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
-  req,
-  ctx,
-  props,
-) => {
+async function productListLoader(
+  req: Request,
+  ctx: HandlerContext<
+    unknown,
+    LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
+  >
+): Promise<Product[]> {
+  const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;
-  console.log("Config vtex", ctx.state.global);
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
   const count = props.count ?? 12;
   const query = props.query || "";
-  const O = props.sort || "";
-  const searchParams = new URLSearchParams();
+  const sort: Sort = props.sort || "";
+  const selectedFacets: SearchArgs["selectedFacets"] = [];
 
   if (props.collection) {
-    const fq = props.collection.map((productClusterId) =>
-      `productClusterIds:${productClusterId}`
-    ).join(",");
-    searchParams.append("fq", fq);
+    props.collection.forEach((productClusterId) => {
+      selectedFacets.push({
+        key: "productClusterIds",
+        value: productClusterId,
+      });
+    });
   }
 
   // search products on VTEX. Feel free to change any of these parameters
-  const vtexProducts = await vtex.catalog_system.products({
-    fq: searchParams.get("fq") ?? "",
-    term: query,
-    _from: 0,
-    _to: Math.max(count - 1, 0),
-    O: O as LegacySort,
+  const { products: vtexProducts } = await vtex.search.products({
+    query,
+    page: 0,
+    count,
+    sort,
+    selectedFacets,
   });
 
   // Transform VTEX product format into schema.org's compatible format
@@ -80,9 +79,7 @@ const legacyProductListLoader: LoaderFunction<
     toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
-  return {
-    data: products,
-  };
-};
+  return products;
+}
 
-export default legacyProductListLoader;
+export default productListLoader;
