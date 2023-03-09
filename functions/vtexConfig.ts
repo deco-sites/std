@@ -17,8 +17,8 @@ export interface ClientConfigVTEX {
  */
 const vtexConfig: LoaderFunction<
   null,
-  ClientConfigVTEX | undefined,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
+  ClientConfigVTEX,
+  LiveState<{ configVTEX: ConfigVTEX }>
 > = (_, ctx) => {
   const { configVTEX } = ctx.state.global;
 
