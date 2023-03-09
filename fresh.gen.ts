@@ -27,12 +27,13 @@ import * as $$$$6 from "./functions/vtexLegacyProductListingPage.ts";
 import * as $$$$7 from "./functions/vtexProductDetailsPage.ts";
 import * as $$$$8 from "./functions/vtexProductList.ts";
 import * as $$$$9 from "./functions/vtexProductListingPage.ts";
-import * as $$$$10 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$11 from "$live/functions/MatchDate.ts";
-import * as $$$$12 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$13 from "$live/functions/MatchRandom.ts";
-import * as $$$$14 from "$live/functions/MatchSite.ts";
-import * as $$$$15 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$10 from "./functions/vtexSuggestions.ts";
+import * as $$$$11 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$12 from "$live/functions/MatchDate.ts";
+import * as $$$$13 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$14 from "$live/functions/MatchRandom.ts";
+import * as $$$$15 from "$live/functions/MatchSite.ts";
+import * as $$$$16 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -62,12 +63,13 @@ const manifest: DecoManifest = {
     "./functions/vtexProductDetailsPage.ts": $$$$7,
     "./functions/vtexProductList.ts": $$$$8,
     "./functions/vtexProductListingPage.ts": $$$$9,
-    "$live/functions/EffectSelectPage.ts": $$$$10,
-    "$live/functions/MatchDate.ts": $$$$11,
-    "$live/functions/MatchEnvironment.ts": $$$$12,
-    "$live/functions/MatchRandom.ts": $$$$13,
-    "$live/functions/MatchSite.ts": $$$$14,
-    "$live/functions/MatchUserAgent.ts": $$$$15,
+    "./functions/vtexSuggestions.ts": $$$$10,
+    "$live/functions/EffectSelectPage.ts": $$$$11,
+    "$live/functions/MatchDate.ts": $$$$12,
+    "$live/functions/MatchEnvironment.ts": $$$$13,
+    "$live/functions/MatchRandom.ts": $$$$14,
+    "$live/functions/MatchSite.ts": $$$$15,
+    "$live/functions/MatchUserAgent.ts": $$$$16,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -676,6 +678,33 @@ const manifest: DecoManifest = {
         "properties": {
           "data": {
             "$id": "05ecb684cf4ee00e98171fdc45227df637e4804e",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
+    "./functions/vtexSuggestions.ts": {
+      "inputSchema": {
+        "title": "Vtex Suggestions",
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Count",
+            "description": "limit the number of searches",
+            "default": "4",
+          },
+        },
+        "required": [],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "ed6dd98378c4000f0975a28f1d78921b8e165be8",
           },
         },
         "additionalProperties": true,
