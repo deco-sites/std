@@ -134,12 +134,12 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "vtexLegacyProductDetailsPage.ts@4e80626e-618a-4314-9022-56050b5649a0":
+            "vtexLegacyProductDetailsPage.ts@00f5446c-3e05-40e7-8853-1fc5674bfa86":
               {
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@4e80626e-618a-4314-9022-56050b5649a0",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@00f5446c-3e05-40e7-8853-1fc5674bfa86",
               },
-            "vtexLegacyProductDetailsPage.ts@223418f7-6734-4bec-917c-bd821f1438fa":
+            "vtexLegacyProductDetailsPage.ts@290690d1-ea6c-4d2e-9dc3-7cd3b0a96bab":
               {
                 "anyOf": [
                   {
@@ -153,14 +153,14 @@ const manifest = {
                   },
                 ],
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@223418f7-6734-4bec-917c-bd821f1438fa",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@290690d1-ea6c-4d2e-9dc3-7cd3b0a96bab",
               },
             "vtexLegacyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@4e80626e-618a-4314-9022-56050b5649a0",
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@00f5446c-3e05-40e7-8853-1fc5674bfa86",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -267,11 +267,11 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductList.ts",
             },
-            "occProductDetailsPage.ts@0b2430e8-0091-4eb3-8e55-830a2ad91d9c": {
+            "occProductDetailsPage.ts@3bbd5c5d-7759-4e0d-99e2-885ccf4a869e": {
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@0b2430e8-0091-4eb3-8e55-830a2ad91d9c",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@3bbd5c5d-7759-4e0d-99e2-885ccf4a869e",
             },
-            "occProductDetailsPage.ts@35207d24-d146-4775-b670-f97713a5a2bb": {
+            "occProductDetailsPage.ts@e33f0379-4e0d-4b0b-8658-81cee5d7e01f": {
               "anyOf": [
                 {
                   "$ref":
@@ -284,14 +284,14 @@ const manifest = {
                 },
               ],
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@35207d24-d146-4775-b670-f97713a5a2bb",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@e33f0379-4e0d-4b0b-8658-81cee5d7e01f",
             },
             "occProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@0b2430e8-0091-4eb3-8e55-830a2ad91d9c",
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@3bbd5c5d-7759-4e0d-99e2-885ccf4a869e",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -351,7 +351,7 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
             },
-            "vtexProductDetailsPage.ts@06bf79a0-95b2-4c8d-acf3-350c108f859f": {
+            "vtexProductDetailsPage.ts@71cd3f11-8fe8-4396-bff5-69cd86523fd4": {
               "anyOf": [
                 {
                   "$ref":
@@ -364,7 +364,7 @@ const manifest = {
                 },
               ],
               "$id":
-                "deco-sites/std/loaders/vtexProductDetailsPage.ts@06bf79a0-95b2-4c8d-acf3-350c108f859f",
+                "deco-sites/std/loaders/vtexProductDetailsPage.ts@71cd3f11-8fe8-4396-bff5-69cd86523fd4",
             },
             "vtexProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
@@ -474,12 +474,12 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/shopifyProductList.ts",
             },
-            "shopifyProductDetailsPage.ts@ff60d1a2-0094-4c12-a290-00de5f1f309a":
+            "shopifyProductDetailsPage.ts@2ccbced9-39d5-4fa6-beab-2ed071ee817d":
               {
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@ff60d1a2-0094-4c12-a290-00de5f1f309a",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@2ccbced9-39d5-4fa6-beab-2ed071ee817d",
               },
-            "shopifyProductDetailsPage.ts@524cfb0d-8783-4c64-aaa4-a2a46652617f":
+            "shopifyProductDetailsPage.ts@9920db60-76c3-4aba-a0de-831bf3d68b3d":
               {
                 "anyOf": [
                   {
@@ -493,14 +493,14 @@ const manifest = {
                   },
                 ],
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@524cfb0d-8783-4c64-aaa4-a2a46652617f",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@9920db60-76c3-4aba-a0de-831bf3d68b3d",
               },
             "shopifyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@ff60d1a2-0094-4c12-a290-00de5f1f309a",
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@2ccbced9-39d5-4fa6-beab-2ed071ee817d",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1079,54 +1079,133 @@ const manifest = {
               "$id": "deco-sites/std/commerce/types.ts@Product",
             },
             "types.ts@Product[]": {
-              "type": "array",
-              "items": {
+              "anyOf": [{
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "allOf": [{}],
+                  "properties": {
+                    "@type": {
+                      "title": "@type",
+                      "type": "string",
+                      "const": "Product",
+                    },
+                    "additionalProperty": {
+                      "title": "Additional Property",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue[]",
+                    },
+                    "aggregateRating": {
+                      "title": "Aggregate Rating",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateRating",
+                    },
+                    "award": { "title": "Award", "type": ["string", "null"] },
+                    "brand": { "title": "Brand", "type": ["string", "null"] },
+                    "category": {
+                      "title": "Category",
+                      "type": ["string", "null"],
+                    },
+                    "gtin": { "title": "Gtin", "type": ["string", "null"] },
+                    "inProductGroupWithID": {
+                      "title": "In Product Group With I D",
+                      "type": ["string", "null"],
+                    },
+                    "isVariantOf": {
+                      "title": "Is Variant Of",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@ProductGroup",
+                    },
+                    "offers": {
+                      "title": "Offers",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateOffer",
+                    },
+                    "productID": { "title": "Product I D", "type": "string" },
+                    "productionDate": {
+                      "title": "Production Date",
+                      "type": ["string", "null"],
+                    },
+                    "releaseDate": {
+                      "title": "Release Date",
+                      "type": ["string", "null"],
+                    },
+                    "review": {
+                      "title": "Review",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@Review",
+                    },
+                    "sku": { "title": "Sku", "type": "string" },
+                  },
+                  "required": ["@type", "productID", "sku"],
+                },
+              }, {
                 "$ref":
-                  "#/definitions/deco-sites/std/commerce/types.ts@Product",
-              },
+                  "#/definitions/deco-sites/std/loaders/vtexProductList.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductList.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductList.ts",
+              }],
               "$id": "deco-sites/std/commerce/types.ts@Product[]",
             },
             "types.ts@ProductListingPage": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "breadcrumb": {
-                  "title": "Breadcrumb",
-                  "$ref":
-                    "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
-                },
-                "filters": {
-                  "title": "Filters",
-                  "$ref":
-                    "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
-                },
-                "products": {
-                  "title": "Products",
-                  "$ref":
-                    "#/definitions/deco-sites/std/commerce/types.ts@Product[]",
-                },
-                "pageInfo": {
-                  "type": "object",
-                  "allOf": [],
-                  "properties": {
-                    "currentPage": {
-                      "title": "Current Page",
-                      "type": "number",
-                    },
-                    "nextPage": {
-                      "title": "Next Page",
-                      "anyOf": [{ "type": "string" }, { "type": "undefined" }],
-                    },
-                    "previousPage": {
-                      "title": "Previous Page",
-                      "anyOf": [{ "type": "string" }, { "type": "undefined" }],
-                    },
+              "anyOf": [{
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "breadcrumb": {
+                    "title": "Breadcrumb",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
                   },
-                  "required": ["currentPage", "nextPage", "previousPage"],
+                  "filters": {
+                    "title": "Filters",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
+                  },
+                  "products": {
+                    "title": "Products",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@Product[]",
+                  },
+                  "pageInfo": {
+                    "type": "object",
+                    "allOf": [],
+                    "properties": {
+                      "currentPage": {
+                        "title": "Current Page",
+                        "type": "number",
+                      },
+                      "nextPage": {
+                        "title": "Next Page",
+                        "anyOf": [{ "type": "string" }, {
+                          "type": "undefined",
+                        }],
+                      },
+                      "previousPage": {
+                        "title": "Previous Page",
+                        "anyOf": [{ "type": "string" }, {
+                          "type": "undefined",
+                        }],
+                      },
+                    },
+                    "required": ["currentPage", "nextPage", "previousPage"],
+                  },
                 },
-              },
-              "required": ["breadcrumb", "filters", "products", "pageInfo"],
-              "title": "deco-sites/std/commerce/types.ts@ProductListingPage",
+                "required": ["breadcrumb", "filters", "products", "pageInfo"],
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexProductListingPage.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductListingPage.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+              }],
               "$id": "deco-sites/std/commerce/types.ts@ProductListingPage",
             },
             "types.ts@ProductDetailsPage": {
@@ -1239,7 +1318,7 @@ const manifest = {
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/$live/components/LiveControls.tsx@c7434edc-fc69-4ba0-a22c-1444beb10a26",
+                  "#/definitions/$live/components/LiveControls.tsx@945c6c56-67df-4e0b-a467-bafa7a67b2be",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1441,9 +1520,9 @@ const manifest = {
       },
       "$live": {
         "components": {
-          "LiveControls.tsx@c7434edc-fc69-4ba0-a22c-1444beb10a26": {
+          "LiveControls.tsx@945c6c56-67df-4e0b-a467-bafa7a67b2be": {
             "$id":
-              "$live/components/LiveControls.tsx@c7434edc-fc69-4ba0-a22c-1444beb10a26",
+              "$live/components/LiveControls.tsx@945c6c56-67df-4e0b-a467-bafa7a67b2be",
           },
         },
         "routes": {
