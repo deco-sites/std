@@ -134,17 +134,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4":
+            "vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353":
               {
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353",
               },
             "vtexLegacyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4",
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -210,7 +210,7 @@ const manifest = {
                 },
                 "sort": {
                   "title": "Sort",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                   "description": "search sort parameter",
                 },
                 "collection": {
@@ -242,16 +242,16 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductList.ts",
             },
-            "occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a": {
+            "occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde": {
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde",
             },
             "occProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a",
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -343,7 +343,7 @@ const manifest = {
                 },
                 "sort": {
                   "title": "Sort",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                   "description": "search sort parameter",
                 },
                 "collection": {
@@ -410,17 +410,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/shopifyProductList.ts",
             },
-            "shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9":
+            "shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d":
               {
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d",
               },
             "shopifyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9",
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -707,11 +707,11 @@ const manifest = {
                 },
                 "priceComponentType": {
                   "title": "Price Component Type",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                 },
                 "priceType": {
                   "title": "Price Type",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                 },
                 "billingDuration": {
                   "title": "Billing Duration",
@@ -747,7 +747,7 @@ const manifest = {
                 },
                 "availability": {
                   "title": "Availability",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                 },
                 "gtin": { "title": "Gtin", "type": ["string", "null"] },
                 "inventoryLevel": {
@@ -757,7 +757,7 @@ const manifest = {
                 },
                 "itemCondition": {
                   "title": "Item Condition",
-                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "$ref": "#/definitions/unknown",
                 },
                 "price": { "title": "Price", "type": "number" },
                 "priceSpecification": {
@@ -920,11 +920,76 @@ const manifest = {
               "$id": "deco-sites/std/commerce/types.ts@Product",
             },
             "types.ts@Product[]": {
-              "type": "array",
-              "items": {
+              "anyOf": [{
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "allOf": [{}],
+                  "properties": {
+                    "@type": {
+                      "title": "@type",
+                      "type": "string",
+                      "const": "Product",
+                    },
+                    "additionalProperty": {
+                      "title": "Additional Property",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue[]",
+                    },
+                    "aggregateRating": {
+                      "title": "Aggregate Rating",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateRating",
+                    },
+                    "award": { "title": "Award", "type": ["string", "null"] },
+                    "brand": { "title": "Brand", "type": ["string", "null"] },
+                    "category": {
+                      "title": "Category",
+                      "type": ["string", "null"],
+                    },
+                    "gtin": { "title": "Gtin", "type": ["string", "null"] },
+                    "inProductGroupWithID": {
+                      "title": "In Product Group With I D",
+                      "type": ["string", "null"],
+                    },
+                    "isVariantOf": {
+                      "title": "Is Variant Of",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@ProductGroup",
+                    },
+                    "offers": {
+                      "title": "Offers",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateOffer",
+                    },
+                    "productID": { "title": "Product I D", "type": "string" },
+                    "productionDate": {
+                      "title": "Production Date",
+                      "type": ["string", "null"],
+                    },
+                    "releaseDate": {
+                      "title": "Release Date",
+                      "type": ["string", "null"],
+                    },
+                    "review": {
+                      "title": "Review",
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@Review",
+                    },
+                    "sku": { "title": "Sku", "type": "string" },
+                  },
+                  "required": ["@type", "productID", "sku"],
+                },
+              }, {
                 "$ref":
-                  "#/definitions/deco-sites/std/commerce/types.ts@Product",
-              },
+                  "#/definitions/deco-sites/std/loaders/vtexProductList.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductList.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductList.ts",
+              }],
               "$id": "deco-sites/std/commerce/types.ts@Product[]",
             },
             "types.ts@ProductListingPage": {
@@ -957,11 +1022,11 @@ const manifest = {
                       },
                       "nextPage": {
                         "title": "Next Page",
-                        "$ref": "#/definitions/deco-sites/std/unknown",
+                        "$ref": "#/definitions/unknown",
                       },
                       "previousPage": {
                         "title": "Previous Page",
-                        "$ref": "#/definitions/deco-sites/std/unknown",
+                        "$ref": "#/definitions/unknown",
                       },
                     },
                     "required": ["currentPage", "nextPage", "previousPage"],
@@ -1065,35 +1130,17 @@ const manifest = {
               },
             },
           },
-          "unknown": {
-            "anyOf": [
-              { "type": "string", "const": "https://schema.org/BackOrder" },
-              { "type": "string", "const": "https://schema.org/Discontinued" },
-              { "type": "string", "const": "https://schema.org/InStock" },
-              { "type": "string", "const": "https://schema.org/InStoreOnly" },
-              {
-                "type": "string",
-                "const": "https://schema.org/LimitedAvailability",
-              },
-              { "type": "string", "const": "https://schema.org/OnlineOnly" },
-              { "type": "string", "const": "https://schema.org/OutOfStock" },
-              { "type": "string", "const": "https://schema.org/PreOrder" },
-              { "type": "string", "const": "https://schema.org/PreSale" },
-              { "type": "string", "const": "https://schema.org/SoldOut" },
-            ],
-            "$id": "deco-sites/std/unknown",
-          },
           "islands": {
-            "LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d": {
+            "LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb": {
               "$id":
-                "deco-sites/std/islands/LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d",
+                "deco-sites/std/islands/LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb",
             },
             "LiveControls.tsx": {
               "title": "deco-sites/std/islands/LiveControls.tsx",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d",
+                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1283,6 +1330,26 @@ const manifest = {
           },
         },
       },
+      "unknown": {
+        "anyOf": [
+          { "type": "string", "const": "https://schema.org/BackOrder" },
+          { "type": "string", "const": "https://schema.org/Discontinued" },
+          { "type": "string", "const": "https://schema.org/InStock" },
+          { "type": "string", "const": "https://schema.org/InStoreOnly" },
+          {
+            "type": "string",
+            "const": "https://schema.org/LimitedAvailability",
+          },
+          { "type": "string", "const": "https://schema.org/OnlineOnly" },
+          { "type": "string", "const": "https://schema.org/OutOfStock" },
+          { "type": "string", "const": "https://schema.org/PreOrder" },
+          { "type": "string", "const": "https://schema.org/PreSale" },
+          { "type": "string", "const": "https://schema.org/SoldOut" },
+          { "type": "string", "const": "or" },
+          { "type": "string", "const": "and" },
+        ],
+        "$id": "unknown",
+      },
       "$live": {
         "routes": {
           "[...catchall].tsx@Entrypoint": {
@@ -1334,7 +1401,7 @@ const manifest = {
               "base": { "title": "Base", "type": ["string", "null"] },
               "routes": {
                 "title": "Routes",
-                "$ref": "#/definitions/$live/record<string, Resolvable>",
+                "$ref": "#/definitions/record<string, Resolvable>",
               },
             },
             "required": ["routes"],
@@ -1381,12 +1448,6 @@ const manifest = {
             },
             "$id": "$live/handlers/fresh.ts",
           },
-        },
-        "record<string, Resolvable>": {
-          "title": "Unknown record",
-          "type": "object",
-          "additionalProperties": { "$ref": "#/root/handlers" },
-          "$id": "$live/record<string, Resolvable>",
         },
         "pages": {
           "LivePage.tsx@Props": {
@@ -1570,7 +1631,7 @@ const manifest = {
             "type": "object",
             "allOf": [],
             "properties": {
-              "op": { "title": "Op", "$ref": "#/definitions/$live/unknown" },
+              "op": { "title": "Op", "$ref": "#/definitions/unknown" },
               "matchers": {
                 "title": "Matchers",
                 "type": "array",
@@ -1627,7 +1688,7 @@ const manifest = {
             "properties": {
               "environment": {
                 "title": "Environment",
-                "$ref": "#/definitions/$live/unknown",
+                "$ref": "#/definitions/unknown",
               },
             },
             "required": ["environment"],
@@ -1663,19 +1724,6 @@ const manifest = {
             "$id": "$live/matchers/MatchAlways.ts",
           },
         },
-        "unknown": {
-          "anyOf": [{ "type": "string", "const": "or" }, {
-            "type": "string",
-            "const": "and",
-          }],
-          "$id": "$live/unknown",
-        },
-        "record<string, string>": {
-          "title": "Unknown record",
-          "type": "object",
-          "additionalProperties": { "type": "string" },
-          "$id": "$live/record<string, string>",
-        },
         "flags": {
           "audience.ts@Audience": {
             "type": "object",
@@ -1685,11 +1733,11 @@ const manifest = {
               "name": { "title": "Name", "type": "string" },
               "routes": {
                 "title": "Routes",
-                "$ref": "#/definitions/$live/record<string, Resolvable>",
+                "$ref": "#/definitions/record<string, Resolvable>",
               },
               "overrides": {
                 "title": "Overrides",
-                "$ref": "#/definitions/$live/record<string, string>",
+                "$ref": "#/definitions/record<string, string>",
               },
             },
             "required": ["matcher", "name", "routes"],
@@ -1717,11 +1765,11 @@ const manifest = {
             "properties": {
               "routes": {
                 "title": "Routes",
-                "$ref": "#/definitions/$live/record<string, Resolvable>",
+                "$ref": "#/definitions/record<string, Resolvable>",
               },
               "overrides": {
                 "title": "Overrides",
-                "$ref": "#/definitions/$live/record<string, string>",
+                "$ref": "#/definitions/record<string, string>",
               },
             },
             "required": [],
@@ -1744,6 +1792,18 @@ const manifest = {
             "$id": "$live/flags/everyone.ts",
           },
         },
+      },
+      "record<string, Resolvable>": {
+        "title": "Unknown record",
+        "type": "object",
+        "additionalProperties": { "$ref": "#/root/handlers" },
+        "$id": "record<string, Resolvable>",
+      },
+      "record<string, string>": {
+        "title": "Unknown record",
+        "type": "object",
+        "additionalProperties": { "type": "string" },
+        "$id": "record<string, string>",
       },
     },
     "root": {
