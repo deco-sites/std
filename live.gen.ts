@@ -134,17 +134,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d":
+            "vtexLegacyProductDetailsPage.ts@3790c19e-61a7-437c-96f8-7164d57cb8db":
               {
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@3790c19e-61a7-437c-96f8-7164d57cb8db",
               },
             "vtexLegacyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d",
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@3790c19e-61a7-437c-96f8-7164d57cb8db",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -242,16 +242,16 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductList.ts",
             },
-            "occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad": {
+            "occProductDetailsPage.ts@cff90c1c-e149-47b0-bb9b-f81e762c1e15": {
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@cff90c1c-e149-47b0-bb9b-f81e762c1e15",
             },
             "occProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad",
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@cff90c1c-e149-47b0-bb9b-f81e762c1e15",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -410,17 +410,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/shopifyProductList.ts",
             },
-            "shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315":
+            "shopifyProductDetailsPage.ts@37461256-21e4-4034-9a28-c0dda6e5f977":
               {
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@37461256-21e4-4034-9a28-c0dda6e5f977",
               },
             "shopifyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315",
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@37461256-21e4-4034-9a28-c0dda6e5f977",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -447,16 +447,16 @@ const manifest = {
             "$id": "deco-sites/std/unknown",
           },
           "islands": {
-            "LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d": {
+            "LiveControls.tsx@ee3edb7c-6aa1-42e0-8ad1-ccd0abe59e9c": {
               "$id":
-                "deco-sites/std/islands/LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d",
+                "deco-sites/std/islands/LiveControls.tsx@ee3edb7c-6aa1-42e0-8ad1-ccd0abe59e9c",
             },
             "LiveControls.tsx": {
               "title": "deco-sites/std/islands/LiveControls.tsx",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d",
+                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@ee3edb7c-6aa1-42e0-8ad1-ccd0abe59e9c",
               }],
               "required": ["__resolveType"],
               "properties": {
