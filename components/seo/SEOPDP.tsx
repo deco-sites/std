@@ -1,11 +1,9 @@
-import type { LoaderReturnType } from "$live/types.ts";
-
+import type { ProductDetailsPage } from "../../commerce/types.ts";
 import ScriptLDJson from "./ScriptLDJson.tsx";
 import SEOBase from "./SEOBase.tsx";
-import type { ProductDetailsPage } from "../../commerce/types.ts";
 
 export interface Props {
-  page: LoaderReturnType<ProductDetailsPage | null>;
+  page: ProductDetailsPage | null;
   /**
    * @title Title template
    * @description add a %s whenever you want it to be replaced with the product name

@@ -134,17 +134,33 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353":
+            "vtexLegacyProductDetailsPage.ts@1b91fdae-72ab-46a9-af55-a2d47c7badae":
               {
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1b91fdae-72ab-46a9-af55-a2d47c7badae",
+              },
+            "vtexLegacyProductDetailsPage.ts@2c9d1c83-fdab-47a9-affa-efb5a3ccbd3f":
+              {
+                "anyOf": [
+                  {
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@ProductDetailsPage",
+                  },
+                  { "type": "null" },
+                  {
+                    "$ref":
+                      "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
+                  },
+                ],
+                "$id":
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@2c9d1c83-fdab-47a9-affa-efb5a3ccbd3f",
               },
             "vtexLegacyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1437c32f-7273-4c5c-8421-15dd3e465353",
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@1b91fdae-72ab-46a9-af55-a2d47c7badae",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -210,7 +226,16 @@ const manifest = {
                 },
                 "sort": {
                   "title": "Sort",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [
+                    { "type": "string", "const": "" },
+                    { "type": "string", "const": "price:desc" },
+                    { "type": "string", "const": "price:asc" },
+                    { "type": "string", "const": "orders:desc" },
+                    { "type": "string", "const": "name:desc" },
+                    { "type": "string", "const": "name:asc" },
+                    { "type": "string", "const": "release:desc" },
+                    { "type": "string", "const": "discount:desc" },
+                  ],
                   "description": "search sort parameter",
                 },
                 "collection": {
@@ -242,16 +267,31 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductList.ts",
             },
-            "occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde": {
+            "occProductDetailsPage.ts@4c746ef6-e7c6-4708-a293-3e4fc0aaaad9": {
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@4c746ef6-e7c6-4708-a293-3e4fc0aaaad9",
+            },
+            "occProductDetailsPage.ts@9ce0d2c9-729e-49a8-8451-01c62341eee7": {
+              "anyOf": [
+                {
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@ProductDetailsPage",
+                },
+                { "type": "null" },
+                {
+                  "$ref":
+                    "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts",
+                },
+              ],
+              "$id":
+                "deco-sites/std/loaders/occProductDetailsPage.ts@9ce0d2c9-729e-49a8-8451-01c62341eee7",
             },
             "occProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@0f7570a6-9834-4e35-a148-db56a0c16fde",
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@4c746ef6-e7c6-4708-a293-3e4fc0aaaad9",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -311,6 +351,21 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
             },
+            "vtexProductDetailsPage.ts@ba8e2c18-b1b9-4789-a7cb-870ff19f3207": {
+              "anyOf": [
+                {
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@ProductDetailsPage",
+                },
+                { "type": "null" },
+                {
+                  "$ref":
+                    "#/definitions/deco-sites/std/loaders/vtexProductDetailsPage.ts",
+                },
+              ],
+              "$id":
+                "deco-sites/std/loaders/vtexProductDetailsPage.ts@ba8e2c18-b1b9-4789-a7cb-870ff19f3207",
+            },
             "vtexProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
               "type": "object",
@@ -343,7 +398,16 @@ const manifest = {
                 },
                 "sort": {
                   "title": "Sort",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [
+                    { "type": "string", "const": "" },
+                    { "type": "string", "const": "price:desc" },
+                    { "type": "string", "const": "price:asc" },
+                    { "type": "string", "const": "orders:desc" },
+                    { "type": "string", "const": "name:desc" },
+                    { "type": "string", "const": "name:asc" },
+                    { "type": "string", "const": "release:desc" },
+                    { "type": "string", "const": "discount:desc" },
+                  ],
                   "description": "search sort parameter",
                 },
                 "collection": {
@@ -410,17 +474,33 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/shopifyProductList.ts",
             },
-            "shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d":
+            "shopifyProductDetailsPage.ts@b3d58127-c5d3-4f61-98da-53434287ce1e":
               {
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@b3d58127-c5d3-4f61-98da-53434287ce1e",
+              },
+            "shopifyProductDetailsPage.ts@3e8b5561-2fbb-455d-8fe8-5968e24113a5":
+              {
+                "anyOf": [
+                  {
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@ProductDetailsPage",
+                  },
+                  { "type": "null" },
+                  {
+                    "$ref":
+                      "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts",
+                  },
+                ],
+                "$id":
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@3e8b5561-2fbb-455d-8fe8-5968e24113a5",
               },
             "shopifyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@8a39bb85-9538-4675-a83b-5e235a19593d",
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@b3d58127-c5d3-4f61-98da-53434287ce1e",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -707,11 +787,48 @@ const manifest = {
                 },
                 "priceComponentType": {
                   "title": "Price Component Type",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [{
+                    "type": "string",
+                    "const": "https://schema.org/ActivationFee",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/CleaningFee",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/DistanceFee",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/Downpayment",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/Installment",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/Subscription",
+                  }],
                 },
                 "priceType": {
                   "title": "Price Type",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "const": "https://schema.org/InvoicePrice",
+                    },
+                    {
+                      "type": "string",
+                      "const": "https://schema.org/ListPrice",
+                    },
+                    {
+                      "type": "string",
+                      "const": "https://schema.org/MinimumAdvertisedPrice",
+                    },
+                    { "type": "string", "const": "https://schema.org/MSRP" },
+                    {
+                      "type": "string",
+                      "const": "https://schema.org/SalePrice",
+                    },
+                    { "type": "string", "const": "https://schema.org/SRP" },
+                  ],
                 },
                 "billingDuration": {
                   "title": "Billing Duration",
@@ -747,7 +864,37 @@ const manifest = {
                 },
                 "availability": {
                   "title": "Availability",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [{
+                    "type": "string",
+                    "const": "https://schema.org/BackOrder",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/Discontinued",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/InStock",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/InStoreOnly",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/LimitedAvailability",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/OnlineOnly",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/OutOfStock",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/PreOrder",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/PreSale",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/SoldOut",
+                  }],
                 },
                 "gtin": { "title": "Gtin", "type": ["string", "null"] },
                 "inventoryLevel": {
@@ -757,7 +904,19 @@ const manifest = {
                 },
                 "itemCondition": {
                   "title": "Item Condition",
-                  "$ref": "#/definitions/unknown",
+                  "anyOf": [{
+                    "type": "string",
+                    "const": "https://schema.org/DamagedCondition",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/NewCondition",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/RefurbishedCondition",
+                  }, {
+                    "type": "string",
+                    "const": "https://schema.org/UsedCondition",
+                  }],
                 },
                 "price": { "title": "Price", "type": "number" },
                 "priceSpecification": {
@@ -920,130 +1079,74 @@ const manifest = {
               "$id": "deco-sites/std/commerce/types.ts@Product",
             },
             "types.ts@Product[]": {
-              "anyOf": [{
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "allOf": [{}],
-                  "properties": {
-                    "@type": {
-                      "title": "@type",
-                      "type": "string",
-                      "const": "Product",
-                    },
-                    "additionalProperty": {
-                      "title": "Additional Property",
-                      "$ref":
-                        "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue[]",
-                    },
-                    "aggregateRating": {
-                      "title": "Aggregate Rating",
-                      "$ref":
-                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateRating",
-                    },
-                    "award": { "title": "Award", "type": ["string", "null"] },
-                    "brand": { "title": "Brand", "type": ["string", "null"] },
-                    "category": {
-                      "title": "Category",
-                      "type": ["string", "null"],
-                    },
-                    "gtin": { "title": "Gtin", "type": ["string", "null"] },
-                    "inProductGroupWithID": {
-                      "title": "In Product Group With I D",
-                      "type": ["string", "null"],
-                    },
-                    "isVariantOf": {
-                      "title": "Is Variant Of",
-                      "$ref":
-                        "#/definitions/deco-sites/std/commerce/types.ts@ProductGroup",
-                    },
-                    "offers": {
-                      "title": "Offers",
-                      "$ref":
-                        "#/definitions/deco-sites/std/commerce/types.ts@AggregateOffer",
-                    },
-                    "productID": { "title": "Product I D", "type": "string" },
-                    "productionDate": {
-                      "title": "Production Date",
-                      "type": ["string", "null"],
-                    },
-                    "releaseDate": {
-                      "title": "Release Date",
-                      "type": ["string", "null"],
-                    },
-                    "review": {
-                      "title": "Review",
-                      "$ref":
-                        "#/definitions/deco-sites/std/commerce/types.ts@Review",
-                    },
-                    "sku": { "title": "Sku", "type": "string" },
-                  },
-                  "required": ["@type", "productID", "sku"],
-                },
-              }, {
+              "type": "array",
+              "items": {
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexProductList.ts",
-              }, {
-                "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductList.ts",
-              }, {
-                "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductList.ts",
-              }],
+                  "#/definitions/deco-sites/std/commerce/types.ts@Product",
+              },
               "$id": "deco-sites/std/commerce/types.ts@Product[]",
             },
             "types.ts@ProductListingPage": {
-              "anyOf": [{
-                "type": "object",
-                "allOf": [],
-                "properties": {
-                  "breadcrumb": {
-                    "title": "Breadcrumb",
-                    "$ref":
-                      "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
-                  },
-                  "filters": {
-                    "title": "Filters",
-                    "$ref":
-                      "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
-                  },
-                  "products": {
-                    "title": "Products",
-                    "$ref":
-                      "#/definitions/deco-sites/std/commerce/types.ts@Product[]",
-                  },
-                  "pageInfo": {
-                    "type": "object",
-                    "allOf": [],
-                    "properties": {
-                      "currentPage": {
-                        "title": "Current Page",
-                        "type": "number",
-                      },
-                      "nextPage": {
-                        "title": "Next Page",
-                        "$ref": "#/definitions/unknown",
-                      },
-                      "previousPage": {
-                        "title": "Previous Page",
-                        "$ref": "#/definitions/unknown",
-                      },
-                    },
-                    "required": ["currentPage", "nextPage", "previousPage"],
-                  },
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "breadcrumb": {
+                  "title": "Breadcrumb",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
                 },
-                "required": ["breadcrumb", "filters", "products", "pageInfo"],
-              }, {
-                "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexProductListingPage.ts",
-              }, {
-                "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductListingPage.ts",
-              }, {
-                "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
-              }],
+                "filters": {
+                  "title": "Filters",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
+                },
+                "products": {
+                  "title": "Products",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@Product[]",
+                },
+                "pageInfo": {
+                  "type": "object",
+                  "allOf": [],
+                  "properties": {
+                    "currentPage": {
+                      "title": "Current Page",
+                      "type": "number",
+                    },
+                    "nextPage": {
+                      "title": "Next Page",
+                      "anyOf": [{ "type": "string" }, { "type": "undefined" }],
+                    },
+                    "previousPage": {
+                      "title": "Previous Page",
+                      "anyOf": [{ "type": "string" }, { "type": "undefined" }],
+                    },
+                  },
+                  "required": ["currentPage", "nextPage", "previousPage"],
+                },
+              },
+              "required": ["breadcrumb", "filters", "products", "pageInfo"],
+              "title": "deco-sites/std/commerce/types.ts@ProductListingPage",
               "$id": "deco-sites/std/commerce/types.ts@ProductListingPage",
+            },
+            "types.ts@ProductDetailsPage": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "breadcrumbList": {
+                  "title": "Breadcrumb List",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
+                },
+                "product": {
+                  "title": "Product",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@Product",
+                },
+              },
+              "required": ["breadcrumbList", "product"],
+              "title": "deco-sites/std/commerce/types.ts@ProductDetailsPage",
+              "$id": "deco-sites/std/commerce/types.ts@ProductDetailsPage",
             },
             "occ": {
               "client.ts@ConfigOCC": {
@@ -1131,16 +1234,16 @@ const manifest = {
             },
           },
           "islands": {
-            "LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb": {
+            "LiveControls.tsx@b2707ac8-7246-480e-8515-a819e54c8309": {
               "$id":
-                "deco-sites/std/islands/LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb",
+                "deco-sites/std/islands/LiveControls.tsx@b2707ac8-7246-480e-8515-a819e54c8309",
             },
             "LiveControls.tsx": {
               "title": "deco-sites/std/islands/LiveControls.tsx",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@7b745138-37b0-4f4c-831a-300de0ac4abb",
+                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@b2707ac8-7246-480e-8515-a819e54c8309",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1181,7 +1284,11 @@ const manifest = {
                 "type": "object",
                 "allOf": [],
                 "properties": {
-                  "page": { "title": "Page" },
+                  "page": {
+                    "title": "Page",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@ProductListingPage",
+                  },
                   "title": { "title": "Title", "type": ["string", "null"] },
                   "description": {
                     "title": "Description",
@@ -1205,7 +1312,13 @@ const manifest = {
                 "type": "object",
                 "allOf": [],
                 "properties": {
-                  "page": { "title": "Page" },
+                  "page": {
+                    "title": "Page",
+                    "anyOf": [{
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@ProductDetailsPage",
+                    }, { "type": "null" }],
+                  },
                   "titleTemplate": {
                     "title": "Title template",
                     "type": "string",
@@ -1329,26 +1442,6 @@ const manifest = {
             },
           },
         },
-      },
-      "unknown": {
-        "anyOf": [
-          { "type": "string", "const": "https://schema.org/BackOrder" },
-          { "type": "string", "const": "https://schema.org/Discontinued" },
-          { "type": "string", "const": "https://schema.org/InStock" },
-          { "type": "string", "const": "https://schema.org/InStoreOnly" },
-          {
-            "type": "string",
-            "const": "https://schema.org/LimitedAvailability",
-          },
-          { "type": "string", "const": "https://schema.org/OnlineOnly" },
-          { "type": "string", "const": "https://schema.org/OutOfStock" },
-          { "type": "string", "const": "https://schema.org/PreOrder" },
-          { "type": "string", "const": "https://schema.org/PreSale" },
-          { "type": "string", "const": "https://schema.org/SoldOut" },
-          { "type": "string", "const": "or" },
-          { "type": "string", "const": "and" },
-        ],
-        "$id": "unknown",
       },
       "$live": {
         "routes": {
@@ -1631,7 +1724,13 @@ const manifest = {
             "type": "object",
             "allOf": [],
             "properties": {
-              "op": { "title": "Op", "$ref": "#/definitions/unknown" },
+              "op": {
+                "title": "Op",
+                "anyOf": [{ "type": "string", "const": "or" }, {
+                  "type": "string",
+                  "const": "and",
+                }],
+              },
               "matchers": {
                 "title": "Matchers",
                 "type": "array",
@@ -1688,7 +1787,10 @@ const manifest = {
             "properties": {
               "environment": {
                 "title": "Environment",
-                "$ref": "#/definitions/unknown",
+                "anyOf": [{ "type": "string", "const": "production" }, {
+                  "type": "string",
+                  "const": "development",
+                }],
               },
             },
             "required": ["environment"],

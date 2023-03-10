@@ -1,11 +1,9 @@
-import type { LoaderReturnType } from "$live/types.ts";
-
 import ScriptLDJson from "./ScriptLDJson.tsx";
 import SEOBase from "./SEOBase.tsx";
 import type { ProductListingPage } from "../../commerce/types.ts";
 
 export interface Props {
-  page: LoaderReturnType<ProductListingPage>;
+  page: ProductListingPage;
   title?: string;
   description?: string;
   url?: string;
