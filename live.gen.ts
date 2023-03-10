@@ -3,55 +3,55 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./loaders/vtexProductListingPage.ts";
-import * as $1 from "./loaders/vtexLegacyProductDetailsPage.ts";
-import * as $2 from "./loaders/shopifyProductListingPage.ts";
-import * as $3 from "./loaders/vtexProductList.ts";
-import * as $4 from "./loaders/occProductDetailsPage.ts";
-import * as $5 from "./loaders/vtexLegacyProductListingPage.ts";
-import * as $6 from "./loaders/vtexProductDetailsPage.ts";
-import * as $7 from "./loaders/vtexLegacyProductList.ts";
-import * as $8 from "./loaders/shopifyProductList.ts";
-import * as $9 from "./loaders/shopifyProductDetailsPage.ts";
-import * as $$0 from "./routes/inspect-vscode.ts";
-import * as $$1 from "./routes/404.tsx";
-import * as $$2 from "./routes/_middleware.ts";
-import * as $$$0 from "./islands/LiveControls.tsx";
-import * as $$$$$$0 from "./sections/SEO.tsx";
-import * as $$$$$$1 from "./sections/SEOPLP.tsx";
-import * as $$$$$$2 from "./sections/configOCC.global.tsx";
-import * as $$$$$$3 from "./sections/configShopify.global.tsx";
-import * as $$$$$$4 from "./sections/configVTEX.global.tsx";
-import * as $$$$$$5 from "./sections/SEOPDP.tsx";
+import * as $0 from "deco-sites/std/loaders/vtexProductListingPage.ts";
+import * as $1 from "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts";
+import * as $2 from "deco-sites/std/loaders/shopifyProductListingPage.ts";
+import * as $3 from "deco-sites/std/loaders/vtexProductList.ts";
+import * as $4 from "deco-sites/std/loaders/occProductDetailsPage.ts";
+import * as $5 from "deco-sites/std/loaders/vtexLegacyProductListingPage.ts";
+import * as $6 from "deco-sites/std/loaders/vtexProductDetailsPage.ts";
+import * as $7 from "deco-sites/std/loaders/vtexLegacyProductList.ts";
+import * as $8 from "deco-sites/std/loaders/shopifyProductList.ts";
+import * as $9 from "deco-sites/std/loaders/shopifyProductDetailsPage.ts";
+import * as $$0 from "deco-sites/std/routes/inspect-vscode.ts";
+import * as $$1 from "deco-sites/std/routes/404.tsx";
+import * as $$2 from "deco-sites/std/routes/_middleware.ts";
+import * as $$$0 from "deco-sites/std/islands/LiveControls.tsx";
+import * as $$$$$$0 from "deco-sites/std/sections/SEO.tsx";
+import * as $$$$$$1 from "deco-sites/std/sections/SEOPLP.tsx";
+import * as $$$$$$2 from "deco-sites/std/sections/configOCC.global.tsx";
+import * as $$$$$$3 from "deco-sites/std/sections/configShopify.global.tsx";
+import * as $$$$$$4 from "deco-sites/std/sections/configVTEX.global.tsx";
+import * as $$$$$$5 from "deco-sites/std/sections/SEOPDP.tsx";
 import { configurable } from "$live/engine/adapters/fresh/manifest.ts";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
-import * as $live$0 from "$live/handlers/routesSelection.ts";
-import * as $live$1 from "$live/handlers/router.ts";
-import * as $live$2 from "$live/handlers/fresh.ts";
-import * as $live$$0 from "$live/pages/LivePage.tsx";
-import * as $live$$$0 from "$live/sections/Head.tsx";
-import * as $live$$$$0 from "$live/matchers/MatchDate.ts";
-import * as $live$$$$1 from "$live/matchers/MatchUserAgent.ts";
-import * as $live$$$$2 from "$live/matchers/MatchSite.ts";
-import * as $live$$$$3 from "$live/matchers/MatchMulti.ts";
-import * as $live$$$$4 from "$live/matchers/MatchRandom.ts";
-import * as $live$$$$5 from "$live/matchers/MatchEnvironment.ts";
-import * as $live$$$$6 from "$live/matchers/MatchAlways.ts";
-import * as $live$$$$$0 from "$live/flags/audience.ts";
-import * as $live$$$$$1 from "$live/flags/everyone.ts";
+import * as i1$0 from "$live/handlers/routesSelection.ts";
+import * as i1$1 from "$live/handlers/router.ts";
+import * as i1$2 from "$live/handlers/fresh.ts";
+import * as i1$$0 from "$live/pages/LivePage.tsx";
+import * as i1$$$0 from "$live/sections/Head.tsx";
+import * as i1$$$$0 from "$live/matchers/MatchDate.ts";
+import * as i1$$$$1 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$$2 from "$live/matchers/MatchSite.ts";
+import * as i1$$$$3 from "$live/matchers/MatchMulti.ts";
+import * as i1$$$$4 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$$5 from "$live/matchers/MatchEnvironment.ts";
+import * as i1$$$$6 from "$live/matchers/MatchAlways.ts";
+import * as i1$$$$$0 from "$live/flags/audience.ts";
+import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
 const manifest = {
   "loaders": {
-    "./loaders/vtexProductListingPage.ts": $0,
-    "./loaders/vtexLegacyProductDetailsPage.ts": $1,
-    "./loaders/shopifyProductListingPage.ts": $2,
-    "./loaders/vtexProductList.ts": $3,
-    "./loaders/occProductDetailsPage.ts": $4,
-    "./loaders/vtexLegacyProductListingPage.ts": $5,
-    "./loaders/vtexProductDetailsPage.ts": $6,
-    "./loaders/vtexLegacyProductList.ts": $7,
-    "./loaders/shopifyProductList.ts": $8,
-    "./loaders/shopifyProductDetailsPage.ts": $9,
+    "deco-sites/std/loaders/vtexProductListingPage.ts": $0,
+    "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts": $1,
+    "deco-sites/std/loaders/shopifyProductListingPage.ts": $2,
+    "deco-sites/std/loaders/vtexProductList.ts": $3,
+    "deco-sites/std/loaders/occProductDetailsPage.ts": $4,
+    "deco-sites/std/loaders/vtexLegacyProductListingPage.ts": $5,
+    "deco-sites/std/loaders/vtexProductDetailsPage.ts": $6,
+    "deco-sites/std/loaders/vtexLegacyProductList.ts": $7,
+    "deco-sites/std/loaders/shopifyProductList.ts": $8,
+    "deco-sites/std/loaders/shopifyProductDetailsPage.ts": $9,
   },
   "routes": {
     "./routes/inspect-vscode.ts": $$0,
@@ -63,654 +63,671 @@ const manifest = {
     "./islands/LiveControls.tsx": $$$0,
   },
   "sections": {
-    "./sections/SEO.tsx": $$$$$$0,
-    "./sections/SEOPLP.tsx": $$$$$$1,
-    "./sections/configOCC.global.tsx": $$$$$$2,
-    "./sections/configShopify.global.tsx": $$$$$$3,
-    "./sections/configVTEX.global.tsx": $$$$$$4,
-    "./sections/SEOPDP.tsx": $$$$$$5,
-    "$live/sections/Head.tsx": $live$$$0,
+    "deco-sites/std/sections/SEO.tsx": $$$$$$0,
+    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$1,
+    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$2,
+    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$3,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$4,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$5,
+    "$live/sections/Head.tsx": i1$$$0,
   },
   "handlers": {
-    "$live/handlers/routesSelection.ts": $live$0,
-    "$live/handlers/router.ts": $live$1,
-    "$live/handlers/fresh.ts": $live$2,
+    "$live/handlers/routesSelection.ts": i1$0,
+    "$live/handlers/router.ts": i1$1,
+    "$live/handlers/fresh.ts": i1$2,
   },
   "pages": {
-    "$live/pages/LivePage.tsx": $live$$0,
+    "$live/pages/LivePage.tsx": i1$$0,
   },
   "matchers": {
-    "$live/matchers/MatchDate.ts": $live$$$$0,
-    "$live/matchers/MatchUserAgent.ts": $live$$$$1,
-    "$live/matchers/MatchSite.ts": $live$$$$2,
-    "$live/matchers/MatchMulti.ts": $live$$$$3,
-    "$live/matchers/MatchRandom.ts": $live$$$$4,
-    "$live/matchers/MatchEnvironment.ts": $live$$$$5,
-    "$live/matchers/MatchAlways.ts": $live$$$$6,
+    "$live/matchers/MatchDate.ts": i1$$$$0,
+    "$live/matchers/MatchUserAgent.ts": i1$$$$1,
+    "$live/matchers/MatchSite.ts": i1$$$$2,
+    "$live/matchers/MatchMulti.ts": i1$$$$3,
+    "$live/matchers/MatchRandom.ts": i1$$$$4,
+    "$live/matchers/MatchEnvironment.ts": i1$$$$5,
+    "$live/matchers/MatchAlways.ts": i1$$$$6,
   },
   "flags": {
-    "$live/flags/audience.ts": $live$$$$$0,
-    "$live/flags/everyone.ts": $live$$$$$1,
+    "$live/flags/audience.ts": i1$$$$$0,
+    "$live/flags/everyone.ts": i1$$$$$1,
   },
   "config": config,
   "baseUrl": import.meta.url,
   "schemas": {
     "definitions": {
-      ".": {
-        "loaders": {
-          "vtexProductListingPage.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "query": {
-                "title": "Query",
-                "type": ["string", "null"],
-                "description": "overides the query term",
+      "deco-sites": {
+        "std": {
+          "loaders": {
+            "vtexProductListingPage.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": ["string", "null"],
+                  "description": "overides the query term",
+                },
+                "count": {
+                  "title": "Items per page",
+                  "type": "number",
+                  "description": "number of products per page to display",
+                },
               },
-              "count": {
-                "title": "Items per page",
-                "type": "number",
-                "description": "number of products per page to display",
-              },
+              "required": ["count"],
+              "title": "deco-sites/std/loaders/vtexProductListingPage.ts@Props",
+              "$id": "deco-sites/std/loaders/vtexProductListingPage.ts@Props",
             },
-            "required": ["count"],
-            "title": "./loaders/vtexProductListingPage.ts@Props",
-            "$id": "./loaders/vtexProductListingPage.ts@Props",
-          },
-          "vtexProductListingPage.ts": {
-            "title": "./loaders/vtexProductListingPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./loaders/vtexProductListingPage.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexProductListingPage.ts",
+            "vtexProductListingPage.ts": {
+              "title": "deco-sites/std/loaders/vtexProductListingPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexProductListingPage.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/vtexProductListingPage.ts",
+                },
               },
+              "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "$id": "./loaders/vtexProductListingPage.ts",
-          },
-          "vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb":
-            {
+            "vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d":
+              {
+                "$id":
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d",
+              },
+            "vtexLegacyProductDetailsPage.ts": {
+              "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@b1b49dca-282e-43eb-8a2f-39deb4d7d77d",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default":
+                    "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
+            },
+            "shopifyProductListingPage.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": ["string", "null"],
+                  "description": "overides the query term",
+                },
+                "count": {
+                  "title": "Items per page",
+                  "type": "number",
+                  "description": "number of products per page to display",
+                },
+              },
+              "required": ["count"],
+              "title":
+                "deco-sites/std/loaders/shopifyProductListingPage.ts@Props",
               "$id":
-                "./loaders/vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb",
+                "deco-sites/std/loaders/shopifyProductListingPage.ts@Props",
             },
-          "vtexLegacyProductDetailsPage.ts": {
-            "title": "./loaders/vtexLegacyProductDetailsPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/vtexLegacyProductDetailsPage.ts@27ab7c90-6681-48d3-8882-41929825dadb",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexLegacyProductDetailsPage.ts",
+            "shopifyProductListingPage.ts": {
+              "title": "deco-sites/std/loaders/shopifyProductListingPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductListingPage.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default":
+                    "deco-sites/std/loaders/shopifyProductListingPage.ts",
+                },
               },
+              "$id": "deco-sites/std/loaders/shopifyProductListingPage.ts",
             },
-            "$id": "./loaders/vtexLegacyProductDetailsPage.ts",
+            "vtexProductList.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": "string",
+                  "description": "query to use on search",
+                },
+                "count": {
+                  "title": "Count",
+                  "type": "number",
+                  "description": "total number of items to display",
+                },
+                "sort": {
+                  "title": "Sort",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "description": "search sort parameter",
+                },
+                "collection": {
+                  "title": "Collection",
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description":
+                    "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
+                  "pattern": "\\d*",
+                },
+              },
+              "required": ["query", "count"],
+              "title": "deco-sites/std/loaders/vtexProductList.ts@Props",
+              "$id": "deco-sites/std/loaders/vtexProductList.ts@Props",
+            },
+            "vtexProductList.ts": {
+              "title": "deco-sites/std/loaders/vtexProductList.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexProductList.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/vtexProductList.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/vtexProductList.ts",
+            },
+            "occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad": {
+              "$id":
+                "deco-sites/std/loaders/occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad",
+            },
+            "occProductDetailsPage.ts": {
+              "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@f82191a8-1145-4f5a-a18f-6809a6c049ad",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/occProductDetailsPage.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/occProductDetailsPage.ts",
+            },
+            "vtexLegacyProductListingPage.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "term": {
+                  "title": "Term",
+                  "type": ["string", "null"],
+                  "description": "overides the query term",
+                },
+                "count": {
+                  "title": "Items per page",
+                  "type": "number",
+                  "description": "number of products per page to display",
+                },
+                "ft": {
+                  "title": "Ft",
+                  "type": ["string", "null"],
+                  "description": "FullText term",
+                },
+                "fq": { "title": "Fq", "type": ["string", "null"] },
+                "map": {
+                  "title": "Map",
+                  "type": ["string", "null"],
+                  "description": "map param",
+                },
+              },
+              "required": ["count"],
+              "title":
+                "deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
+              "$id":
+                "deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
+            },
+            "vtexLegacyProductListingPage.ts": {
+              "title": "deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default":
+                    "deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+            },
+            "vtexProductDetailsPage.ts": {
+              "title": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
+            },
+            "vtexLegacyProductList.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": "string",
+                  "description": "query to use on search",
+                },
+                "count": {
+                  "title": "Count",
+                  "type": "number",
+                  "description": "total number of items to display",
+                },
+                "sort": {
+                  "title": "Sort",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                  "description": "search sort parameter",
+                },
+                "collection": {
+                  "title": "Collection",
+                  "type": "array",
+                  "items": { "type": "string" },
+                  "description":
+                    "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
+                  "pattern": "\\d*",
+                },
+              },
+              "required": ["query", "count"],
+              "title": "deco-sites/std/loaders/vtexLegacyProductList.ts@Props",
+              "$id": "deco-sites/std/loaders/vtexLegacyProductList.ts@Props",
+            },
+            "vtexLegacyProductList.ts": {
+              "title": "deco-sites/std/loaders/vtexLegacyProductList.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductList.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/vtexLegacyProductList.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/vtexLegacyProductList.ts",
+            },
+            "shopifyProductList.ts@Props": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "query": {
+                  "title": "Query",
+                  "type": "string",
+                  "description": "search term to use on search",
+                },
+                "count": {
+                  "title": "Count",
+                  "type": "number",
+                  "description": "total number of items to display",
+                },
+              },
+              "required": ["query", "count"],
+              "title": "deco-sites/std/loaders/shopifyProductList.ts@Props",
+              "$id": "deco-sites/std/loaders/shopifyProductList.ts@Props",
+            },
+            "shopifyProductList.ts": {
+              "title": "deco-sites/std/loaders/shopifyProductList.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductList.ts@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/loaders/shopifyProductList.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/shopifyProductList.ts",
+            },
+            "shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315":
+              {
+                "$id":
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315",
+              },
+            "shopifyProductDetailsPage.ts": {
+              "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@1463c8c1-b50a-44ef-833f-850802bc9315",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default":
+                    "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
+                },
+              },
+              "$id": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
+            },
           },
-          "shopifyProductListingPage.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "query": {
-                "title": "Query",
-                "type": ["string", "null"],
-                "description": "overides the query term",
+          "unknown": {
+            "anyOf": [
+              { "type": "string", "const": "" },
+              { "type": "string", "const": "price:desc" },
+              { "type": "string", "const": "price:asc" },
+              { "type": "string", "const": "orders:desc" },
+              { "type": "string", "const": "name:desc" },
+              { "type": "string", "const": "name:asc" },
+              { "type": "string", "const": "release:desc" },
+              { "type": "string", "const": "discount:desc" },
+            ],
+            "$id": "deco-sites/std/unknown",
+          },
+          "islands": {
+            "LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d": {
+              "$id":
+                "deco-sites/std/islands/LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d",
+            },
+            "LiveControls.tsx": {
+              "title": "deco-sites/std/islands/LiveControls.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@997f4ade-7d99-490e-8bee-25fc1a53004d",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/islands/LiveControls.tsx",
+                },
               },
-              "count": {
-                "title": "Items per page",
-                "type": "number",
-                "description": "number of products per page to display",
+              "$id": "deco-sites/std/islands/LiveControls.tsx",
+            },
+          },
+          "components": {
+            "seo": {
+              "SEOBase.tsx@Props": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "title": { "title": "Title", "type": ["string", "null"] },
+                  "description": {
+                    "title": "Description",
+                    "type": ["string", "null"],
+                  },
+                  "url": { "title": "Url", "type": ["string", "null"] },
+                  "imageUrl": {
+                    "title": "Image Url",
+                    "type": ["string", "null"],
+                  },
+                  "themeColor": {
+                    "title": "Theme Color",
+                    "type": ["string", "null"],
+                  },
+                },
+                "required": [],
+                "title": "deco-sites/std/components/seo/SEOBase.tsx@Props",
+                "$id": "deco-sites/std/components/seo/SEOBase.tsx@Props",
+              },
+              "SEOPLP.tsx@Props": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "page": { "title": "Page" },
+                  "title": { "title": "Title", "type": ["string", "null"] },
+                  "description": {
+                    "title": "Description",
+                    "type": ["string", "null"],
+                  },
+                  "url": { "title": "Url", "type": ["string", "null"] },
+                  "imageUrl": {
+                    "title": "Image Url",
+                    "type": ["string", "null"],
+                  },
+                  "themeColor": {
+                    "title": "Theme Color",
+                    "type": ["string", "null"],
+                  },
+                },
+                "required": ["page"],
+                "title": "deco-sites/std/components/seo/SEOPLP.tsx@Props",
+                "$id": "deco-sites/std/components/seo/SEOPLP.tsx@Props",
+              },
+              "SEOPDP.tsx@Props": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "page": { "title": "Page" },
+                  "titleTemplate": {
+                    "title": "Title template",
+                    "type": "string",
+                    "description":
+                      "add a %s whenever you want it to be replaced with the product name",
+                    "default": "%s | Fashion Store",
+                  },
+                  "description": {
+                    "title": "Meta tag description",
+                    "type": ["string", "null"],
+                    "description":
+                      "If not set, the product description will be used instead",
+                  },
+                  "themeColor": {
+                    "title": "Theme Color",
+                    "type": ["string", "null"],
+                  },
+                },
+                "required": ["page", "titleTemplate"],
+                "title": "deco-sites/std/components/seo/SEOPDP.tsx@Props",
+                "$id": "deco-sites/std/components/seo/SEOPDP.tsx@Props",
               },
             },
-            "required": ["count"],
-            "title": "./loaders/shopifyProductListingPage.ts@Props",
-            "$id": "./loaders/shopifyProductListingPage.ts@Props",
           },
-          "shopifyProductListingPage.ts": {
-            "title": "./loaders/shopifyProductListingPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/shopifyProductListingPage.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/shopifyProductListingPage.ts",
+          "sections": {
+            "SEO.tsx": {
+              "title": "deco-sites/std/sections/SEO.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/components/seo/SEOBase.tsx@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/SEO.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/SEO.tsx",
+            },
+            "SEOPLP.tsx": {
+              "title": "deco-sites/std/sections/SEOPLP.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/components/seo/SEOPLP.tsx@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/SEOPLP.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/SEOPLP.tsx",
+            },
+            "configOCC.global.tsx": {
+              "title": "deco-sites/std/sections/configOCC.global.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/occ/client.ts@ConfigOCC",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/configOCC.global.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/configOCC.global.tsx",
+            },
+            "configShopify.global.tsx": {
+              "title": "deco-sites/std/sections/configShopify.global.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/configShopify.global.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/configShopify.global.tsx",
+            },
+            "configVTEX.global.tsx": {
+              "title": "deco-sites/std/sections/configVTEX.global.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/configVTEX.global.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/configVTEX.global.tsx",
+            },
+            "SEOPDP.tsx": {
+              "title": "deco-sites/std/sections/SEOPDP.tsx",
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/components/seo/SEOPDP.tsx@Props",
+              }],
+              "required": ["__resolveType"],
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "default": "deco-sites/std/sections/SEOPDP.tsx",
+                },
+              },
+              "$id": "deco-sites/std/sections/SEOPDP.tsx",
+            },
+          },
+          "commerce": {
+            "occ": {
+              "client.ts@ConfigOCC": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "baseUrl": { "title": "Base Url", "type": "string" },
+                  "nrpp": { "title": "Nrpp", "type": ["string", "null"] },
+                },
+                "required": ["baseUrl"],
+                "title": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
+                "$id": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
               },
             },
-            "$id": "./loaders/shopifyProductListingPage.ts",
-          },
-          "vtexProductList.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "query": {
-                "title": "Query",
-                "type": "string",
-                "description": "query to use on search",
+            "shopify": {
+              "client.ts@ConfigShopify": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "storeName": {
+                    "title": "Store Name",
+                    "type": "string",
+                    "description": "Shopify store name.",
+                  },
+                  "storefrontAccessToken": {
+                    "title": "Storefront Access Token",
+                    "type": "string",
+                    "description": "Shopify storefront access token.",
+                  },
+                },
+                "required": ["storeName", "storefrontAccessToken"],
+                "title":
+                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
+                "$id":
+                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
               },
-              "count": {
-                "title": "Count",
-                "type": "number",
-                "description": "total number of items to display",
-              },
-              "sort": {
-                "title": "Sort",
-                "anyOf": [
-                  { "type": "string", "const": "" },
-                  { "type": "string", "const": "price:desc" },
-                  { "type": "string", "const": "price:asc" },
-                  { "type": "string", "const": "orders:desc" },
-                  { "type": "string", "const": "name:desc" },
-                  { "type": "string", "const": "name:asc" },
-                  { "type": "string", "const": "release:desc" },
-                  { "type": "string", "const": "discount:desc" },
+            },
+            "vtex": {
+              "client.ts@ConfigVTEX": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "account": {
+                    "title": "Account",
+                    "type": "string",
+                    "description":
+                      "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
+                  },
+                  "defaultLocale": {
+                    "title": "Default Locale",
+                    "type": "string",
+                    "description":
+                      "Locale used for VTEX Intelligent Search client.",
+                  },
+                  "defaultPriceCurrency": {
+                    "title": "Default Price Currency",
+                    "type": "string",
+                    "description": "Default price currency.",
+                    "default": "USD",
+                  },
+                  "defaultSalesChannel": {
+                    "title": "Default Sales Channel",
+                    "type": "string",
+                    "description":
+                      "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
+                  },
+                  "defaultRegionId": {
+                    "title": "Default Region Id",
+                    "type": ["string", "null"],
+                  },
+                  "defaultHideUnnavailableItems": {
+                    "title": "Default Hide Unnavailable Items",
+                    "type": ["boolean", "null"],
+                  },
+                },
+                "required": [
+                  "account",
+                  "defaultLocale",
+                  "defaultPriceCurrency",
+                  "defaultSalesChannel",
                 ],
-                "description": "search sort parameter",
+                "title": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
+                "$id": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
               },
-              "collection": {
-                "title": "Collection",
-                "type": "array",
-                "items": { "type": "string" },
-                "description":
-                  "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
-                "pattern": "\\d*",
-              },
-            },
-            "required": ["query", "count"],
-            "title": "./loaders/vtexProductList.ts@Props",
-            "$id": "./loaders/vtexProductList.ts@Props",
-          },
-          "vtexProductList.ts": {
-            "title": "./loaders/vtexProductList.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./loaders/vtexProductList.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexProductList.ts",
-              },
-            },
-            "$id": "./loaders/vtexProductList.ts",
-          },
-          "occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648": {
-            "$id":
-              "./loaders/occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648",
-          },
-          "occProductDetailsPage.ts": {
-            "title": "./loaders/occProductDetailsPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/occProductDetailsPage.ts@6a5f2518-b2f0-4235-8879-622c09889648",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/occProductDetailsPage.ts",
-              },
-            },
-            "$id": "./loaders/occProductDetailsPage.ts",
-          },
-          "vtexLegacyProductListingPage.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "term": {
-                "title": "Term",
-                "type": ["string", "null"],
-                "description": "overides the query term",
-              },
-              "count": {
-                "title": "Items per page",
-                "type": "number",
-                "description": "number of products per page to display",
-              },
-              "ft": {
-                "title": "Ft",
-                "type": ["string", "null"],
-                "description": "FullText term",
-              },
-              "fq": { "title": "Fq", "type": ["string", "null"] },
-              "map": {
-                "title": "Map",
-                "type": ["string", "null"],
-                "description": "map param",
-              },
-            },
-            "required": ["count"],
-            "title": "./loaders/vtexLegacyProductListingPage.ts@Props",
-            "$id": "./loaders/vtexLegacyProductListingPage.ts@Props",
-          },
-          "vtexLegacyProductListingPage.ts": {
-            "title": "./loaders/vtexLegacyProductListingPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/vtexLegacyProductListingPage.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexLegacyProductListingPage.ts",
-              },
-            },
-            "$id": "./loaders/vtexLegacyProductListingPage.ts",
-          },
-          "vtexProductDetailsPage.ts": {
-            "title": "./loaders/vtexProductDetailsPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/vtexLegacyProductListingPage.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexProductDetailsPage.ts",
-              },
-            },
-            "$id": "./loaders/vtexProductDetailsPage.ts",
-          },
-          "vtexLegacyProductList.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "query": {
-                "title": "Query",
-                "type": "string",
-                "description": "query to use on search",
-              },
-              "count": {
-                "title": "Count",
-                "type": "number",
-                "description": "total number of items to display",
-              },
-              "sort": {
-                "title": "Sort",
-                "anyOf": [
-                  { "type": "string", "const": "" },
-                  { "type": "string", "const": "price:desc" },
-                  { "type": "string", "const": "price:asc" },
-                  { "type": "string", "const": "orders:desc" },
-                  { "type": "string", "const": "name:desc" },
-                  { "type": "string", "const": "name:asc" },
-                  { "type": "string", "const": "release:desc" },
-                  { "type": "string", "const": "discount:desc" },
-                ],
-                "description": "search sort parameter",
-              },
-              "collection": {
-                "title": "Collection",
-                "type": "array",
-                "items": { "type": "string" },
-                "description":
-                  "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
-                "pattern": "\\d*",
-              },
-            },
-            "required": ["query", "count"],
-            "title": "./loaders/vtexLegacyProductList.ts@Props",
-            "$id": "./loaders/vtexLegacyProductList.ts@Props",
-          },
-          "vtexLegacyProductList.ts": {
-            "title": "./loaders/vtexLegacyProductList.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./loaders/vtexLegacyProductList.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/vtexLegacyProductList.ts",
-              },
-            },
-            "$id": "./loaders/vtexLegacyProductList.ts",
-          },
-          "shopifyProductList.ts@Props": {
-            "type": "object",
-            "allOf": [],
-            "properties": {
-              "query": {
-                "title": "Query",
-                "type": "string",
-                "description": "search term to use on search",
-              },
-              "count": {
-                "title": "Count",
-                "type": "number",
-                "description": "total number of items to display",
-              },
-            },
-            "required": ["query", "count"],
-            "title": "./loaders/shopifyProductList.ts@Props",
-            "$id": "./loaders/shopifyProductList.ts@Props",
-          },
-          "shopifyProductList.ts": {
-            "title": "./loaders/shopifyProductList.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./loaders/shopifyProductList.ts@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/shopifyProductList.ts",
-              },
-            },
-            "$id": "./loaders/shopifyProductList.ts",
-          },
-          "shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07": {
-            "$id":
-              "./loaders/shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07",
-          },
-          "shopifyProductDetailsPage.ts": {
-            "title": "./loaders/shopifyProductDetailsPage.ts",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./loaders/shopifyProductDetailsPage.ts@57ccc203-8e38-43d4-9b0a-d5b3c540af07",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./loaders/shopifyProductDetailsPage.ts",
-              },
-            },
-            "$id": "./loaders/shopifyProductDetailsPage.ts",
-          },
-        },
-        "islands": {
-          "LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61": {
-            "$id":
-              "./islands/LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61",
-          },
-          "LiveControls.tsx": {
-            "title": "./islands/LiveControls.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./islands/LiveControls.tsx@2d068051-c887-4f98-9d09-670408f3db61",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./islands/LiveControls.tsx",
-              },
-            },
-            "$id": "./islands/LiveControls.tsx",
-          },
-        },
-        "components": {
-          "seo": {
-            "SEOBase.tsx@Props": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "title": { "title": "Title", "type": ["string", "null"] },
-                "description": {
-                  "title": "Description",
-                  "type": ["string", "null"],
-                },
-                "url": { "title": "Url", "type": ["string", "null"] },
-                "imageUrl": {
-                  "title": "Image Url",
-                  "type": ["string", "null"],
-                },
-                "themeColor": {
-                  "title": "Theme Color",
-                  "type": ["string", "null"],
-                },
-              },
-              "required": [],
-              "title": "./components/seo/SEOBase.tsx@Props",
-              "$id": "./components/seo/SEOBase.tsx@Props",
-            },
-            "SEOPLP.tsx@Props": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "page": { "title": "Page" },
-                "title": { "title": "Title", "type": ["string", "null"] },
-                "description": {
-                  "title": "Description",
-                  "type": ["string", "null"],
-                },
-                "url": { "title": "Url", "type": ["string", "null"] },
-                "imageUrl": {
-                  "title": "Image Url",
-                  "type": ["string", "null"],
-                },
-                "themeColor": {
-                  "title": "Theme Color",
-                  "type": ["string", "null"],
-                },
-              },
-              "required": ["page"],
-              "title": "./components/seo/SEOPLP.tsx@Props",
-              "$id": "./components/seo/SEOPLP.tsx@Props",
-            },
-            "SEOPDP.tsx@Props": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "page": { "title": "Page" },
-                "titleTemplate": {
-                  "title": "Title template",
-                  "type": "string",
-                  "description":
-                    "add a %s whenever you want it to be replaced with the product name",
-                  "default": "%s | Fashion Store",
-                },
-                "description": {
-                  "title": "Meta tag description",
-                  "type": ["string", "null"],
-                  "description":
-                    "If not set, the product description will be used instead",
-                },
-                "themeColor": {
-                  "title": "Theme Color",
-                  "type": ["string", "null"],
-                },
-              },
-              "required": ["page", "titleTemplate"],
-              "title": "./components/seo/SEOPDP.tsx@Props",
-              "$id": "./components/seo/SEOPDP.tsx@Props",
-            },
-          },
-        },
-        "sections": {
-          "SEO.tsx": {
-            "title": "./sections/SEO.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./components/seo/SEOBase.tsx@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/SEO.tsx",
-              },
-            },
-            "$id": "./sections/SEO.tsx",
-          },
-          "SEOPLP.tsx": {
-            "title": "./sections/SEOPLP.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./components/seo/SEOPLP.tsx@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/SEOPLP.tsx",
-              },
-            },
-            "$id": "./sections/SEOPLP.tsx",
-          },
-          "configOCC.global.tsx": {
-            "title": "./sections/configOCC.global.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./commerce/occ/client.ts@ConfigOCC",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/configOCC.global.tsx",
-              },
-            },
-            "$id": "./sections/configOCC.global.tsx",
-          },
-          "configShopify.global.tsx": {
-            "title": "./sections/configShopify.global.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref":
-                "#/definitions/./commerce/shopify/client.ts@ConfigShopify",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/configShopify.global.tsx",
-              },
-            },
-            "$id": "./sections/configShopify.global.tsx",
-          },
-          "configVTEX.global.tsx": {
-            "title": "./sections/configVTEX.global.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./commerce/vtex/client.ts@ConfigVTEX",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/configVTEX.global.tsx",
-              },
-            },
-            "$id": "./sections/configVTEX.global.tsx",
-          },
-          "SEOPDP.tsx": {
-            "title": "./sections/SEOPDP.tsx",
-            "type": "object",
-            "allOf": [{
-              "$ref": "#/definitions/./components/seo/SEOPDP.tsx@Props",
-            }],
-            "required": ["__resolveType"],
-            "properties": {
-              "__resolveType": {
-                "type": "string",
-                "default": "./sections/SEOPDP.tsx",
-              },
-            },
-            "$id": "./sections/SEOPDP.tsx",
-          },
-        },
-        "commerce": {
-          "occ": {
-            "client.ts@ConfigOCC": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "baseUrl": { "title": "Base Url", "type": "string" },
-                "nrpp": { "title": "Nrpp", "type": ["string", "null"] },
-              },
-              "required": ["baseUrl"],
-              "title": "./commerce/occ/client.ts@ConfigOCC",
-              "$id": "./commerce/occ/client.ts@ConfigOCC",
-            },
-          },
-          "shopify": {
-            "client.ts@ConfigShopify": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "storeName": {
-                  "title": "Store Name",
-                  "type": "string",
-                  "description": "Shopify store name.",
-                },
-                "storefrontAccessToken": {
-                  "title": "Storefront Access Token",
-                  "type": "string",
-                  "description": "Shopify storefront access token.",
-                },
-              },
-              "required": ["storeName", "storefrontAccessToken"],
-              "title": "./commerce/shopify/client.ts@ConfigShopify",
-              "$id": "./commerce/shopify/client.ts@ConfigShopify",
-            },
-          },
-          "vtex": {
-            "client.ts@ConfigVTEX": {
-              "type": "object",
-              "allOf": [],
-              "properties": {
-                "account": {
-                  "title": "Account",
-                  "type": "string",
-                  "description":
-                    "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
-                },
-                "defaultLocale": {
-                  "title": "Default Locale",
-                  "type": "string",
-                  "description":
-                    "Locale used for VTEX Intelligent Search client.",
-                },
-                "defaultPriceCurrency": {
-                  "title": "Default Price Currency",
-                  "type": "string",
-                  "description": "Default price currency.",
-                  "default": "USD",
-                },
-                "defaultSalesChannel": {
-                  "title": "Default Sales Channel",
-                  "type": "string",
-                  "description":
-                    "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
-                },
-                "defaultRegionId": {
-                  "title": "Default Region Id",
-                  "type": ["string", "null"],
-                },
-                "defaultHideUnnavailableItems": {
-                  "title": "Default Hide Unnavailable Items",
-                  "type": ["boolean", "null"],
-                },
-              },
-              "required": [
-                "account",
-                "defaultLocale",
-                "defaultPriceCurrency",
-                "defaultSalesChannel",
-              ],
-              "title": "./commerce/vtex/client.ts@ConfigVTEX",
-              "$id": "./commerce/vtex/client.ts@ConfigVTEX",
             },
           },
         },
@@ -1002,13 +1019,7 @@ const manifest = {
             "type": "object",
             "allOf": [],
             "properties": {
-              "op": {
-                "title": "Op",
-                "anyOf": [{ "type": "string", "const": "or" }, {
-                  "type": "string",
-                  "const": "and",
-                }],
-              },
+              "op": { "title": "Op", "$ref": "#/definitions/$live/unknown" },
               "matchers": {
                 "title": "Matchers",
                 "type": "array",
@@ -1065,10 +1076,7 @@ const manifest = {
             "properties": {
               "environment": {
                 "title": "Environment",
-                "anyOf": [{ "type": "string", "const": "production" }, {
-                  "type": "string",
-                  "const": "development",
-                }],
+                "$ref": "#/definitions/$live/unknown",
               },
             },
             "required": ["environment"],
@@ -1103,6 +1111,13 @@ const manifest = {
             },
             "$id": "$live/matchers/MatchAlways.ts",
           },
+        },
+        "unknown": {
+          "anyOf": [{ "type": "string", "const": "or" }, {
+            "type": "string",
+            "const": "and",
+          }],
+          "$id": "$live/unknown",
         },
         "record<string, string>": {
           "title": "Unknown record",
@@ -1183,32 +1198,60 @@ const manifest = {
     "root": {
       "loaders": {
         "title": "loaders",
-        "anyOf": [
-          { "$ref": "#/definitions/./loaders/vtexProductListingPage.ts" },
-          { "$ref": "#/definitions/./loaders/vtexLegacyProductDetailsPage.ts" },
-          { "$ref": "#/definitions/./loaders/shopifyProductListingPage.ts" },
-          { "$ref": "#/definitions/./loaders/vtexProductList.ts" },
-          { "$ref": "#/definitions/./loaders/occProductDetailsPage.ts" },
-          { "$ref": "#/definitions/./loaders/vtexLegacyProductListingPage.ts" },
-          { "$ref": "#/definitions/./loaders/vtexProductDetailsPage.ts" },
-          { "$ref": "#/definitions/./loaders/vtexLegacyProductList.ts" },
-          { "$ref": "#/definitions/./loaders/shopifyProductList.ts" },
-          { "$ref": "#/definitions/./loaders/shopifyProductDetailsPage.ts" },
-        ],
+        "anyOf": [{
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/vtexProductListingPage.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/shopifyProductListingPage.ts",
+        }, {
+          "$ref": "#/definitions/deco-sites/std/loaders/vtexProductList.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/vtexProductDetailsPage.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/vtexLegacyProductList.ts",
+        }, {
+          "$ref": "#/definitions/deco-sites/std/loaders/shopifyProductList.ts",
+        }, {
+          "$ref":
+            "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts",
+        }],
       },
       "islands": {
         "title": "islands",
-        "anyOf": [{ "$ref": "#/definitions/./islands/LiveControls.tsx" }],
+        "anyOf": [{
+          "$ref": "#/definitions/deco-sites/std/islands/LiveControls.tsx",
+        }],
       },
       "sections": {
         "title": "sections",
         "anyOf": [
-          { "$ref": "#/definitions/./sections/SEO.tsx" },
-          { "$ref": "#/definitions/./sections/SEOPLP.tsx" },
-          { "$ref": "#/definitions/./sections/configOCC.global.tsx" },
-          { "$ref": "#/definitions/./sections/configShopify.global.tsx" },
-          { "$ref": "#/definitions/./sections/configVTEX.global.tsx" },
-          { "$ref": "#/definitions/./sections/SEOPDP.tsx" },
+          { "$ref": "#/definitions/deco-sites/std/sections/SEO.tsx" },
+          { "$ref": "#/definitions/deco-sites/std/sections/SEOPLP.tsx" },
+          {
+            "$ref":
+              "#/definitions/deco-sites/std/sections/configOCC.global.tsx",
+          },
+          {
+            "$ref":
+              "#/definitions/deco-sites/std/sections/configShopify.global.tsx",
+          },
+          {
+            "$ref":
+              "#/definitions/deco-sites/std/sections/configVTEX.global.tsx",
+          },
+          { "$ref": "#/definitions/deco-sites/std/sections/SEOPDP.tsx" },
           { "$ref": "#/definitions/$live/sections/Head.tsx" },
         ],
       },
@@ -1250,9 +1293,9 @@ const manifest = {
       },
       "state": {
         "type": "object",
-        "required": ["./routes/[...catchall].tsx"],
+        "required": ["$live/routes/[...catchall].tsx"],
         "properties": {
-          "./routes/[...catchall].tsx": {
+          "$live/routes/[...catchall].tsx": {
             "$ref": "#/definitions/$live/routes/[...catchall].tsx@Entrypoint",
           },
         },
