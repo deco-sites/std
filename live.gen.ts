@@ -134,17 +134,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductListingPage.ts",
             },
-            "vtexLegacyProductDetailsPage.ts@8c8a4fb1-32fe-489f-af79-a61db06c92dd":
+            "vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4":
               {
                 "$id":
-                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@8c8a4fb1-32fe-489f-af79-a61db06c92dd",
+                  "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4",
               },
             "vtexLegacyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@8c8a4fb1-32fe-489f-af79-a61db06c92dd",
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@2a82bb38-f457-4f20-9fc0-39af3f6530d4",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -242,16 +242,16 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/vtexProductList.ts",
             },
-            "occProductDetailsPage.ts@b40a64de-e488-4c07-a5da-628144c985d4": {
+            "occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a": {
               "$id":
-                "deco-sites/std/loaders/occProductDetailsPage.ts@b40a64de-e488-4c07-a5da-628144c985d4",
+                "deco-sites/std/loaders/occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a",
             },
             "occProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@b40a64de-e488-4c07-a5da-628144c985d4",
+                  "#/definitions/deco-sites/std/loaders/occProductDetailsPage.ts@da52d160-561b-4690-8995-336d0adc250a",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -410,17 +410,17 @@ const manifest = {
               },
               "$id": "deco-sites/std/loaders/shopifyProductList.ts",
             },
-            "shopifyProductDetailsPage.ts@a8cb702d-18a4-405b-8d72-e8101532c6c8":
+            "shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9":
               {
                 "$id":
-                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@a8cb702d-18a4-405b-8d72-e8101532c6c8",
+                  "deco-sites/std/loaders/shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9",
               },
             "shopifyProductDetailsPage.ts": {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@a8cb702d-18a4-405b-8d72-e8101532c6c8",
+                  "#/definitions/deco-sites/std/loaders/shopifyProductDetailsPage.ts@30b27b32-fe24-4b30-806f-a4daf42e26f9",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -433,30 +433,667 @@ const manifest = {
               "$id": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
             },
           },
+          "commerce": {
+            "types.ts@BreadcrumbList": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "BreadcrumbList",
+                },
+              },
+              "required": ["@type"],
+              "title": "deco-sites/std/commerce/types.ts@BreadcrumbList",
+              "$id": "deco-sites/std/commerce/types.ts@BreadcrumbList",
+            },
+            "types.ts@FilterBase": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "label": { "title": "Label", "type": "string" },
+                "key": { "title": "Key", "type": "string" },
+              },
+              "required": ["label", "key"],
+              "title": "deco-sites/std/commerce/types.ts@FilterBase",
+              "$id": "deco-sites/std/commerce/types.ts@FilterBase",
+            },
+            "types.ts@FilterToggleValue": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "quantity": { "title": "Quantity", "type": "number" },
+                "label": { "title": "Label", "type": "string" },
+                "value": { "title": "Value", "type": "string" },
+                "selected": { "title": "Selected", "type": "boolean" },
+                "url": { "title": "Url", "type": "string" },
+              },
+              "required": ["quantity", "label", "value", "selected", "url"],
+              "title": "deco-sites/std/commerce/types.ts@FilterToggleValue",
+              "$id": "deco-sites/std/commerce/types.ts@FilterToggleValue",
+            },
+            "types.ts@FilterToggleValue[]": {
+              "type": "array",
+              "items": {
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@FilterToggleValue",
+              },
+              "$id": "deco-sites/std/commerce/types.ts@FilterToggleValue[]",
+            },
+            "types.ts@FilterToggle": {
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@FilterBase",
+              }],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "FilterToggle",
+                },
+                "values": {
+                  "title": "Values",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@FilterToggleValue[]",
+                },
+                "quantity": { "title": "Quantity", "type": "number" },
+              },
+              "required": ["@type", "values", "quantity"],
+              "title": "deco-sites/std/commerce/types.ts@FilterToggle",
+              "$id": "deco-sites/std/commerce/types.ts@FilterToggle",
+            },
+            "types.ts@FilterRangeValue": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "min": { "title": "Min", "type": "number" },
+                "max": { "title": "Max", "type": "number" },
+              },
+              "required": ["min", "max"],
+              "title": "deco-sites/std/commerce/types.ts@FilterRangeValue",
+              "$id": "deco-sites/std/commerce/types.ts@FilterRangeValue",
+            },
+            "types.ts@FilterRange": {
+              "type": "object",
+              "allOf": [{
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@FilterBase",
+              }],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "FilterRange",
+                },
+                "values": {
+                  "title": "Values",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@FilterRangeValue",
+                },
+              },
+              "required": ["@type", "values"],
+              "title": "deco-sites/std/commerce/types.ts@FilterRange",
+              "$id": "deco-sites/std/commerce/types.ts@FilterRange",
+            },
+            "types.ts@FilterRange|deco-sites": {
+              "std": {
+                "commerce": {
+                  "types.ts@FilterToggle": {
+                    "anyOf": [{
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@FilterToggle",
+                    }, {
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@FilterRange",
+                    }],
+                    "$id":
+                      "deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle",
+                  },
+                  "types.ts@FilterToggle[]": {
+                    "type": "array",
+                    "items": {
+                      "$ref":
+                        "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle",
+                    },
+                    "$id":
+                      "deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
+                  },
+                },
+              },
+            },
+            "types.ts@PropertyValue": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "PropertyValue",
+                },
+                "maxValue": {
+                  "title": "Max Value",
+                  "type": ["number", "null"],
+                },
+                "minValue": {
+                  "title": "Min Value",
+                  "type": ["number", "null"],
+                },
+                "propertyID": {
+                  "title": "Property I D",
+                  "type": ["string", "null"],
+                },
+                "unitCode": {
+                  "title": "Unit Code",
+                  "type": ["string", "null"],
+                },
+                "unitText": {
+                  "title": "Unit Text",
+                  "type": ["string", "null"],
+                },
+                "value": { "title": "Value", "type": ["string", "null"] },
+                "valueReference": {
+                  "title": "Value Reference",
+                  "type": ["string", "null"],
+                },
+              },
+              "required": ["@type"],
+              "title": "deco-sites/std/commerce/types.ts@PropertyValue",
+              "$id": "deco-sites/std/commerce/types.ts@PropertyValue",
+            },
+            "types.ts@PropertyValue[]": {
+              "type": "array",
+              "items": {
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue",
+              },
+              "$id": "deco-sites/std/commerce/types.ts@PropertyValue[]",
+            },
+            "types.ts@AggregateRating": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "AggregateRating",
+                },
+                "ratingCount": {
+                  "title": "Rating Count",
+                  "type": ["number", "null"],
+                },
+                "reviewCount": {
+                  "title": "Review Count",
+                  "type": ["number", "null"],
+                },
+              },
+              "required": ["@type"],
+              "title": "deco-sites/std/commerce/types.ts@AggregateRating",
+              "$id": "deco-sites/std/commerce/types.ts@AggregateRating",
+            },
+            "types.ts@ProductLeaf": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {},
+              "required": [],
+              "title": "deco-sites/std/commerce/types.ts@ProductLeaf",
+              "$id": "deco-sites/std/commerce/types.ts@ProductLeaf",
+            },
+            "types.ts@ProductLeaf[]": {
+              "type": "array",
+              "items": {
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@ProductLeaf",
+              },
+              "$id": "deco-sites/std/commerce/types.ts@ProductLeaf[]",
+            },
+            "types.ts@ProductGroup": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "ProductGroup",
+                },
+                "hasVariant": {
+                  "title": "Has Variant",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@ProductLeaf[]",
+                },
+                "productGroupID": {
+                  "title": "Product Group I D",
+                  "type": "string",
+                },
+                "additionalProperty": {
+                  "title": "Additional Property",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue[]",
+                },
+                "model": {
+                  "title": "Model",
+                  "type": ["string", "null"],
+                  "docs": "https://schema.org/gtin",
+                },
+              },
+              "required": [
+                "@type",
+                "hasVariant",
+                "productGroupID",
+                "additionalProperty",
+              ],
+              "title": "deco-sites/std/commerce/types.ts@ProductGroup",
+              "$id": "deco-sites/std/commerce/types.ts@ProductGroup",
+            },
+            "types.ts@QuantitativeValue": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "value": { "title": "Value", "type": ["number", "null"] },
+              },
+              "required": [],
+              "title": "deco-sites/std/commerce/types.ts@QuantitativeValue",
+              "$id": "deco-sites/std/commerce/types.ts@QuantitativeValue",
+            },
+            "types.ts@UnitPriceSpecification": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "UnitPriceSpecification",
+                },
+                "priceComponentType": {
+                  "title": "Price Component Type",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                },
+                "priceType": {
+                  "title": "Price Type",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                },
+                "billingDuration": {
+                  "title": "Billing Duration",
+                  "type": ["number", "null"],
+                },
+                "billingIncrement": {
+                  "title": "Billing Increment",
+                  "type": ["number", "null"],
+                },
+              },
+              "required": ["@type", "priceType"],
+              "title":
+                "deco-sites/std/commerce/types.ts@UnitPriceSpecification",
+              "$id": "deco-sites/std/commerce/types.ts@UnitPriceSpecification",
+            },
+            "types.ts@UnitPriceSpecification[]": {
+              "type": "array",
+              "items": {
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@UnitPriceSpecification",
+              },
+              "$id":
+                "deco-sites/std/commerce/types.ts@UnitPriceSpecification[]",
+            },
+            "types.ts@Offer": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "Offer",
+                },
+                "availability": {
+                  "title": "Availability",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                },
+                "gtin": { "title": "Gtin", "type": ["string", "null"] },
+                "inventoryLevel": {
+                  "title": "Inventory Level",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@QuantitativeValue",
+                },
+                "itemCondition": {
+                  "title": "Item Condition",
+                  "$ref": "#/definitions/deco-sites/std/unknown",
+                },
+                "price": { "title": "Price", "type": "number" },
+                "priceSpecification": {
+                  "title": "Price Specification",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@UnitPriceSpecification[]",
+                },
+                "priceValidUntil": {
+                  "title": "Price Valid Until",
+                  "type": ["string", "null"],
+                },
+                "seller": { "title": "Seller", "type": ["string", "null"] },
+                "sku": { "title": "Sku", "type": ["string", "null"] },
+              },
+              "required": [
+                "@type",
+                "availability",
+                "inventoryLevel",
+                "price",
+                "priceSpecification",
+              ],
+              "title": "deco-sites/std/commerce/types.ts@Offer",
+              "$id": "deco-sites/std/commerce/types.ts@Offer",
+            },
+            "types.ts@Offer[]": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/deco-sites/std/commerce/types.ts@Offer",
+              },
+              "$id": "deco-sites/std/commerce/types.ts@Offer[]",
+            },
+            "types.ts@AggregateOffer": {
+              "type": "object",
+              "allOf": [],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "AggregateOffer",
+                },
+                "highPrice": { "title": "High Price", "type": "number" },
+                "lowPrice": { "title": "Low Price", "type": "number" },
+                "offerCount": { "title": "Offer Count", "type": "number" },
+                "offers": {
+                  "title": "Offers",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@Offer[]",
+                },
+                "priceCurrency": {
+                  "title": "Price Currency",
+                  "type": ["string", "null"],
+                },
+              },
+              "required": [
+                "@type",
+                "highPrice",
+                "lowPrice",
+                "offerCount",
+                "offers",
+              ],
+              "title": "deco-sites/std/commerce/types.ts@AggregateOffer",
+              "$id": "deco-sites/std/commerce/types.ts@AggregateOffer",
+            },
+            "types.ts@Review": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "Review",
+                },
+                "itemReviewed": {
+                  "title": "Item Reviewed",
+                  "type": ["string", "null"],
+                },
+                "negativeNotes": {
+                  "title": "Negative Notes",
+                  "type": "array",
+                  "items": { "type": "string" },
+                },
+                "positiveNotes": {
+                  "title": "Positive Notes",
+                  "type": "array",
+                  "items": { "type": "string" },
+                },
+                "reviewAspect": {
+                  "title": "Review Aspect",
+                  "type": ["string", "null"],
+                },
+                "reviewBody": {
+                  "title": "Review Body",
+                  "type": ["string", "null"],
+                },
+                "reviewRating": {
+                  "title": "Review Rating",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@AggregateRating",
+                },
+              },
+              "required": ["@type"],
+              "title": "deco-sites/std/commerce/types.ts@Review",
+              "$id": "deco-sites/std/commerce/types.ts@Review",
+            },
+            "types.ts@Product": {
+              "type": "object",
+              "allOf": [{}],
+              "properties": {
+                "@type": {
+                  "title": "@type",
+                  "type": "string",
+                  "const": "Product",
+                },
+                "additionalProperty": {
+                  "title": "Additional Property",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@PropertyValue[]",
+                },
+                "aggregateRating": {
+                  "title": "Aggregate Rating",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@AggregateRating",
+                },
+                "award": { "title": "Award", "type": ["string", "null"] },
+                "brand": { "title": "Brand", "type": ["string", "null"] },
+                "category": { "title": "Category", "type": ["string", "null"] },
+                "gtin": { "title": "Gtin", "type": ["string", "null"] },
+                "inProductGroupWithID": {
+                  "title": "In Product Group With I D",
+                  "type": ["string", "null"],
+                },
+                "isVariantOf": {
+                  "title": "Is Variant Of",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@ProductGroup",
+                },
+                "offers": {
+                  "title": "Offers",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@AggregateOffer",
+                },
+                "productID": { "title": "Product I D", "type": "string" },
+                "productionDate": {
+                  "title": "Production Date",
+                  "type": ["string", "null"],
+                },
+                "releaseDate": {
+                  "title": "Release Date",
+                  "type": ["string", "null"],
+                },
+                "review": {
+                  "title": "Review",
+                  "$ref":
+                    "#/definitions/deco-sites/std/commerce/types.ts@Review",
+                },
+                "sku": { "title": "Sku", "type": "string" },
+              },
+              "required": ["@type", "productID", "sku"],
+              "title": "deco-sites/std/commerce/types.ts@Product",
+              "$id": "deco-sites/std/commerce/types.ts@Product",
+            },
+            "types.ts@Product[]": {
+              "type": "array",
+              "items": {
+                "$ref":
+                  "#/definitions/deco-sites/std/commerce/types.ts@Product",
+              },
+              "$id": "deco-sites/std/commerce/types.ts@Product[]",
+            },
+            "types.ts@ProductListingPage": {
+              "anyOf": [{
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "breadcrumb": {
+                    "title": "Breadcrumb",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@BreadcrumbList",
+                  },
+                  "filters": {
+                    "title": "Filters",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@FilterRange|deco-sites/std/commerce/types.ts@FilterToggle[]",
+                  },
+                  "products": {
+                    "title": "Products",
+                    "$ref":
+                      "#/definitions/deco-sites/std/commerce/types.ts@Product[]",
+                  },
+                  "pageInfo": {
+                    "type": "object",
+                    "allOf": [],
+                    "properties": {
+                      "currentPage": {
+                        "title": "Current Page",
+                        "type": "number",
+                      },
+                      "nextPage": {
+                        "title": "Next Page",
+                        "$ref": "#/definitions/deco-sites/std/unknown",
+                      },
+                      "previousPage": {
+                        "title": "Previous Page",
+                        "$ref": "#/definitions/deco-sites/std/unknown",
+                      },
+                    },
+                    "required": ["currentPage", "nextPage", "previousPage"],
+                  },
+                },
+                "required": ["breadcrumb", "filters", "products", "pageInfo"],
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexProductListingPage.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/shopifyProductListingPage.ts",
+              }, {
+                "$ref":
+                  "#/definitions/deco-sites/std/loaders/vtexLegacyProductListingPage.ts",
+              }],
+              "$id": "deco-sites/std/commerce/types.ts@ProductListingPage",
+            },
+            "occ": {
+              "client.ts@ConfigOCC": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "baseUrl": { "title": "Base Url", "type": "string" },
+                  "nrpp": { "title": "Nrpp", "type": ["string", "null"] },
+                },
+                "required": ["baseUrl"],
+                "title": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
+                "$id": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
+              },
+            },
+            "shopify": {
+              "client.ts@ConfigShopify": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "storeName": {
+                    "title": "Store Name",
+                    "type": "string",
+                    "description": "Shopify store name.",
+                  },
+                  "storefrontAccessToken": {
+                    "title": "Storefront Access Token",
+                    "type": "string",
+                    "description": "Shopify storefront access token.",
+                  },
+                },
+                "required": ["storeName", "storefrontAccessToken"],
+                "title":
+                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
+                "$id":
+                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
+              },
+            },
+            "vtex": {
+              "client.ts@ConfigVTEX": {
+                "type": "object",
+                "allOf": [],
+                "properties": {
+                  "account": {
+                    "title": "Account",
+                    "type": "string",
+                    "description":
+                      "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
+                  },
+                  "defaultLocale": {
+                    "title": "Default Locale",
+                    "type": "string",
+                    "description":
+                      "Locale used for VTEX Intelligent Search client.",
+                  },
+                  "defaultPriceCurrency": {
+                    "title": "Default Price Currency",
+                    "type": "string",
+                    "description": "Default price currency.",
+                    "default": "USD",
+                  },
+                  "defaultSalesChannel": {
+                    "title": "Default Sales Channel",
+                    "type": "string",
+                    "description":
+                      "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
+                  },
+                  "defaultRegionId": {
+                    "title": "Default Region Id",
+                    "type": ["string", "null"],
+                  },
+                  "defaultHideUnnavailableItems": {
+                    "title": "Default Hide Unnavailable Items",
+                    "type": ["boolean", "null"],
+                  },
+                },
+                "required": [
+                  "account",
+                  "defaultLocale",
+                  "defaultPriceCurrency",
+                  "defaultSalesChannel",
+                ],
+                "title": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
+                "$id": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
+              },
+            },
+          },
           "unknown": {
             "anyOf": [
-              { "type": "string", "const": "" },
-              { "type": "string", "const": "price:desc" },
-              { "type": "string", "const": "price:asc" },
-              { "type": "string", "const": "orders:desc" },
-              { "type": "string", "const": "name:desc" },
-              { "type": "string", "const": "name:asc" },
-              { "type": "string", "const": "release:desc" },
-              { "type": "string", "const": "discount:desc" },
+              { "type": "string", "const": "https://schema.org/BackOrder" },
+              { "type": "string", "const": "https://schema.org/Discontinued" },
+              { "type": "string", "const": "https://schema.org/InStock" },
+              { "type": "string", "const": "https://schema.org/InStoreOnly" },
+              {
+                "type": "string",
+                "const": "https://schema.org/LimitedAvailability",
+              },
+              { "type": "string", "const": "https://schema.org/OnlineOnly" },
+              { "type": "string", "const": "https://schema.org/OutOfStock" },
+              { "type": "string", "const": "https://schema.org/PreOrder" },
+              { "type": "string", "const": "https://schema.org/PreSale" },
+              { "type": "string", "const": "https://schema.org/SoldOut" },
             ],
             "$id": "deco-sites/std/unknown",
           },
           "islands": {
-            "LiveControls.tsx@74be5095-9b59-4898-8519-e3099c7f93d3": {
+            "LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d": {
               "$id":
-                "deco-sites/std/islands/LiveControls.tsx@74be5095-9b59-4898-8519-e3099c7f93d3",
+                "deco-sites/std/islands/LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d",
             },
             "LiveControls.tsx": {
               "title": "deco-sites/std/islands/LiveControls.tsx",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@74be5095-9b59-4898-8519-e3099c7f93d3",
+                  "#/definitions/deco-sites/std/islands/LiveControls.tsx@16df602a-bc31-4755-bdbc-71654bc5d22d",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -642,92 +1279,6 @@ const manifest = {
                 },
               },
               "$id": "deco-sites/std/sections/SEOPDP.tsx",
-            },
-          },
-          "commerce": {
-            "occ": {
-              "client.ts@ConfigOCC": {
-                "type": "object",
-                "allOf": [],
-                "properties": {
-                  "baseUrl": { "title": "Base Url", "type": "string" },
-                  "nrpp": { "title": "Nrpp", "type": ["string", "null"] },
-                },
-                "required": ["baseUrl"],
-                "title": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
-                "$id": "deco-sites/std/commerce/occ/client.ts@ConfigOCC",
-              },
-            },
-            "shopify": {
-              "client.ts@ConfigShopify": {
-                "type": "object",
-                "allOf": [],
-                "properties": {
-                  "storeName": {
-                    "title": "Store Name",
-                    "type": "string",
-                    "description": "Shopify store name.",
-                  },
-                  "storefrontAccessToken": {
-                    "title": "Storefront Access Token",
-                    "type": "string",
-                    "description": "Shopify storefront access token.",
-                  },
-                },
-                "required": ["storeName", "storefrontAccessToken"],
-                "title":
-                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
-                "$id":
-                  "deco-sites/std/commerce/shopify/client.ts@ConfigShopify",
-              },
-            },
-            "vtex": {
-              "client.ts@ConfigVTEX": {
-                "type": "object",
-                "allOf": [],
-                "properties": {
-                  "account": {
-                    "title": "Account",
-                    "type": "string",
-                    "description":
-                      "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
-                  },
-                  "defaultLocale": {
-                    "title": "Default Locale",
-                    "type": "string",
-                    "description":
-                      "Locale used for VTEX Intelligent Search client.",
-                  },
-                  "defaultPriceCurrency": {
-                    "title": "Default Price Currency",
-                    "type": "string",
-                    "description": "Default price currency.",
-                    "default": "USD",
-                  },
-                  "defaultSalesChannel": {
-                    "title": "Default Sales Channel",
-                    "type": "string",
-                    "description":
-                      "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
-                  },
-                  "defaultRegionId": {
-                    "title": "Default Region Id",
-                    "type": ["string", "null"],
-                  },
-                  "defaultHideUnnavailableItems": {
-                    "title": "Default Hide Unnavailable Items",
-                    "type": ["boolean", "null"],
-                  },
-                },
-                "required": [
-                  "account",
-                  "defaultLocale",
-                  "defaultPriceCurrency",
-                  "defaultSalesChannel",
-                ],
-                "title": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
-                "$id": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX",
-              },
             },
           },
         },
