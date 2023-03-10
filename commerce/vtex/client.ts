@@ -58,10 +58,8 @@ export const createClient = ({
   defaultPriceCurrency = "USD",
   defaultLocale = "en-US",
   defaultHideUnnavailableItems = false,
-}: Partial<ConfigVTEX> = {}) => {
-  const baseUrl =
-    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`;
-
+  baseUrl = `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`,
+}: Partial<ConfigVTEX> & { baseUrl?: string } = {}) => {
   const addDefaultFacets = (
     facets: SelectedFacet[],
   ) => {
