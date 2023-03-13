@@ -1,8 +1,7 @@
 import { marky } from "https://deno.land/x/marky@v1.1.6/mod.ts";
-import { LoaderReturnType } from "$live/types.ts";
 
 export type Props = {
-  text: LoaderReturnType<string>;
+  text: string;
 };
 
 export default function Markdown({ text }: Props) {
