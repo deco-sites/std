@@ -17,7 +17,7 @@ const topSearches: LoaderFunction<
 > = async (_, ctx, { count }) => {
   const vtex = createClient(ctx.state.global.configVTEX);
   const topSearches = await vtex.search.topSearches(
-    { locale: ctx.state.global.configVTEX.defaultLocale },
+    { locale: ctx.state.global?.configVTEX?.defaultLocale ?? "en-US" },
   );
 
   return {
