@@ -17,16 +17,24 @@ const topSearches: LoaderFunction<
   LiveState<{ configVTEX: ConfigVTEX }>
 > = withISFallback(async (_, ctx, { count }) => {
   const vtex = createClient(ctx.state.global.configVTEX);
-  const topSearches = await vtex.search.topSearches(
-    { locale: ctx.state.global.configVTEX.defaultLocale },
-  );
+  let _topSearches: Suggestion;
+
+  try {
+    _topSearches = await vtex.search.topSearches(
+      { locale: ctx.state.global.configVTEX.defaultLocale },
+    );
+  } catch (e) {
+    console.error(`Error fetching vtex top searches: \n ${e}`);
+
+    return { data: { searches: [] } };
+  }
 
   return {
     data: {
-      ...topSearches,
-      searches: topSearches?.searches && count
-        ? topSearches.searches.slice(0, count)
-        : topSearches?.searches,
+      ..._topSearches,
+      searches: _topSearches?.searches && count
+        ? _topSearches.searches.slice(0, count)
+        : _topSearches?.searches,
     },
   };
 });
