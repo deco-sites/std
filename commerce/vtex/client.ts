@@ -58,10 +58,8 @@ export const createClient = ({
   defaultPriceCurrency = "USD",
   defaultLocale = "en-US",
   defaultHideUnnavailableItems = false,
-}: Partial<ConfigVTEX> = {}) => {
-  const baseUrl =
-    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`;
-
+  baseUrl = `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`,
+}: Partial<ConfigVTEX> & { baseUrl?: string } = {}) => {
   const addDefaultFacets = (
     facets: SelectedFacet[],
   ) => {
@@ -92,7 +90,7 @@ export const createClient = ({
     selectedFacets = [],
     type,
     fuzzy = "auto",
-    locale = "en-US",
+    locale = defaultLocale,
   }: SearchArgs): Promise<T> => {
     const params = new URLSearchParams({
       page: (page + 1).toString(),
@@ -126,7 +124,7 @@ export const createClient = ({
     search<ProductSearchResult>({ ...args, type: "product_search" });
 
   const suggestedTerms = (
-    { query, locale = "en-US" }: Omit<SearchArgs, "type">,
+    { query, locale = defaultLocale }: Pick<SearchArgs, "query" | "locale">,
   ): Promise<Suggestion> => {
     const params = new URLSearchParams({
       query: query?.toString() ?? "",
