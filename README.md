@@ -1,26 +1,9 @@
-# Deco Start — live template
+# deco.cx standard libraries
 
-Welcome to your live site!
+This repo contains all the [Live.ts](https://github.com/deco-cx/live.ts) blocks built by the community that are officially maintained by the [deco.cx](https://deco.cx) team.
 
-This repository was created for you when you created a new site. To edit the
-code of the components in this site, you may clone this repo and run the project
-locally.
+## How we deal with breaking changes
 
----
+We are committed to avoiding breaking changes at all costs. The product is still early, but nonetheless we prefer to **add** new blocks or new properties whenever possible.
 
-NOTE: To edit or create new pages with existing components, you don't need to
-edit the code! Just go to any page and hit `Ctrl+Shift+E` to open the editor of
-the current page you're seeing.
-
----
-
-## Usage
-
-Start the project:
-
-```sh
-deno task start
-```
-
-Navigate to `https://localhost:8080` to see your site and start creating new
-components.
+If and when breaking changes occur, they will be signaled with a new Major version on the git tags.
