@@ -1,4 +1,4 @@
-# deco.cx standard libraries
+# deco.cx standard blocks library
 
 This repo contains all the [Live.ts](https://github.com/deco-cx/live.ts) blocks built by the community that are officially maintained by the [deco.cx](https://deco.cx) team.
 
