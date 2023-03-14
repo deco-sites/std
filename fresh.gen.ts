@@ -719,7 +719,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "9eacf861fb2b53de69284b63e9bc22217300cc3c",
+            "$id": "664f9b3b60b4a75294c340d8218b4ad76821fd58",
           },
         },
         "additionalProperties": true,

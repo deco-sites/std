@@ -357,4 +357,5 @@ export interface Search {
 
 export interface Suggestion {
   searches?: Search[];
+  products?: Product[];
 }
