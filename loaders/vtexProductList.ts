@@ -1,13 +1,13 @@
 import type { LiveState } from "$live/types.ts";
 
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 import { LiveConfig } from "$live/blocks/handler.ts";
-import type { Product } from "../commerce/types.ts";
 import {
   ConfigVTEX,
   createClient,
 } from "deco-sites/std/commerce/vtex/client.ts";
 import { toProduct } from "deco-sites/std/commerce/vtex/transform.ts";
+import type { Product } from "../commerce/types.ts";
 import type { SearchArgs, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {

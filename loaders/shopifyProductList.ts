@@ -1,6 +1,6 @@
 import { HandlerContext } from "$fresh/server.ts";
-import type { LiveState } from "$live/types.ts";
 import { LiveConfig } from "$live/blocks/handler.ts";
+import type { LiveState } from "$live/types.ts";
 
 import {
   ConfigShopify,

@@ -1,8 +1,7 @@
-import type { LiveState } from "$live/types.ts";
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 import { LiveConfig } from "$live/blocks/handler.ts";
+import type { LiveState } from "$live/types.ts";
 
-import type { Filter } from "../commerce/types.ts";
 import { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import {
   ConfigVTEX,
@@ -12,13 +11,14 @@ import {
   filtersFromSearchParams,
   toFilter,
   toProduct,
-} from "../commerce/vtex/transform.ts";
-import type { PageType, Sort } from "../commerce/vtex/types.ts";
-import { slugify } from "../commerce/vtex/utils/slugify.ts";
+} from "deco-sites/std/commerce/vtex/transform.ts";
+import { slugify } from "deco-sites/std/commerce/vtex/utils/slugify.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
-} from "./vtexLegacyProductListingPage.ts";
+} from "deco-sites/std/loaders/vtexLegacyProductListingPage.ts";
+import type { Filter } from "../commerce/types.ts";
+import type { PageType, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /**

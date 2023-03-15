@@ -1,6 +1,6 @@
-import { LiveState } from "$live/types.ts";
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 import { LiveConfig } from "$live/blocks/handler.ts";
+import { LiveState } from "$live/types.ts";
 import { Suggestion } from "deco-sites/std/commerce/types.ts";
 import {
   ConfigVTEX,

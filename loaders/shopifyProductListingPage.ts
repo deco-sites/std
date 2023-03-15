@@ -1,13 +1,13 @@
 import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "$fresh/server.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 import {
   ConfigShopify,
   createClient,
 } from "deco-sites/std/commerce/shopify/client.ts";
 import { toProduct } from "deco-sites/std/commerce/shopify/transform.ts";
 import { ProductListingPage } from "deco-sites/std/commerce/types.ts";
-import { LiveConfig } from "$live/blocks/handler.ts";
 
 export interface Props {
   /**

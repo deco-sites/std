@@ -1,8 +1,6 @@
 import type { LiveState } from "$live/types.ts";
 
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
 import { LiveConfig } from "$live/blocks/handler.ts";
-import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import {
   ClientVTEX,
   ConfigVTEX,
@@ -12,8 +10,10 @@ import {
   legacyFacetToFilter,
   toProduct,
 } from "deco-sites/std/commerce/vtex/transform.ts";
-import type { LegacySort, PageType } from "../commerce/vtex/types.ts";
 import { slugify } from "deco-sites/std/commerce/vtex/utils/slugify.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import type { Filter, ProductListingPage } from "../commerce/types.ts";
+import type { LegacySort, PageType } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /**

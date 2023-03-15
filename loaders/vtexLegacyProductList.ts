@@ -1,14 +1,14 @@
 import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "$fresh/server.ts";
-import type { Product } from "../commerce/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 import {
   ConfigVTEX,
   createClient,
 } from "deco-sites/std/commerce/vtex/client.ts";
 import { toProduct } from "deco-sites/std/commerce/vtex/transform.ts";
+import type { Product } from "../commerce/types.ts";
 import type { LegacySort } from "../commerce/vtex/types.ts";
-import { LiveConfig } from "$live/blocks/handler.ts";
 
 export interface Props {
   /** @description query to use on search */
