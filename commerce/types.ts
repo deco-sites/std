@@ -350,3 +350,11 @@ export interface ProductListingPage {
     previousPage: string | undefined;
   };
 }
+
+export interface Search {
+  term: string;
+}
+
+export interface Suggestion {
+  searches?: Search[];
+}

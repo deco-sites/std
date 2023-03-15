@@ -142,7 +142,7 @@ export const createClient = ({
   };
 
   const topSearches = (
-    { locale = "en-US" }: Pick<SearchArgs, "locale">,
+    { locale = defaultLocale }: Pick<SearchArgs, "locale">,
   ): Promise<Suggestion> => {
     const params = new URLSearchParams({
       locale,
