@@ -1,8 +1,11 @@
 import { LiveState } from "$live/types.ts";
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
-import { LiveConfig } from "../../live/blocks/handler.ts";
-import { Suggestion } from "../commerce/types.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
+import { Suggestion } from "deco-sites/std/commerce/types.ts";
+import {
+  ConfigVTEX,
+  createClient,
+} from "deco-sites/std/commerce/vtex/client.ts";
 
 export interface Props {
   /**

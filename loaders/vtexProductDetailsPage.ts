@@ -1,11 +1,14 @@
 import type { LiveState } from "$live/types.ts";
 
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
-import { LiveConfig } from "../../live/blocks/handler.ts";
-import { ProductDetailsPage } from "../commerce/types.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import { toProductPage } from "../commerce/vtex/transform.ts";
-import { Props } from "./vtexLegacyProductListingPage.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
+import { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import {
+  ConfigVTEX,
+  createClient,
+} from "deco-sites/std/commerce/vtex/client.ts";
+import { toProductPage } from "deco-sites/std/commerce/vtex/transform.ts";
+import { Props } from "deco-sites/std/loaders/vtexLegacyProductListingPage.ts";
 
 /**
  * @title VTEX Product Page Loader
