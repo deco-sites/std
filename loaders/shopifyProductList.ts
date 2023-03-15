@@ -1,9 +1,13 @@
 import { HandlerContext } from "$fresh/server.ts";
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 
-import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import { toProduct } from "../commerce/shopify/transform.ts";
-import { Product } from "../commerce/types.ts";
+import {
+  ConfigShopify,
+  createClient,
+} from "deco-sites/std/commerce/shopify/client.ts";
+import { toProduct } from "deco-sites/std/commerce/shopify/transform.ts";
+import { Product } from "deco-sites/std/commerce/types.ts";
 
 export interface Props {
   /** @description search term to use on search */
@@ -23,7 +27,7 @@ async function searchLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
-  >,
+  >
 ): Promise<Product[]> {
   const { configShopify } = global;
   const shopify = createClient(configShopify);

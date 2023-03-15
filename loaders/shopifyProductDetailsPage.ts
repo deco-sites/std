@@ -1,8 +1,12 @@
-import { LiveConfig, LiveState } from "$live/types.ts";
+import { LiveState } from "$live/types.ts";
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
-import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import { toProductPage } from "../commerce/shopify/transform.ts";
-import { ProductDetailsPage } from "../commerce/types.ts";
+import {
+  ConfigShopify,
+  createClient,
+} from "deco-sites/std/commerce/shopify/client.ts";
+import { toProductPage } from "deco-sites/std/commerce/shopify/transform.ts";
+import { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 
 /**
  * @title Shopify Product Page Loader
@@ -13,7 +17,7 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configShopify?: ConfigShopify }>>
-  >,
+  >
 ): Promise<ProductDetailsPage | null> {
   const { configShopify } = ctx.state.global;
   const shopify = createClient(configShopify);

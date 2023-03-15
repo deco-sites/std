@@ -1,9 +1,13 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
-import { ProductDetailsPage } from "../commerce/types.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import { toProductPage } from "../commerce/vtex/transform.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
+import { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import {
+  ConfigVTEX,
+  createClient,
+} from "deco-sites/std/commerce/vtex/client.ts";
+import { toProductPage } from "deco-sites/std/commerce/vtex/transform.ts";
 
 /**
  * @title VTEX Product Page Loader
@@ -17,7 +21,7 @@ async function legacyProductPageLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<ProductDetailsPage | null> {
   const { configVTEX } = global;
   const vtex = createClient(configVTEX);

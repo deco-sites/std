@@ -1,6 +1,7 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { LiveConfig } from "../../live/blocks/handler.ts";
 import { ProductDetailsPage } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
@@ -15,7 +16,7 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<ProductDetailsPage | null> {
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");

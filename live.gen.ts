@@ -3,6 +3,8 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
+import { DecoManifest } from "$live/types.ts";
+
 import * as $0 from "deco-sites/std/loaders/vtexProductListingPage.ts";
 import * as $1 from "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts";
 import * as $2 from "deco-sites/std/loaders/shopifyProductListingPage.ts";
@@ -23,24 +25,23 @@ import * as $$$$$$2 from "deco-sites/std/sections/configOCC.global.tsx";
 import * as $$$$$$3 from "deco-sites/std/sections/configShopify.global.tsx";
 import * as $$$$$$4 from "deco-sites/std/sections/configVTEX.global.tsx";
 import * as $$$$$$5 from "deco-sites/std/sections/SEOPDP.tsx";
-import { configurable } from "$live/engine/adapters/fresh/manifest.ts";
+import { configurable } from "$live/engine/fresh/manifest.ts";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
 import * as i1$0 from "$live/handlers/routesSelection.ts";
 import * as i1$1 from "$live/handlers/router.ts";
 import * as i1$2 from "$live/handlers/fresh.ts";
 import * as i1$$0 from "$live/pages/LivePage.tsx";
-import * as i1$$$0 from "$live/sections/Head.tsx";
-import * as i1$$$$0 from "$live/matchers/MatchDate.ts";
-import * as i1$$$$1 from "$live/matchers/MatchUserAgent.ts";
-import * as i1$$$$2 from "$live/matchers/MatchSite.ts";
-import * as i1$$$$3 from "$live/matchers/MatchMulti.ts";
-import * as i1$$$$4 from "$live/matchers/MatchRandom.ts";
-import * as i1$$$$5 from "$live/matchers/MatchEnvironment.ts";
-import * as i1$$$$6 from "$live/matchers/MatchAlways.ts";
-import * as i1$$$$$0 from "$live/flags/audience.ts";
-import * as i1$$$$$1 from "$live/flags/everyone.ts";
+import * as i1$$$0 from "$live/matchers/MatchDate.ts";
+import * as i1$$$1 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$2 from "$live/matchers/MatchSite.ts";
+import * as i1$$$3 from "$live/matchers/MatchMulti.ts";
+import * as i1$$$4 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$5 from "$live/matchers/MatchEnvironment.ts";
+import * as i1$$$6 from "$live/matchers/MatchAlways.ts";
+import * as i1$$$$0 from "$live/flags/audience.ts";
+import * as i1$$$$1 from "$live/flags/everyone.ts";
 
-const manifest = {
+const manifest: DecoManifest = {
   "loaders": {
     "deco-sites/std/loaders/vtexProductListingPage.ts": $0,
     "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts": $1,
@@ -69,7 +70,6 @@ const manifest = {
     "deco-sites/std/sections/configShopify.global.tsx": $$$$$$3,
     "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$4,
     "deco-sites/std/sections/SEOPDP.tsx": $$$$$$5,
-    "$live/sections/Head.tsx": i1$$$0,
   },
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$0,
@@ -80,35 +80,55 @@ const manifest = {
     "$live/pages/LivePage.tsx": i1$$0,
   },
   "matchers": {
-    "$live/matchers/MatchDate.ts": i1$$$$0,
-    "$live/matchers/MatchUserAgent.ts": i1$$$$1,
-    "$live/matchers/MatchSite.ts": i1$$$$2,
-    "$live/matchers/MatchMulti.ts": i1$$$$3,
-    "$live/matchers/MatchRandom.ts": i1$$$$4,
-    "$live/matchers/MatchEnvironment.ts": i1$$$$5,
-    "$live/matchers/MatchAlways.ts": i1$$$$6,
+    "$live/matchers/MatchDate.ts": i1$$$0,
+    "$live/matchers/MatchUserAgent.ts": i1$$$1,
+    "$live/matchers/MatchSite.ts": i1$$$2,
+    "$live/matchers/MatchMulti.ts": i1$$$3,
+    "$live/matchers/MatchRandom.ts": i1$$$4,
+    "$live/matchers/MatchEnvironment.ts": i1$$$5,
+    "$live/matchers/MatchAlways.ts": i1$$$6,
   },
   "flags": {
-    "$live/flags/audience.ts": i1$$$$$0,
-    "$live/flags/everyone.ts": i1$$$$$1,
+    "$live/flags/audience.ts": i1$$$$0,
+    "$live/flags/everyone.ts": i1$$$$1,
   },
   "config": config,
   "baseUrl": import.meta.url,
   "schemas": {
     "definitions": {
+      "JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag": {
+        "$ref": "#/root/flags",
+        "$id": "JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag",
+      },
+      "JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag[]": {
+        "type": "array",
+        "items": { "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag" },
+        "$id": "JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag[]",
+      },
       "JGxpdmUvaGFuZGxlcnMvcm91dGVzU2VsZWN0aW9uLnRz@SelectionConfig": {
         "type": "object",
         "allOf": [],
         "properties": {
           "flags": {
             "title": "Flags",
-            "type": "array",
-            "items": { "$ref": "#/root/flags" },
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2ZsYWcudHM=@Flag[]",
           },
         },
         "required": ["flags"],
         "title": "$live/handlers/routesSelection.ts@SelectionConfig",
         "$id": "$live/handlers/routesSelection.ts@SelectionConfig",
+      },
+      "JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler": {
+        "$ref": "#/root/handlers",
+        "$id": "JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+      },
+      "3453f64f-f579-4a7b-91fd-08dbb9f78ac9@Handler@record": {
+        "title": "Unknown record",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+        },
+        "$id": "3453f64f-f579-4a7b-91fd-08dbb9f78ac9@Handler@record",
       },
       "JGxpdmUvaGFuZGxlcnMvcm91dGVyLnRz@RouterConfig": {
         "type": "object",
@@ -116,22 +136,42 @@ const manifest = {
         "properties": {
           "base": { "title": "Base", "type": ["string", "null"] },
           "routes": {
-            "title": "Unknown record",
-            "type": "object",
-            "additionalProperties": { "$ref": "#/root/handlers" },
+            "title": "Routes",
+            "$ref":
+              "#/definitions/3453f64f-f579-4a7b-91fd-08dbb9f78ac9@Handler@record",
           },
         },
         "required": ["routes"],
         "title": "$live/handlers/router.ts@RouterConfig",
         "$id": "$live/handlers/router.ts@RouterConfig",
       },
+      "JGxpdmUvYmxvY2tzL3BhZ2UudHM=@Page": {
+        "$ref": "#/root/pages",
+        "$id": "JGxpdmUvYmxvY2tzL3BhZ2UudHM=@Page",
+      },
       "JGxpdmUvaGFuZGxlcnMvZnJlc2gudHM=@FreshConfig": {
         "type": "object",
         "allOf": [],
-        "properties": { "page": { "title": "Page", "$ref": "#/root/pages" } },
+        "properties": {
+          "page": {
+            "title": "Page",
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL3BhZ2UudHM=@Page",
+          },
+        },
         "required": ["page"],
         "title": "$live/handlers/fresh.ts@FreshConfig",
         "$id": "$live/handlers/fresh.ts@FreshConfig",
+      },
+      "JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section": {
+        "$ref": "#/root/sections",
+        "$id": "JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section",
+      },
+      "JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section[]": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section",
+        },
+        "$id": "JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section[]",
       },
       "JGxpdmUvcGFnZXMvTGl2ZVBhZ2UudHN4@Props": {
         "type": "object",
@@ -139,48 +179,12 @@ const manifest = {
         "properties": {
           "sections": {
             "title": "Sections",
-            "type": "array",
-            "items": { "$ref": "#/root/sections" },
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL3NlY3Rpb24udHM=@Section[]",
           },
         },
         "required": ["sections"],
         "title": "$live/pages/LivePage.tsx@Props",
         "$id": "$live/pages/LivePage.tsx@Props",
-      },
-      "JGxpdmUvc2VjdGlvbnMvSGVhZC50c3g=@Props": {
-        "type": "object",
-        "allOf": [],
-        "properties": {
-          "title": { "title": "Title", "type": ["string", "null"] },
-          "description": { "title": "Description", "type": ["string", "null"] },
-          "url": { "title": "Url", "type": ["string", "null"] },
-          "imageUrl": { "title": "Image Url", "type": ["string", "null"] },
-          "faviconUrl": { "title": "Favicon Url", "type": ["string", "null"] },
-          "styleUrls": {
-            "title": "Style Urls",
-            "type": "array",
-            "items": { "type": "string" },
-          },
-          "inlineStyles": {
-            "title": "Inline Styles",
-            "type": "array",
-            "items": { "type": "string" },
-          },
-          "scriptUrls": {
-            "title": "Script Urls",
-            "type": "array",
-            "items": { "type": "string" },
-          },
-          "inlineScripts": {
-            "title": "Inline Scripts",
-            "type": "array",
-            "items": { "type": "string" },
-          },
-          "themeColor": { "title": "Theme Color", "type": ["string", "null"] },
-        },
-        "required": [],
-        "title": "$live/sections/Head.tsx@Props",
-        "$id": "$live/sections/Head.tsx@Props",
       },
       "JGxpdmUvbWF0Y2hlcnMvTWF0Y2hEYXRlLnRz@Props": {
         "type": "object",
@@ -220,6 +224,17 @@ const manifest = {
         "title": "$live/matchers/MatchSite.ts@Props",
         "$id": "$live/matchers/MatchSite.ts@Props",
       },
+      "JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher": {
+        "$ref": "#/root/matchers",
+        "$id": "JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher",
+      },
+      "JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher[]": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher",
+        },
+        "$id": "JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher[]",
+      },
       "JGxpdmUvbWF0Y2hlcnMvTWF0Y2hNdWx0aS50cw==@Props": {
         "type": "object",
         "allOf": [],
@@ -233,8 +248,7 @@ const manifest = {
           },
           "matchers": {
             "title": "Matchers",
-            "type": "array",
-            "items": { "$ref": "#/root/matchers" },
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher[]",
           },
         },
         "required": ["op", "matchers"],
@@ -265,16 +279,27 @@ const manifest = {
         "title": "$live/matchers/MatchEnvironment.ts@Props",
         "$id": "$live/matchers/MatchEnvironment.ts@Props",
       },
+      "5bda1f2e-1a15-4864-8023-c36e4cedb724@Handler@record": {
+        "title": "Unknown record",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+        },
+        "$id": "5bda1f2e-1a15-4864-8023-c36e4cedb724@Handler@record",
+      },
       "JGxpdmUvZmxhZ3MvYXVkaWVuY2UudHM=@Audience": {
         "type": "object",
         "allOf": [],
         "properties": {
-          "matcher": { "title": "Matcher", "$ref": "#/root/matchers" },
+          "matcher": {
+            "title": "Matcher",
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL21hdGNoZXIudHM=@Matcher",
+          },
           "name": { "title": "Name", "type": "string" },
           "routes": {
-            "title": "Unknown record",
-            "type": "object",
-            "additionalProperties": { "$ref": "#/root/handlers" },
+            "title": "Routes",
+            "$ref":
+              "#/definitions/5bda1f2e-1a15-4864-8023-c36e4cedb724@Handler@record",
           },
           "overrides": {
             "title": "Unknown record",
@@ -286,14 +311,22 @@ const manifest = {
         "title": "$live/flags/audience.ts@Audience",
         "$id": "$live/flags/audience.ts@Audience",
       },
+      "6d265aa6-4d98-44b9-be2d-71aa8563b9ff@Handler@record": {
+        "title": "Unknown record",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+        },
+        "$id": "6d265aa6-4d98-44b9-be2d-71aa8563b9ff@Handler@record",
+      },
       "JGxpdmUvZmxhZ3MvZXZlcnlvbmUudHM=@EveryoneConfig": {
         "type": "object",
         "allOf": [],
         "properties": {
           "routes": {
-            "title": "Unknown record",
-            "type": "object",
-            "additionalProperties": { "$ref": "#/root/handlers" },
+            "title": "Routes",
+            "$ref":
+              "#/definitions/6d265aa6-4d98-44b9-be2d-71aa8563b9ff@Handler@record",
           },
           "overrides": {
             "title": "Unknown record",
@@ -365,21 +398,6 @@ const manifest = {
           },
         },
         "$id": "$live/pages/LivePage.tsx",
-      },
-      "JGxpdmUvc2VjdGlvbnMvSGVhZC50c3g=": {
-        "title": "$live/sections/Head.tsx",
-        "type": "object",
-        "allOf": [{
-          "$ref": "#/definitions/JGxpdmUvc2VjdGlvbnMvSGVhZC50c3g=@Props",
-        }],
-        "required": ["__resolveType"],
-        "properties": {
-          "__resolveType": {
-            "type": "string",
-            "default": "$live/sections/Head.tsx",
-          },
-        },
-        "$id": "$live/sections/Head.tsx",
       },
       "JGxpdmUvbWF0Y2hlcnMvTWF0Y2hEYXRlLnRz": {
         "title": "$live/matchers/MatchDate.ts",
@@ -523,7 +541,10 @@ const manifest = {
         "type": "object",
         "allOf": [],
         "properties": {
-          "handler": { "title": "Handler", "$ref": "#/root/handlers" },
+          "handler": {
+            "title": "Handler",
+            "$ref": "#/definitions/JGxpdmUvYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+          },
         },
         "required": ["handler"],
         "title": "$live/routes/[...catchall].tsx@Entrypoint",
@@ -746,11 +767,7 @@ const manifest = {
             "$ref":
               "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@PropertyValue[]",
           },
-          "model": {
-            "title": "Model",
-            "type": ["string", "null"],
-            "docs": "https://schema.org/gtin",
-          },
+          "model": { "title": "Model", "type": ["string", "null"] },
         },
         "required": [
           "@type",
@@ -1207,7 +1224,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@eea593c6-a753-4783-8f4e-36d131987fa7",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1223,7 +1240,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1253,7 +1270,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@b9f26464-27d3-41ac-af18-144cea13e6c3",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@c0fde23f-8561-4ea2-98b9-9479abfaf896",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1266,7 +1283,7 @@ const manifest = {
         }],
         "$id": "deco-sites/std/commerce/types.ts@ProductDetailsPage",
       },
-      "9524f7b2-3336-4855-9cc8-96d35af26b01": {
+      "877d962c-c45d-415a-929b-30fdf591c1f9": {
         "anyOf": [{
           "type": "null",
           "$id": "undefined@undefined",
@@ -1276,7 +1293,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@eea593c6-a753-4783-8f4e-36d131987fa7",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1290,20 +1307,20 @@ const manifest = {
         }],
         "$id": "undefined@undefined",
       },
-      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@b7e9ef5d-b85c-4a33-9efe-4e14fc69d0af":
+      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@f2102da5-ba32-493b-8ca9-ba00bfd252ac":
         {
           "anyOf": [
             {
               "$ref":
                 "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
             },
-            { "$ref": "#/definitions/9524f7b2-3336-4855-9cc8-96d35af26b01" },
+            { "$ref": "#/definitions/877d962c-c45d-415a-929b-30fdf591c1f9" },
             {
               "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@eea593c6-a753-4783-8f4e-36d131987fa7",
+                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1317,14 +1334,14 @@ const manifest = {
             },
           ],
           "$id":
-            "deco-sites/std/commerce/types.ts@b7e9ef5d-b85c-4a33-9efe-4e14fc69d0af",
+            "deco-sites/std/commerce/types.ts@f2102da5-ba32-493b-8ca9-ba00bfd252ac",
         },
-      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@eea593c6-a753-4783-8f4e-36d131987fa7":
+      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd":
         {
           "$id":
-            "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@eea593c6-a753-4783-8f4e-36d131987fa7",
+            "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
           "title":
-            "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@eea593c6-a753-4783-8f4e-36d131987fa7",
+            "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
         },
       "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdExpc3RpbmdQYWdlLnRz@Props":
         {
@@ -1387,7 +1404,7 @@ const manifest = {
         "title": "deco-sites/std/loaders/vtexProductList.ts@Props",
         "$id": "deco-sites/std/loaders/vtexProductList.ts@Props",
       },
-      "9ffb63f5-89c9-4964-b473-cfcef0c8e9ec": {
+      "5e752d4c-39df-4548-90a4-5761c40ee305": {
         "anyOf": [{
           "type": "null",
           "$id": "undefined@undefined",
@@ -1397,7 +1414,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1410,20 +1427,20 @@ const manifest = {
         }],
         "$id": "undefined@undefined",
       },
-      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@e48da433-b4ac-4f04-aad2-7e852ae8334d":
+      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@6ec83578-e1fb-41e3-84f9-edca9934ac64":
         {
           "anyOf": [
             {
               "$ref":
                 "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
             },
-            { "$ref": "#/definitions/9ffb63f5-89c9-4964-b473-cfcef0c8e9ec" },
+            { "$ref": "#/definitions/5e752d4c-39df-4548-90a4-5761c40ee305" },
             {
               "title": "deco-sites/std/loaders/occProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1436,14 +1453,14 @@ const manifest = {
             },
           ],
           "$id":
-            "deco-sites/std/commerce/types.ts@e48da433-b4ac-4f04-aad2-7e852ae8334d",
+            "deco-sites/std/commerce/types.ts@6ec83578-e1fb-41e3-84f9-edca9934ac64",
         },
-      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@6f6a68f9-882a-4982-a35c-1d74f11be38b":
+      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@4aa9fc22-17a1-4632-a59b-0df9cab15e59":
         {
           "$id":
-            "deco-sites/std/loaders/occProductDetailsPage.ts@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+            "deco-sites/std/loaders/occProductDetailsPage.ts@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
           "title":
-            "deco-sites/std/loaders/occProductDetailsPage.ts@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+            "deco-sites/std/loaders/occProductDetailsPage.ts@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
         },
       "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdExpc3RpbmdQYWdlLnRz@Props":
         {
@@ -1477,7 +1494,7 @@ const manifest = {
             "deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
           "$id": "deco-sites/std/loaders/vtexLegacyProductListingPage.ts@Props",
         },
-      "8a72f74f-1ef2-4324-86b2-7edb749de349": {
+      "e0dfdd43-8373-4703-8f7c-e04798ea401a": {
         "anyOf": [{
           "type": "null",
           "$id": "undefined@undefined",
@@ -1500,14 +1517,14 @@ const manifest = {
         }],
         "$id": "undefined@undefined",
       },
-      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@68fdd7d2-87cd-4492-be00-79621613dff1":
+      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@c926fd47-621d-4657-a985-ef31754a4e97":
         {
           "anyOf": [
             {
               "$ref":
                 "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
             },
-            { "$ref": "#/definitions/8a72f74f-1ef2-4324-86b2-7edb749de349" },
+            { "$ref": "#/definitions/e0dfdd43-8373-4703-8f7c-e04798ea401a" },
             {
               "title": "deco-sites/std/loaders/vtexProductDetailsPage.ts",
               "type": "object",
@@ -1526,7 +1543,7 @@ const manifest = {
             },
           ],
           "$id":
-            "deco-sites/std/commerce/types.ts@68fdd7d2-87cd-4492-be00-79621613dff1",
+            "deco-sites/std/commerce/types.ts@c926fd47-621d-4657-a985-ef31754a4e97",
         },
       "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdExpc3QudHM=@Props":
         {
@@ -1589,7 +1606,7 @@ const manifest = {
         "title": "deco-sites/std/loaders/shopifyProductList.ts@Props",
         "$id": "deco-sites/std/loaders/shopifyProductList.ts@Props",
       },
-      "005b556f-633c-4581-aa60-b5d3fb7a89c2": {
+      "1ec4672d-48d3-4635-bf1b-21beaa9257cb": {
         "anyOf": [{
           "type": "null",
           "$id": "undefined@undefined",
@@ -1599,7 +1616,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@b9f26464-27d3-41ac-af18-144cea13e6c3",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@c0fde23f-8561-4ea2-98b9-9479abfaf896",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1612,20 +1629,20 @@ const manifest = {
         }],
         "$id": "undefined@undefined",
       },
-      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@c9917a34-2e52-4cfe-82eb-3ab7296554a3":
+      "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@e61062de-8232-4a7d-9f36-99038a39fbec":
         {
           "anyOf": [
             {
               "$ref":
                 "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
             },
-            { "$ref": "#/definitions/005b556f-633c-4581-aa60-b5d3fb7a89c2" },
+            { "$ref": "#/definitions/1ec4672d-48d3-4635-bf1b-21beaa9257cb" },
             {
               "title": "deco-sites/std/loaders/shopifyProductDetailsPage.ts",
               "type": "object",
               "allOf": [{
                 "$ref":
-                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@b9f26464-27d3-41ac-af18-144cea13e6c3",
+                  "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@c0fde23f-8561-4ea2-98b9-9479abfaf896",
               }],
               "required": ["__resolveType"],
               "properties": {
@@ -1639,21 +1656,21 @@ const manifest = {
             },
           ],
           "$id":
-            "deco-sites/std/commerce/types.ts@c9917a34-2e52-4cfe-82eb-3ab7296554a3",
+            "deco-sites/std/commerce/types.ts@e61062de-8232-4a7d-9f36-99038a39fbec",
         },
-      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@b9f26464-27d3-41ac-af18-144cea13e6c3":
+      "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@c0fde23f-8561-4ea2-98b9-9479abfaf896":
         {
           "$id":
-            "deco-sites/std/loaders/shopifyProductDetailsPage.ts@b9f26464-27d3-41ac-af18-144cea13e6c3",
+            "deco-sites/std/loaders/shopifyProductDetailsPage.ts@c0fde23f-8561-4ea2-98b9-9479abfaf896",
           "title":
-            "deco-sites/std/loaders/shopifyProductDetailsPage.ts@b9f26464-27d3-41ac-af18-144cea13e6c3",
+            "deco-sites/std/loaders/shopifyProductDetailsPage.ts@c0fde23f-8561-4ea2-98b9-9479abfaf896",
         },
-      "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvY29tcG9uZW50cy9MaXZlQ29udHJvbHMudHN4@ee1fab9b-1117-4a73-98fc-dfd9b9aef3b5":
+      "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvY29tcG9uZW50cy9MaXZlQ29udHJvbHMudHN4@61f8f918-aae4-4e7c-8207-c9e141b94614":
         {
           "$id":
-            "/Users/marcoscandeia/workspace/live/components/LiveControls.tsx@ee1fab9b-1117-4a73-98fc-dfd9b9aef3b5",
+            "/Users/marcoscandeia/workspace/live/components/LiveControls.tsx@61f8f918-aae4-4e7c-8207-c9e141b94614",
           "title":
-            "/Users/marcoscandeia/workspace/live/components/LiveControls.tsx@ee1fab9b-1117-4a73-98fc-dfd9b9aef3b5",
+            "/Users/marcoscandeia/workspace/live/components/LiveControls.tsx@61f8f918-aae4-4e7c-8207-c9e141b94614",
         },
       "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPQmFzZS50c3g=@Props": {
         "type": "object",
@@ -1816,7 +1833,7 @@ const manifest = {
           "type": "object",
           "allOf": [{
             "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@eea593c6-a753-4783-8f4e-36d131987fa7",
+              "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz@4f7b442d-4d90-4f0e-a9d9-b90a2f42aacd",
           }],
           "required": ["__resolveType"],
           "properties": {
@@ -1865,7 +1882,7 @@ const manifest = {
         "type": "object",
         "allOf": [{
           "$ref":
-            "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@6f6a68f9-882a-4982-a35c-1d74f11be38b",
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9vY2NQcm9kdWN0RGV0YWlsc1BhZ2UudHM=@4aa9fc22-17a1-4632-a59b-0df9cab15e59",
         }],
         "required": ["__resolveType"],
         "properties": {
@@ -1947,7 +1964,7 @@ const manifest = {
         "type": "object",
         "allOf": [{
           "$ref":
-            "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@b9f26464-27d3-41ac-af18-144cea13e6c3",
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9zaG9waWZ5UHJvZHVjdERldGFpbHNQYWdlLnRz@c0fde23f-8561-4ea2-98b9-9479abfaf896",
         }],
         "required": ["__resolveType"],
         "properties": {
@@ -1999,7 +2016,7 @@ const manifest = {
         "type": "object",
         "allOf": [{
           "$ref":
-            "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvY29tcG9uZW50cy9MaXZlQ29udHJvbHMudHN4@ee1fab9b-1117-4a73-98fc-dfd9b9aef3b5",
+            "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvY29tcG9uZW50cy9MaXZlQ29udHJvbHMudHN4@61f8f918-aae4-4e7c-8207-c9e141b94614",
         }],
         "required": ["__resolveType"],
         "properties": {
@@ -2123,36 +2140,6 @@ const manifest = {
         "title": "pages",
         "anyOf": [{ "$ref": "#/definitions/JGxpdmUvcGFnZXMvTGl2ZVBhZ2UudHN4" }],
       },
-      "sections": {
-        "title": "sections",
-        "anyOf": [
-          { "$ref": "#/definitions/JGxpdmUvc2VjdGlvbnMvSGVhZC50c3g=" },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPLnRzeA==",
-          },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPUExQLnRzeA==",
-          },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnT0NDLmdsb2JhbC50c3g=",
-          },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnU2hvcGlmeS5nbG9iYWwudHN4",
-          },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnVlRFWC5nbG9iYWwudHN4",
-          },
-          {
-            "$ref":
-              "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPUERQLnRzeA==",
-          },
-        ],
-      },
       "matchers": {
         "title": "matchers",
         "anyOf": [
@@ -2191,13 +2178,13 @@ const manifest = {
           "anyOf": [
             { "$ref": "#/root/handlers" },
             { "$ref": "#/root/pages" },
-            { "$ref": "#/root/sections" },
             { "$ref": "#/root/matchers" },
             { "$ref": "#/root/flags" },
             { "$ref": "#/root/state" },
             { "$ref": "#/root/loaders" },
             { "$ref": "#/root/routes" },
             { "$ref": "#/root/islands" },
+            { "$ref": "#/root/sections" },
           ],
         },
       },
@@ -2254,6 +2241,27 @@ const manifest = {
         "anyOf": [{
           "$ref":
             "#/definitions/ZGVjby1zaXRlcy9zdGQvaXNsYW5kcy9MaXZlQ29udHJvbHMudHN4",
+        }],
+      },
+      "sections": {
+        "title": "sections",
+        "anyOf": [{
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPLnRzeA==",
+        }, {
+          "$ref":
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPUExQLnRzeA==",
+        }, {
+          "$ref":
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnT0NDLmdsb2JhbC50c3g=",
+        }, {
+          "$ref":
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnU2hvcGlmeS5nbG9iYWwudHN4",
+        }, {
+          "$ref":
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnVlRFWC5nbG9iYWwudHN4",
+        }, {
+          "$ref":
+            "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPUERQLnRzeA==",
         }],
       },
     },

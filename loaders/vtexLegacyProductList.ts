@@ -1,10 +1,14 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 import type { Product } from "../commerce/types.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import { toProduct } from "../commerce/vtex/transform.ts";
+import {
+  ConfigVTEX,
+  createClient,
+} from "deco-sites/std/commerce/vtex/client.ts";
+import { toProduct } from "deco-sites/std/commerce/vtex/transform.ts";
 import type { LegacySort } from "../commerce/vtex/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 
 export interface Props {
   /** @description query to use on search */
@@ -43,7 +47,7 @@ async function legacyProductPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<Product[]> {
   const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;

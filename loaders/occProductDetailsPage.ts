@@ -1,8 +1,9 @@
 import { HandlerContext } from "$fresh/server.ts";
-import type { LiveConfig, LiveState } from "$live/types.ts";
-import { ConfigOCC, createClient } from "../commerce/occ/client.ts";
-import { toProductPage } from "../commerce/occ/transform.ts";
-import { ProductDetailsPage } from "../commerce/types.ts";
+import type { LiveState } from "$live/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
+import { ConfigOCC, createClient } from "deco-sites/std/commerce/occ/client.ts";
+import { toProductPage } from "deco-sites/std/commerce/occ/transform.ts";
+import { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
 
 /**
  * @title Oracle Commerce Cloud Product Page Loader
@@ -13,7 +14,7 @@ async function productPageLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<unknown, LiveState<{ configOCC: ConfigOCC }>>
-  >,
+  >
 ): Promise<ProductDetailsPage | null> {
   const { configOCC } = ctx.state.global;
   const occ = createClient(configOCC);

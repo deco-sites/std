@@ -1,6 +1,7 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { LiveConfig } from "../../live/blocks/handler.ts";
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import {
   ClientVTEX,
@@ -49,7 +50,7 @@ const SORT_TO_LEGACY_SORT: Record<string, string> = {
 
 export const pageTypesFromPathname = async (
   pathname: string,
-  vtex: ClientVTEX,
+  vtex: ClientVTEX
 ) => {
   const segments = pathname.split("/").filter(Boolean);
 
@@ -58,7 +59,7 @@ export const pageTypesFromPathname = async (
       vtex.catalog_system.pageType({
         slug: segments.slice(0, index + 1).join("/"),
       })
-    ),
+    )
   );
 
   return results.filter((result) => PAGE_TYPE_TO_MAP_PARAM[result.pageType]);
@@ -69,7 +70,7 @@ export const pageTypesToBreadcrumbList = (pages: PageType[], url: URL) => {
     ({ pageType }) =>
       pageType === "Category" ||
       pageType === "Department" ||
-      pageType === "SubCategory",
+      pageType === "SubCategory"
   );
 
   return filteredPages.map((page, index) => {
@@ -109,7 +110,7 @@ async function legacyPLPLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<ProductListingPage> {
   const props = ctx.state.$live;
   const url = new URL(req.url);
@@ -122,10 +123,11 @@ async function legacyPLPLoader(
   const page = Number(url.searchParams.get("page")) || 0;
   const O = (url.searchParams.get("O") ||
     SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
-  const ft = props.ft || url.searchParams.get("ft") ||
-    url.searchParams.get("q") || "";
+  const ft =
+    props.ft || url.searchParams.get("ft") || url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
-  const map = props.map ||
+  const map =
+    props.map ||
     url.searchParams.get("map") ||
     mapParamFromUrl(await pageTypesPromise);
   const _from = page * count;
@@ -163,7 +165,7 @@ async function legacyPLPLoader(
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
-    url,
+    url
   );
 
   const hasNextPage = Boolean(page < 50 && products.length === count);

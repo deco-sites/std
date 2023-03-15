@@ -1,5 +1,6 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { LiveConfig } from "../../live/blocks/handler.ts";
 
 import type { Filter } from "../commerce/types.ts";
 import { ProductListingPage } from "../commerce/types.ts";
@@ -73,7 +74,7 @@ async function plpLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<ProductListingPage> {
   const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;
@@ -86,9 +87,10 @@ async function plpLoader(
   const sort = (url.searchParams.get("sort") as Sort) || ("" as Sort);
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacetsFromParams = filtersFromSearchParams(url.searchParams);
-  const selectedFacets = selectedFacetsFromParams.length === 0
-    ? filtersFromPathname(await pageTypesPromise)
-    : selectedFacetsFromParams;
+  const selectedFacets =
+    selectedFacetsFromParams.length === 0
+      ? filtersFromPathname(await pageTypesPromise)
+      : selectedFacetsFromParams;
 
   const searchArgs = {
     query,
@@ -117,7 +119,7 @@ async function plpLoader(
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
-    url,
+    url
   );
 
   const hasNextPage = Boolean(pagination.next.proxyUrl);

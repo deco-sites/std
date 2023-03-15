@@ -1,9 +1,13 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
-import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
-import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
-import { toProduct } from "../commerce/shopify/transform.ts";
-import { ProductListingPage } from "../commerce/types.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import {
+  ConfigShopify,
+  createClient,
+} from "deco-sites/std/commerce/shopify/client.ts";
+import { toProduct } from "deco-sites/std/commerce/shopify/transform.ts";
+import { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import { LiveConfig } from "$live/blocks/handler.ts";
 
 export interface Props {
   /**
@@ -28,7 +32,7 @@ async function searchLoader(
   }: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configShopify?: ConfigShopify }>>
-  >,
+  >
 ): Promise<ProductListingPage> {
   const url = new URL(req.url);
   const { configShopify } = global;

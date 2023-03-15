@@ -1,6 +1,7 @@
-import type { LiveConfig, LiveState } from "$live/types.ts";
+import type { LiveState } from "$live/types.ts";
 
 import { HandlerContext } from "https://deno.land/x/fresh@1.1.3/server.ts";
+import { LiveConfig } from "../../live/blocks/handler.ts";
 import type { Product } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
@@ -42,7 +43,7 @@ async function productListLoader(
   ctx: HandlerContext<
     unknown,
     LiveConfig<Props, LiveState<{ configVTEX?: ConfigVTEX }>>
-  >,
+  >
 ): Promise<Product[]> {
   const props = ctx.state.$live;
   const { configVTEX } = ctx.state.global;
