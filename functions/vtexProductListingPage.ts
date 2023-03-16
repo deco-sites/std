@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "$live/types.ts";
 import type { LiveState } from "$live/types.ts";
 
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { slugify } from "../commerce/vtex/utils/slugify.ts";
 import {
   filtersFromSearchParams,
@@ -66,9 +67,9 @@ const filtersFromPathname = (pages: PageType[]) =>
  */
 const plpLoader: LoaderFunction<
   Props,
-  ProductListingPage,
+  ProductListingPage | null,
   LiveState<{ configVTEX?: ConfigVTEX }>
-> = async (
+> = withISFallback(async (
   req,
   ctx,
   props,
@@ -146,6 +147,6 @@ const plpLoader: LoaderFunction<
       },
     },
   };
-};
+});
 
 export default plpLoader;

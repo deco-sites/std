@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "$live/types.ts";
 import type { LiveState } from "$live/types.ts";
 
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
@@ -13,7 +14,7 @@ const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
   LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+> = withISFallback(async (
   req,
   ctx,
 ) => {
@@ -43,6 +44,6 @@ const productPageLoader: LoaderFunction<
       priceCurrency: vtex.currency(),
     }),
   };
-};
+});
 
 export default productPageLoader;

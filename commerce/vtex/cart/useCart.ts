@@ -1,23 +1,6 @@
 import { signal } from "@preact/signals";
+import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import type { OrderForm } from "../types.ts";
-
-const fetchAPI = async <T>(input: string, init?: RequestInit) => {
-  const response = await fetch(input, {
-    ...init,
-    headers: {
-      accept: "application/json",
-      ...init?.headers,
-    },
-  });
-
-  if (response.ok) {
-    return response.json() as Promise<T>;
-  }
-
-  throw new Error(
-    `Request failed with status code ${response.status} ${input}`,
-  );
-};
 
 const cart = signal<OrderForm | null>(null);
 const loading = signal<boolean>(true);

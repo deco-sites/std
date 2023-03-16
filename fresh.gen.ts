@@ -363,7 +363,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "4745e1202484ea61e4cdd1a83ec4c56d9e4dce67",
+            "$id": "1f15a836acd2ecbefef6eaf34ebcff98e39811f3",
           },
         },
         "additionalProperties": true,
@@ -396,7 +396,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "05ecb684cf4ee00e98171fdc45227df637e4804e",
+            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
           },
         },
         "additionalProperties": true,
@@ -491,7 +491,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "4745e1202484ea61e4cdd1a83ec4c56d9e4dce67",
+            "$id": "1f15a836acd2ecbefef6eaf34ebcff98e39811f3",
           },
         },
         "additionalProperties": true,
@@ -547,7 +547,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "05ecb684cf4ee00e98171fdc45227df637e4804e",
+            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
           },
         },
         "additionalProperties": true,
@@ -642,7 +642,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "4745e1202484ea61e4cdd1a83ec4c56d9e4dce67",
+            "$id": "1f15a836acd2ecbefef6eaf34ebcff98e39811f3",
           },
         },
         "additionalProperties": true,
@@ -675,7 +675,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "05ecb684cf4ee00e98171fdc45227df637e4804e",
+            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
           },
         },
         "additionalProperties": true,
@@ -702,7 +702,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "ed6dd98378c4000f0975a28f1d78921b8e165be8",
+            "$id": "9eacf861fb2b53de69284b63e9bc22217300cc3c",
           },
         },
         "additionalProperties": true,

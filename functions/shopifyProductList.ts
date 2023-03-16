@@ -18,7 +18,7 @@ export interface Props {
  */
 const searchLoader: LoaderFunction<
   Props,
-  Product[],
+  Product[] | null,
   LiveState<{ configShopify: ConfigShopify }>
 > = async (
   _req,

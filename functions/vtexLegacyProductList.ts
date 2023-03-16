@@ -40,7 +40,7 @@ export interface Props {
  */
 const legacyProductListLoader: LoaderFunction<
   Props,
-  Product[],
+  Product[] | null,
   LiveState<{ configVTEX: ConfigVTEX | undefined }>
 > = async (
   req,
