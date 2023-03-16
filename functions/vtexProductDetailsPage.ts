@@ -1,6 +1,7 @@
 import type { LoaderFunction } from "$live/types.ts";
 import type { LiveState } from "$live/types.ts";
 
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
@@ -45,4 +46,4 @@ const productPageLoader: LoaderFunction<
   };
 };
 
-export default productPageLoader;
+export default withISFallback(productPageLoader);

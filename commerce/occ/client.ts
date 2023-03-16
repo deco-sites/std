@@ -1,4 +1,4 @@
-import { fetchAPI } from "$live/utils/fetchAPI.ts";
+import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
   CategorySearchResult,
   OccProductPage,
