@@ -23,7 +23,7 @@ export interface Props {
  */
 const searchLoader: LoaderFunction<
   Props,
-  ProductListingPage,
+  ProductListingPage | null,
   LiveState<{ configShopify: ConfigShopify }>
 > = async (
   req,

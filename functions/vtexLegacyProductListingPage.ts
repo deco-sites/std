@@ -107,7 +107,7 @@ const mapParamFromUrl = (pages: PageType[]) =>
  */
 const legacyPLPLoader: LoaderFunction<
   Props,
-  ProductListingPage,
+  ProductListingPage | null,
   LiveState<{ configVTEX?: ConfigVTEX }>
 > = async (
   req,
