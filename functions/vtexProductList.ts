@@ -40,9 +40,9 @@ export interface Props {
  */
 const productListLoader: LoaderFunction<
   Props,
-  Product[],
+  Product[] | null,
   LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+> = withISFallback(async (
   req,
   ctx,
   props,
@@ -84,6 +84,6 @@ const productListLoader: LoaderFunction<
   return {
     data: products,
   };
-};
+});
 
-export default withISFallback(productListLoader);
+export default productListLoader;

@@ -13,9 +13,9 @@ export interface Props {
 
 const topSearches: LoaderFunction<
   Props,
-  Suggestion,
+  Suggestion | null,
   LiveState<{ configVTEX: ConfigVTEX }>
-> = async (_, ctx, { count }) => {
+> = withISFallback(async (_, ctx, { count }) => {
   const vtex = createClient(ctx.state.global.configVTEX);
   const topSearches = await vtex.search.topSearches(
     { locale: ctx.state.global.configVTEX.defaultLocale },
@@ -29,6 +29,6 @@ const topSearches: LoaderFunction<
         : topSearches?.searches,
     },
   };
-};
+});
 
-export default withISFallback(topSearches);
+export default topSearches;

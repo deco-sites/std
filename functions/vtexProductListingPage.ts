@@ -69,7 +69,7 @@ const plpLoader: LoaderFunction<
   Props,
   ProductListingPage | null,
   LiveState<{ configVTEX?: ConfigVTEX }>
-> = async (
+> = withISFallback(async (
   req,
   ctx,
   props,
@@ -147,6 +147,6 @@ const plpLoader: LoaderFunction<
       },
     },
   };
-};
+});
 
-export default withISFallback(plpLoader);
+export default plpLoader;

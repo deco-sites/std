@@ -14,7 +14,7 @@ const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
   LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+> = withISFallback(async (
   req,
   ctx,
 ) => {
@@ -44,6 +44,6 @@ const productPageLoader: LoaderFunction<
       priceCurrency: vtex.currency(),
     }),
   };
-};
+});
 
-export default withISFallback(productPageLoader);
+export default productPageLoader;
