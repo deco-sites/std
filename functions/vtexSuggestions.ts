@@ -1,6 +1,7 @@
 import { LiveState, LoaderFunction } from "$live/types.ts";
 import { Suggestion } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 
 export interface Props {
   /**
@@ -30,4 +31,4 @@ const topSearches: LoaderFunction<
   };
 };
 
-export default topSearches;
+export default withISFallback(topSearches);
