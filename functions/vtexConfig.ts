@@ -7,10 +7,9 @@ export interface ClientConfigVTEX {
   account: string;
   defaultLocale: string;
   defaultPriceCurrency: string;
-  //   defaultLocale: ConfigVTEX["defaultLocale"];
-  //   defaultPriceCurrency: ConfigVTEX["defaultPriceCurrency"];
 }
 
+// TODO: Drop this when live@1.x
 /**
  * @title Loader to get vtex config and pass to components
  * @description Usefull for client side components, like: search auto complete.
