@@ -678,8 +678,14 @@ export interface PageType {
     | "FullText";
 }
 
-export interface CategoryTree {
-  categoryLevels: number;
+export interface Categories {
+  id: number;
+  name: string;
+  hasChildren: boolean;
+  children: Categories[];
+  url: string;
+  Title?: string;
+  MetaTagDescription?: string;
 }
 
 export interface LegacyFacet {

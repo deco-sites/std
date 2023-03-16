@@ -82,10 +82,7 @@ const productListLoader: LoaderFunction<
     toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
-  // Get category tree
-
-  const categoryTree = await vtex.catalog_system.categoryTree({categoryLevels: 2});
-  console.log(categoryTree)
+  
 
   return {
     data: products,

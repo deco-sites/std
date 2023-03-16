@@ -1,6 +1,6 @@
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
-  CategoryTree,
+  Categories,
   FacetSearchResult,
   LegacyFacets,
   LegacyProduct,
@@ -211,7 +211,7 @@ export const createClient = ({
     );
 
   const categoryTree = ({ categoryLevels }: { categoryLevels: number }) => {
-    return fetchAPI<CategoryTree>(
+    return fetchAPI<Categories>(
       new URL(
         `./api/catalog_system/pub/category/tree/${categoryLevels}`,
         baseUrl,

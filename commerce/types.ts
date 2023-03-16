@@ -360,6 +360,18 @@ export interface Suggestion {
   products?: Product[];
 }
 
-export interface CategoryTree {
-  categoryLevels: number;
+export interface Categories {
+  id: number;
+  name: string;
+  hasChildren: boolean;
+  // TODO: Create a way to recursive types withou making a infinite loop
+  // deno-lint-ignore no-explicit-any
+  children: any | null;
+  url: string;
+  Title?: string;
+  MetaTagDescription?: string;
 }
+
+
+
+

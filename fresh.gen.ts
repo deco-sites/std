@@ -20,20 +20,21 @@ import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
 import * as $$$$3 from "./functions/shopifyProductListingPage.ts";
-import * as $$$$4 from "./functions/vtexConfig.ts";
-import * as $$$$5 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $$$$6 from "./functions/vtexLegacyProductList.ts";
-import * as $$$$7 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $$$$8 from "./functions/vtexProductDetailsPage.ts";
-import * as $$$$9 from "./functions/vtexProductList.ts";
-import * as $$$$10 from "./functions/vtexProductListingPage.ts";
-import * as $$$$11 from "./functions/vtexSuggestions.ts";
-import * as $$$$12 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$13 from "$live/functions/MatchDate.ts";
-import * as $$$$14 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$15 from "$live/functions/MatchRandom.ts";
-import * as $$$$16 from "$live/functions/MatchSite.ts";
-import * as $$$$17 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$4 from "./functions/vtexCategoryTree.ts";
+import * as $$$$5 from "./functions/vtexConfig.ts";
+import * as $$$$6 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $$$$7 from "./functions/vtexLegacyProductList.ts";
+import * as $$$$8 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $$$$9 from "./functions/vtexProductDetailsPage.ts";
+import * as $$$$10 from "./functions/vtexProductList.ts";
+import * as $$$$11 from "./functions/vtexProductListingPage.ts";
+import * as $$$$12 from "./functions/vtexSuggestions.ts";
+import * as $$$$13 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$14 from "$live/functions/MatchDate.ts";
+import * as $$$$15 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$16 from "$live/functions/MatchRandom.ts";
+import * as $$$$17 from "$live/functions/MatchSite.ts";
+import * as $$$$18 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -56,20 +57,21 @@ const manifest: DecoManifest = {
     "./functions/shopifyProductDetailsPage.ts": $$$$1,
     "./functions/shopifyProductList.ts": $$$$2,
     "./functions/shopifyProductListingPage.ts": $$$$3,
-    "./functions/vtexConfig.ts": $$$$4,
-    "./functions/vtexLegacyProductDetailsPage.ts": $$$$5,
-    "./functions/vtexLegacyProductList.ts": $$$$6,
-    "./functions/vtexLegacyProductListingPage.ts": $$$$7,
-    "./functions/vtexProductDetailsPage.ts": $$$$8,
-    "./functions/vtexProductList.ts": $$$$9,
-    "./functions/vtexProductListingPage.ts": $$$$10,
-    "./functions/vtexSuggestions.ts": $$$$11,
-    "$live/functions/EffectSelectPage.ts": $$$$12,
-    "$live/functions/MatchDate.ts": $$$$13,
-    "$live/functions/MatchEnvironment.ts": $$$$14,
-    "$live/functions/MatchRandom.ts": $$$$15,
-    "$live/functions/MatchSite.ts": $$$$16,
-    "$live/functions/MatchUserAgent.ts": $$$$17,
+    "./functions/vtexCategoryTree.ts": $$$$4,
+    "./functions/vtexConfig.ts": $$$$5,
+    "./functions/vtexLegacyProductDetailsPage.ts": $$$$6,
+    "./functions/vtexLegacyProductList.ts": $$$$7,
+    "./functions/vtexLegacyProductListingPage.ts": $$$$8,
+    "./functions/vtexProductDetailsPage.ts": $$$$9,
+    "./functions/vtexProductList.ts": $$$$10,
+    "./functions/vtexProductListingPage.ts": $$$$11,
+    "./functions/vtexSuggestions.ts": $$$$12,
+    "$live/functions/EffectSelectPage.ts": $$$$13,
+    "$live/functions/MatchDate.ts": $$$$14,
+    "$live/functions/MatchEnvironment.ts": $$$$15,
+    "$live/functions/MatchRandom.ts": $$$$16,
+    "$live/functions/MatchSite.ts": $$$$17,
+    "$live/functions/MatchUserAgent.ts": $$$$18,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -404,6 +406,32 @@ const manifest: DecoManifest = {
         "additionalProperties": true,
       },
     },
+    "./functions/vtexCategoryTree.ts": {
+      "inputSchema": {
+        "title": "Vtex Category Tree",
+        "type": "object",
+        "properties": {
+          "levels": {
+            "type": "number",
+            "title": "Levels",
+            "description": "number of categories levels to be returned",
+            "default": "2",
+          },
+        },
+        "required": [
+          "levels",
+        ],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "f9d39beed44d096543140a08e430f55071164a0d",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
     "./functions/vtexConfig.ts": {
       "inputSchema": {
         "type": "null",
@@ -648,6 +676,13 @@ const manifest: DecoManifest = {
             "description":
               "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
             "pattern": "\\d*",
+          },
+          "categoryLevels": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Category Levels",
           },
         },
         "required": [
