@@ -69,6 +69,7 @@ export default function useAutocomplete(
   { configVTEX }: UseVTEXAutocompleteProps,
 ): AutocompleteHook {
   if (configVTEX && !vtexClient) {
+    // TODO: create a singleton
     vtexClient = createClient({
       ...configVTEX,
       baseUrl: window.location.origin,
