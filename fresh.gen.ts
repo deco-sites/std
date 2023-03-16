@@ -9,7 +9,6 @@ import * as $0 from "./routes/404.tsx";
 import * as $1 from "./routes/[...catchall].tsx";
 import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/index.tsx";
-import * as $4 from "./routes/inspect-vscode.ts";
 import * as $$0 from "./islands/LiveControls.tsx";
 import * as $$$0 from "./sections/SEO.tsx";
 import * as $$$1 from "./sections/SEOPDP.tsx";
@@ -41,7 +40,6 @@ const manifest: DecoManifest = {
     "./routes/[...catchall].tsx": $1,
     "./routes/_middleware.ts": $2,
     "./routes/index.tsx": $3,
-    "./routes/inspect-vscode.ts": $4,
   },
   islands: { "./islands/LiveControls.tsx": $$0 },
   sections: {
