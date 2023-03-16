@@ -10,12 +10,12 @@
   },
   "lint": {
     "files": {
-      "exclude": ["static/"]
+      "exclude": ["static/", "README.md"]
     }
   },
   "fmt": {
     "files": {
-      "exclude": ["static/"]
+      "exclude": ["static/", "README.md"]
     }
   },
   "importMap": "./import_map.json",
