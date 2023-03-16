@@ -358,3 +358,7 @@ export interface Search {
 export interface Suggestion {
   searches?: Search[];
 }
+
+export interface CategoryTree {
+  categoryLevels: number;
+}

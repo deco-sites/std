@@ -678,6 +678,10 @@ export interface PageType {
     | "FullText";
 }
 
+export interface CategoryTree {
+  categoryLevels: number;
+}
+
 export interface LegacyFacet {
   Quantity: number;
   Name: string;

@@ -31,6 +31,7 @@ export interface Props {
    * @pattern \d*
    */
   collection?: string[];
+  categoryLevels?: number;
 }
 
 /**
@@ -79,6 +80,11 @@ const productListLoader: LoaderFunction<
   const products = vtexProducts.map((p) =>
     toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
+
+  // Get category tree
+
+  const categoryTree = await vtex.catalog_system.categoryTree({categoryLevels: 2});
+  console.log(categoryTree)
 
   return {
     data: products,
