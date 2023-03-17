@@ -81,8 +81,6 @@ const productListLoader: LoaderFunction<
     toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
-  
-
   return {
     data: products,
   };

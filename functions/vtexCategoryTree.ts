@@ -27,21 +27,25 @@ const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ confi
     category.name = category.name.toLowerCase().replace(/-/g, " ");
   });
 
-  const finalCategories = categoriesArray.filter((category) => !category.hidden);
 
   if (categoriesOrder.length > 0) {
+    console.log(categoriesOrder)
     const reversedCategoriesOrder = [...categoriesOrder].reverse();
 
     reversedCategoriesOrder.forEach((category) => {
-      const index = finalCategories.findIndex((item) => item.name.toLowerCase().replace(/\s+/g, "-") === category.name.toLowerCase().replace(/\s+/g, "-"));
+      const index = categoriesArray.findIndex((item) => item.name.toLowerCase().replace(/\s+/g, "-") === category.name.toLowerCase().replace(/\s+/g, "-"));
 
       if (index !== -1) {
-        finalCategories[index].hidden = category.hideCategory;
-        const [item] = finalCategories.splice(index, 1);
-        finalCategories.unshift(item);
+        categoriesArray[index].hidden = category.hideCategory;
+        console.log(category.hideCategory, 'category.hideCategory')
+        const [item] = categoriesArray.splice(index, 1);
+        categoriesArray.unshift(item);
       }
     });
   }
+
+  const finalCategories = categoriesArray.filter((category) => !category.hidden);
+
 
   return {
     data: finalCategories,
