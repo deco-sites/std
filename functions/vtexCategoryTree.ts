@@ -1,5 +1,5 @@
 import { LiveState, LoaderFunction } from "$live/types.ts";
-import { Categories } from "../commerce/types.ts";
+import { Categories, CategoriesReturn } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 
@@ -13,7 +13,7 @@ export interface CategoriesOrder {
   hideCategory?: boolean;
 }
 
-const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ configVTEX: ConfigVTEX }>> = withISFallback(async (_, ctx, { levels = 2, categoriesOrder = [] }) => {
+const categoryTree: LoaderFunction<Props, CategoriesReturn  | null, LiveState<{ configVTEX: ConfigVTEX }>> = withISFallback(async (_, ctx, { levels = 2, categoriesOrder = [] }) => {
   const vtex = createClient(ctx.state.global.configVTEX);
   const categories = await vtex.catalog_system.categoryTree({ categoryLevels: levels });
 
@@ -29,6 +29,7 @@ const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ confi
 
 
   if (categoriesOrder.length > 0) {
+
     const reversedCategoriesOrder = [...categoriesOrder].reverse();
 
     reversedCategoriesOrder.forEach((category) => {
@@ -46,7 +47,10 @@ const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ confi
 
 
   return {
-    data: finalCategories,
+    data: {
+      showCategories: finalCategories,
+      allCategories: categoriesArray
+    },
   };
 });
 

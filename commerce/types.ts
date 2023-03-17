@@ -374,5 +374,10 @@ export interface Categories  {
 }
 
 
+export interface CategoriesReturn {
+  showCategories: Categories[]
+  allCategories: Categories[]
+}
+
 
 
