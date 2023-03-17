@@ -29,7 +29,6 @@ const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ confi
 
 
   if (categoriesOrder.length > 0) {
-    console.log(categoriesOrder)
     const reversedCategoriesOrder = [...categoriesOrder].reverse();
 
     reversedCategoriesOrder.forEach((category) => {
@@ -37,7 +36,6 @@ const categoryTree: LoaderFunction<Props, Categories[] | null, LiveState<{ confi
 
       if (index !== -1) {
         categoriesArray[index].hidden = category.hideCategory;
-        console.log(category.hideCategory, 'category.hideCategory')
         const [item] = categoriesArray.splice(index, 1);
         categoriesArray.unshift(item);
       }
