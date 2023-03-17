@@ -417,16 +417,42 @@ const manifest: DecoManifest = {
             "description": "number of categories levels to be returned",
             "default": "2",
           },
+          "categoriesOrder": {
+            "type": "array",
+            "items": {
+              "title": "CategoriesOrder",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name",
+                },
+                "hideCategory": {
+                  "type": [
+                    "boolean",
+                    "null",
+                  ],
+                  "title": "Hide Category",
+                },
+              },
+              "required": [
+                "name",
+              ],
+            },
+            "title": "Categories Order",
+            "description": "order of categories",
+          },
         },
         "required": [
           "levels",
+          "categoriesOrder",
         ],
       },
       "outputSchema": {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "f9d39beed44d096543140a08e430f55071164a0d",
+            "$id": "e7e597ea99f8e50061968a0ac8629b1537357428",
           },
         },
         "additionalProperties": true,

@@ -360,7 +360,7 @@ export interface Suggestion {
   products?: Product[];
 }
 
-export interface Categories {
+export interface Categories  {
   id: number;
   name: string;
   hasChildren: boolean;
@@ -370,6 +370,7 @@ export interface Categories {
   url: string;
   Title?: string;
   MetaTagDescription?: string;
+  hidden?: boolean;
 }
 
 
