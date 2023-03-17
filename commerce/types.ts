@@ -233,7 +233,7 @@ export interface ProductGroup extends Omit<Thing, "@type"> {
    * Note: Publishers should be aware that applications designed to use specific schema.org properties (e.g. https://schema.org/width, https://schema.org/color, https://schema.org/gtin13, ...) will typically expect such data to be provided using those properties, rather than using the generic property/value mechanism.
    */
   additionalProperty: PropertyValue[];
-  /** @docs https://schema.org/gtin */
+  /** docs https://schema.org/gtin */
   model?: string;
 }
 
