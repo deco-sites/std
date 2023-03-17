@@ -63,6 +63,7 @@ const categoryTree: LoaderFunction<
     (category) => !category.hidden
   );
 
+
   return {
     data: finalCategories,
   };
