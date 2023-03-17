@@ -32,7 +32,6 @@ export interface Props {
    * @pattern \d*
    */
   collection?: string[];
-  categoryLevels?: number;
 }
 
 /**
