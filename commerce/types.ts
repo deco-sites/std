@@ -360,11 +360,11 @@ export interface Suggestion {
   products?: Product[];
 }
 
-export interface Categories  {
+export interface Categories {
   id: number;
   name: string;
   hasChildren: boolean;
-  // TODO: Create a way to recursive types withou making a infinite loop
+  // FIXME(lfroes) The schema generator is not handling recursive types leading in a infinite recursion loop
   // deno-lint-ignore no-explicit-any
   children: any | null;
   url: string;
@@ -373,11 +373,7 @@ export interface Categories  {
   hidden?: boolean;
 }
 
-
 export interface CategoriesReturn {
-  showCategories: Categories[]
-  allCategories: Categories[]
+  showCategories: Categories[];
+  allCategories: Categories[];
 }
-
-
-
