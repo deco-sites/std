@@ -165,7 +165,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "page": {
-            "$id": "05ecb684cf4ee00e98171fdc45227df637e4804e",
+            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
             "format": "live-function",
             "type": "string",
             "title": "Page",

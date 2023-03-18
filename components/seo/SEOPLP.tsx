@@ -5,7 +5,7 @@ import SEOBase from "./SEOBase.tsx";
 import type { ProductListingPage } from "../../commerce/types.ts";
 
 export interface Props {
-  page: LoaderReturnType<ProductListingPage>;
+  page: LoaderReturnType<ProductListingPage | null>;
   title?: string;
   description?: string;
   url?: string;
