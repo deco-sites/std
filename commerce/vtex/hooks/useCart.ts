@@ -1,7 +1,12 @@
 import { signal } from "@preact/signals";
 import { fetchAPI } from "../../../utils/fetchAPI.ts";
-import type { OrderForm } from "../types.ts";
+import type {
+  OrderForm,
+  SimulationData,
+  SimulationOrderForm,
+} from "../types.ts";
 
+const simulation = signal<SimulationOrderForm | null>(null);
 const cart = signal<OrderForm | null>(null);
 const loading = signal<boolean>(true);
 
@@ -26,9 +31,9 @@ interface CartInstallmentsOptions {
   paymentSystem: number;
 }
 
-const getCartInstallments = async (
-  { paymentSystem }: CartInstallmentsOptions,
-) => {
+const getCartInstallments = async ({
+  paymentSystem,
+}: CartInstallmentsOptions) => {
   const params = new URLSearchParams({ paymentSystem: `${paymentSystem}` });
 
   cart.value = await fetchAPI(
@@ -42,9 +47,9 @@ interface IgnoreProfileDataOptions {
   ignoreProfileData: boolean;
 }
 
-const ignoreProfileData = async (
-  { ignoreProfileData }: IgnoreProfileDataOptions,
-) => {
+const ignoreProfileData = async ({
+  ignoreProfileData,
+}: IgnoreProfileDataOptions) => {
   cart.value = await fetchAPI(
     `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/profile`,
     {
@@ -78,9 +83,7 @@ const changePrice = async ({ itemIndex, price }: ChangePriceOptions) => {
 };
 
 const getCart = async () => {
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm`,
-  );
+  cart.value = await fetchAPI<OrderForm>(`/api/checkout/pub/orderForm`);
 };
 
 const removeAllPersonalData = async () => {
@@ -97,9 +100,10 @@ interface UpdateItemsOptions {
   allowedOutdatedData?: Array<"paymentData">;
 }
 
-const updateItems = async (
-  { orderItems, allowedOutdatedData = ["paymentData"] }: UpdateItemsOptions,
-) => {
+const updateItems = async ({
+  orderItems,
+  allowedOutdatedData = ["paymentData"],
+}: UpdateItemsOptions) => {
   const params = new URLSearchParams();
 
   if (allowedOutdatedData) {
@@ -122,6 +126,16 @@ const updateItems = async (
   );
 };
 
+const simulateShipping = async (data: SimulationData) => {
+  simulation.value = await fetchAPI<SimulationOrderForm>(
+    `./api/checkout/pub/orderForms/simulation`,
+    {
+      method: "POST",
+      body: JSON.stringify(data),
+    },
+  );
+};
+
 const removeAllItems = async () => {
   cart.value = await fetchAPI<OrderForm>(
     `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/items/removeAll`,
@@ -140,9 +154,10 @@ interface AddItemsOptions {
   allowedOutdatedData?: Array<"paymentData">;
 }
 
-const addItems = async (
-  { orderItems, allowedOutdatedData = ["paymentData"] }: AddItemsOptions,
-) => {
+const addItems = async ({
+  orderItems,
+  allowedOutdatedData = ["paymentData"],
+}: AddItemsOptions) => {
   const params = new URLSearchParams();
 
   if (allowedOutdatedData) {
@@ -204,6 +219,7 @@ if (typeof document !== "undefined") {
 const state = {
   loading,
   cart,
+  simulation,
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items/removeAll */
   removeAllItems: () =>
     withPQueue(() => withCart(() => withLoading(removeAllItems))),
@@ -232,6 +248,9 @@ const state = {
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/coupons */
   addCouponsToCart: (opts: AddCouponsToCartOptions) =>
     withPQueue(() => withCart(() => withLoading(() => addCouponsToCart(opts)))),
+  /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
+  simulateShipping: (data: SimulationData) =>
+    withPQueue(() => withCart(() => withLoading(() => simulateShipping(data)))),
 };
 
 export const useCart = () => state;
