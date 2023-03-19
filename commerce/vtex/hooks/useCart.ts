@@ -23,7 +23,7 @@ const addCouponsToCart = async ({ text }: AddCouponsToCartOptions) => {
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 };
 
@@ -39,7 +39,7 @@ const getCartInstallments = async ({
   cart.value = await fetchAPI(
     `/api/checkout/pub/orderForm/${
       cart.value!.orderFormId
-    }/installments?${params}`
+    }/installments?${params}`,
   );
 };
 
@@ -58,7 +58,7 @@ const ignoreProfileData = async ({
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 };
 
@@ -78,7 +78,7 @@ const changePrice = async ({ itemIndex, price }: ChangePriceOptions) => {
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 };
 
@@ -88,7 +88,7 @@ const getCart = async () => {
 
 const removeAllPersonalData = async () => {
   cart.value = await fetchAPI<OrderForm>(
-    `/checkout/changeToAnonymousUser/${cart.value!.orderFormId}`
+    `/checkout/changeToAnonymousUser/${cart.value!.orderFormId}`,
   );
 };
 
@@ -122,7 +122,7 @@ const updateItems = async ({
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 };
 
@@ -132,14 +132,14 @@ const simulateShipping = async (data: SimulationData) => {
     {
       method: "POST",
       body: JSON.stringify(data),
-    }
+    },
   );
 };
 
 const removeAllItems = async () => {
   cart.value = await fetchAPI<OrderForm>(
     `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/items/removeAll`,
-    { method: "POST" }
+    { method: "POST" },
   );
 };
 
@@ -174,7 +174,7 @@ const addItems = async ({
       headers: {
         "content-type": "application/json",
       },
-    }
+    },
   );
 };
 
@@ -212,7 +212,7 @@ if (typeof document !== "undefined") {
 
   document.addEventListener(
     "visibilitychange",
-    () => document.visibilityState === "visible" && _getCart()
+    () => document.visibilityState === "visible" && _getCart(),
   );
 }
 
