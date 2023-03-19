@@ -8,6 +8,8 @@ import {
   ProductSearchResult,
   SearchArgs,
   SelectedFacet,
+  SimulationData,
+  SimulationOrderForm,
   Suggestion,
 } from "./types.ts";
 
@@ -209,9 +211,20 @@ export const createClient = ({
       new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, baseUrl).href,
     );
 
+  const simulation = (data: SimulationData) => {
+    return fetchAPI<SimulationOrderForm>(
+      new URL(`./api/checkout/pub/orderForms/simulation`, baseUrl).href,
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+      },
+    );
+  };
+
   return {
     currency: () => defaultPriceCurrency,
     locale: () => defaultLocale,
+    simulation,
     search: {
       facets,
       products,
