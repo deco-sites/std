@@ -1,3 +1,4 @@
+import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
   FacetSearchResult,
@@ -24,7 +25,7 @@ interface LegacyParams {
   map?: string;
 }
 
-export interface ConfigVTEX {
+export interface ConfigVTEX extends Account {
   /**
    * @description VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.
    */

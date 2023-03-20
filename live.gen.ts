@@ -18,15 +18,16 @@ import * as $8 from "deco-sites/std/functions/vtexProductDetailsPage.ts";
 import * as $9 from "deco-sites/std/functions/vtexLegacyProductList.ts";
 import * as $10 from "deco-sites/std/functions/shopifyProductList.ts";
 import * as $11 from "deco-sites/std/functions/shopifyProductDetailsPage.ts";
-import * as $$$0 from "./routes/404.tsx";
-import * as $$$1 from "./routes/_middleware.ts";
-import * as $$$$$$$0 from "deco-sites/std/sections/SEO.tsx";
-import * as $$$$$$$1 from "deco-sites/std/sections/SEOPLP.tsx";
-import * as $$$$$$$2 from "deco-sites/std/sections/configOCC.global.tsx";
-import * as $$$$$$$3 from "deco-sites/std/sections/configShopify.global.tsx";
-import * as $$$$$$$4 from "deco-sites/std/sections/configVTEX.global.tsx";
-import * as $$$$$$$5 from "deco-sites/std/sections/SEOPDP.tsx";
+import * as $$0 from "deco-sites/std/accounts/vtexAccount.ts";
+import * as $$1 from "deco-sites/std/accounts/shopifyAccount.ts";
+import * as $$2 from "deco-sites/std/accounts/occAccount.ts";
+import * as $$$$0 from "./routes/404.tsx";
+import * as $$$$$$$$0 from "deco-sites/std/sections/SEO.tsx";
+import * as $$$$$$$$1 from "deco-sites/std/sections/SEOPLP.tsx";
+import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPDP.tsx";
 import { $live } from "$live/engine/fresh/manifest.ts";
+import * as $live_middleware from "$live/routes/_middleware.ts";
+import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_schema from "$live/routes/live/schema.ts";
 import * as $live_previews from "$live/routes/live/previews/[...block].tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
@@ -59,20 +60,23 @@ const manifest: DecoManifest = {
     "deco-sites/std/functions/shopifyProductList.ts": $10,
     "deco-sites/std/functions/shopifyProductDetailsPage.ts": $11,
   },
+  "accounts": {
+    "deco-sites/std/accounts/vtexAccount.ts": $$0,
+    "deco-sites/std/accounts/shopifyAccount.ts": $$1,
+    "deco-sites/std/accounts/occAccount.ts": $$2,
+  },
   "routes": {
-    "./routes/404.tsx": $$$0,
-    "./routes/_middleware.ts": $$$1,
+    "./routes/404.tsx": $$$$0,
+    "./routes/_middleware.ts": $live_middleware,
+    "./routes/live/inspect.ts": $live_inspect,
     "./routes/live/schema.ts": $live_schema,
     "./routes/live/previews/[...block].tsx": $live_previews,
     "./routes/[...catchall].tsx": $live_catchall,
   },
   "sections": {
-    "deco-sites/std/sections/SEO.tsx": $$$$$$$0,
-    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$1,
-    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$2,
-    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$3,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$4,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$5,
+    "deco-sites/std/sections/SEO.tsx": $$$$$$$$0,
+    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$1,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$2,
   },
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$0,
@@ -101,5 +105,6 @@ const manifest: DecoManifest = {
 };
 
 context.namespace = "deco-sites/std";
+context.siteId = 538;
 
 export default $live(manifest);

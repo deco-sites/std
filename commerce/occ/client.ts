@@ -1,3 +1,4 @@
+import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
   CategorySearchResult,
@@ -13,7 +14,7 @@ export interface SearchCategoryArgs {
   offset?: number;
 }
 
-export interface ConfigOCC {
+export interface ConfigOCC extends Account {
   baseUrl: string;
   // TOOD: Don't know yet what it means
   nrpp?: string;
