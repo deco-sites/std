@@ -1,6 +1,6 @@
 {
   "imports": {
-    "$live/": "https://denopkg.com/deco-cx/live@e1b844aeb226fb00647a5efb740115bb43160f01/",
+    "$live/": "https://denopkg.com/deco-cx/live@9b28f3e9ab028f30332dc82eb1b62254752a2348/",
     "deco-sites/std/": "./",
     "partytown/": "https://deno.land/x/partytown@0.2.1/",
     "inspect_vscode/": "https://deno.land/x/inspect_vscode@0.1.2/",

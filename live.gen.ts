@@ -18,14 +18,13 @@ import * as $8 from "deco-sites/std/functions/vtexProductDetailsPage.ts";
 import * as $9 from "deco-sites/std/functions/vtexLegacyProductList.ts";
 import * as $10 from "deco-sites/std/functions/shopifyProductList.ts";
 import * as $11 from "deco-sites/std/functions/shopifyProductDetailsPage.ts";
-import * as $$0 from "deco-sites/std/accounts/vtexAccount.ts";
-import * as $$1 from "deco-sites/std/accounts/shopifyAccount.ts";
-import * as $$2 from "deco-sites/std/accounts/occAccount.ts";
+import * as $$0 from "deco-sites/std/accounts/vtex.ts";
+import * as $$1 from "deco-sites/std/accounts/shopify.ts";
+import * as $$2 from "deco-sites/std/accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$$$$$0 from "deco-sites/std/sections/SEO.tsx";
 import * as $$$$$$$$1 from "deco-sites/std/sections/SEOPLP.tsx";
 import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPDP.tsx";
-import { $live } from "$live/engine/fresh/manifest.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_schema from "$live/routes/live/schema.ts";
@@ -61,9 +60,9 @@ const manifest: DecoManifest = {
     "deco-sites/std/functions/shopifyProductDetailsPage.ts": $11,
   },
   "accounts": {
-    "deco-sites/std/accounts/vtexAccount.ts": $$0,
-    "deco-sites/std/accounts/shopifyAccount.ts": $$1,
-    "deco-sites/std/accounts/occAccount.ts": $$2,
+    "deco-sites/std/accounts/vtex.ts": $$0,
+    "deco-sites/std/accounts/shopify.ts": $$1,
+    "deco-sites/std/accounts/occ.ts": $$2,
   },
   "routes": {
     "./routes/404.tsx": $$$$0,
@@ -107,4 +106,4 @@ const manifest: DecoManifest = {
 context.namespace = "deco-sites/std";
 context.siteId = 538;
 
-export default $live(manifest);
+export default manifest;

@@ -1,20 +1,19 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveState, LoaderFunction } from "$live/types.ts";
 
-import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import { slugify } from "../commerce/vtex/utils/slugify.ts";
+import type { Filter, ProductListingPage } from "../commerce/types.ts";
+import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import {
   filtersFromSearchParams,
   toFilter,
   toProduct,
 } from "../commerce/vtex/transform.ts";
+import type { PageType, Sort } from "../commerce/vtex/types.ts";
+import { slugify } from "../commerce/vtex/utils/slugify.ts";
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "./vtexLegacyProductListingPage.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import type { Filter, ProductListingPage } from "../commerce/types.ts";
-import type { PageType, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /**
@@ -27,6 +26,33 @@ export interface Props {
    */
   count: number;
 }
+
+export const singleFlightKey = (
+  props: Props,
+  { request }: { request: Request },
+) => {
+  const url = new URL(request.url);
+  const { query, count, sort, page, selectedFacets } = searchArgsOf(props, url);
+  return `${query}${count}${sort}${page}${
+    selectedFacets.map((f) => `${f.key}${f.value}`).sort().join("")
+  }`;
+};
+
+const searchArgsOf = (props: Props, url: URL) => {
+  const count = props.count ?? 12;
+  const query = props.query || url.searchParams.get("q") || "";
+  const page = Number(url.searchParams.get("page")) || 0;
+  const sort = url.searchParams.get("sort") as Sort || "" as Sort;
+  const selectedFacets = filtersFromSearchParams(url.searchParams);
+
+  return {
+    query,
+    page,
+    sort,
+    count,
+    selectedFacets,
+  };
+};
 
 const PAGE_TYPE_TO_MAP_PARAM = {
   Brand: "brand",
@@ -78,21 +104,18 @@ const plpLoader: LoaderFunction<
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
-  const count = props.count ?? 12;
-  const query = props.query || url.searchParams.get("q") || "";
-  const page = Number(url.searchParams.get("page")) || 0;
-  const sort = url.searchParams.get("sort") as Sort || "" as Sort;
+  const { selectedFacets: baseSelectedFacets, page, ...args } = searchArgsOf(
+    props,
+    url,
+  );
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
-  const selectedFacetsFromParams = filtersFromSearchParams(url.searchParams);
-  const selectedFacets = selectedFacetsFromParams.length === 0
+  const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)
-    : selectedFacetsFromParams;
+    : baseSelectedFacets;
 
   const searchArgs = {
-    query,
+    ...args,
     page,
-    sort,
-    count,
     selectedFacets,
   };
 
