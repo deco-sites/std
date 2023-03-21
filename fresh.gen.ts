@@ -29,17 +29,18 @@ import * as $$$$7 from "./functions/vtexConfig.ts";
 import * as $$$$8 from "./functions/vtexLegacyProductDetailsPage.ts";
 import * as $$$$9 from "./functions/vtexLegacyProductList.ts";
 import * as $$$$10 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $$$$11 from "./functions/vtexNavbar.ts";
-import * as $$$$12 from "./functions/vtexProductDetailsPage.ts";
-import * as $$$$13 from "./functions/vtexProductList.ts";
-import * as $$$$14 from "./functions/vtexProductListingPage.ts";
-import * as $$$$15 from "./functions/vtexSuggestions.ts";
-import * as $$$$16 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$17 from "$live/functions/MatchDate.ts";
-import * as $$$$18 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$19 from "$live/functions/MatchRandom.ts";
-import * as $$$$20 from "$live/functions/MatchSite.ts";
-import * as $$$$21 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$11 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $$$$12 from "./functions/vtexNavbar.ts";
+import * as $$$$13 from "./functions/vtexProductDetailsPage.ts";
+import * as $$$$14 from "./functions/vtexProductList.ts";
+import * as $$$$15 from "./functions/vtexProductListingPage.ts";
+import * as $$$$16 from "./functions/vtexSuggestions.ts";
+import * as $$$$17 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$18 from "$live/functions/MatchDate.ts";
+import * as $$$$19 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$20 from "$live/functions/MatchRandom.ts";
+import * as $$$$21 from "$live/functions/MatchSite.ts";
+import * as $$$$22 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -71,17 +72,18 @@ const manifest: DecoManifest = {
     "./functions/vtexLegacyProductDetailsPage.ts": $$$$8,
     "./functions/vtexLegacyProductList.ts": $$$$9,
     "./functions/vtexLegacyProductListingPage.ts": $$$$10,
-    "./functions/vtexNavbar.ts": $$$$11,
-    "./functions/vtexProductDetailsPage.ts": $$$$12,
-    "./functions/vtexProductList.ts": $$$$13,
-    "./functions/vtexProductListingPage.ts": $$$$14,
-    "./functions/vtexSuggestions.ts": $$$$15,
-    "$live/functions/EffectSelectPage.ts": $$$$16,
-    "$live/functions/MatchDate.ts": $$$$17,
-    "$live/functions/MatchEnvironment.ts": $$$$18,
-    "$live/functions/MatchRandom.ts": $$$$19,
-    "$live/functions/MatchSite.ts": $$$$20,
-    "$live/functions/MatchUserAgent.ts": $$$$21,
+    "./functions/vtexLegacyRelatedProductsLoader.ts": $$$$11,
+    "./functions/vtexNavbar.ts": $$$$12,
+    "./functions/vtexProductDetailsPage.ts": $$$$13,
+    "./functions/vtexProductList.ts": $$$$14,
+    "./functions/vtexProductListingPage.ts": $$$$15,
+    "./functions/vtexSuggestions.ts": $$$$16,
+    "$live/functions/EffectSelectPage.ts": $$$$17,
+    "$live/functions/MatchDate.ts": $$$$18,
+    "$live/functions/MatchEnvironment.ts": $$$$19,
+    "$live/functions/MatchRandom.ts": $$$$20,
+    "$live/functions/MatchSite.ts": $$$$21,
+    "$live/functions/MatchUserAgent.ts": $$$$22,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -764,6 +766,77 @@ const manifest: DecoManifest = {
         "properties": {
           "data": {
             "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
+    "./functions/vtexLegacyRelatedProductsLoader.ts": {
+      "inputSchema": {
+        "title": "Vtex Legacy Related Products Loader",
+        "type": "object",
+        "properties": {
+          "crossSelling": {
+            "type": "string",
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "",
+              },
+              {
+                "type": "string",
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "const": "whosawalsosaw",
+                  },
+                  {
+                    "type": "string",
+                    "const": "whosawalsobought",
+                  },
+                  {
+                    "type": "string",
+                    "const": "whoboughtalsobought",
+                  },
+                  {
+                    "type": "string",
+                    "const": "showtogether",
+                  },
+                  {
+                    "type": "string",
+                    "const": "accessories",
+                  },
+                  {
+                    "type": "string",
+                    "const": "similars",
+                  },
+                  {
+                    "type": "string",
+                    "const": "suggestions",
+                  },
+                ],
+                "title": "CrossSellingType",
+              },
+            ],
+            "title": "Related Products",
+            "description":
+              "VTEX Cross Selling API. This loader only works on routes of type /:slug/p",
+          },
+          "count": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Count",
+          },
+        },
+        "required": [],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "bae848f3957be1cb6ed2c2ac3847787272389ee9",
           },
         },
         "additionalProperties": true,

@@ -224,7 +224,7 @@ export const createClient = ({
   const crossSelling = (
     type: CrossSellingType,
     { productId }: CrossSellingArgs,
-  ) =>
+  ): Promise<LegacyProduct[]> =>
     fetchAPI(
       new URL(
         `./api/catalog_system/pub/products/crossselling/${type}/${productId}`,
