@@ -10,6 +10,7 @@ import {
 interface ProductSearchParams extends ProductFilterResultsParams {
   term?: string;
   wildcard?: boolean;
+  tags?: string[];
 }
 
 const ProductSearch: VNDARequest<
@@ -18,7 +19,7 @@ const ProductSearch: VNDARequest<
 > = (fetcher) => {
   return (params) => {
     const qs = paramsToQueryString(params);
-    const endpoint = `products/search?${qs}`;
+    const endpoint = `products/search?show_only_available=true&${qs}`;
     return fetcher(endpoint);
   };
 };
