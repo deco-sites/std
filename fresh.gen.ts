@@ -21,20 +21,21 @@ import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
 import * as $$$$3 from "./functions/shopifyProductListingPage.ts";
-import * as $$$$4 from "./functions/vtexConfig.ts";
-import * as $$$$5 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $$$$6 from "./functions/vtexLegacyProductList.ts";
-import * as $$$$7 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $$$$8 from "./functions/vtexProductDetailsPage.ts";
-import * as $$$$9 from "./functions/vtexProductList.ts";
-import * as $$$$10 from "./functions/vtexProductListingPage.ts";
-import * as $$$$11 from "./functions/vtexSuggestions.ts";
-import * as $$$$12 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$13 from "$live/functions/MatchDate.ts";
-import * as $$$$14 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$15 from "$live/functions/MatchRandom.ts";
-import * as $$$$16 from "$live/functions/MatchSite.ts";
-import * as $$$$17 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$4 from "./functions/vndaProductList.ts";
+import * as $$$$5 from "./functions/vtexConfig.ts";
+import * as $$$$6 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $$$$7 from "./functions/vtexLegacyProductList.ts";
+import * as $$$$8 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $$$$9 from "./functions/vtexProductDetailsPage.ts";
+import * as $$$$10 from "./functions/vtexProductList.ts";
+import * as $$$$11 from "./functions/vtexProductListingPage.ts";
+import * as $$$$12 from "./functions/vtexSuggestions.ts";
+import * as $$$$13 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$14 from "$live/functions/MatchDate.ts";
+import * as $$$$15 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$16 from "$live/functions/MatchRandom.ts";
+import * as $$$$17 from "$live/functions/MatchSite.ts";
+import * as $$$$18 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -58,20 +59,21 @@ const manifest: DecoManifest = {
     "./functions/shopifyProductDetailsPage.ts": $$$$1,
     "./functions/shopifyProductList.ts": $$$$2,
     "./functions/shopifyProductListingPage.ts": $$$$3,
-    "./functions/vtexConfig.ts": $$$$4,
-    "./functions/vtexLegacyProductDetailsPage.ts": $$$$5,
-    "./functions/vtexLegacyProductList.ts": $$$$6,
-    "./functions/vtexLegacyProductListingPage.ts": $$$$7,
-    "./functions/vtexProductDetailsPage.ts": $$$$8,
-    "./functions/vtexProductList.ts": $$$$9,
-    "./functions/vtexProductListingPage.ts": $$$$10,
-    "./functions/vtexSuggestions.ts": $$$$11,
-    "$live/functions/EffectSelectPage.ts": $$$$12,
-    "$live/functions/MatchDate.ts": $$$$13,
-    "$live/functions/MatchEnvironment.ts": $$$$14,
-    "$live/functions/MatchRandom.ts": $$$$15,
-    "$live/functions/MatchSite.ts": $$$$16,
-    "$live/functions/MatchUserAgent.ts": $$$$17,
+    "./functions/vndaProductList.ts": $$$$4,
+    "./functions/vtexConfig.ts": $$$$5,
+    "./functions/vtexLegacyProductDetailsPage.ts": $$$$6,
+    "./functions/vtexLegacyProductList.ts": $$$$7,
+    "./functions/vtexLegacyProductListingPage.ts": $$$$8,
+    "./functions/vtexProductDetailsPage.ts": $$$$9,
+    "./functions/vtexProductList.ts": $$$$10,
+    "./functions/vtexProductListingPage.ts": $$$$11,
+    "./functions/vtexSuggestions.ts": $$$$12,
+    "$live/functions/EffectSelectPage.ts": $$$$13,
+    "$live/functions/MatchDate.ts": $$$$14,
+    "$live/functions/MatchEnvironment.ts": $$$$15,
+    "$live/functions/MatchRandom.ts": $$$$16,
+    "$live/functions/MatchSite.ts": $$$$17,
+    "$live/functions/MatchUserAgent.ts": $$$$18,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -282,11 +284,18 @@ const manifest: DecoManifest = {
             "title": "Use Sandbox",
             "description": "Define if sandbox environment should be used",
           },
+          "defaultPriceCurrency": {
+            "type": "string",
+            "title": "Default Price Currency",
+            "description": "Default price currency.",
+            "default": "USD",
+          },
         },
         "required": [
           "domain",
           "authToken",
           "useSandbox",
+          "defaultPriceCurrency",
         ],
       },
       "outputSchema": null,
@@ -432,6 +441,78 @@ const manifest: DecoManifest = {
         "properties": {
           "data": {
             "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
+    "./functions/vndaProductList.ts": {
+      "inputSchema": {
+        "title": "Vnda Product List",
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "number",
+            "title": "Limit",
+            "description": "total number of items to display",
+          },
+          "term": {
+            "type": [
+              "string",
+              "null",
+            ],
+            "title": "Term",
+            "description": "query to use on search",
+          },
+          "wildcard": {
+            "type": [
+              "boolean",
+              "null",
+            ],
+            "title": "Wildcard",
+            "description": "search for term anywhere",
+          },
+          "sort": {
+            "type": "string",
+            "anyOf": [
+              {
+                "type": "string",
+                "const": "newest",
+              },
+              {
+                "type": "string",
+                "const": "oldest",
+              },
+              {
+                "type": "string",
+                "const": "lowest_price",
+              },
+              {
+                "type": "string",
+                "const": "highest_price",
+              },
+            ],
+            "title": "Sort",
+            "description": "search sort parameter",
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "title": "Tags",
+            "description": "search for products that have certain tag",
+          },
+        },
+        "required": [
+          "limit",
+        ],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "1f15a836acd2ecbefef6eaf34ebcff98e39811f3",
           },
         },
         "additionalProperties": true,
