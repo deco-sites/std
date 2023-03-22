@@ -181,7 +181,7 @@ const legacyPLPLoader: LoaderFunction<
 
   return {
     data: {
-      '@type': 'ProductListingPage',
+      "@type": "ProductListingPage",
       breadcrumb: {
         "@type": "BreadcrumbList",
         itemListElement,

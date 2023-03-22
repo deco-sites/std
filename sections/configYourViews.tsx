@@ -1,6 +1,6 @@
-import type { ConfigVTEX } from "../commerce/vtex/client.ts";
+import type { ConfigYourViews } from "../commerce/yourviews/client.ts";
 
-function ConfigSection(_: ConfigVTEX) {
+function ConfigSection(_: ConfigYourViews) {
   return (
     <div>
       "This is a global setting and not a component. Every change here will

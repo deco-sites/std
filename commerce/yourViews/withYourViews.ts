@@ -31,10 +31,10 @@ const getProductId = (product: Product) => product.isVariantOf!.productGroupID;
 export const withYourViews = <
   Props,
   Data extends ProductDetailsPage | Product[] | ProductListingPage | null,
-  State extends LiveState<{ configYourViews: ConfigYourViews | undefined }>,
+  Global extends { configYourViews: ConfigYourViews | undefined },
 >(
-  loader: LoaderFunction<Props, Data, State>,
-): LoaderFunction<Props, Data, State> =>
+  loader: LoaderFunction<Props, Data, LiveState<Global>>,
+): LoaderFunction<Props, Data, LiveState<Global>> =>
 async (req, ctx, props) => {
   const response = await loader(req, ctx, props);
 
