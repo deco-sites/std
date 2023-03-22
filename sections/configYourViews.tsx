@@ -1,4 +1,4 @@
-import type { ConfigYourViews } from "../commerce/yourviews/client.ts";
+import type { ConfigYourViews } from "../commerce/yourViews/client.ts";
 
 function ConfigSection(_: ConfigYourViews) {
   return (
