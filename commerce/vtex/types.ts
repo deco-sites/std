@@ -650,6 +650,16 @@ export interface PageType {
     | "FullText";
 }
 
+export interface Categories {
+  id: number;
+  name: string;
+  hasChildren: boolean;
+  children: Categories[];
+  url: string;
+  Title?: string;
+  MetaTagDescription?: string;
+}
+
 export interface LegacyFacet {
   Quantity: number;
   Name: string;
