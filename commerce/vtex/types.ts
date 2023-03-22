@@ -650,11 +650,11 @@ export interface PageType {
     | "FullText";
 }
 
-export interface Categories {
+export interface Category {
   id: number;
   name: string;
   hasChildren: boolean;
-  children: Categories[];
+  children: Category[];
   url: string;
   Title?: string;
   MetaTagDescription?: string;
