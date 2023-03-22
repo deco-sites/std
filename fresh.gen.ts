@@ -15,7 +15,8 @@ import * as $$$1 from "./sections/SEOPDP.tsx";
 import * as $$$2 from "./sections/SEOPLP.tsx";
 import * as $$$3 from "./sections/configOCC.global.tsx";
 import * as $$$4 from "./sections/configShopify.global.tsx";
-import * as $$$5 from "./sections/configVTEX.global.tsx";
+import * as $$$5 from "./sections/configVNDA.global.tsx";
+import * as $$$6 from "./sections/configVTEX.global.tsx";
 import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
@@ -49,7 +50,8 @@ const manifest: DecoManifest = {
     "./sections/SEOPLP.tsx": $$$2,
     "./sections/configOCC.global.tsx": $$$3,
     "./sections/configShopify.global.tsx": $$$4,
-    "./sections/configVTEX.global.tsx": $$$5,
+    "./sections/configVNDA.global.tsx": $$$5,
+    "./sections/configVTEX.global.tsx": $$$6,
   },
   functions: {
     "./functions/occProductDetailsPage.ts": $$$$0,
@@ -254,6 +256,37 @@ const manifest: DecoManifest = {
         "required": [
           "storeName",
           "storefrontAccessToken",
+        ],
+      },
+      "outputSchema": null,
+    },
+    "./sections/configVNDA.global.tsx": {
+      "inputSchema": {
+        "title": "Config V N D A.global",
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "title": "Domain",
+            "description":
+              "Your VNDA domain name. For example, https://mystore.vnda.com.br",
+          },
+          "authToken": {
+            "type": "string",
+            "title": "Auth Token",
+            "description":
+              "The token generated from admin panel. Read here: https://developers.vnda.com.br/docs/chave-de-acesso-e-requisicoes",
+          },
+          "useSandbox": {
+            "type": "boolean",
+            "title": "Use Sandbox",
+            "description": "Define if sandbox environment should be used",
+          },
+        },
+        "required": [
+          "domain",
+          "authToken",
+          "useSandbox",
         ],
       },
       "outputSchema": null,
