@@ -364,20 +364,14 @@ export interface Suggestion {
   products?: Product[];
 }
 
-export interface Categories {
-  id: number;
-  name: string;
-  hasChildren: boolean;
-  // FIXME(lfroes) The schema generator is not handling recursive types leading in a infinite recursion loop
-  // deno-lint-ignore no-explicit-any
-  children: any | null;
-  url: string;
-  Title?: string;
-  MetaTagDescription?: string;
-  hidden?: boolean;
+export interface NavItem {
+  label: string;
+  href: string;
+  image?: { src?: string; alt?: string };
 }
 
-export interface CategoriesReturn {
-  showCategories: Categories[];
-  allCategories: Categories[];
+export interface Navbar extends NavItem {
+  // TODO: The schema generator is not handling recursive types leading in a infinite recursion loop
+  // deno-lint-ignore no-explicit-any
+  children?: any[];
 }

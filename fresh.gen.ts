@@ -21,11 +21,11 @@ import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
 import * as $$$$3 from "./functions/shopifyProductListingPage.ts";
-import * as $$$$4 from "./functions/vtexCategoryTree.ts";
-import * as $$$$5 from "./functions/vtexConfig.ts";
-import * as $$$$6 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $$$$7 from "./functions/vtexLegacyProductList.ts";
-import * as $$$$8 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $$$$4 from "./functions/vtexConfig.ts";
+import * as $$$$5 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $$$$6 from "./functions/vtexLegacyProductList.ts";
+import * as $$$$7 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $$$$8 from "./functions/vtexNavbar.ts";
 import * as $$$$9 from "./functions/vtexProductDetailsPage.ts";
 import * as $$$$10 from "./functions/vtexProductList.ts";
 import * as $$$$11 from "./functions/vtexProductListingPage.ts";
@@ -59,11 +59,11 @@ const manifest: DecoManifest = {
     "./functions/shopifyProductDetailsPage.ts": $$$$1,
     "./functions/shopifyProductList.ts": $$$$2,
     "./functions/shopifyProductListingPage.ts": $$$$3,
-    "./functions/vtexCategoryTree.ts": $$$$4,
-    "./functions/vtexConfig.ts": $$$$5,
-    "./functions/vtexLegacyProductDetailsPage.ts": $$$$6,
-    "./functions/vtexLegacyProductList.ts": $$$$7,
-    "./functions/vtexLegacyProductListingPage.ts": $$$$8,
+    "./functions/vtexConfig.ts": $$$$4,
+    "./functions/vtexLegacyProductDetailsPage.ts": $$$$5,
+    "./functions/vtexLegacyProductList.ts": $$$$6,
+    "./functions/vtexLegacyProductListingPage.ts": $$$$7,
+    "./functions/vtexNavbar.ts": $$$$8,
     "./functions/vtexProductDetailsPage.ts": $$$$9,
     "./functions/vtexProductList.ts": $$$$10,
     "./functions/vtexProductListingPage.ts": $$$$11,
@@ -429,58 +429,6 @@ const manifest: DecoManifest = {
         "additionalProperties": true,
       },
     },
-    "./functions/vtexCategoryTree.ts": {
-      "inputSchema": {
-        "title": "Vtex Category Tree",
-        "type": "object",
-        "properties": {
-          "levels": {
-            "type": "number",
-            "title": "Levels",
-            "description": "number of categories levels to be returned",
-            "default": "2",
-          },
-          "categoriesOrder": {
-            "type": "array",
-            "items": {
-              "title": "CategoriesOrder",
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "title": "Name",
-                },
-                "hideCategory": {
-                  "type": [
-                    "boolean",
-                    "null",
-                  ],
-                  "title": "Hide Category",
-                },
-              },
-              "required": [
-                "name",
-              ],
-            },
-            "title": "Categories Order",
-            "description": "order of categories",
-          },
-        },
-        "required": [
-          "levels",
-          "categoriesOrder",
-        ],
-      },
-      "outputSchema": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "$id": "e7e597ea99f8e50061968a0ac8629b1537357428",
-          },
-        },
-        "additionalProperties": true,
-      },
-    },
     "./functions/vtexConfig.ts": {
       "inputSchema": {
         "type": "null",
@@ -647,6 +595,33 @@ const manifest: DecoManifest = {
         "additionalProperties": true,
       },
     },
+    "./functions/vtexNavbar.ts": {
+      "inputSchema": {
+        "title": "Vtex Navbar",
+        "type": "object",
+        "properties": {
+          "levels": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Levels",
+            "description": "Number of levels of categories to be returned",
+            "default": "2",
+          },
+        },
+        "required": [],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "0244534df7e3d23a94046f4c6f7086c2b72853b8",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
     "./functions/vtexProductDetailsPage.ts": {
       "inputSchema": {
         "type": "null",
@@ -725,13 +700,6 @@ const manifest: DecoManifest = {
             "description":
               "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
             "pattern": "\\d*",
-          },
-          "categoryLevels": {
-            "type": [
-              "number",
-              "null",
-            ],
-            "title": "Category Levels",
           },
         },
         "required": [

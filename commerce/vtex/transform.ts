@@ -1,6 +1,7 @@
 import type {
   BreadcrumbList,
   Filter,
+  Navbar,
   Offer,
   Product,
   ProductDetailsPage,
@@ -10,6 +11,7 @@ import type {
 
 import { slugify } from "./utils/slugify.ts";
 import type {
+  Category,
   Facet as FacetVTEX,
   FacetValueBoolean,
   FacetValueRange,
@@ -408,3 +410,14 @@ export const toFilter = (
     }),
   };
 };
+
+function nodeToNavbar(node: Category): Navbar {
+  return {
+    href: node.url,
+    label: node.name,
+    children: node.children.map(nodeToNavbar),
+  };
+}
+
+export const categoryTreeToNavbar = (tree: Category[]): Navbar[] =>
+  tree.map(nodeToNavbar);
