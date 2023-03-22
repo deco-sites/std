@@ -16,6 +16,7 @@ import * as $$$2 from "./sections/SEOPLP.tsx";
 import * as $$$3 from "./sections/configOCC.global.tsx";
 import * as $$$4 from "./sections/configShopify.global.tsx";
 import * as $$$5 from "./sections/configVTEX.global.tsx";
+import * as $$$6 from "./sections/configYourViews.tsx";
 import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
@@ -50,6 +51,7 @@ const manifest: DecoManifest = {
     "./sections/configOCC.global.tsx": $$$3,
     "./sections/configShopify.global.tsx": $$$4,
     "./sections/configVTEX.global.tsx": $$$5,
+    "./sections/configYourViews.tsx": $$$6,
   },
   functions: {
     "./functions/occProductDetailsPage.ts": $$$$0,
@@ -308,6 +310,10 @@ const manifest: DecoManifest = {
           "defaultSalesChannel",
         ],
       },
+      "outputSchema": null,
+    },
+    "./sections/configYourViews.tsx": {
+      "inputSchema": null,
       "outputSchema": null,
     },
     "./functions/occProductDetailsPage.ts": {

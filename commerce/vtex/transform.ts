@@ -72,6 +72,7 @@ export const toProductPage = (
   }
 
   return {
+    "@type": "ProductDetailsPage",
     breadcrumbList: toBreadcrumbList(product, sku, options),
     product: toProduct(product, sku, 0, options),
   };
