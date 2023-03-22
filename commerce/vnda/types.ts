@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-explicit-any
+// deno-lint-ignore-file no-explicit-any ban-types
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // CLIENT TYPES
@@ -19,6 +19,12 @@ export interface ConfigVNDA {
    * @description Define if sandbox environment should be used
    */
   useSandbox: boolean;
+
+  /**
+   * @description Default price currency.
+   * @default USD
+   */
+  defaultPriceCurrency: string;
 }
 
 export type Fetcher<T> = (
@@ -33,7 +39,7 @@ export interface ProductFilterResultsParams {
   sort?: "newest" | "oldest" | "lowest_price" | "highest_price";
 }
 
-export type VNDARequest<T, X> = (
+export type VNDARequest<T = {}, X = {}> = (
   fetcher: Fetcher<T>,
 ) => (params: X) => T | Promise<T>;
 
@@ -42,7 +48,7 @@ export type VNDARequest<T, X> = (
 ////////////////////////////////////////////////////////////////////////////////////////
 
 export interface ProductSearchResultVNDA {
-  results: ProductSearchVNDA[];
+  results: ProductGetResultVNDA[];
   aggregations: {
     min_price: number;
     max_price: number;
@@ -51,14 +57,18 @@ export interface ProductSearchResultVNDA {
   };
 }
 
-export interface ProductGetResultVNDA {
+export interface ProductGetResultVNDA extends ProductBaseVNDA {
+  variants: ProductVariationVNDA[];
+}
+
+export interface ProductBaseVNDA {
   id: number;
   active: boolean;
   available: boolean;
   description: string;
   discount_id: number;
   image_url: string;
-  installments: ProductVNDAInstallments[];
+  installments: ProductVNDAInstallments[] | number[];
   name: string;
   on_sale: number;
   price: number;
@@ -70,30 +80,23 @@ export interface ProductGetResultVNDA {
     type: "fixed" | "percentage";
     amount: number;
   };
-  variants: Array<{
-    id: number;
-    image_url: string;
-    available: boolean;
-    available_quantity: number;
-    installments: ProductVNDAInstallments[] | number[];
-    main: boolean;
-    min_quantity: number;
-    name: string;
-    price: number;
-    properties: Record<
-      string,
-      { name: string; value: string; defining: boolean }
-    >;
-    quantity: number;
-    quantity_sold: number;
-    sale_price: number;
-    sku: string;
-    slug: string;
-    stock: number;
-    sku_lowercase: string;
-    full_name: string;
-    intl_price: number;
-  }>;
+}
+
+export interface ProductVariationVNDA extends ProductBaseVNDA {
+  available_quantity: number;
+  installments: number[];
+  main: boolean;
+  min_quantity: number;
+  properties: Record<
+    string,
+    { name: string; value: string; defining: boolean }
+  >;
+  quantity: number;
+  quantity_sold: number;
+  sku: string;
+  stock: number;
+  sku_lowercase: string;
+  full_name: string;
 }
 
 interface ProductVNDAInstallments {
@@ -102,26 +105,4 @@ interface ProductVNDAInstallments {
   interest: boolean;
   interest_rate: number;
   total: number;
-}
-
-interface ProductSearchVNDA extends ProductGetResultVNDA {
-  tags: Array<{
-    name: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    importance: number;
-    type: string;
-    image_url: string;
-  }>;
-  discount: {
-    name: string;
-    description: string;
-    facebook: boolean;
-    valid_to: string;
-  };
-  images: Array<{
-    sku: string;
-    url: string;
-  }>;
 }
