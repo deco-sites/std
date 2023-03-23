@@ -20,18 +20,12 @@ interface ProductOptions {
   priceCurrency: string;
 }
 
-/**
- * @param url base url
- * @param slug product slug
- * @param skuId product variation sku
- * @returns
- */
-const getProductURL = (
+function getProductURL(
   url: URL,
   product: ProductBaseVNDA,
   skuId?: string,
   parentUrlData?: { slug: string; productId: string },
-) => {
+) {
   const slug = parentUrlData?.slug || product.slug;
   const productId = parentUrlData?.productId || product.id;
 
@@ -43,84 +37,44 @@ const getProductURL = (
     `/${slug}/p?${params.toString()}`,
     url.origin,
   ).href;
-};
+}
 
-export const toProduct = (
-  product: ProductGetResultVNDA | ProductVariationVNDA,
-  options: ProductOptions,
-  level = 0,
-  parentUrlData?: { slug: string; productId: string },
-): Product => {
-  const getVariants = () => {
-    if (level !== 0) return [];
+function isProductGetResultVNDA(
+  product: ProductBaseVNDA,
+): product is ProductGetResultVNDA {
+  return "variants" in product;
+}
 
-    const _product = product as ProductGetResultVNDA;
+function getVariants(product: ProductGetResultVNDA, options: ProductOptions) {
+  return product.variants.map((variant) => {
+    const normalizedVariant = normalizeProductVariationVNDA(variant);
+    const { id, slug } = product;
+    const productId = id.toString();
+    return toProduct(normalizedVariant, options, { slug, productId });
+  });
+}
 
-    return _product.variants.map((variant) => {
-      const normalizedVariant = normalizeProductVariationVNDA(variant);
-      const { id, slug } = product;
-      const productId = id.toString();
-      return toProduct(normalizedVariant, options, 1, { slug, productId });
-    });
-  };
+function getSku(product: ProductGetResultVNDA | ProductVariationVNDA) {
+  if (isProductGetResultVNDA(product)) {
+    const firstVariant = product.variants[0];
+    if (!firstVariant) return product.id.toString();
 
-  const getSku = () => {
-    if (level === 0) {
-      const _product = product as ProductGetResultVNDA;
-      const firstVariant = _product.variants[0];
-      if (!firstVariant) return product.id.toString();
+    const normalizedVariant = normalizeProductVariationVNDA(firstVariant);
+    return normalizedVariant.sku;
+  }
 
-      const normalizedVariant = normalizeProductVariationVNDA(firstVariant);
-      return normalizedVariant.sku;
-    }
+  return product.sku;
+}
 
-    const _product = product as ProductVariationVNDA;
-    return _product.sku;
-  };
+function getProperties(product: ProductGetResultVNDA | ProductVariationVNDA) {
+  if (isProductGetResultVNDA(product)) {
+    return toPropertyValue(product);
+  }
 
-  const getProperties = () => {
-    if (level === 0) return toPropertyValue(product as ProductGetResultVNDA);
-    return toLeafPropertyValue(product as ProductVariationVNDA);
-  };
+  return toLeafPropertyValue(product);
+}
 
-  const { url, priceCurrency } = options;
-  const productSku = getSku();
-  const productUrl = getProductURL(url, product, productSku, parentUrlData);
-
-  return {
-    "@type": "Product",
-    productID: product.id.toString(),
-    url: productUrl,
-    name: product.name,
-    description: product.description,
-    sku: productSku,
-    additionalProperty: getProperties(),
-    isVariantOf: {
-      "@type": "ProductGroup",
-      productGroupID: product.id.toString(),
-      hasVariant: getVariants(),
-      url: productUrl,
-      name: product.name,
-      additionalProperty: getProperties(),
-      model: product.reference,
-    },
-    image: [{
-      "@type": "ImageObject" as const,
-      alternateName: product.name ?? "",
-      url: `https://${product.image_url}`,
-    }],
-    offers: {
-      "@type": "AggregateOffer" as const,
-      priceCurrency: priceCurrency,
-      highPrice: product.sale_price,
-      lowPrice: product.sale_price,
-      offerCount: 1,
-      offers: [toOffer(product)],
-    },
-  };
-};
-
-const toOffer = (product: ProductBaseVNDA): Offer => {
+function toOffer(product: ProductBaseVNDA): Offer {
   const numberInstallments = product.installments as number[];
   const sumNumbers = () => numberInstallments.reduce((acc, i) => (acc + i), 0);
   const isInstallmentNumbersOnly = typeof product.installments === "number";
@@ -176,15 +130,15 @@ const toOffer = (product: ProductBaseVNDA): Offer => {
       ? "https://schema.org/InStock"
       : "https://schema.org/OutOfStock",
   };
-};
+}
 
-const toPropertyValue = (product: ProductGetResultVNDA): PropertyValue[] => {
+function toPropertyValue(product: ProductGetResultVNDA): PropertyValue[] {
   return product.variants.flatMap(toLeafPropertyValue);
-};
+}
 
-const toLeafPropertyValue = (
+function toLeafPropertyValue(
   maybeProduct: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
-): PropertyValue[] => {
+): PropertyValue[] {
   const product = normalizeProductVariationVNDA(maybeProduct);
   const keys = Object.keys(product.properties);
   const validKeys = keys.filter((key) => Boolean(product.properties[key]));
@@ -195,31 +149,79 @@ const toLeafPropertyValue = (
     name: product.properties[key].name,
     valueReference: "SPECIFICATION",
   }));
-};
+}
 
-const normalizeProductVariationVNDA = (
-  maybeProduct: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
-): ProductVariationVNDA => {
-  const maybeProductKeys = Object.keys(maybeProduct);
+function isProductVariationVNDA(
+  variation: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
+): variation is ProductVariationVNDA {
+  const variationKeys = Object.keys(variation);
+  return variationKeys.length > 1;
+}
 
-  if (maybeProductKeys.length === 1) {
-    const product = maybeProduct as Record<string, ProductVariationVNDA>;
-    return product[maybeProductKeys[0]];
+function normalizeProductVariationVNDA(
+  variation: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
+): ProductVariationVNDA {
+  if (!isProductVariationVNDA(variation)) {
+    const variationKeys = Object.keys(variation);
+    return variation[variationKeys[0]];
   }
 
-  return maybeProduct as ProductVariationVNDA;
-};
+  return variation;
+}
+
+export function toProduct(
+  product: ProductGetResultVNDA | ProductVariationVNDA,
+  options: ProductOptions,
+  parentUrlData?: { slug: string; productId: string },
+): Product {
+  const { url, priceCurrency } = options;
+  const productSku = getSku(product);
+  const productUrl = getProductURL(url, product, productSku, parentUrlData);
+
+  return {
+    "@type": "Product",
+    productID: product.id.toString(),
+    url: productUrl,
+    name: product.name,
+    description: product.description,
+    sku: productSku,
+    additionalProperty: getProperties(product),
+    isVariantOf: {
+      "@type": "ProductGroup",
+      productGroupID: product.id.toString(),
+      hasVariant: isProductGetResultVNDA(product)
+        ? getVariants(product, options)
+        : [],
+      url: productUrl,
+      name: product.name,
+      additionalProperty: getProperties(product),
+      model: product.reference,
+    },
+    image: [{
+      "@type": "ImageObject" as const,
+      alternateName: product.name ?? "",
+      url: `https://${product.image_url}`,
+    }],
+    offers: {
+      "@type": "AggregateOffer" as const,
+      priceCurrency: priceCurrency,
+      highPrice: product.sale_price,
+      lowPrice: product.sale_price,
+      offerCount: 1,
+      offers: [toOffer(product)],
+    },
+  };
+}
 
 /**
- * Não é possível pegar um produto pelo sku, então para que tudo
- * funcione normalmente, essa função simula o comportamento padrão
- * de outros ecommerces simplesmente copiando os dados da variação
- * para o nivel do produto pai.
+ * It's not possible to get a product by sku, so this function
+ * simulates the default behavior of other e-commerces platforms
+ * by simply copying the variation data to the parent product level.
  */
-export const useVariant = (
+export function useVariant(
   product: Product,
   variantSkuId?: string | null,
-): Product => {
+): Product {
   const variantFilter = (variant: ProductLeaf) => variant.sku === variantSkuId;
   const chosenVariant = product.isVariantOf?.hasVariant.find(variantFilter);
   if (!chosenVariant) return product;
@@ -232,12 +234,12 @@ export const useVariant = (
     image: chosenVariant.image,
     offers: chosenVariant.offers,
   };
-};
+}
 
-export const toFilters = (
+export function toFilters(
   aggregations: ProductSearchResultVNDA["aggregations"],
   filtersInUse: { key: string; value: string }[],
-): Filter[] => {
+): Filter[] {
   const priceRange = {
     "@type": "FilterRange" as const,
     label: "Valor",
@@ -287,11 +289,11 @@ export const toFilters = (
     priceRange,
     ...types,
   ];
-};
+}
 
-export const filtersToSearchParams = (
+export function filtersToSearchParams(
   selectedTypes: { key: string; value: string }[],
-) => {
+) {
   const searchParams = new URLSearchParams();
 
   for (const { key, value } of selectedTypes) {
@@ -299,10 +301,10 @@ export const filtersToSearchParams = (
   }
 
   return searchParams;
-};
+}
 
-export const filtersFromSearchParams = (params: URLSearchParams) => {
+export function filtersFromSearchParams(params: URLSearchParams) {
   const selectedTypes: { key: string; value: string }[] = [];
   params.forEach((value, name) => selectedTypes.push({ key: name, value }));
   return selectedTypes;
-};
+}
