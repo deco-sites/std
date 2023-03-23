@@ -133,6 +133,7 @@ const plpLoader: LoaderFunction<
 
   return {
     data: {
+      "@type": "ProductListingPage",
       breadcrumb: {
         "@type": "BreadcrumbList",
         itemListElement,

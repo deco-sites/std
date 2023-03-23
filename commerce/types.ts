@@ -65,6 +65,8 @@ export interface AggregateRating {
   ratingCount?: number;
   /** The count of total number of reviews. */
   reviewCount?: number;
+  /** The rating for the content. */
+  ratingValue?: number;
 }
 
 export declare type ItemAvailability =
@@ -336,11 +338,13 @@ export interface FilterRange extends FilterBase {
 export type Filter = FilterToggle | FilterRange;
 export type SortOption = { value: string; label: string };
 export interface ProductDetailsPage {
+  "@type": "ProductDetailsPage";
   breadcrumbList: BreadcrumbList;
   product: Product;
 }
 
 export interface ProductListingPage {
+  "@type": "ProductListingPage";
   breadcrumb: BreadcrumbList;
   filters: Filter[];
   products: Product[];
@@ -359,4 +363,16 @@ export interface Search {
 export interface Suggestion {
   searches?: Search[];
   products?: Product[];
+}
+
+export interface NavItem {
+  label: string;
+  href: string;
+  image?: { src?: string; alt?: string };
+}
+
+export interface Navbar extends NavItem {
+  // TODO: The schema generator is not handling recursive types leading in a infinite recursion loop
+  // deno-lint-ignore no-explicit-any
+  children?: any[];
 }

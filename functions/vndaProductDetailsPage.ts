@@ -33,6 +33,7 @@ const productPageLoader: LoaderFunction<
 
     return {
       data: {
+        "@type": "ProductDetailsPage",
         // TODO: Find out what's the right breadcrumb on vnda
         breadcrumbList: {
           "@type": "BreadcrumbList",

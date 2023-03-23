@@ -66,6 +66,7 @@ const searchLoader: LoaderFunction<
 
   return {
     data: {
+      "@type": "ProductListingPage",
       // TODO: Find out what's the right breadcrumb on shopify
       breadcrumb: {
         "@type": "BreadcrumbList",
