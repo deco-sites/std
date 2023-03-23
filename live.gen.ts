@@ -26,13 +26,16 @@ import * as $$$$$$$$0 from "deco-sites/std/sections/SEO.tsx";
 import * as $$$$$$$$1 from "deco-sites/std/sections/SEOPLP.tsx";
 import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPDP.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
+import * as $live_workbench from "$live/routes/live/workbench.ts";
+import * as $live_editorData from "$live/routes/live/editorData.ts";
 import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_schema from "$live/routes/live/schema.ts";
 import * as $live_previews from "$live/routes/live/previews/[...block].tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
 import * as i1$0 from "$live/handlers/routesSelection.ts";
 import * as i1$1 from "$live/handlers/router.ts";
-import * as i1$2 from "$live/handlers/fresh.ts";
+import * as i1$2 from "$live/handlers/devPage.ts";
+import * as i1$3 from "$live/handlers/fresh.ts";
 import * as i1$$0 from "$live/pages/LivePage.tsx";
 import * as i1$$$0 from "$live/matchers/MatchDate.ts";
 import * as i1$$$1 from "$live/matchers/MatchUserAgent.ts";
@@ -67,6 +70,8 @@ const manifest: DecoManifest = {
   "routes": {
     "./routes/404.tsx": $$$$0,
     "./routes/_middleware.ts": $live_middleware,
+    "./routes/live/workbench.ts": $live_workbench,
+    "./routes/live/editorData.ts": $live_editorData,
     "./routes/live/inspect.ts": $live_inspect,
     "./routes/live/schema.ts": $live_schema,
     "./routes/live/previews/[...block].tsx": $live_previews,
@@ -80,7 +85,8 @@ const manifest: DecoManifest = {
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$0,
     "$live/handlers/router.ts": i1$1,
-    "$live/handlers/fresh.ts": i1$2,
+    "$live/handlers/devPage.ts": i1$2,
+    "$live/handlers/fresh.ts": i1$3,
   },
   "pages": {
     "$live/pages/LivePage.tsx": i1$$0,
