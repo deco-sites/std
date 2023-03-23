@@ -45,10 +45,12 @@ const searchLoader: LoaderFunction<
   const client = createClient(configVNDA);
 
   const count = props.count ?? 12;
-  const term = props.term || url.searchParams.get("q") || "";
   const page = Number(url.searchParams.get("page")) || 0;
   const sort = url.searchParams.get("sort") as VNDASort;
   const filtersInUse = filtersFromSearchParams(url.searchParams);
+
+  // TO-DO: remover url.pathname quando API VNDA normalizar
+  const term = props.term || url.searchParams.get("q") || url.pathname;
 
   const filters = filtersInUse.reduce((filters, filter) => {
     // deno-lint-ignore no-explicit-any
