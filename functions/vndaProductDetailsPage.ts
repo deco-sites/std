@@ -14,43 +14,41 @@ const productPageLoader: LoaderFunction<
   ProductDetailsPage | null,
   LiveState<{ configVNDA: ConfigVNDA }>
 > = async (req, ctx) => {
-  try {
-    const url = new URL(req.url);
-    const { configVNDA } = ctx.state.global;
-    const client = createClient(configVNDA);
+  const url = new URL(req.url);
+  const { configVNDA } = ctx.state.global;
+  const client = createClient(configVNDA);
 
-    const getResult = await client.product.get({
-      id: url.searchParams.get("id")!,
-    });
+  const getResult = await client.product.get({
+    id: url.searchParams.get("id")!,
+  });
 
-    const product = useVariant(
-      toProduct(getResult, {
-        url,
-        priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-      }),
-      url.searchParams.get("skuId"),
-    );
+  const product = useVariant(
+    toProduct(getResult, {
+      url,
+      priceCurrency: configVNDA.defaultPriceCurrency || "USD",
+    }),
+    url.searchParams.get("skuId"),
+  );
 
-    return {
-      data: {
-        "@type": "ProductDetailsPage",
-        // TODO: Find out what's the right breadcrumb on vnda
-        breadcrumbList: {
-          "@type": "BreadcrumbList",
-          itemListElement: [],
-          numberOfItems: 0,
-        },
-        product,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-
+  if (!product) {
     return {
       data: null,
       status: 404,
     };
   }
+
+  return {
+    data: {
+      "@type": "ProductDetailsPage",
+      // TODO: Find out what's the right breadcrumb on vnda
+      breadcrumbList: {
+        "@type": "BreadcrumbList",
+        itemListElement: [],
+        numberOfItems: 0,
+      },
+      product,
+    },
+  };
 };
 
 export default productPageLoader;
