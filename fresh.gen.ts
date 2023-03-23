@@ -21,21 +21,22 @@ import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
 import * as $$$$3 from "./functions/shopifyProductListingPage.ts";
-import * as $$$$4 from "./functions/vndaProductList.ts";
-import * as $$$$5 from "./functions/vtexConfig.ts";
-import * as $$$$6 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $$$$7 from "./functions/vtexLegacyProductList.ts";
-import * as $$$$8 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $$$$9 from "./functions/vtexProductDetailsPage.ts";
-import * as $$$$10 from "./functions/vtexProductList.ts";
-import * as $$$$11 from "./functions/vtexProductListingPage.ts";
-import * as $$$$12 from "./functions/vtexSuggestions.ts";
-import * as $$$$13 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$14 from "$live/functions/MatchDate.ts";
-import * as $$$$15 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$16 from "$live/functions/MatchRandom.ts";
-import * as $$$$17 from "$live/functions/MatchSite.ts";
-import * as $$$$18 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$4 from "./functions/vndaProductDetailsPage.ts";
+import * as $$$$5 from "./functions/vndaProductList.ts";
+import * as $$$$6 from "./functions/vtexConfig.ts";
+import * as $$$$7 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $$$$8 from "./functions/vtexLegacyProductList.ts";
+import * as $$$$9 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $$$$10 from "./functions/vtexProductDetailsPage.ts";
+import * as $$$$11 from "./functions/vtexProductList.ts";
+import * as $$$$12 from "./functions/vtexProductListingPage.ts";
+import * as $$$$13 from "./functions/vtexSuggestions.ts";
+import * as $$$$14 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$15 from "$live/functions/MatchDate.ts";
+import * as $$$$16 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$17 from "$live/functions/MatchRandom.ts";
+import * as $$$$18 from "$live/functions/MatchSite.ts";
+import * as $$$$19 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -59,21 +60,22 @@ const manifest: DecoManifest = {
     "./functions/shopifyProductDetailsPage.ts": $$$$1,
     "./functions/shopifyProductList.ts": $$$$2,
     "./functions/shopifyProductListingPage.ts": $$$$3,
-    "./functions/vndaProductList.ts": $$$$4,
-    "./functions/vtexConfig.ts": $$$$5,
-    "./functions/vtexLegacyProductDetailsPage.ts": $$$$6,
-    "./functions/vtexLegacyProductList.ts": $$$$7,
-    "./functions/vtexLegacyProductListingPage.ts": $$$$8,
-    "./functions/vtexProductDetailsPage.ts": $$$$9,
-    "./functions/vtexProductList.ts": $$$$10,
-    "./functions/vtexProductListingPage.ts": $$$$11,
-    "./functions/vtexSuggestions.ts": $$$$12,
-    "$live/functions/EffectSelectPage.ts": $$$$13,
-    "$live/functions/MatchDate.ts": $$$$14,
-    "$live/functions/MatchEnvironment.ts": $$$$15,
-    "$live/functions/MatchRandom.ts": $$$$16,
-    "$live/functions/MatchSite.ts": $$$$17,
-    "$live/functions/MatchUserAgent.ts": $$$$18,
+    "./functions/vndaProductDetailsPage.ts": $$$$4,
+    "./functions/vndaProductList.ts": $$$$5,
+    "./functions/vtexConfig.ts": $$$$6,
+    "./functions/vtexLegacyProductDetailsPage.ts": $$$$7,
+    "./functions/vtexLegacyProductList.ts": $$$$8,
+    "./functions/vtexLegacyProductListingPage.ts": $$$$9,
+    "./functions/vtexProductDetailsPage.ts": $$$$10,
+    "./functions/vtexProductList.ts": $$$$11,
+    "./functions/vtexProductListingPage.ts": $$$$12,
+    "./functions/vtexSuggestions.ts": $$$$13,
+    "$live/functions/EffectSelectPage.ts": $$$$14,
+    "$live/functions/MatchDate.ts": $$$$15,
+    "$live/functions/MatchEnvironment.ts": $$$$16,
+    "$live/functions/MatchRandom.ts": $$$$17,
+    "$live/functions/MatchSite.ts": $$$$18,
+    "$live/functions/MatchUserAgent.ts": $$$$19,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -127,7 +129,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "page": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
             "format": "live-function",
             "type": "string",
             "title": "Page",
@@ -361,7 +363,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
           },
         },
         "additionalProperties": true,
@@ -376,7 +378,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
           },
         },
         "additionalProperties": true,
@@ -441,6 +443,21 @@ const manifest: DecoManifest = {
         "properties": {
           "data": {
             "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
+    "./functions/vndaProductDetailsPage.ts": {
+      "inputSchema": {
+        "type": "null",
+        "title": "Vnda Product Details Page",
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
           },
         },
         "additionalProperties": true,
@@ -542,7 +559,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
           },
         },
         "additionalProperties": true,
@@ -693,7 +710,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "32b1e09638e3a749d7f269168bb2c102bfe7f50d",
           },
         },
         "additionalProperties": true,
