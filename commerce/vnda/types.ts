@@ -33,10 +33,12 @@ export type Fetcher<T> = (
   data?: Record<any, any>,
 ) => Promise<T>;
 
+export type VNDASort = "newest" | "oldest" | "lowest_price" | "highest_price";
+
 export interface ProductFilterResultsParams {
   page?: number;
   per_page?: number;
-  sort?: "newest" | "oldest" | "lowest_price" | "highest_price";
+  sort?: VNDASort;
 }
 
 export type VNDARequest<T = {}, X = {}> = (
@@ -52,8 +54,11 @@ export interface ProductSearchResultVNDA {
   aggregations: {
     min_price: number;
     max_price: number;
-    type: Record<string, Array<{ name: string; title: string; count: number }>>;
     properties: Record<string, Array<{ value: string; count: number }>>;
+    types: Record<
+      string,
+      Array<{ name: string; title: string; count: number }>
+    >;
   };
 }
 
