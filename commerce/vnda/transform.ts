@@ -1,6 +1,7 @@
 import {
   Offer,
   Product,
+  ProductLeaf,
   PropertyValue,
   UnitPriceSpecification,
 } from "../types.ts";
@@ -27,10 +28,13 @@ const getProductURL = (
   url: URL,
   product: ProductBaseVNDA,
   skuId?: string,
-  parentSlug?: string,
+  parentUrlData?: { slug: string; productId: string },
 ) => {
-  const slug = parentSlug || `${product.slug}-${product.id}`;
+  const slug = parentUrlData?.slug || product.slug;
+  const productId = parentUrlData?.productId || product.id;
+
   const params = new URLSearchParams();
+  params.set("id", productId.toString());
   if (skuId) params.set("skuId", skuId);
 
   return new URL(
@@ -43,7 +47,7 @@ export const toProduct = (
   product: ProductGetResultVNDA | ProductVariationVNDA,
   options: ProductOptions,
   level = 0,
-  parentSlug?: string,
+  parentUrlData?: { slug: string; productId: string },
 ): Product => {
   const getVariants = () => {
     if (level !== 0) return [];
@@ -52,13 +56,21 @@ export const toProduct = (
 
     return _product.variants.map((variant) => {
       const normalizedVariant = normalizeProductVariationVNDA(variant);
-      const parentProductSlug = `${product.slug}-${product.id}`;
-      return toProduct(normalizedVariant, options, 1, parentProductSlug);
+      const { id, slug } = product;
+      const productId = id.toString();
+      return toProduct(normalizedVariant, options, 1, { slug, productId });
     });
   };
 
   const getSku = () => {
-    if (level !== 0) return product.id.toString();
+    if (level === 0) {
+      const _product = product as ProductGetResultVNDA;
+      const firstVariant = _product.variants[0];
+      if (!firstVariant) return product.id.toString();
+
+      const normalizedVariant = normalizeProductVariationVNDA(firstVariant);
+      return normalizedVariant.sku;
+    }
 
     const _product = product as ProductVariationVNDA;
     return _product.sku;
@@ -71,7 +83,7 @@ export const toProduct = (
 
   const { url, priceCurrency } = options;
   const productSku = getSku();
-  const productUrl = getProductURL(url, product, productSku, parentSlug);
+  const productUrl = getProductURL(url, product, productSku, parentUrlData);
 
   return {
     "@type": "Product",
@@ -194,4 +206,28 @@ const normalizeProductVariationVNDA = (
   }
 
   return maybeProduct as ProductVariationVNDA;
+};
+
+/**
+ * Não é possível pegar um produto pelo sku, então para que tudo
+ * funcione normalmente, essa função simula o comportamento padrão
+ * de outros ecommerces simplesmente copiando os dados da variação
+ * para o nivel do produto pai.
+ */
+export const useVariant = (
+  product: Product,
+  variantSkuId?: string | null,
+): Product => {
+  const variantFilter = (variant: ProductLeaf) => variant.sku === variantSkuId;
+  const chosenVariant = product.isVariantOf?.hasVariant.find(variantFilter);
+  if (!chosenVariant) return product;
+
+  return {
+    ...product,
+    productID: chosenVariant.productID,
+    url: chosenVariant.url,
+    sku: chosenVariant.sku,
+    image: chosenVariant.image,
+    offers: chosenVariant.offers,
+  };
 };
