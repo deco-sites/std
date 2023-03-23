@@ -336,7 +336,7 @@ export interface FilterRange extends FilterBase {
 export type Filter = FilterToggle | FilterRange;
 
 export interface ProductDetailsPage {
-  breadcrumbList?: BreadcrumbList;
+  breadcrumbList: BreadcrumbList;
   product: Product;
 }
 
