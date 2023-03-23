@@ -173,7 +173,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "page": {
-            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
             "format": "live-function",
             "type": "string",
             "title": "Page",
@@ -444,7 +444,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
           },
         },
         "additionalProperties": true,
@@ -550,6 +550,14 @@ const manifest: DecoManifest = {
             "title": "Term",
             "description": "overides the query term",
           },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "title": "Tags",
+            "description": "filter products by tag",
+          },
           "count": {
             "type": "number",
             "title": "Items per page",
@@ -564,7 +572,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
           },
         },
         "additionalProperties": true,
@@ -730,7 +738,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
           },
         },
         "additionalProperties": true,
@@ -858,7 +866,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "9ba29fcac079080c6f7cf16f40f91cf15a25d53f",
+            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
           },
         },
         "additionalProperties": true,

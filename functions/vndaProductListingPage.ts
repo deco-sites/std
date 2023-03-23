@@ -17,6 +17,10 @@ export interface Props {
    */
   term?: string;
   /**
+   * @description filter products by tag
+   */
+  tags?: string[];
+  /**
    * @title Items per page
    * @description number of products per page to display
    */
@@ -59,6 +63,7 @@ const searchLoader: LoaderFunction<
     sort,
     page,
     per_page: count,
+    tags: props.tags,
   });
 
   const products = search.results.map((product) => {
