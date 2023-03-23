@@ -49,7 +49,11 @@ export const toProduct = (
     if (level !== 0) return [];
 
     const _product = product as ProductGetResultVNDA;
-    return _product.variants.map((v) => toProduct(v, options, 1, productUrl));
+
+    return _product.variants.map((variant) => {
+      const normalizedVariant = normalizeProductVariationVNDA(variant);
+      return toProduct(normalizedVariant, options, 1, productUrl);
+    });
   };
 
   const getProperties = () => {
@@ -153,8 +157,9 @@ const toPropertyValue = (product: ProductGetResultVNDA): PropertyValue[] => {
 };
 
 const toLeafPropertyValue = (
-  product: ProductVariationVNDA,
+  maybeProduct: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
 ): PropertyValue[] => {
+  const product = normalizeProductVariationVNDA(maybeProduct);
   const keys = Object.keys(product.properties);
   const validKeys = keys.filter((key) => Boolean(product.properties[key]));
 
@@ -164,4 +169,17 @@ const toLeafPropertyValue = (
     name: product.properties[key].name,
     valueReference: "SPECIFICATION",
   }));
+};
+
+const normalizeProductVariationVNDA = (
+  maybeProduct: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
+): ProductVariationVNDA => {
+  const maybeProductKeys = Object.keys(maybeProduct);
+
+  if (maybeProductKeys.length === 1) {
+    const product = maybeProduct as Record<string, ProductVariationVNDA>;
+    return product[maybeProductKeys[0]];
+  }
+
+  return maybeProduct as ProductVariationVNDA;
 };

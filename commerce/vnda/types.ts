@@ -58,7 +58,7 @@ export interface ProductSearchResultVNDA {
 }
 
 export interface ProductGetResultVNDA extends ProductBaseVNDA {
-  variants: ProductVariationVNDA[];
+  variants: Record<string, ProductVariationVNDA>[] | ProductVariationVNDA[];
 }
 
 export interface ProductBaseVNDA {
