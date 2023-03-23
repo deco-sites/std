@@ -17,6 +17,7 @@ import * as $$$3 from "./sections/configOCC.global.tsx";
 import * as $$$4 from "./sections/configShopify.global.tsx";
 import * as $$$5 from "./sections/configVNDA.global.tsx";
 import * as $$$6 from "./sections/configVTEX.global.tsx";
+import * as $$$7 from "./sections/configYourViews.tsx";
 import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
@@ -28,16 +29,17 @@ import * as $$$$7 from "./functions/vtexConfig.ts";
 import * as $$$$8 from "./functions/vtexLegacyProductDetailsPage.ts";
 import * as $$$$9 from "./functions/vtexLegacyProductList.ts";
 import * as $$$$10 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $$$$11 from "./functions/vtexProductDetailsPage.ts";
-import * as $$$$12 from "./functions/vtexProductList.ts";
-import * as $$$$13 from "./functions/vtexProductListingPage.ts";
-import * as $$$$14 from "./functions/vtexSuggestions.ts";
-import * as $$$$15 from "$live/functions/EffectSelectPage.ts";
-import * as $$$$16 from "$live/functions/MatchDate.ts";
-import * as $$$$17 from "$live/functions/MatchEnvironment.ts";
-import * as $$$$18 from "$live/functions/MatchRandom.ts";
-import * as $$$$19 from "$live/functions/MatchSite.ts";
-import * as $$$$20 from "$live/functions/MatchUserAgent.ts";
+import * as $$$$11 from "./functions/vtexNavbar.ts";
+import * as $$$$12 from "./functions/vtexProductDetailsPage.ts";
+import * as $$$$13 from "./functions/vtexProductList.ts";
+import * as $$$$14 from "./functions/vtexProductListingPage.ts";
+import * as $$$$15 from "./functions/vtexSuggestions.ts";
+import * as $$$$16 from "$live/functions/EffectSelectPage.ts";
+import * as $$$$17 from "$live/functions/MatchDate.ts";
+import * as $$$$18 from "$live/functions/MatchEnvironment.ts";
+import * as $$$$19 from "$live/functions/MatchRandom.ts";
+import * as $$$$20 from "$live/functions/MatchSite.ts";
+import * as $$$$21 from "$live/functions/MatchUserAgent.ts";
 
 const manifest: DecoManifest = {
   routes: {
@@ -55,6 +57,7 @@ const manifest: DecoManifest = {
     "./sections/configShopify.global.tsx": $$$4,
     "./sections/configVNDA.global.tsx": $$$5,
     "./sections/configVTEX.global.tsx": $$$6,
+    "./sections/configYourViews.tsx": $$$7,
   },
   functions: {
     "./functions/occProductDetailsPage.ts": $$$$0,
@@ -68,16 +71,17 @@ const manifest: DecoManifest = {
     "./functions/vtexLegacyProductDetailsPage.ts": $$$$8,
     "./functions/vtexLegacyProductList.ts": $$$$9,
     "./functions/vtexLegacyProductListingPage.ts": $$$$10,
-    "./functions/vtexProductDetailsPage.ts": $$$$11,
-    "./functions/vtexProductList.ts": $$$$12,
-    "./functions/vtexProductListingPage.ts": $$$$13,
-    "./functions/vtexSuggestions.ts": $$$$14,
-    "$live/functions/EffectSelectPage.ts": $$$$15,
-    "$live/functions/MatchDate.ts": $$$$16,
-    "$live/functions/MatchEnvironment.ts": $$$$17,
-    "$live/functions/MatchRandom.ts": $$$$18,
-    "$live/functions/MatchSite.ts": $$$$19,
-    "$live/functions/MatchUserAgent.ts": $$$$20,
+    "./functions/vtexNavbar.ts": $$$$11,
+    "./functions/vtexProductDetailsPage.ts": $$$$12,
+    "./functions/vtexProductList.ts": $$$$13,
+    "./functions/vtexProductListingPage.ts": $$$$14,
+    "./functions/vtexSuggestions.ts": $$$$15,
+    "$live/functions/EffectSelectPage.ts": $$$$16,
+    "$live/functions/MatchDate.ts": $$$$17,
+    "$live/functions/MatchEnvironment.ts": $$$$18,
+    "$live/functions/MatchRandom.ts": $$$$19,
+    "$live/functions/MatchSite.ts": $$$$20,
+    "$live/functions/MatchUserAgent.ts": $$$$21,
   },
   schemas: {
     "./sections/SEO.tsx": {
@@ -173,7 +177,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "page": {
-            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
+            "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
             "format": "live-function",
             "type": "string",
             "title": "Page",
@@ -465,7 +469,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
+            "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
           },
         },
         "additionalProperties": true,
@@ -480,7 +484,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "78c64adae4b16df19c6019918cf3380bc0a3ea85",
+            "$id": "bf6c5311c35f44b8ba333ce3c2acd5fed0d8ad8a",
           },
         },
         "additionalProperties": true,
@@ -552,7 +556,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "1f15a836acd2ecbefef6eaf34ebcff98e39811f3",
+            "$id": "bae848f3957be1cb6ed2c2ac3847787272389ee9",
           },
         },
         "additionalProperties": true,
@@ -593,7 +597,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
+            "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
           },
         },
         "additionalProperties": true,
@@ -759,7 +763,34 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
+            "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
+          },
+        },
+        "additionalProperties": true,
+      },
+    },
+    "./functions/vtexNavbar.ts": {
+      "inputSchema": {
+        "title": "Vtex Navbar",
+        "type": "object",
+        "properties": {
+          "levels": {
+            "type": [
+              "number",
+              "null",
+            ],
+            "title": "Levels",
+            "description": "Number of levels of categories to be returned",
+            "default": "2",
+          },
+        },
+        "required": [],
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$id": "0244534df7e3d23a94046f4c6f7086c2b72853b8",
           },
         },
         "additionalProperties": true,
@@ -887,7 +918,7 @@ const manifest: DecoManifest = {
         "type": "object",
         "properties": {
           "data": {
-            "$id": "8738b869e1d3bd6090c48c93ca67447242989a05",
+            "$id": "93678a2f6c9ab06d039c9fcd9714055f1a81449f",
           },
         },
         "additionalProperties": true,
