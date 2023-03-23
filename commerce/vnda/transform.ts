@@ -27,11 +27,14 @@ const getProductURL = (
   url: URL,
   product: ProductBaseVNDA,
   skuId?: string,
+  parentSlug?: string,
 ) => {
+  const slug = parentSlug || `${product.slug}-${product.id}`;
   const params = new URLSearchParams();
   if (skuId) params.set("skuId", skuId);
+
   return new URL(
-    `/${product.slug}-${product.id}/p?${params.toString()}`,
+    `/${slug}/p?${params.toString()}`,
     url.origin,
   ).href;
 };
@@ -40,11 +43,8 @@ export const toProduct = (
   product: ProductGetResultVNDA | ProductVariationVNDA,
   options: ProductOptions,
   level = 0,
-  parentUrl?: string,
+  parentSlug?: string,
 ): Product => {
-  const { url, priceCurrency } = options;
-  const productUrl = parentUrl || getProductURL(url, product);
-
   const getVariants = () => {
     if (level !== 0) return [];
 
@@ -52,8 +52,16 @@ export const toProduct = (
 
     return _product.variants.map((variant) => {
       const normalizedVariant = normalizeProductVariationVNDA(variant);
-      return toProduct(normalizedVariant, options, 1, productUrl);
+      const parentProductSlug = `${product.slug}-${product.id}`;
+      return toProduct(normalizedVariant, options, 1, parentProductSlug);
     });
+  };
+
+  const getSku = () => {
+    if (level !== 0) return product.id.toString();
+
+    const _product = product as ProductVariationVNDA;
+    return _product.sku;
   };
 
   const getProperties = () => {
@@ -61,13 +69,17 @@ export const toProduct = (
     return toLeafPropertyValue(product as ProductVariationVNDA);
   };
 
+  const { url, priceCurrency } = options;
+  const productSku = getSku();
+  const productUrl = getProductURL(url, product, productSku, parentSlug);
+
   return {
     "@type": "Product",
     productID: product.id.toString(),
     url: productUrl,
     name: product.name,
     description: product.description,
-    sku: product.reference,
+    sku: productSku,
     additionalProperty: getProperties(),
     isVariantOf: {
       "@type": "ProductGroup",
