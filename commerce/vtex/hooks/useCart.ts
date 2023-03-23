@@ -128,7 +128,7 @@ const updateItems = async ({
 
 const simulateShipping = async (data: SimulationData) => {
   simulation.value = await fetchAPI<SimulationOrderForm>(
-    `./api/checkout/pub/orderForms/simulation`,
+    `/api/checkout/pub/orderForms/simulation`,
     {
       method: "POST",
       body: JSON.stringify(data),
