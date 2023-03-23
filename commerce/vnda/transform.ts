@@ -1,4 +1,5 @@
 import {
+  Filter,
   Offer,
   Product,
   ProductLeaf,
@@ -9,6 +10,7 @@ import {
 import {
   ProductBaseVNDA,
   ProductGetResultVNDA,
+  ProductSearchResultVNDA,
   ProductVariationVNDA,
 } from "./types.ts";
 
@@ -230,4 +232,77 @@ export const useVariant = (
     image: chosenVariant.image,
     offers: chosenVariant.offers,
   };
+};
+
+export const toFilters = (
+  aggregations: ProductSearchResultVNDA["aggregations"],
+  filtersInUse: { key: string; value: string }[],
+): Filter[] => {
+  const priceRange = {
+    "@type": "FilterRange" as const,
+    label: "Valor",
+    key: "price_range",
+    values: {
+      min: aggregations.min_price,
+      max: aggregations.max_price,
+    },
+  };
+
+  const types = Object.keys(aggregations.types).map((typeKey) => {
+    const typeValues = aggregations.types[typeKey];
+
+    return {
+      "@type": "FilterToggle" as const,
+      key: "type",
+      label: typeKey,
+      quantity: 0,
+      values: typeValues.map((value) => {
+        const isSelected = filtersInUse.find((filter) =>
+          filter.value === value.name &&
+          filter.key === typeKey
+        );
+
+        const nextFiltersInUse = !isSelected
+          ? [
+            ...filtersInUse,
+            { key: typeKey, value: value.name },
+          ]
+          : filtersInUse.filter((filter) =>
+            !(filter.value === value.name &&
+              filter.key === typeKey)
+          );
+
+        return {
+          selected: Boolean(isSelected),
+          value: value.name,
+          label: value.title,
+          quantity: value.count,
+          url: `/s?${filtersToSearchParams(nextFiltersInUse).toString()}`,
+        };
+      }),
+    };
+  });
+
+  return [
+    priceRange,
+    ...types,
+  ];
+};
+
+export const filtersToSearchParams = (
+  selectedTypes: { key: string; value: string }[],
+) => {
+  const searchParams = new URLSearchParams();
+
+  for (const { key, value } of selectedTypes) {
+    searchParams.append(key, value);
+  }
+
+  return searchParams;
+};
+
+export const filtersFromSearchParams = (params: URLSearchParams) => {
+  const selectedTypes: { key: string; value: string }[] = [];
+  params.forEach((value, name) => selectedTypes.push({ key: name, value }));
+  return selectedTypes;
 };
