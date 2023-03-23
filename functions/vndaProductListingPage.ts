@@ -3,6 +3,7 @@ import type { LoaderFunction } from "$live/types.ts";
 import { createClient } from "../commerce/vnda/client.ts";
 import type { ProductListingPage } from "../commerce/types.ts";
 import { ConfigVNDA, VNDASort } from "../commerce/vnda/types.ts";
+import { VNDA_SORT_OPTIONS } from "../commerce/vnda/constants.ts";
 
 import {
   filtersFromSearchParams,
@@ -88,6 +89,7 @@ const searchLoader: LoaderFunction<
         previousPage: `?${previousPage}`,
         currentPage: page,
       },
+      sortOptions: VNDA_SORT_OPTIONS,
     },
   };
 };
