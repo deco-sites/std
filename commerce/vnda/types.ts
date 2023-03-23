@@ -1,9 +1,3 @@
-// deno-lint-ignore-file no-explicit-any ban-types
-
-////////////////////////////////////////////////////////////////////////////////////////
-// CLIENT TYPES
-////////////////////////////////////////////////////////////////////////////////////////
-
 export interface ConfigVNDA {
   /**
    * @description Your VNDA domain name. For example, https://mystore.vnda.com.br
@@ -27,27 +21,7 @@ export interface ConfigVNDA {
   defaultPriceCurrency: string;
 }
 
-export type Fetcher<T> = (
-  endpoint: string,
-  method?: string,
-  data?: Record<any, any>,
-) => Promise<T>;
-
 export type VNDASort = "newest" | "oldest" | "lowest_price" | "highest_price";
-
-export interface ProductFilterResultsParams {
-  page?: number;
-  per_page?: number;
-  sort?: VNDASort;
-}
-
-export type VNDARequest<T = {}, X = {}> = (
-  fetcher: Fetcher<T>,
-) => (params: X) => T | Promise<T>;
-
-////////////////////////////////////////////////////////////////////////////////////////
-// PRODUCT TYPES
-////////////////////////////////////////////////////////////////////////////////////////
 
 export interface ProductSearchResultVNDA {
   results: ProductGetResultVNDA[];
@@ -110,4 +84,17 @@ interface ProductVNDAInstallments {
   interest: boolean;
   interest_rate: number;
   total: number;
+}
+
+export interface ProductGetParams {
+  id?: string;
+}
+
+export interface ProductSearchParams {
+  term?: string;
+  page?: number;
+  tags?: string[];
+  sort?: VNDASort;
+  per_page?: number;
+  wildcard?: boolean;
 }
