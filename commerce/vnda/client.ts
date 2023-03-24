@@ -56,7 +56,7 @@ export const createClient = (params: ConfigVNDA) => {
       ...Object.fromEntries(typeTagsEntries),
     });
 
-    const endpoint = `products/search?show_only_available=true&${qs}`;
+    const endpoint = `products/search?${qs}`;
     return fetcher<ProductSearchResultVNDA>(endpoint);
   };
 
