@@ -48,7 +48,14 @@ export const createClient = (params: ConfigVNDA) => {
   };
 
   const searchProduct = (params: ProductSearchParams) => {
-    const qs = paramsToQueryString(params);
+    const { type_tags, ...knownParams } = params;
+    const typeTagsEntries = type_tags?.map((tag) => [tag.key, tag.value]) || [];
+
+    const qs = paramsToQueryString({
+      ...knownParams,
+      ...Object.fromEntries(typeTagsEntries),
+    });
+
     const endpoint = `products/search?show_only_available=true&${qs}`;
     return fetcher<ProductSearchResultVNDA>(endpoint);
   };

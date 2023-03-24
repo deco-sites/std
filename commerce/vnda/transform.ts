@@ -236,9 +236,37 @@ export function useVariant(
   };
 }
 
+function isFilterSelected(
+  typeTagsInUse: { key: string; value: string }[],
+  filter: { key: string; value: string },
+) {
+  return Boolean(typeTagsInUse.find((inUse) =>
+    inUse.key === filter.key &&
+    inUse.value === filter.value
+  ));
+}
+
+function addFilter(
+  typeTagsInUse: { key: string; value: string }[],
+  filter: { key: string; value: string },
+) {
+  return [...typeTagsInUse, filter];
+}
+
+function removeFilter(
+  typeTagsInUse: { key: string; value: string }[],
+  filter: { key: string; value: string },
+) {
+  return typeTagsInUse.filter((inUse) =>
+    inUse.key !== filter.key &&
+    inUse.value !== filter.value
+  );
+}
+
 export function toFilters(
   aggregations: ProductSearchResultVNDA["aggregations"],
-  filtersInUse: { key: string; value: string }[],
+  typeTagsInUse: { key: string; value: string }[],
+  cleanUrl: URL,
 ): Filter[] {
   const priceRange = {
     "@type": "FilterRange" as const,
@@ -259,27 +287,24 @@ export function toFilters(
       label: typeKey,
       quantity: 0,
       values: typeValues.map((value) => {
-        const isSelected = filtersInUse.find((filter) =>
-          filter.value === value.name &&
-          filter.key === typeKey
+        const filter = { key: `type_tags[${typeKey}][]`, value: value.name };
+        const isSelected = isFilterSelected(typeTagsInUse, filter);
+
+        const nextFilters = isSelected
+          ? removeFilter(typeTagsInUse, filter)
+          : addFilter(typeTagsInUse, filter);
+
+        const filterUrl = new URL(cleanUrl);
+        nextFilters.forEach(({ key, value }) =>
+          filterUrl.searchParams.append(key, value)
         );
 
-        const nextFiltersInUse = !isSelected
-          ? [
-            ...filtersInUse,
-            { key: typeKey, value: value.name },
-          ]
-          : filtersInUse.filter((filter) =>
-            !(filter.value === value.name &&
-              filter.key === typeKey)
-          );
-
         return {
-          selected: Boolean(isSelected),
           value: value.name,
           label: value.title,
+          selected: isSelected,
           quantity: value.count,
-          url: `/s?${filtersToSearchParams(nextFiltersInUse).toString()}`,
+          url: filterUrl.toString(),
         };
       }),
     };
@@ -291,20 +316,25 @@ export function toFilters(
   ];
 }
 
-export function filtersToSearchParams(
-  selectedTypes: { key: string; value: string }[],
-) {
-  const searchParams = new URLSearchParams();
+export function typeTagExtractor(url: URL) {
+  const keysToDestroy: string[] = [];
+  const typeTags: { key: string; value: string }[] = [];
+  const typeTagRegex = /\btype_tags\[(\S+)\]\[\]/;
 
-  for (const { key, value } of selectedTypes) {
-    searchParams.append(key, value);
-  }
+  url.searchParams.forEach((value, key) => {
+    const match = typeTagRegex.exec(key);
 
-  return searchParams;
-}
+    if (match) {
+      keysToDestroy.push(key);
+      typeTags.push({ key, value });
+    }
+  });
 
-export function filtersFromSearchParams(params: URLSearchParams) {
-  const selectedTypes: { key: string; value: string }[] = [];
-  params.forEach((value, name) => selectedTypes.push({ key: name, value }));
-  return selectedTypes;
+  // it can't be done inside the forEach instruction above
+  typeTags.forEach((tag) => url.searchParams.delete(tag.key));
+
+  return {
+    typeTags,
+    cleanUrl: url,
+  };
 }

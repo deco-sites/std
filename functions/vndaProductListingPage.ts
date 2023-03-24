@@ -6,9 +6,9 @@ import { VNDA_SORT_OPTIONS } from "../commerce/vnda/client.ts";
 import { ConfigVNDA, VNDASort } from "../commerce/vnda/types.ts";
 
 import {
-  filtersFromSearchParams,
   toFilters,
   toProduct,
+  typeTagExtractor,
 } from "../commerce/vnda/transform.ts";
 
 export interface Props {
@@ -45,27 +45,20 @@ const searchLoader: LoaderFunction<
   const client = createClient(configVNDA);
 
   const count = props.count ?? 12;
-  const page = Number(url.searchParams.get("page")) || 0;
+  const { cleanUrl, typeTags } = typeTagExtractor(url);
   const sort = url.searchParams.get("sort") as VNDASort;
-  const filtersInUse = filtersFromSearchParams(url.searchParams);
+  const page = Number(url.searchParams.get("page")) || 1;
 
-  // TO-DO: remover url.pathname quando API VNDA normalizar
-  const term = props.term || url.searchParams.get("q") || url.pathname;
-
-  const filters = filtersInUse.reduce((filters, filter) => {
-    // deno-lint-ignore no-explicit-any
-    const newFilters = { ...filters } as any;
-    newFilters[filter.key] = filter.value;
-    return newFilters;
-  }, {});
+  const term = ctx.params.slug || props.term || url.searchParams.get("q") ||
+    undefined;
 
   const search = await client.product.search({
-    ...filters,
     term,
     sort,
     page,
     per_page: count,
     tags: props.tags,
+    type_tags: typeTags,
   });
 
   const products = search.results.map((product) => {
@@ -90,7 +83,7 @@ const searchLoader: LoaderFunction<
         itemListElement: [],
         numberOfItems: 0,
       },
-      filters: toFilters(search.aggregations, filtersInUse),
+      filters: toFilters(search.aggregations, typeTags, cleanUrl),
       products: products,
       pageInfo: {
         nextPage: `?${nextPage}`,

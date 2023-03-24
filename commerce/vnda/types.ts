@@ -97,4 +97,5 @@ export interface ProductSearchParams {
   sort?: VNDASort;
   per_page?: number;
   wildcard?: boolean;
+  type_tags?: { key: string; value: string }[];
 }
