@@ -1,7 +1,3 @@
-const DOMAIN_HEADER = "X-Shop-Host";
-const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
-const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
-
 import { SortOption } from "../types.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
@@ -13,6 +9,10 @@ import {
   ProductSearchParams,
   ProductSearchResultVNDA,
 } from "./types.ts";
+
+const DOMAIN_HEADER = "X-Shop-Host";
+const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
+const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
 
 export const VNDA_SORT_OPTIONS: SortOption[] = [
   { value: "", label: "Relevância" },
