@@ -33,7 +33,7 @@ export const createClient = (params: ConfigVNDA) => {
   ) => {
     return fetchAPI<T>(new URL(endpoint, baseUrl).href, {
       body: data ? JSON.stringify(data) : undefined,
-      method: method || "GET",
+      method: method ?? "GET",
       headers: {
         [DOMAIN_HEADER]: domain,
         accept: "application/json",
@@ -49,7 +49,7 @@ export const createClient = (params: ConfigVNDA) => {
 
   const searchProduct = (params: ProductSearchParams) => {
     const { type_tags, ...knownParams } = params;
-    const typeTagsEntries = type_tags?.map((tag) => [tag.key, tag.value]) || [];
+    const typeTagsEntries = type_tags?.map((tag) => [tag.key, tag.value]) ?? [];
 
     const qs = paramsToQueryString({
       ...knownParams,
