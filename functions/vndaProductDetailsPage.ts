@@ -2,8 +2,8 @@ import type { LiveState } from "$live/types.ts";
 import type { LoaderFunction } from "$live/types.ts";
 import { ConfigVNDA } from "../commerce/vnda/types.ts";
 import { createClient } from "../commerce/vnda/client.ts";
-import { toProduct, useVariant } from "../commerce/vnda/transform.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
+import { toProduct, useVariant } from "../commerce/vnda/transform.ts";
 
 /**
  * @title VTEX Product Page Loader
@@ -22,6 +22,13 @@ const productPageLoader: LoaderFunction<
     id: url.searchParams.get("id")!,
   });
 
+  if (!getResult) {
+    return {
+      data: null,
+      status: 404,
+    };
+  }
+
   const product = useVariant(
     toProduct(getResult, {
       url,
@@ -29,13 +36,6 @@ const productPageLoader: LoaderFunction<
     }),
     url.searchParams.get("skuId"),
   );
-
-  if (!product) {
-    return {
-      data: null,
-      status: 404,
-    };
-  }
 
   return {
     data: {

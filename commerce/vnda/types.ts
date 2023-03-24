@@ -5,7 +5,7 @@ export interface ConfigVNDA {
   domain: string;
 
   /**
-   * @description The token generated from admin panel. Read here: https://developers.vnda.com.br/docs/chave-de-acesso-e-requisicoes
+   * @description The token generated from admin panel. Read here: https://developers.vnda.com.br/docs/chave-de-acesso-e-requisicoes. Do not add any other permissions than catalog.
    */
   authToken: string;
 

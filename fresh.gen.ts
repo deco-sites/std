@@ -285,7 +285,7 @@ const manifest: DecoManifest = {
             "type": "string",
             "title": "Auth Token",
             "description":
-              "The token generated from admin panel. Read here: https://developers.vnda.com.br/docs/chave-de-acesso-e-requisicoes",
+              "The token generated from admin panel. Read here: https://developers.vnda.com.br/docs/chave-de-acesso-e-requisicoes. Do not add any other permissions than catalog.",
           },
           "useSandbox": {
             "type": "boolean",

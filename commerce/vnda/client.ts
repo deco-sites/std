@@ -42,9 +42,15 @@ export const createClient = (params: ConfigVNDA) => {
     });
   };
 
-  const getProduct = (params: ProductGetParams) => {
-    const endpoint = `products/${params.id}`;
-    return fetcher<ProductGetResultVNDA>(endpoint);
+  const getProduct = async (params: ProductGetParams) => {
+    try {
+      const endpoint = `products/${params.id}`;
+      return await fetcher<ProductGetResultVNDA>(endpoint);
+    } catch {
+      // the VNDA's API does not returns "ok" when a product is not found.
+      // so this try/catch is needed to avoid crashes
+      return null;
+    }
   };
 
   const searchProduct = (params: ProductSearchParams) => {
