@@ -5,36 +5,18 @@ import type { VNDACart } from "../types.ts";
 const cart = signal<VNDACart | null>(null);
 const loading = signal<boolean>(false);
 
-// TODO: Move this to other files
 type UseVNDACartHook = {
   loading: Signal<boolean>;
   cart: Signal<VNDACart | null>;
-  fetchAndSetCart(): Promise<any>;
-  // Not all systems will return the cart, I don't know
+  fetchAndSetCart(): Promise<void>;
   addItemToCart(
     params: { itemId: string; sellerId?: string; quantity: number },
-  ): Promise<any>;
-  addCouponToCart(params: { text: string }): Promise<any>;
+  ): Promise<void>;
+  addCouponToCart(params: { text: string }): Promise<void>;
   updateItemQuantity(
     params: { itemId: number; quantity: number },
-  ): Promise<any>;
-  // addItemsToCart(params: { itemId: string, sellerId?: string }[]): Promise<any>
+  ): Promise<void>;
 };
-
-// const changePrice = async ({ itemIndex, price }: ChangePriceOptions) => {
-//   cart.value = await fetchAPI<OrderForm>(
-//     `/api/checkout/pub/orderForm/${
-//       cart.value!.orderFormId
-//     }/items/${itemIndex}/price`,
-//     {
-//       method: "PUT",
-//       body: JSON.stringify({ price }),
-//       headers: {
-//         "content-type": "application/json",
-//       },
-//     },
-//   );
-// };
 
 const addItemToCart: UseVNDACartHook["addItemToCart"] = async (
   { itemId, quantity },
@@ -49,9 +31,8 @@ const addItemToCart: UseVNDACartHook["addItemToCart"] = async (
   });
 
   cart.value = vndaCart;
-
-  return vndaCart;
 };
+
 const addCouponToCart: UseVNDACartHook["addCouponToCart"] = async (
   { text },
 ) => {
@@ -88,14 +69,15 @@ const fetchAndSetCart = async () => {
   const vndaCart = await fetchAPI<VNDACart>(`/api/carrinho`);
 
   cart.value = vndaCart;
-
-  // TODO: Understant the data flow with withPQueue
-  // return mappedCart;
 };
 
 type Middleware = (fn: () => Promise<void>) => Promise<void>;
 
-// VNDA doesn't need withCart because it's only created in the first item added
+/**
+ * Usually we add a withCart middleware here, but it wouldn't work
+ * with VNDA because it doesn't create a Cart structure before
+ * adding items.
+ */
 
 const withLoading: Middleware = async (cb) => {
   try {
