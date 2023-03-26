@@ -8,27 +8,34 @@ import { context } from "$live/live.ts";
 
 import * as $0 from "deco-sites/std/functions/vtexConfig.ts";
 import * as $1 from "deco-sites/std/functions/vtexProductListingPage.ts";
-import * as $2 from "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts";
-import * as $3 from "deco-sites/std/functions/vtexSuggestions.ts";
-import * as $4 from "deco-sites/std/functions/shopifyProductListingPage.ts";
-import * as $5 from "deco-sites/std/functions/vtexProductList.ts";
-import * as $6 from "deco-sites/std/functions/occProductDetailsPage.ts";
-import * as $7 from "deco-sites/std/functions/vtexLegacyProductListingPage.ts";
-import * as $8 from "deco-sites/std/functions/vtexProductDetailsPage.ts";
-import * as $9 from "deco-sites/std/functions/vtexLegacyProductList.ts";
-import * as $10 from "deco-sites/std/functions/shopifyProductList.ts";
-import * as $11 from "deco-sites/std/functions/shopifyProductDetailsPage.ts";
-import * as $$0 from "deco-sites/std/accounts/vtex.ts";
-import * as $$1 from "deco-sites/std/accounts/shopify.ts";
-import * as $$2 from "deco-sites/std/accounts/occ.ts";
+import * as $2 from "deco-sites/std/functions/vndaProductList.ts";
+import * as $3 from "deco-sites/std/functions/vndaProductDetailsPage.ts";
+import * as $4 from "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts";
+import * as $5 from "deco-sites/std/functions/vtexSuggestions.ts";
+import * as $6 from "deco-sites/std/functions/vtexNavbar.ts";
+import * as $7 from "deco-sites/std/functions/shopifyProductListingPage.ts";
+import * as $8 from "deco-sites/std/functions/vtexProductList.ts";
+import * as $9 from "deco-sites/std/functions/occProductDetailsPage.ts";
+import * as $10 from "deco-sites/std/functions/vndaProductListingPage.ts";
+import * as $11 from "deco-sites/std/functions/vtexLegacyProductListingPage.ts";
+import * as $12 from "deco-sites/std/functions/vtexProductDetailsPage.ts";
+import * as $13 from "deco-sites/std/functions/vtexLegacyProductList.ts";
+import * as $14 from "deco-sites/std/functions/shopifyProductList.ts";
+import * as $15 from "deco-sites/std/functions/shopifyProductDetailsPage.ts";
+import * as $$0 from "deco-sites/std/accounts/vnda.ts";
+import * as $$1 from "deco-sites/std/accounts/yourViews.ts";
+import * as $$2 from "deco-sites/std/accounts/vtex.ts";
+import * as $$3 from "deco-sites/std/accounts/shopify.ts";
+import * as $$4 from "deco-sites/std/accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$$$$$0 from "deco-sites/std/sections/configYourViews.tsx";
 import * as $$$$$$$$1 from "deco-sites/std/sections/SEO.tsx";
 import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPLP.tsx";
 import * as $$$$$$$$3 from "deco-sites/std/sections/configOCC.global.tsx";
 import * as $$$$$$$$4 from "deco-sites/std/sections/configShopify.global.tsx";
-import * as $$$$$$$$5 from "deco-sites/std/sections/configVTEX.global.tsx";
-import * as $$$$$$$$6 from "deco-sites/std/sections/SEOPDP.tsx";
+import * as $$$$$$$$5 from "deco-sites/std/sections/configVNDA.global.tsx";
+import * as $$$$$$$$6 from "deco-sites/std/sections/configVTEX.global.tsx";
+import * as $$$$$$$$7 from "deco-sites/std/sections/SEOPDP.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_editorData from "$live/routes/live/editorData.ts";
@@ -55,21 +62,27 @@ const manifest: DecoManifest = {
   "functions": {
     "deco-sites/std/functions/vtexConfig.ts": $0,
     "deco-sites/std/functions/vtexProductListingPage.ts": $1,
-    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $2,
-    "deco-sites/std/functions/vtexSuggestions.ts": $3,
-    "deco-sites/std/functions/shopifyProductListingPage.ts": $4,
-    "deco-sites/std/functions/vtexProductList.ts": $5,
-    "deco-sites/std/functions/occProductDetailsPage.ts": $6,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $7,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $8,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $9,
-    "deco-sites/std/functions/shopifyProductList.ts": $10,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $11,
+    "deco-sites/std/functions/vndaProductList.ts": $2,
+    "deco-sites/std/functions/vndaProductDetailsPage.ts": $3,
+    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
+    "deco-sites/std/functions/vtexSuggestions.ts": $5,
+    "deco-sites/std/functions/vtexNavbar.ts": $6,
+    "deco-sites/std/functions/shopifyProductListingPage.ts": $7,
+    "deco-sites/std/functions/vtexProductList.ts": $8,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $9,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $10,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $11,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $12,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $13,
+    "deco-sites/std/functions/shopifyProductList.ts": $14,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $15,
   },
   "accounts": {
-    "deco-sites/std/accounts/vtex.ts": $$0,
-    "deco-sites/std/accounts/shopify.ts": $$1,
-    "deco-sites/std/accounts/occ.ts": $$2,
+    "deco-sites/std/accounts/vnda.ts": $$0,
+    "deco-sites/std/accounts/yourViews.ts": $$1,
+    "deco-sites/std/accounts/vtex.ts": $$2,
+    "deco-sites/std/accounts/shopify.ts": $$3,
+    "deco-sites/std/accounts/occ.ts": $$4,
   },
   "routes": {
     "./routes/404.tsx": $$$$0,
@@ -87,8 +100,9 @@ const manifest: DecoManifest = {
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$3,
     "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$4,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$5,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$6,
+    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$5,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$6,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$7,
   },
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$0,

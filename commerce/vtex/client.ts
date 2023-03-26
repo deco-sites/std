@@ -1,6 +1,7 @@
 import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
+  Category,
   FacetSearchResult,
   LegacyFacets,
   LegacyProduct,
@@ -210,6 +211,15 @@ export const createClient = ({
       new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, baseUrl).href,
     );
 
+  const categoryTree = ({ categoryLevels }: { categoryLevels: number }) => {
+    return fetchAPI<Category[]>(
+      new URL(
+        `./api/catalog_system/pub/category/tree/${categoryLevels}`,
+        baseUrl,
+      ).href,
+    );
+  };
+
   return {
     currency: () => defaultPriceCurrency,
     locale: () => defaultLocale,
@@ -223,6 +233,7 @@ export const createClient = ({
       products: legacyProducts,
       facets: legacyFacets,
       pageType,
+      categoryTree,
     },
   };
 };

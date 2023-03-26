@@ -8,8 +8,8 @@ const message = `
 
 Intelligent Search is NOT installed in your VTEX account. You can either:
 
-  * Install Intelligent Search API in your VTEX account by typing \`vtex install vtex.intelligent-search-api\`
-  * Use the VTEX Legacy Search API provided by Deco by using the vtexLegacy*.ts loaders. To use these loaders, go to your Deco admin and change the loaders
+  * Install Intelligent Search API in your VTEX account. More info at https://www.deco.cx/docs/en/tutorials/installing-vtex-is
+  * Use the VTEX Legacy Search API provided by Deco by using the vtexLegacy*.ts loaders. To learn more about loaders: https://www.deco.cx/docs/en/concepts/loader
 
 // ****************************************************************************
 `;

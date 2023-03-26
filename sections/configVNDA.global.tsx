@@ -1,6 +1,6 @@
-import type { ConfigYourViews } from "../commerce/yourViews/client.ts";
+import type { ConfigVNDA } from "../commerce/vnda/types.ts";
 
-function ConfigSection(_: ConfigYourViews) {
+function ConfigSection(_: ConfigVNDA) {
   return (
     <div>
       "This is a global setting and not a component. Every change here will

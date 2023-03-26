@@ -384,7 +384,7 @@ export interface Sla {
   deliveryChannel: SelectedDeliveryChannel;
   name: SelectedSla;
   deliveryIds: DeliveryID[];
-  shippingEstimate: ShippingEstimate;
+  shippingEstimate: string;
   shippingEstimateDate: null;
   lockTTL: null;
   availableDeliveryWindows: AvailableDeliveryWindow[];
@@ -396,7 +396,7 @@ export interface Sla {
   pickupPointId: null | string;
   pickupDistance: number | null;
   polygonName: string;
-  transitTime: TransitTime;
+  transitTime: string;
 }
 
 export interface AvailableDeliveryWindow {
@@ -408,30 +408,12 @@ export interface AvailableDeliveryWindow {
 }
 
 export interface DeliveryID {
-  courierId: CourierID;
-  warehouseId: WarehouseID;
-  dockId: DockID;
-  courierName: CourierName;
+  courierId: string;
+  warehouseId: string;
+  dockId: string;
+  courierName: string;
   quantity: number;
   kitItemDetails: unknown[];
-}
-
-export enum CourierID {
-  Normal111 = "Normal_111",
-  R111 = "R_111",
-}
-
-export enum CourierName {
-  NormalRJS = "Normal RJS",
-  RetireRJS = "Retire RJS",
-}
-
-export enum DockID {
-  D111 = "D_111",
-}
-
-export enum WarehouseID {
-  The111_2 = "111_2",
 }
 
 export interface PickupStoreInfo {
@@ -440,16 +422,6 @@ export interface PickupStoreInfo {
   address: Address | null;
   additionalInfo: null | string;
   dockId: null;
-}
-
-export enum ShippingEstimate {
-  The0Bd = "0bd",
-  The1M = "1m",
-}
-
-export enum TransitTime {
-  The0Bd = "0bd",
-  The198333333333333M = "1,98333333333333m",
 }
 
 export interface PickupPoint {
@@ -574,11 +546,11 @@ export interface ProductSearchResult {
   correction?: Correction;
 }
 
-interface Correction {
+export interface Correction {
   misspelled: boolean;
 }
 
-interface Options {
+export interface Options {
   sorts: {
     field: string;
     order: string;
@@ -588,12 +560,12 @@ interface Options {
   counts: Count[];
 }
 
-interface Count {
+export interface Count {
   count: number;
   proxyURL: string;
 }
 
-interface Pagination {
+export interface Pagination {
   count: number;
   current: Page;
   before: Page[];
@@ -605,7 +577,7 @@ interface Pagination {
   last: Page;
 }
 
-interface Page {
+export interface Page {
   index: number;
   proxyUrl: string;
 }
@@ -623,7 +595,7 @@ export interface Search {
   count: number;
 }
 
-interface IProduct {
+export interface IProduct {
   productId: string;
   productName: string;
   brand: string;
@@ -678,6 +650,16 @@ export interface PageType {
     | "FullText";
 }
 
+export interface Category {
+  id: number;
+  name: string;
+  hasChildren: boolean;
+  children: Category[];
+  url: string;
+  Title?: string;
+  MetaTagDescription?: string;
+}
+
 export interface LegacyFacet {
   Quantity: number;
   Name: string;
@@ -688,7 +670,7 @@ export interface LegacyFacet {
   Children: LegacyFacet[];
 }
 
-interface Image {
+export interface Image {
   imageId: string;
   imageLabel: string | null;
   imageTag: string;
@@ -696,7 +678,7 @@ interface Image {
   imageText: string;
 }
 
-interface Installment {
+export interface Installment {
   Value: number;
   InterestRate: number;
   TotalValuePlusInterestRate: number;
@@ -848,4 +830,123 @@ export interface FacetValueRange {
 export interface Breadcrumb {
   href: string;
   name: string;
+}
+
+export interface SKU {
+  id: number;
+  quantity: number;
+  seller: string;
+}
+
+export interface SimulationData {
+  items: SKU[];
+  postalCode: string;
+  country: string;
+}
+
+export interface SimulationOrderForm {
+  items: Item[];
+  ratesAndBenefitsData: RatesAndBenefitsData;
+  paymentData: PaymentData;
+  selectableGifts: unknown[];
+  marketingData?: MarketingData;
+  postalCode: string;
+  country: string;
+  logisticsInfo: LogisticsInfo[];
+  messages: Message[];
+  purchaseConditions: PurchaseConditions;
+  pickupPoints: PickupPoint[];
+  subscriptionData?: unknown;
+  totals: Total[];
+  itemMetadata?: ItemMetadata;
+  allowMultipleDeliveries: boolean;
+}
+
+export interface Total {
+  id: string;
+  name: string;
+  value: number;
+}
+
+export interface PurchaseConditions {
+  itemPurchaseConditions: ItemPurchaseCondition[];
+}
+
+export interface ItemPurchaseCondition {
+  id: string;
+  seller: string;
+  sellerChain: string[];
+  slas: Sla[];
+  price: number;
+  listPrice: number;
+}
+
+export interface DeliveryId {
+  courierId: string;
+  warehouseId: string;
+  dockId: string;
+  courierName: string;
+  quantity: number;
+  kitItemDetails: unknown[];
+}
+
+export interface Installment {
+  count: number;
+  hasInterestRate: boolean;
+  interestRate: number;
+  value: number;
+  total: number;
+  sellerMerchantInstallments: SellerMerchantInstallment[];
+}
+
+export interface SellerMerchantInstallment {
+  id: string;
+  count: number;
+  hasInterestRate: boolean;
+  interestRate: number;
+  value: number;
+  total: number;
+}
+
+export interface Teaser {
+  featured: boolean;
+  id: string;
+  name: string;
+  conditions: Conditions;
+  effects: Effects;
+  teaserType: string;
+}
+
+export interface Effects {
+  parameters: Parameter[];
+}
+
+export interface Conditions {
+  parameters: Parameter[];
+  minimumQuantity: number;
+}
+
+export interface Parameter {
+  name: string;
+  value: string;
+}
+
+export interface PriceDefinition {
+  calculatedSellingPrice: number;
+  total: number;
+  sellingPrices: SellingPrice[];
+}
+
+export interface SellingPrice {
+  value: number;
+  quantity: number;
+}
+
+export interface Offering {
+  type: string;
+  id: string;
+  name: string;
+  allowGiftMessage: boolean;
+  attachmentOfferings: unknown[];
+  price: number;
 }

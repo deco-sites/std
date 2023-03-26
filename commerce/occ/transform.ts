@@ -40,6 +40,7 @@ export const toProductPage = (
   stock: ProductSkuInventoryStatus,
 ): ProductDetailsPage => {
   return {
+    "@type": "ProductDetailsPage",
     breadcrumbList: toBreadcrumbList(product),
     product: toProduct(product, stock),
   };
