@@ -28,7 +28,7 @@ import * as $$2 from "deco-sites/std/accounts/vtex.ts";
 import * as $$3 from "deco-sites/std/accounts/shopify.ts";
 import * as $$4 from "deco-sites/std/accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
-import * as $$$$$$$$0 from "deco-sites/std/sections/configYourViews.tsx";
+import * as $$$$$$$$0 from "deco-sites/std/sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "deco-sites/std/sections/SEO.tsx";
 import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPLP.tsx";
 import * as $$$$$$$$3 from "deco-sites/std/sections/configOCC.global.tsx";
@@ -48,15 +48,16 @@ import * as i1$1 from "$live/handlers/router.ts";
 import * as i1$2 from "$live/handlers/devPage.ts";
 import * as i1$3 from "$live/handlers/fresh.ts";
 import * as i1$$0 from "$live/pages/LivePage.tsx";
-import * as i1$$$0 from "$live/matchers/MatchDate.ts";
-import * as i1$$$1 from "$live/matchers/MatchUserAgent.ts";
-import * as i1$$$2 from "$live/matchers/MatchSite.ts";
-import * as i1$$$3 from "$live/matchers/MatchMulti.ts";
-import * as i1$$$4 from "$live/matchers/MatchRandom.ts";
-import * as i1$$$5 from "$live/matchers/MatchEnvironment.ts";
-import * as i1$$$6 from "$live/matchers/MatchAlways.ts";
-import * as i1$$$$0 from "$live/flags/audience.ts";
-import * as i1$$$$1 from "$live/flags/everyone.ts";
+import * as i1$$$0 from "$live/sections/PageInclude.tsx";
+import * as i1$$$$0 from "$live/matchers/MatchDate.ts";
+import * as i1$$$$1 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$$2 from "$live/matchers/MatchSite.ts";
+import * as i1$$$$3 from "$live/matchers/MatchMulti.ts";
+import * as i1$$$$4 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$$5 from "$live/matchers/MatchEnvironment.ts";
+import * as i1$$$$6 from "$live/matchers/MatchAlways.ts";
+import * as i1$$$$$0 from "$live/flags/audience.ts";
+import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
 const manifest: DecoManifest = {
   "functions": {
@@ -95,7 +96,7 @@ const manifest: DecoManifest = {
     "./routes/[...catchall].tsx": $live_catchall,
   },
   "sections": {
-    "deco-sites/std/sections/configYourViews.tsx": $$$$$$$$0,
+    "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
     "deco-sites/std/sections/SEO.tsx": $$$$$$$$1,
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$3,
@@ -103,6 +104,7 @@ const manifest: DecoManifest = {
     "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$5,
     "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$6,
     "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$7,
+    "$live/sections/PageInclude.tsx": i1$$$0,
   },
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$0,
@@ -114,17 +116,17 @@ const manifest: DecoManifest = {
     "$live/pages/LivePage.tsx": i1$$0,
   },
   "matchers": {
-    "$live/matchers/MatchDate.ts": i1$$$0,
-    "$live/matchers/MatchUserAgent.ts": i1$$$1,
-    "$live/matchers/MatchSite.ts": i1$$$2,
-    "$live/matchers/MatchMulti.ts": i1$$$3,
-    "$live/matchers/MatchRandom.ts": i1$$$4,
-    "$live/matchers/MatchEnvironment.ts": i1$$$5,
-    "$live/matchers/MatchAlways.ts": i1$$$6,
+    "$live/matchers/MatchDate.ts": i1$$$$0,
+    "$live/matchers/MatchUserAgent.ts": i1$$$$1,
+    "$live/matchers/MatchSite.ts": i1$$$$2,
+    "$live/matchers/MatchMulti.ts": i1$$$$3,
+    "$live/matchers/MatchRandom.ts": i1$$$$4,
+    "$live/matchers/MatchEnvironment.ts": i1$$$$5,
+    "$live/matchers/MatchAlways.ts": i1$$$$6,
   },
   "flags": {
-    "$live/flags/audience.ts": i1$$$$0,
-    "$live/flags/everyone.ts": i1$$$$1,
+    "$live/flags/audience.ts": i1$$$$$0,
+    "$live/flags/everyone.ts": i1$$$$$1,
   },
   "islands": {},
   "config": config,
