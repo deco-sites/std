@@ -2,13 +2,23 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.unstable": true,
-  "deno.importMap": "./import_map.json",
-  "deno.codeLens.test": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "editor.suggest.showStatusBar": true,
   "editor.quickSuggestions": {
     "strings": true
   },
-  "editor.defaultFormatter": "denoland.vscode-deno",
-  "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
-  }
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "deno.inlayHints.parameterNames.enabled": "none",
+  "deno.inlayHints.parameterTypes.enabled": false,
+  "deno.inlayHints.variableTypes.enabled": false,
+  "deno.inlayHints.functionLikeReturnTypes.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "denoland.vscode-deno"
 }

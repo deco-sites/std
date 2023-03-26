@@ -336,7 +336,7 @@ export interface FilterRange extends FilterBase {
 }
 
 export type Filter = FilterToggle | FilterRange;
-
+export type SortOption = { value: string; label: string };
 export interface ProductDetailsPage {
   "@type": "ProductDetailsPage";
   breadcrumbList: BreadcrumbList;
@@ -353,6 +353,7 @@ export interface ProductListingPage {
     nextPage: string | undefined;
     previousPage: string | undefined;
   };
+  sortOptions?: SortOption[];
 }
 
 export interface Search {
