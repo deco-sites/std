@@ -37,7 +37,6 @@ import * as $$$$$$$$5 from "deco-sites/std/sections/configVNDA.global.tsx";
 import * as $$$$$$$$6 from "deco-sites/std/sections/configVTEX.global.tsx";
 import * as $$$$$$$$7 from "deco-sites/std/sections/SEOPDP.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
-import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_editorData from "$live/routes/live/editorData.ts";
 import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_schema from "$live/routes/live/schema.ts";
@@ -88,7 +87,6 @@ const manifest: DecoManifest = {
   "routes": {
     "./routes/404.tsx": $$$$0,
     "./routes/_middleware.ts": $live_middleware,
-    "./routes/live/workbench.ts": $live_workbench,
     "./routes/live/editorData.ts": $live_editorData,
     "./routes/live/inspect.ts": $live_inspect,
     "./routes/live/schema.ts": $live_schema,
