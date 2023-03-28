@@ -950,3 +950,16 @@ export interface Offering {
   attachmentOfferings: unknown[];
   price: number;
 }
+
+export type CrossSellingType =
+  | "whosawalsosaw"
+  | "whosawalsobought"
+  | "whoboughtalsobought"
+  | "showtogether"
+  | "accessories"
+  | "similars"
+  | "suggestions";
+
+export interface CrossSellingArgs {
+  productId: string;
+}
