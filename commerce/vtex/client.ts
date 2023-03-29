@@ -2,6 +2,8 @@ import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
   Category,
+  CrossSellingArgs,
+  CrossSellingType,
   FacetSearchResult,
   LegacyFacets,
   LegacyProduct,
@@ -220,6 +222,38 @@ export const createClient = ({
     );
   };
 
+  const crossSelling = (
+    type: CrossSellingType,
+    { productId }: CrossSellingArgs,
+  ): Promise<LegacyProduct[]> =>
+    fetchAPI(
+      new URL(
+        `./api/catalog_system/pub/products/crossselling/${type}/${productId}`,
+        baseUrl,
+      ).href,
+    );
+
+  const whoSawAlsoSaw = (params: CrossSellingArgs) =>
+    crossSelling("whosawalsosaw", params);
+
+  const whoSawAlsoBought = (params: CrossSellingArgs) =>
+    crossSelling("whosawalsobought", params);
+
+  const whoBoughtAlsoBought = (params: CrossSellingArgs) =>
+    crossSelling("whoboughtalsobought", params);
+
+  const showTogether = (params: CrossSellingArgs) =>
+    crossSelling("showtogether", params);
+
+  const accessories = (params: CrossSellingArgs) =>
+    crossSelling("accessories", params);
+
+  const similars = (params: CrossSellingArgs) =>
+    crossSelling("similars", params);
+
+  const suggestions = (params: CrossSellingArgs) =>
+    crossSelling("similars", params);
+
   return {
     currency: () => defaultPriceCurrency,
     locale: () => defaultLocale,
@@ -234,6 +268,15 @@ export const createClient = ({
       facets: legacyFacets,
       pageType,
       categoryTree,
+      crossSelling: {
+        whoSawAlsoSaw,
+        whoSawAlsoBought,
+        whoBoughtAlsoBought,
+        showTogether,
+        accessories,
+        similars,
+        suggestions,
+      },
     },
   };
 };
