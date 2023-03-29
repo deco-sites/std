@@ -110,7 +110,8 @@ const manifest: DecoManifest = {
               "string",
               "null",
             ],
-            "title": "Canonical",
+            "title": "Canonical URL",
+            "default": "https://example.com",
           },
           "imageUrl": {
             "type": [

@@ -3,6 +3,10 @@ import { Head } from "$fresh/runtime.ts";
 export interface Props {
   title?: string;
   description?: string;
+  /**
+   * @title Canonical URL
+   * @default https://example.com
+   */
   canonical?: string;
   imageUrl?: string;
   themeColor?: string;
