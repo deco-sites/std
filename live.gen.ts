@@ -22,13 +22,14 @@ import * as $12 from "deco-sites/std/functions/vtexProductDetailsPage.ts";
 import * as $13 from "deco-sites/std/functions/vtexLegacyProductList.ts";
 import * as $14 from "deco-sites/std/functions/shopifyProductList.ts";
 import * as $15 from "deco-sites/std/functions/shopifyProductDetailsPage.ts";
+import * as $16 from "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "deco-sites/std/accounts/vnda.ts";
 import * as $$1 from "deco-sites/std/accounts/yourViews.ts";
 import * as $$2 from "deco-sites/std/accounts/vtex.ts";
 import * as $$3 from "deco-sites/std/accounts/shopify.ts";
 import * as $$4 from "deco-sites/std/accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
-import * as $$$$$$$$0 from "deco-sites/std/sections/configYourViews.tsx";
+import * as $$$$$$$$0 from "deco-sites/std/sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "deco-sites/std/sections/SEO.tsx";
 import * as $$$$$$$$2 from "deco-sites/std/sections/SEOPLP.tsx";
 import * as $$$$$$$$3 from "deco-sites/std/sections/configOCC.global.tsx";
@@ -76,6 +77,7 @@ const manifest: DecoManifest = {
     "deco-sites/std/functions/vtexLegacyProductList.ts": $13,
     "deco-sites/std/functions/shopifyProductList.ts": $14,
     "deco-sites/std/functions/shopifyProductDetailsPage.ts": $15,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $16,
   },
   "accounts": {
     "deco-sites/std/accounts/vnda.ts": $$0,
@@ -94,7 +96,7 @@ const manifest: DecoManifest = {
     "./routes/[...catchall].tsx": $live_catchall,
   },
   "sections": {
-    "deco-sites/std/sections/configYourViews.tsx": $$$$$$$$0,
+    "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
     "deco-sites/std/sections/SEO.tsx": $$$$$$$$1,
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$3,

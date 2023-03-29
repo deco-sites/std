@@ -1107,6 +1107,27 @@
               "default": "deco-sites/std/functions/shopifyProductList.ts"
             }
           }
+        },
+        {
+          "title": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lSZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts"
+              ],
+              "default": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts"
+            }
+          }
         }
       ]
     },
@@ -1735,6 +1756,62 @@
         "count"
       ],
       "title": "deco-sites/std/functions/shopifyProductList.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lSZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "crossSelling": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": ""
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "whosawalsosaw"
+                },
+                {
+                  "type": "string",
+                  "const": "whosawalsobought"
+                },
+                {
+                  "type": "string",
+                  "const": "whoboughtalsobought"
+                },
+                {
+                  "type": "string",
+                  "const": "showtogether"
+                },
+                {
+                  "type": "string",
+                  "const": "accessories"
+                },
+                {
+                  "type": "string",
+                  "const": "similars"
+                },
+                {
+                  "type": "string",
+                  "const": "suggestions"
+                }
+              ]
+            }
+          ],
+          "title": "Cross Selling",
+          "description": "VTEX Cross Selling API. This loader only works on routes of type /:slug/p"
+        },
+        "count": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Count"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2Uvdm5kYS90eXBlcy50cw==@ConfigVNDA": {
       "type": "object",
@@ -2623,6 +2700,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lSZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
+      "title": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lSZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts"
+          ],
+          "default": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvdm5kYS50cw==": {
       "title": "deco-sites/std/accounts/vnda.ts",
       "type": "object",
@@ -2833,8 +2931,8 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLnRzeA==": {
-      "title": "deco-sites/std/sections/configYourViews.tsx",
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLmdsb2JhbC50c3g=": {
+      "title": "deco-sites/std/sections/configYourViews.global.tsx",
       "type": "object",
       "allOf": [
         {
@@ -2848,9 +2946,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "deco-sites/std/sections/configYourViews.tsx"
+            "deco-sites/std/sections/configYourViews.global.tsx"
           ],
-          "default": "deco-sites/std/sections/configYourViews.tsx"
+          "default": "deco-sites/std/sections/configYourViews.global.tsx"
         }
       }
     },
@@ -3290,6 +3388,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Nob3BpZnlQcm9kdWN0RGV0YWlsc1BhZ2UudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lSZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM="
         }
       ]
     },
@@ -3354,7 +3455,7 @@
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLnRzeA=="
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLmdsb2JhbC50c3g="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPLnRzeA=="
