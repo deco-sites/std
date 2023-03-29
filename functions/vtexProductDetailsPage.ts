@@ -6,6 +6,10 @@ import { toProductPage } from "../commerce/vtex/transform.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
 
+/**
+ * When there's no ?skuId querystring, we need to figure out the product id
+ * from the pathname. For this, we use the pageType api
+ */
 const getProductID = async (
   slug: string,
   vtex: ReturnType<typeof createClient>,
@@ -31,15 +35,10 @@ const productPageLoader: LoaderFunction<
   req,
   ctx,
 ) => {
-  const url = new URL(req.url);
-  const skuId = url.searchParams.get("skuId");
   const { configVTEX } = ctx.state.global;
   const vtex = createClient(configVTEX);
-
-  /**
-   * When there's no ?skuId querystring, we need to figure out the product id
-   * from the pathname. For this, we use the pageType api
-   */
+  const url = new URL(req.url);
+  const skuId = url.searchParams.get("skuId");
   const productId = !skuId && await getProductID(ctx.params.slug, vtex);
 
   /**
