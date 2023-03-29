@@ -376,3 +376,205 @@ export interface Navbar extends NavItem {
   // deno-lint-ignore no-explicit-any
   children?: any[];
 }
+
+// deno-lint-ignore no-explicit-any
+export interface IEvent<Params = any> {
+  name: string;
+  params: Params;
+}
+
+// 3 letter ISO 4217 - Doc: https://en.wikipedia.org/wiki/ISO_4217#Active_codes
+type Currency = string;
+type Value = number;
+
+interface WithItemId {
+  item_id: string;
+}
+
+interface WithItemName {
+  item_name: string;
+}
+
+type ItemIdentifier = WithItemId | WithItemName;
+
+interface AnalyticsItemWithoutIdentifier {
+  affiliation?: string;
+  coupon?: string;
+  discount?: number;
+  index?: number;
+  item_brand?: string;
+  item_category?: string;
+  item_category2?: string;
+  item_category3?: string;
+  item_category4?: string;
+  item_category5?: string;
+  item_list_id?: string;
+  item_list_name?: string;
+  item_variant?: string;
+  location_id?: string;
+  price?: Value;
+  quantity: number;
+}
+
+export type AnalyticsItem =
+  & AnalyticsItemWithoutIdentifier
+  & ItemIdentifier;
+
+export interface AddShippingInfoParams {
+  currency?: Currency;
+  value?: Value;
+  coupun?: string;
+  shipping_tier?: string;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_shipping_info */
+export interface AddShippingInfoEvent extends IEvent<AddShippingInfoParams> {
+  name: "add_shipping_info";
+}
+
+export interface AddToCartParams {
+  currency?: Currency;
+  value?: Value;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_cart */
+export interface AddToCartEvent extends IEvent<AddToCartParams> {
+  name: "add_to_cart";
+}
+
+export interface AddToWishlistParams {
+  currency?: Currency;
+  value?: Value;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#add_to_wishlist */
+export interface AddToWishlistEvent extends IEvent<AddToWishlistParams> {
+  name: "add_to_wishlist";
+}
+
+export interface BeginCheckoutParams {
+  currency: Currency;
+  value: Value;
+  items: AnalyticsItem[];
+  coupon?: string;
+}
+
+/** docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#begin_checkout */
+export interface BeginCheckoutEvent extends IEvent<BeginCheckoutParams> {
+  name: "begin_checkout";
+}
+
+export interface LoginParams {
+  method?: string;
+}
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#login */
+export interface LoginEvent extends IEvent<LoginParams> {
+  name: "login";
+}
+
+export interface RemoveFromCartParams {
+  currency?: Currency;
+  value?: Value;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#remove_from_cart */
+export interface RemoveFromCartEvent extends IEvent<RemoveFromCartParams> {
+  name: "remove_from_cart";
+}
+
+export interface SearchParams {
+  search_term: string;
+}
+
+export interface SearchEvent extends IEvent<SearchParams> {
+  name: "search";
+}
+
+export interface SelectItemParams {
+  item_list_id?: string;
+  item_list_name?: string;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#select_item */
+export interface SelectItemEvent extends IEvent<SelectItemParams> {
+  name: "select_item";
+}
+
+export interface SelectPromotionParams {
+  creative_name?: string;
+  creative_slot?: string;
+  promotion_id?: string;
+  promotion_name?: string;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#select_promotion */
+export interface SelectPromotionEvent extends IEvent<SelectItemEvent> {
+  name: "select_promotion";
+}
+
+export interface ViewCartParams {
+  currency: Currency;
+  value: Value;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_cart */
+export interface ViewCartEvent extends IEvent<ViewCartParams> {
+  name: "view_cart";
+}
+
+export interface ViewItemParams {
+  currency?: Currency;
+  value?: Value;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtag#view_item */
+export interface ViewItemEvent extends IEvent<ViewItemParams> {
+  name: "view_item";
+}
+
+export interface ViewItemListParams {
+  item_list_id?: string;
+  item_list_name?: string;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_item_list */
+export interface ViewItemListEvent extends IEvent<ViewItemListParams> {
+  name: "view_item_list";
+}
+
+export interface ViewPromotionParams {
+  creative_name?: string;
+  creative_slot?: string;
+  promotion_id?: string;
+  promotion_name?: string;
+  items: AnalyticsItem[];
+}
+
+/** @docs https://developers.google.com/analytics/devguides/collection/ga4/reference/events?client_type=gtm#view_promotion */
+export interface ViewPromotionEvent extends IEvent<ViewPromotionParams> {
+  name: "view_promotion";
+}
+
+export type AnalyticsEvent =
+  | AddShippingInfoEvent
+  | AddToCartEvent
+  | AddToWishlistEvent
+  | BeginCheckoutEvent
+  | LoginEvent
+  | RemoveFromCartEvent
+  | SearchEvent
+  | SelectItemEvent
+  | SelectPromotionEvent
+  | ViewCartEvent
+  | ViewItemEvent
+  | ViewItemListEvent
+  | ViewPromotionEvent;
