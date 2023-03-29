@@ -2833,8 +2833,8 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLmdsb2JhbC50c3g=": {
-      "title": "deco-sites/std/sections/configYourViews.global.tsx",
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLnRzeA==": {
+      "title": "deco-sites/std/sections/configYourViews.tsx",
       "type": "object",
       "allOf": [
         {
@@ -2848,9 +2848,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "deco-sites/std/sections/configYourViews.global.tsx"
+            "deco-sites/std/sections/configYourViews.tsx"
           ],
-          "default": "deco-sites/std/sections/configYourViews.global.tsx"
+          "default": "deco-sites/std/sections/configYourViews.tsx"
         }
       }
     },
@@ -3354,7 +3354,7 @@
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLmdsb2JhbC50c3g="
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPLnRzeA=="
