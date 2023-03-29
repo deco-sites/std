@@ -3,12 +3,22 @@ import { Head } from "$fresh/runtime.ts";
 export interface Props {
   title?: string;
   description?: string;
-  url?: string;
+  /**
+   * @title Canonical URL
+   * @default https://example.com
+   */
+  canonical?: string;
   imageUrl?: string;
   themeColor?: string;
 }
 
-function SEOBase({ title, description, imageUrl, themeColor, url }: Props) {
+function SEOBase({
+  title,
+  description,
+  imageUrl,
+  themeColor,
+  canonical,
+}: Props) {
   return (
     <Head>
       {title && <title>{title}</title>}
@@ -18,9 +28,12 @@ function SEOBase({ title, description, imageUrl, themeColor, url }: Props) {
       {/* OpenGraph tags */}
       {title && <meta property="og:title" content={title} />}
       {description && <meta property="og:description" content={description} />}
-      {url && <meta property="og:url" content={url} />}
+      {canonical && <meta property="og:url" content={canonical} />}
       {imageUrl && <meta property="og:image" content={imageUrl} />}
       <meta property="og:type" content="website" />
+
+      {/* Link tags */}
+      {canonical && <link rel="canonical" href={canonical} />}
     </Head>
   );
 }
