@@ -8,7 +8,9 @@ import { CrossSellingType } from "../commerce/vtex/types.ts";
 
 const mapCrossSellingTypeToClientKey = (
   crossSellingType: CrossSellingType,
-): keyof (ReturnType<typeof createClient>)["crossSelling"] => {
+): keyof (ReturnType<typeof createClient>)["catalog_system"][
+  "crossSelling"
+] => {
   switch (crossSellingType) {
     case "whosawalsosaw":
       return "whoSawAlsoSaw";
@@ -71,7 +73,7 @@ const legacyRelatedProductsLoader: LoaderFunction<
     };
   }
 
-  const vtexRelatedProducts = await vtex.crossSelling
+  const vtexRelatedProducts = await vtex.catalog_system.crossSelling
     [mapCrossSellingTypeToClientKey(crossSelling)]({
       productId: pageType.id,
     });

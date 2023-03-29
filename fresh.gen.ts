@@ -105,12 +105,12 @@ const manifest: DecoManifest = {
             ],
             "title": "Description",
           },
-          "url": {
+          "canonical": {
             "type": [
               "string",
               "null",
             ],
-            "title": "Url",
+            "title": "Canonical",
           },
           "imageUrl": {
             "type": [

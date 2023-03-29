@@ -2,6 +2,7 @@ import type { LoaderReturnType } from "$live/types.ts";
 
 import ScriptLDJson from "./ScriptLDJson.tsx";
 import SEOBase from "./SEOBase.tsx";
+import { canonicalFromBreadcrumblist } from "../../utils/seo.ts";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
 
 export interface Props {
@@ -28,7 +29,9 @@ function SeoPDP({ page, titleTemplate, description, ...baseSeo }: Props) {
   const title = titleTemplate.replace("%s", product?.name ?? "");
   const desc = description || product?.description;
   const imageUrl = product?.image?.[0]?.url;
-  const url = product?.url;
+
+  const canonical = breadcrumbList &&
+    canonicalFromBreadcrumblist(breadcrumbList);
 
   return (
     <>
@@ -37,7 +40,7 @@ function SeoPDP({ page, titleTemplate, description, ...baseSeo }: Props) {
         title={title}
         description={desc}
         imageUrl={imageUrl}
-        url={url}
+        canonical={canonical}
       />
 
       <ScriptLDJson {...currentProduct} />
