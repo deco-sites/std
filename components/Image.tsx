@@ -7,7 +7,7 @@ type Props =
   & Omit<JSX.IntrinsicElements["img"], "width" | "height" | "preload">
   & {
     width: number;
-    height: number;
+    height?: number;
     src: string;
     preload?: boolean;
     fetchPriority?: "high" | "low" | "auto";
@@ -19,7 +19,7 @@ const imageKit = new ImageKit({
 
 const FACTORS = [1, 1.5, 2];
 
-export const getSrcSet = (src: string, width: number, height: number) =>
+export const getSrcSet = (src: string, width: number, height?: number) =>
   FACTORS
     .map((factor) =>
       `${
@@ -27,7 +27,7 @@ export const getSrcSet = (src: string, width: number, height: number) =>
           path: src,
           transformation: [{
             width: `${Math.trunc(factor * width)}`,
-            height: `${Math.trunc(factor * height)}`,
+            height: height ? `${Math.trunc(factor * height)}` : undefined,
           }],
         })
       } ${Math.trunc(factor * width)}w`
