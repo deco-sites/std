@@ -414,8 +414,10 @@ export const toFilter = (
 };
 
 function nodeToNavbar(node: Category): Navbar {
+  const url = new URL(node.url, "https://example.com");
+
   return {
-    href: node.url,
+    href: `${url.pathname}${url.search}`,
     label: node.name,
     children: node.children.map(nodeToNavbar),
   };
