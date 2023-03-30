@@ -16,7 +16,7 @@ export default function Analtyics({ trackingIds }: Props) {
     <>
       {/* TODO: Add debug from query string @author Igor Brasileiro */}
       {/* Add Tag Manager script during production only. To test it locally remove the condition */}
-      {!context.deploymentId && trackingIds && (
+      {!!context.deploymentId && trackingIds && (
         trackingIds.map((trackingId) => (
           <GoogleTagManager trackingId={trackingId.trim()} />
         ))
