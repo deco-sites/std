@@ -62,7 +62,6 @@ const legacyProductListLoader: LoaderFunction<
     ).join(",");
     searchParams.append("fq", fq);
   }
-  console.log("a");
   // search products on VTEX. Feel free to change any of these parameters
   const vtexProducts = await vtex.catalog_system.products({
     fq: searchParams.get("fq") ?? "",

@@ -105,11 +105,14 @@ const getHighPriceIndex = (offers: Offer[]) => {
   return it;
 };
 
+const splitCategory = (firstCategory: string) =>
+  firstCategory.split("/").filter(Boolean);
+
 const toAdditionalPropertyCategories = <
   P extends LegacyProductVTEX | ProductVTEX,
 >(product: P): Product["additionalProperty"] => {
-  const categories = product.categories[0].split("/");
-  const categoryIds = product.categoriesIds[0].split("/");
+  const categories = splitCategory(product.categories[0]);
+  const categoryIds = splitCategory(product.categoriesIds[0]);
 
   return [
     ...categories.map((category) => ({
@@ -156,7 +159,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const lowPriceIndex = 0;
 
   // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
-  const categoriesString = product.categories.join(">");
+  const categoriesString = splitCategory(product.categories[0]).join(">");
   const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
 
   const additionalProperty = specificationsAdditionalProperty.concat(
