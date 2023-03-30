@@ -9,8 +9,6 @@ export interface Props {
   trackingIds?: string[];
 }
 
-// const trackingId = "GTM-KVXHNCM";
-
 export default function Analtyics({ trackingIds }: Props) {
   return (
     <>
