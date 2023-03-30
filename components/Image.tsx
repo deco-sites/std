@@ -27,7 +27,7 @@ export const getSrcSet = (src: string, width: number, height?: number) =>
           path: src,
           transformation: [{
             width: `${Math.trunc(factor * width)}`,
-            ...(height ? { height: `${Math.trunc(factor * height)}` } : {}),
+            height: height ? `${Math.trunc(factor * height)}` : undefined,
           }],
         })
       } ${Math.trunc(factor * width)}w`
