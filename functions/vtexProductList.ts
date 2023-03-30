@@ -74,6 +74,8 @@ const productListLoader: LoaderFunction<
     selectedFacets,
   });
 
+  console.log(vtexProducts[0]);
+
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
@@ -81,6 +83,7 @@ const productListLoader: LoaderFunction<
     toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
+  console.log(products[0]);
   return {
     data: products,
   };
