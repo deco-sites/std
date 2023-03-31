@@ -838,7 +838,7 @@ export interface SKU {
   seller: string;
 }
 
-export interface SimulationData {
+export interface SimulationOptions {
   items: SKU[];
   postalCode: string;
   country: string;
