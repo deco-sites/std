@@ -1,9 +1,9 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
 
 /**
@@ -30,13 +30,14 @@ const getProductID = async (
 const productPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
+  StateVTEX
 > = withISFallback(async (
   req,
   ctx,
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const vtex = createClient(configVTEX);
+
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
   const productId = !skuId && await getProductID(ctx.params.slug, vtex);
@@ -64,6 +65,7 @@ const productPageLoader: LoaderFunction<
     query,
     page: 0,
     count: 1,
+    segment,
   });
 
   // Product not found, return the 404 status code
