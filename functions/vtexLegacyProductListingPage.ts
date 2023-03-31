@@ -190,8 +190,10 @@ const legacyPLPLoader: LoaderFunction<
       filters,
       products,
       pageInfo: {
-        nextPage: hasNextPage ? nextPage.toString() : undefined,
-        previousPage: hasPreviousPage ? previousPage.toString() : undefined,
+        nextPage: hasNextPage ? `?${nextPage.toString()}` : undefined,
+        previousPage: hasPreviousPage
+          ? `?${previousPage.toString()}`
+          : undefined,
         currentPage: page,
       },
     },
