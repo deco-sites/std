@@ -14,7 +14,25 @@ import {
 } from "./vtexLegacyProductListingPage.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
-import type { PageType, Sort } from "../commerce/vtex/types.ts";
+import type { Fuzzy, PageType, Sort } from "../commerce/vtex/types.ts";
+
+/** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
+export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
+
+const mapLabelledFuzzyToFuzzy = (
+  labelledFuzzy?: LabelledFuzzy,
+): Fuzzy | undefined => {
+  switch (labelledFuzzy) {
+    case "automatic":
+      return "auto";
+    case "disabled":
+      return "0";
+    case "enabled":
+      return "1";
+    default:
+      return;
+  }
+};
 
 export interface Props {
   /**
@@ -26,6 +44,11 @@ export interface Props {
    * @description number of products per page to display
    */
   count: number;
+
+  /*
+   * @title Fuzzy
+   */
+  fuzzy?: LabelledFuzzy;
 }
 
 const PAGE_TYPE_TO_MAP_PARAM = {
@@ -80,6 +103,8 @@ const plpLoader: LoaderFunction<
 
   const count = props.count ?? 12;
   const query = props.query || url.searchParams.get("q") || "";
+  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ||
+    url.searchParams.get("fuzzy") as Fuzzy;
   const page = Number(url.searchParams.get("page")) || 0;
   const sort = url.searchParams.get("sort") as Sort || "" as Sort;
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
@@ -94,6 +119,7 @@ const plpLoader: LoaderFunction<
     sort,
     count,
     selectedFacets,
+    fuzzy,
   };
 
   // search products on VTEX. Feel free to change any of these parameters

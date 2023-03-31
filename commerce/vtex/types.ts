@@ -493,6 +493,8 @@ export type LegacySort =
   | "OrderByScoreDESC"
   | "";
 
+export type Fuzzy = "0" | "1" | "auto";
+
 export interface SearchArgs {
   query?: string;
   page: number;
@@ -500,7 +502,7 @@ export interface SearchArgs {
   type: "product_search" | "facets";
   sort?: Sort;
   selectedFacets?: SelectedFacet[];
-  fuzzy?: "0" | "1" | "auto";
+  fuzzy?: Fuzzy;
   hideUnavailableItems?: boolean;
   locale?: string;
 }
