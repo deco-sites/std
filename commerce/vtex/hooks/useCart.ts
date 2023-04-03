@@ -2,11 +2,10 @@ import { signal } from "@preact/signals";
 import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import type {
   OrderForm,
-  SimulationData,
+  SimulationOptions,
   SimulationOrderForm,
 } from "../types.ts";
 
-const simulation = signal<SimulationOrderForm | null>(null);
 const cart = signal<OrderForm | null>(null);
 const loading = signal<boolean>(true);
 
@@ -126,15 +125,14 @@ const updateItems = async ({
   );
 };
 
-const simulateShipping = async (data: SimulationData) => {
-  simulation.value = await fetchAPI<SimulationOrderForm>(
+const simulate = (data: SimulationOptions) =>
+  fetchAPI<SimulationOrderForm>(
     `/api/checkout/pub/orderForms/simulation`,
     {
       method: "POST",
       body: JSON.stringify(data),
     },
   );
-};
 
 const removeAllItems = async () => {
   cart.value = await fetchAPI<OrderForm>(
@@ -219,7 +217,6 @@ if (typeof document !== "undefined") {
 const state = {
   loading,
   cart,
-  simulation,
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items/removeAll */
   removeAllItems: () =>
     withPQueue(() => withCart(() => withLoading(removeAllItems))),
@@ -249,8 +246,7 @@ const state = {
   addCouponsToCart: (opts: AddCouponsToCartOptions) =>
     withPQueue(() => withCart(() => withLoading(() => addCouponsToCart(opts)))),
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
-  simulateShipping: (data: SimulationData) =>
-    withPQueue(() => withCart(() => withLoading(() => simulateShipping(data)))),
+  simulate,
 };
 
 export const useCart = () => state;

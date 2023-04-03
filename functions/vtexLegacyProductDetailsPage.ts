@@ -1,9 +1,10 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { toProductPage } from "../commerce/vtex/transform.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 /**
  * @title VTEX Product Page Loader
@@ -12,13 +13,14 @@ import type { ProductDetailsPage } from "../commerce/types.ts";
 const legacyProductPageLoader: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+  StateVTEX
+> = withSegment(async (
   req,
   ctx,
 ) => {
   const { configVTEX } = ctx.state.global;
   const vtex = createClient(configVTEX);
+
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
 
@@ -41,6 +43,6 @@ const legacyProductPageLoader: LoaderFunction<
       priceCurrency: vtex.currency(),
     }),
   };
-};
+});
 
 export default legacyProductPageLoader;

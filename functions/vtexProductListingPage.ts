@@ -1,6 +1,7 @@
 import type { LiveState, LoaderFunction } from "$live/types.ts";
 
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import {
   filtersFromSearchParams,
@@ -14,6 +15,27 @@ import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "./vtexLegacyProductListingPage.ts";
+import { createClient } from "../commerce/vtex/client.ts";
+import type { Fuzzy, PageType, Sort } from "../commerce/vtex/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
+
+/** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
+export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
+
+const mapLabelledFuzzyToFuzzy = (
+  labelledFuzzy?: LabelledFuzzy,
+): Fuzzy | undefined => {
+  switch (labelledFuzzy) {
+    case "automatic":
+      return "auto";
+    case "disabled":
+      return "0";
+    case "enabled":
+      return "1";
+    default:
+      return;
+  }
+};
 
 export interface Props {
   /**
@@ -25,6 +47,11 @@ export interface Props {
    * @description number of products per page to display
    */
   count: number;
+
+  /*
+   * @title Fuzzy
+   */
+  fuzzy?: LabelledFuzzy;
 }
 
 export const singleFlightKey = (
@@ -94,13 +121,13 @@ const filtersFromPathname = (pages: PageType[]) =>
 const plpLoader: LoaderFunction<
   Props,
   ProductListingPage | null,
-  LiveState<{ configVTEX?: ConfigVTEX }>
-> = withISFallback(async (
+  StateVTEX
+> = withSegment(withISFallback(async (
   req,
   ctx,
   props,
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
@@ -108,6 +135,8 @@ const plpLoader: LoaderFunction<
     props,
     url,
   );
+  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ||
+    url.searchParams.get("fuzzy") as Fuzzy;
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)
@@ -117,7 +146,12 @@ const plpLoader: LoaderFunction<
     ...args,
     page,
     selectedFacets,
-  };
+    // HEAD
+    fuzzy,
+    //
+    segment,
+  } //fab7ceb (Proxy segment to VTEX APIs)
+  ;
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
@@ -171,6 +205,6 @@ const plpLoader: LoaderFunction<
       },
     },
   };
-});
+}));
 
 export default plpLoader;

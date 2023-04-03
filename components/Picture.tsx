@@ -18,7 +18,7 @@ type SourceProps =
   & {
     src: string;
     width: number;
-    height: number;
+    height?: number;
     preload?: boolean;
     fetchPriority?: "high" | "low" | "auto";
   };

@@ -1,15 +1,12 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
-import {
-  ClientVTEX,
-  ConfigVTEX,
-  createClient,
-} from "../commerce/vtex/client.ts";
+import { ClientVTEX, createClient } from "../commerce/vtex/client.ts";
 import { legacyFacetToFilter, toProduct } from "../commerce/vtex/transform.ts";
 import { slugify } from "../commerce/vtex/utils/slugify.ts";
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import type { LegacySort, PageType } from "../commerce/vtex/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /**
@@ -108,8 +105,8 @@ const mapParamFromUrl = (pages: PageType[]) =>
 const legacyPLPLoader: LoaderFunction<
   Props,
   ProductListingPage | null,
-  LiveState<{ configVTEX?: ConfigVTEX }>
-> = async (
+  StateVTEX
+> = withSegment(async (
   req,
   ctx,
   props,
@@ -190,12 +187,14 @@ const legacyPLPLoader: LoaderFunction<
       filters,
       products,
       pageInfo: {
-        nextPage: hasNextPage ? nextPage.toString() : undefined,
-        previousPage: hasPreviousPage ? previousPage.toString() : undefined,
+        nextPage: hasNextPage ? `?${nextPage.toString()}` : undefined,
+        previousPage: hasPreviousPage
+          ? `?${previousPage.toString()}`
+          : undefined,
         currentPage: page,
       },
     },
   };
-};
+});
 
 export default legacyPLPLoader;

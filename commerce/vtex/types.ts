@@ -1,3 +1,7 @@
+import { LiveState } from "$live/types.ts";
+
+import { ConfigVTEX } from "./client.ts";
+
 export interface OrderForm {
   orderFormId: string;
   salesChannel: string;
@@ -493,6 +497,8 @@ export type LegacySort =
   | "OrderByScoreDESC"
   | "";
 
+export type Fuzzy = "0" | "1" | "auto";
+
 export interface SearchArgs {
   query?: string;
   page: number;
@@ -500,9 +506,10 @@ export interface SearchArgs {
   type: "product_search" | "facets";
   sort?: Sort;
   selectedFacets?: SelectedFacet[];
-  fuzzy?: "0" | "1" | "auto";
+  fuzzy?: Fuzzy;
   hideUnavailableItems?: boolean;
   locale?: string;
+  segment?: Partial<Segment>;
 }
 
 export interface SelectedFacet {
@@ -838,7 +845,7 @@ export interface SKU {
   seller: string;
 }
 
-export interface SimulationData {
+export interface SimulationOptions {
   items: SKU[];
   postalCode: string;
   country: string;
@@ -963,3 +970,27 @@ export type CrossSellingType =
 export interface CrossSellingArgs {
   productId: string;
 }
+
+export interface Segment {
+  campaigns: unknown | null;
+  /** @description 1,2,3 etc */
+  channel: string;
+  priceTables: unknown | null;
+  regionId: string | null;
+  utm_campaign: string | null;
+  utm_source: string | null;
+  utmi_campaign: string | null;
+  /** @description BRL, USD stc */
+  currencyCode: string;
+  /** @description R$, $ etc */
+  currencySymbol: string;
+  /** @description BRA, USA etc */
+  countryCode: string;
+  /** @description pt-BR, en-US etc */
+  cultureInfo: string;
+  channelPrivacy: "public" | "private";
+}
+
+export type StateVTEX = LiveState<{ configVTEX?: ConfigVTEX }> & {
+  segment?: Partial<Segment>;
+};

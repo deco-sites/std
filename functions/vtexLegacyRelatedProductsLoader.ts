@@ -1,14 +1,17 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
+import type { CrossSellingType } from "../commerce/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
-import { CrossSellingType } from "../commerce/vtex/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 const mapCrossSellingTypeToClientKey = (
   crossSellingType: CrossSellingType,
-): keyof (ReturnType<typeof createClient>)["crossSelling"] => {
+): keyof (ReturnType<typeof createClient>)["catalog_system"][
+  "crossSelling"
+] => {
   switch (crossSellingType) {
     case "whosawalsosaw":
       return "whoSawAlsoSaw";
@@ -42,8 +45,8 @@ export interface Props {
 const legacyRelatedProductsLoader: LoaderFunction<
   Props,
   Product[] | null,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+  StateVTEX
+> = withSegment(async (
   req,
   ctx,
   { crossSelling, count },
@@ -71,7 +74,7 @@ const legacyRelatedProductsLoader: LoaderFunction<
     };
   }
 
-  const vtexRelatedProducts = await vtex.crossSelling
+  const vtexRelatedProducts = await vtex.catalog_system.crossSelling
     [mapCrossSellingTypeToClientKey(crossSelling)]({
       productId: pageType.id,
     });
@@ -83,6 +86,6 @@ const legacyRelatedProductsLoader: LoaderFunction<
   return {
     data: relatedProducts,
   };
-};
+});
 
 export default legacyRelatedProductsLoader;

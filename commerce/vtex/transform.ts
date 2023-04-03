@@ -32,18 +32,21 @@ const isLegacyProduct = (
   product: ProductVTEX | LegacyProductVTEX,
 ): product is LegacyProductVTEX => product.origin !== "intelligent-search";
 
+const getCanonicalURL = (url: URL, { linkText }: { linkText: string }) =>
+  new URL(`/${linkText}/p`, url.origin);
+
 const getProductURL = (
   url: URL,
-  { linkText }: { linkText: string },
+  product: { linkText: string },
   skuId?: string,
 ) => {
-  const params = new URLSearchParams();
+  const canonicalUrl = getCanonicalURL(url, product);
 
   if (skuId) {
-    params.set("skuId", skuId);
+    canonicalUrl.searchParams.set("skuId", skuId);
   }
 
-  return new URL(`/${linkText}/p?${params.toString()}`, url.origin).href;
+  return canonicalUrl;
 };
 
 const nonEmptyArray = <T>(array: T[] | null | undefined) =>
@@ -75,7 +78,7 @@ export const toProductPage = (
 
   return {
     "@type": "ProductDetailsPage",
-    breadcrumbList: toBreadcrumbList(product, sku, options),
+    breadcrumbList: toBreadcrumbList(product, options),
     product: toProduct(product, sku, 0, options),
   };
 };
@@ -135,7 +138,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   return {
     "@type": "Product",
     productID: skuId,
-    url: getProductURL(url, product, sku.itemId),
+    url: getProductURL(url, product, sku.itemId).href,
     name,
     description,
     brand,
@@ -147,7 +150,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
       "@type": "ProductGroup",
       productGroupID: productId,
       hasVariant: hasVariant || [],
-      url: getProductURL(url, product, sku.itemId),
+      url: getProductURL(url, product, sku.itemId).href,
       name: product.productName,
       additionalProperty: groupAdditionalProperty,
       model: productReference,
@@ -172,7 +175,6 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 
 const toBreadcrumbList = (
   product: ProductVTEX,
-  sku: SkuVTEX,
   { url }: ProductOptions,
 ): BreadcrumbList => {
   const { categories, productName } = product;
@@ -195,7 +197,7 @@ const toBreadcrumbList = (
       {
         "@type": "ListItem",
         name: productName,
-        item: new URL(getProductURL(url, product, sku.itemId), url.origin).href,
+        item: getCanonicalURL(url, product).href,
         position: categories.length + 1,
       },
     ],
@@ -412,8 +414,10 @@ export const toFilter = (
 };
 
 function nodeToNavbar(node: Category): Navbar {
+  const url = new URL(node.url, "https://example.com");
+
   return {
-    href: node.url,
+    href: `${url.pathname}${url.search}`,
     label: node.name,
     children: node.children.map(nodeToNavbar),
   };
