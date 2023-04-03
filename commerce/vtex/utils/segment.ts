@@ -40,8 +40,8 @@ const serialize = ({
   }));
 
 /**
- * I could not find a way to accurately configure cloudflare to vary with cookies
- * For this reason, I add a cache bursting key on the url params
+ * Due to a lack of knowledge to configure Cloudflare properly to vary with cookies,
+ * this code adds a key at URL Params to burst the Cloudflare cache
  */
 export const getCacheBurstKey = async (segment: Partial<Segment>) => {
   const serial = serialize(segment);
