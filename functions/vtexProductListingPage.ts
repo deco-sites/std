@@ -1,23 +1,25 @@
-import type { LiveState, LoaderFunction } from "$live/types.ts";
+import type { LoaderFunction } from "$live/types.ts";
 
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
-import { withSegment } from "../commerce/vtex/withSegment.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
 import {
   filtersFromSearchParams,
   toFilter,
   toProduct,
 } from "../commerce/vtex/transform.ts";
-import type { PageType, Sort } from "../commerce/vtex/types.ts";
+import type {
+  Fuzzy,
+  PageType,
+  Sort,
+  StateVTEX,
+} from "../commerce/vtex/types.ts";
 import { slugify } from "../commerce/vtex/utils/slugify.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "./vtexLegacyProductListingPage.ts";
-import { createClient } from "../commerce/vtex/client.ts";
-import type { Fuzzy, PageType, Sort } from "../commerce/vtex/types.ts";
-import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
 export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
@@ -59,21 +61,27 @@ export const singleFlightKey = (
   { request }: { request: Request },
 ) => {
   const url = new URL(request.url);
-  const { query, count, sort, page, selectedFacets } = searchArgsOf(props, url);
-  return `${query}${count}${sort}${page}${
+  const { query, count, sort, page, selectedFacets, fuzzy } = searchArgsOf(
+    props,
+    url,
+  );
+  return `${query}${count}${sort}${page}${fuzzy}${
     selectedFacets.map((f) => `${f.key}${f.value}`).sort().join("")
   }`;
 };
 
 const searchArgsOf = (props: Props, url: URL) => {
   const count = props.count ?? 12;
-  const query = props.query || url.searchParams.get("q") || "";
-  const page = Number(url.searchParams.get("page")) || 0;
-  const sort = url.searchParams.get("sort") as Sort || "" as Sort;
+  const query = props.query ?? url.searchParams.get("q") ?? "";
+  const page = Number(url.searchParams.get("page")) ?? 0;
+  const sort = url.searchParams.get("sort") as Sort ?? "" as Sort;
   const selectedFacets = filtersFromSearchParams(url.searchParams);
+  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
+    url.searchParams.get("fuzzy") as Fuzzy;
 
   return {
     query,
+    fuzzy,
     page,
     sort,
     count,
@@ -131,12 +139,12 @@ const plpLoader: LoaderFunction<
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
-  const { selectedFacets: baseSelectedFacets, page, ...args } = searchArgsOf(
-    props,
-    url,
-  );
-  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ||
-    url.searchParams.get("fuzzy") as Fuzzy;
+  const { selectedFacets: baseSelectedFacets, page, fuzzy, ...args } =
+    searchArgsOf(
+      props,
+      url,
+    );
+  url.searchParams.get("fuzzy") as Fuzzy;
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)

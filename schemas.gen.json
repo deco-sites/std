@@ -1006,6 +1006,23 @@
           "type": "number",
           "title": "Count",
           "description": "number of products per page to display"
+        },
+        "fuzzy": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "automatic"
+            },
+            {
+              "type": "string",
+              "const": "disabled"
+            },
+            {
+              "type": "string",
+              "const": "enabled"
+            }
+          ],
+          "title": "Fuzzy"
         }
       },
       "required": [
@@ -2097,12 +2114,13 @@
           ],
           "title": "Description"
         },
-        "url": {
+        "canonical": {
           "type": [
             "string",
             "null"
           ],
-          "title": "Url"
+          "title": "Canonical",
+          "default": "https://example.com"
         },
         "imageUrl": {
           "type": [
