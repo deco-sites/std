@@ -4,12 +4,13 @@ export const fetchAPI = async <T>(
   input: string | Request,
   init?: RequestInit,
 ): Promise<T> => {
+  const headers = new Headers(init?.headers);
+
+  headers.set("accept", "application/json");
+
   const response = await fetch(input, {
     ...init,
-    headers: {
-      accept: "application/json",
-      ...init?.headers,
-    },
+    headers,
   });
 
   if (response.ok) {

@@ -1,3 +1,7 @@
+import { LiveState } from "$live/types.ts";
+
+import { ConfigVTEX } from "./client.ts";
+
 export interface OrderForm {
   orderFormId: string;
   salesChannel: string;
@@ -505,6 +509,7 @@ export interface SearchArgs {
   fuzzy?: Fuzzy;
   hideUnavailableItems?: boolean;
   locale?: string;
+  segment?: Partial<Segment>;
 }
 
 export interface SelectedFacet {
@@ -965,3 +970,27 @@ export type CrossSellingType =
 export interface CrossSellingArgs {
   productId: string;
 }
+
+export interface Segment {
+  campaigns: unknown | null;
+  /** @description 1,2,3 etc */
+  channel: string;
+  priceTables: unknown | null;
+  regionId: string | null;
+  utm_campaign: string | null;
+  utm_source: string | null;
+  utmi_campaign: string | null;
+  /** @description BRL, USD stc */
+  currencyCode: string;
+  /** @description R$, $ etc */
+  currencySymbol: string;
+  /** @description BRA, USA etc */
+  countryCode: string;
+  /** @description pt-BR, en-US etc */
+  cultureInfo: string;
+  channelPrivacy: "public" | "private";
+}
+
+export type StateVTEX = LiveState<{ configVTEX?: ConfigVTEX }> & {
+  segment?: Partial<Segment>;
+};

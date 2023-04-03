@@ -1,9 +1,10 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
 import type { SearchArgs, Sort } from "../commerce/vtex/types.ts";
 
@@ -41,15 +42,15 @@ export interface Props {
 const productListLoader: LoaderFunction<
   Props,
   Product[] | null,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = withISFallback(async (
+  StateVTEX
+> = withSegment(withISFallback(async (
   req,
   ctx,
   props,
 ) => {
-  const { configVTEX } = ctx.state.global;
-  const vtex = createClient(configVTEX);
+  const { global: { configVTEX }, segment } = ctx.state;
   const url = new URL(req.url);
+  const vtex = createClient(configVTEX);
 
   const count = props.count ?? 12;
   const query = props.query || "";
@@ -72,6 +73,7 @@ const productListLoader: LoaderFunction<
     count,
     sort,
     selectedFacets,
+    segment,
   });
 
   // Transform VTEX product format into schema.org's compatible format
@@ -84,6 +86,6 @@ const productListLoader: LoaderFunction<
   return {
     data: products,
   };
-});
+}));
 
 export default productListLoader;

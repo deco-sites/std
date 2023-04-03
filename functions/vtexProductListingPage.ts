@@ -1,6 +1,6 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { slugify } from "../commerce/vtex/utils/slugify.ts";
 import {
@@ -12,9 +12,10 @@ import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "./vtexLegacyProductListingPage.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { createClient } from "../commerce/vtex/client.ts";
 import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import type { Fuzzy, PageType, Sort } from "../commerce/vtex/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
 export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
@@ -91,13 +92,13 @@ const filtersFromPathname = (pages: PageType[]) =>
 const plpLoader: LoaderFunction<
   Props,
   ProductListingPage | null,
-  LiveState<{ configVTEX?: ConfigVTEX }>
-> = withISFallback(async (
+  StateVTEX
+> = withSegment(withISFallback(async (
   req,
   ctx,
   props,
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
@@ -119,8 +120,12 @@ const plpLoader: LoaderFunction<
     sort,
     count,
     selectedFacets,
+    // HEAD
     fuzzy,
-  };
+    //
+    segment,
+  } //fab7ceb (Proxy segment to VTEX APIs)
+  ;
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
@@ -174,6 +179,6 @@ const plpLoader: LoaderFunction<
       },
     },
   };
-});
+}));
 
 export default plpLoader;

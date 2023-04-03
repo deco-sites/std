@@ -14,6 +14,8 @@ Intelligent Search is NOT installed in your VTEX account. You can either:
 // ****************************************************************************
 `;
 
+let run = true;
+
 export const withISFallback = <Props, Data, State>(
   loader: LoaderFunction<Props, Data, State>,
 ): LoaderFunction<Props, Data | null, State> =>
@@ -22,7 +24,10 @@ async (req, ctx, props) => {
     return await loader(req, ctx, props);
   } catch (err) {
     if (err instanceof HttpError && err.status === 404) {
-      console.warn(message);
+      if (run) {
+        run = false;
+        console.warn(message);
+      }
 
       return {
         data: null,

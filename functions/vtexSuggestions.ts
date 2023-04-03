@@ -16,12 +16,13 @@ const topSearches: LoaderFunction<
   Suggestion | null,
   LiveState<{ configVTEX: ConfigVTEX }>
 > = withISFallback(async (_, ctx, { count }) => {
-  const vtex = createClient(ctx.state.global.configVTEX);
+  const { global: { configVTEX, configVTEX: { defaultLocale } } } = ctx.state;
+  const vtex = createClient(configVTEX);
   const suggestion: Suggestion = {};
 
   try {
     const { searches } = await vtex.search.topSearches(
-      { locale: ctx.state.global.configVTEX.defaultLocale },
+      { locale: defaultLocale },
     );
 
     suggestion.searches = count ? searches.slice(0, count) : searches;

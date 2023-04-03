@@ -10,9 +10,11 @@ import {
   PageType,
   ProductSearchResult,
   SearchArgs,
+  Segment,
   SelectedFacet,
   Suggestion,
 } from "./types.ts";
+import { getCacheBurstKey, withSegment } from "./utils/segment.ts";
 
 const POLICY_KEY = "trade-policy";
 const REGION_KEY = "region-id";
@@ -85,7 +87,7 @@ export const createClient = ({
     return withDefaltFacets;
   };
 
-  const search = <T>({
+  const search = async <T>({
     query = "",
     page,
     count,
@@ -94,6 +96,7 @@ export const createClient = ({
     type,
     fuzzy = "auto",
     locale = defaultLocale,
+    segment,
   }: SearchArgs): Promise<T> => {
     const params = new URLSearchParams({
       page: (page + 1).toString(),
@@ -102,6 +105,7 @@ export const createClient = ({
       sort,
       fuzzy,
       locale,
+      segment: segment ? await getCacheBurstKey(segment) : "",
     });
 
     if (defaultHideUnnavailableItems !== undefined) {
@@ -120,6 +124,9 @@ export const createClient = ({
         `./api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
         baseUrl,
       ).href,
+      {
+        headers: segment && withSegment(segment),
+      },
     );
   };
 
@@ -176,8 +183,9 @@ export const createClient = ({
   };
 
   const legacyProducts = (
-    { term, ...params }: {
+    { term, segment, ...params }: {
       term?: string;
+      segment?: Partial<Segment>;
     } & LegacyParams,
   ) => {
     const url = withLegacyParams(
@@ -187,6 +195,16 @@ export const createClient = ({
       ),
       params,
     );
+
+    if (segment?.utm_campaign) {
+      url.searchParams.set("utm_campaign", segment.utm_campaign);
+    }
+    if (segment?.utm_source) {
+      url.searchParams.set("utm_source", segment.utm_source);
+    }
+    if (segment?.utmi_campaign) {
+      url.searchParams.set("utmi_campaign", segment.utmi_campaign);
+    }
 
     return fetchAPI<LegacyProduct[]>(url.href);
   };

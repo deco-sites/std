@@ -1,10 +1,11 @@
 import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
 
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
+import { withSegment } from "../commerce/vtex/withSegment.ts";
+import { createClient } from "../commerce/vtex/client.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
 import type { Product } from "../commerce/types.ts";
 import type { LegacySort } from "../commerce/vtex/types.ts";
+import type { StateVTEX } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /** @description query to use on search */
@@ -41,8 +42,8 @@ export interface Props {
 const legacyProductListLoader: LoaderFunction<
   Props,
   Product[] | null,
-  LiveState<{ configVTEX: ConfigVTEX | undefined }>
-> = async (
+  StateVTEX
+> = withSegment(async (
   req,
   ctx,
   props,
@@ -82,6 +83,6 @@ const legacyProductListLoader: LoaderFunction<
   return {
     data: products,
   };
-};
+});
 
 export default legacyProductListLoader;
