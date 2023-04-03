@@ -2,9 +2,46 @@ import { signal } from "@preact/signals";
 import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import type {
   OrderForm,
+  OrderFormItem,
   SimulationOptions,
   SimulationOrderForm,
 } from "../types.ts";
+
+import { AnalyticsItem } from "../../types.ts";
+import { mapCategoriesToAnalyticsCategories } from "../../utils/productToAnalyticsItem.ts";
+
+const mapItemCategoriesToAnalyticsCategories = (
+  item: OrderFormItem,
+): Record<`item_category${number | ""}`, string> => {
+  return mapCategoriesToAnalyticsCategories(
+    Object.values(item.productCategories),
+  );
+};
+
+const mapOrderFormItemsToAnalyticsItems = (
+  orderForm: Pick<OrderForm, "items" | "marketingData">,
+): AnalyticsItem[] => {
+  const items = orderForm.items;
+
+  if (!items) {
+    return [];
+  }
+
+  const coupon = orderForm.marketingData?.coupon ?? undefined;
+
+  return items.map((item, index) => ({
+    item_id: item.productId,
+    item_name: item.skuName,
+    coupon,
+    discount: item.price - item.sellingPrice,
+    index,
+    item_brand: item.additionalInfo.brandName ?? "",
+    item_variant: item.id,
+    price: item.price,
+    quantity: item.quantity,
+    ...(mapItemCategoriesToAnalyticsCategories(item)),
+  }));
+};
 
 const cart = signal<OrderForm | null>(null);
 const loading = signal<boolean>(true);
@@ -247,6 +284,7 @@ const state = {
     withPQueue(() => withCart(() => withLoading(() => addCouponsToCart(opts)))),
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
   simulate,
+  mapItemsToAnalyticsItems: mapOrderFormItemsToAnalyticsItems,
 };
 
 export const useCart = () => state;

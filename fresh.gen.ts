@@ -10,14 +10,15 @@ import * as $1 from "./routes/[...catchall].tsx";
 import * as $2 from "./routes/_middleware.ts";
 import * as $3 from "./routes/index.tsx";
 
-import * as $$$0 from "./sections/SEO.tsx";
-import * as $$$1 from "./sections/SEOPDP.tsx";
-import * as $$$2 from "./sections/SEOPLP.tsx";
-import * as $$$3 from "./sections/configOCC.global.tsx";
-import * as $$$4 from "./sections/configShopify.global.tsx";
-import * as $$$5 from "./sections/configVNDA.global.tsx";
-import * as $$$6 from "./sections/configVTEX.global.tsx";
-import * as $$$7 from "./sections/configYourViews.tsx";
+import * as $$$0 from "./sections/Analytics.tsx";
+import * as $$$1 from "./sections/SEO.tsx";
+import * as $$$2 from "./sections/SEOPDP.tsx";
+import * as $$$3 from "./sections/SEOPLP.tsx";
+import * as $$$4 from "./sections/configOCC.global.tsx";
+import * as $$$5 from "./sections/configShopify.global.tsx";
+import * as $$$6 from "./sections/configVNDA.global.tsx";
+import * as $$$7 from "./sections/configVTEX.global.tsx";
+import * as $$$8 from "./sections/configYourViews.tsx";
 import * as $$$$0 from "./functions/occProductDetailsPage.ts";
 import * as $$$$1 from "./functions/shopifyProductDetailsPage.ts";
 import * as $$$$2 from "./functions/shopifyProductList.ts";
@@ -51,14 +52,15 @@ const manifest: DecoManifest = {
   },
   islands: {},
   sections: {
-    "./sections/SEO.tsx": $$$0,
-    "./sections/SEOPDP.tsx": $$$1,
-    "./sections/SEOPLP.tsx": $$$2,
-    "./sections/configOCC.global.tsx": $$$3,
-    "./sections/configShopify.global.tsx": $$$4,
-    "./sections/configVNDA.global.tsx": $$$5,
-    "./sections/configVTEX.global.tsx": $$$6,
-    "./sections/configYourViews.tsx": $$$7,
+    "./sections/Analytics.tsx": $$$0,
+    "./sections/SEO.tsx": $$$1,
+    "./sections/SEOPDP.tsx": $$$2,
+    "./sections/SEOPLP.tsx": $$$3,
+    "./sections/configOCC.global.tsx": $$$4,
+    "./sections/configShopify.global.tsx": $$$5,
+    "./sections/configVNDA.global.tsx": $$$6,
+    "./sections/configVTEX.global.tsx": $$$7,
+    "./sections/configYourViews.tsx": $$$8,
   },
   functions: {
     "./functions/occProductDetailsPage.ts": $$$$0,
@@ -86,6 +88,25 @@ const manifest: DecoManifest = {
     "$live/functions/MatchUserAgent.ts": $$$$22,
   },
   schemas: {
+    "./sections/Analytics.tsx": {
+      "inputSchema": {
+        "title": " Analytics",
+        "type": "object",
+        "properties": {
+          "trackingIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+            },
+            "title": "Tracking Ids",
+            "description":
+              "google tag manager container id. For more info: https://developers.google.com/tag-platform/tag-manager/web#standard_web_page_installation .",
+          },
+        },
+        "required": [],
+      },
+      "outputSchema": null,
+    },
     "./sections/SEO.tsx": {
       "inputSchema": {
         "title": " S E O",
