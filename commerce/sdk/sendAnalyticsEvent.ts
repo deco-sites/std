@@ -5,7 +5,8 @@ declare global {
     // deno-lint-ignore no-explicit-any
     dataLayer: any[];
 
-    jitsu: (fn: "track", type: "ecommerce", params: AnalyticsEvent) => void;
+    // deno-lint-ignore no-explicit-any
+    jitsu: (...args: any[]) => void;
   }
 }
 
@@ -24,14 +25,3 @@ export const sendAnalyticsEvent = <T extends AnalyticsEvent>(
 
   window.jitsu?.("track", "ecommerce", event);
 };
-
-const state = {
-  sendAnalyticsEvent,
-};
-
-/**
- * This hook has a sendAnalytics collector.
- */
-export const useEvent = <T extends AnalyticsEvent = AnalyticsEvent>(): {
-  sendAnalyticsEvent: (e: T) => void;
-} => state;
