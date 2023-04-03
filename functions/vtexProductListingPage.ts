@@ -139,12 +139,10 @@ const plpLoader: LoaderFunction<
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
-  const { selectedFacets: baseSelectedFacets, page, fuzzy, ...args } =
-    searchArgsOf(
-      props,
-      url,
-    );
-  url.searchParams.get("fuzzy") as Fuzzy;
+  const { selectedFacets: baseSelectedFacets, page, ...args } = searchArgsOf(
+    props,
+    url,
+  );
   const pageTypesPromise = pageTypesFromPathname(url.pathname, vtex);
   const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)
@@ -154,9 +152,6 @@ const plpLoader: LoaderFunction<
     ...args,
     page,
     selectedFacets,
-    // HEAD
-    fuzzy,
-    //
     segment,
   } //fab7ceb (Proxy segment to VTEX APIs)
   ;
