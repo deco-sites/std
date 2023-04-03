@@ -1,9 +1,10 @@
+import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import { Product } from "./types.ts";
 
 const gql = (x: TemplateStringsArray) => x.toString().trim();
 
-export interface ConfigShopify {
+export interface ConfigShopify extends Account {
   /**
    * @description Shopify store name.
    */

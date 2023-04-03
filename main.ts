@@ -3,13 +3,14 @@
 /// <reference lib="deno.ns" />
 /// <reference lib="esnext" />
 
-import manifest from "./fresh.gen.ts";
+import manifest from "./live.gen.ts";
 import { start } from "$fresh/server.ts";
 import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "./twind.config.ts";
 import partytownPlugin from "partytown/mod.ts";
+import { $live } from "$live/mod.ts";
 
-await start(manifest, {
+await start($live(manifest), {
   plugins: [
     partytownPlugin(),
     twindPlugin({
