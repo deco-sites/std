@@ -4,7 +4,6 @@
 
 import config from "./deno.json" assert { type: "json" };
 import { DecoManifest } from "$live/types.ts";
-import { context } from "$live/live.ts";
 
 import * as $0 from "deco-sites/std/functions/vtexConfig.ts";
 import * as $1 from "deco-sites/std/functions/vtexProductListingPage.ts";
@@ -136,8 +135,5 @@ const manifest: DecoManifest = {
   "config": config,
   "baseUrl": import.meta.url,
 };
-
-context.namespace = "deco-sites/std";
-context.siteId = 538;
 
 export default manifest;
