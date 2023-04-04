@@ -205,7 +205,21 @@ const toBreadcrumbList = (
   };
 };
 
-const legacyToProductGroupAdditionalProperties = ({}: LegacyProductVTEX) => [];
+const legacyToProductGroupAdditionalProperties = (
+  product: LegacyProductVTEX,
+) =>
+  product.allSpecifications.flatMap((name) => {
+    const values = (product as unknown as Record<string, string[]>)[name];
+
+    return values.map((value) =>
+      ({
+        "@type": "PropertyValue",
+        name,
+        value,
+        valueReference: "SPECIFICATION",
+      }) as const
+    );
+  });
 
 const toProductGroupAdditionalProperties = ({ properties = [] }: ProductVTEX) =>
   properties.flatMap(({ name, values }) =>
