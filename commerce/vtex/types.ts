@@ -631,7 +631,11 @@ export interface IProduct {
 
 export type Product = IProduct & { items: Item[]; origin?: string };
 
-export type LegacyProduct = IProduct & { items: LegacyItem[]; origin?: string };
+export type LegacyProduct = IProduct & {
+  items: LegacyItem[];
+  origin?: string;
+  allSpecifications: string[];
+};
 
 export type LegacyFacets = {
   Departments: LegacyFacet[];
