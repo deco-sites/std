@@ -4,5 +4,4 @@ import liveManifest from "$live/live.gen.ts";
 
 await dev(import.meta.url, "./main.ts", {
   imports: [liveManifest],
-  siteId: 538,
 });

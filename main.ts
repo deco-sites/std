@@ -9,8 +9,9 @@ import twindPlugin from "$fresh/plugins/twind.ts";
 import twindConfig from "./twind.config.ts";
 import partytownPlugin from "partytown/mod.ts";
 import { $live } from "$live/mod.ts";
+import site from "./site.json" assert { type: "json" };
 
-await start($live(manifest), {
+await start($live(manifest, site), {
   plugins: [
     partytownPlugin(),
     twindPlugin({
