@@ -17,8 +17,8 @@ declare global {
 export const sendAnalyticsEvent = <T extends AnalyticsEvent>(
   event: T,
 ) => {
-  window.dataLayer.push({ ecommerce: null });
-  window.dataLayer.push({
+  window.dataLayer?.push({ ecommerce: null });
+  window.dataLayer?.push({
     event: event.name,
     ecommerce: event.params,
   });
