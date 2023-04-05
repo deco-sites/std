@@ -93,6 +93,7 @@ const PAGE_TYPE_TO_MAP_PARAM = {
   Brand: "brand",
   Collection: "productClusterIds",
   Cluster: "productClusterIds",
+  Search: null,
   Product: null,
   NotFound: null,
   FullText: null,
@@ -153,8 +154,7 @@ const plpLoader: LoaderFunction<
     page,
     selectedFacets,
     segment,
-  } //fab7ceb (Proxy segment to VTEX APIs)
-  ;
+  };
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([

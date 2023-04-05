@@ -44,11 +44,13 @@ const SORT_TO_LEGACY_SORT: Record<string, string> = {
   "": "OrderByScoreDESC",
 };
 
+const segmentsFromTerm = (term: string) => term.split("/").filter(Boolean);
+
 export const pageTypesFromPathname = async (
-  pathname: string,
+  term: string,
   vtex: ClientVTEX,
 ) => {
-  const segments = pathname.split("/").filter(Boolean);
+  const segments = segmentsFromTerm(term);
 
   const results = await Promise.all(
     segments.map((_, index) =>
@@ -88,15 +90,33 @@ const PAGE_TYPE_TO_MAP_PARAM = {
   SubCategory: "c",
   Collection: "productClusterIds",
   Cluster: "productClusterIds",
+  Search: "ft",
+  FullText: null,
   Product: null,
   NotFound: null,
-  FullText: null,
 };
 
-const mapParamFromUrl = (pages: PageType[]) =>
-  pages
+const getMapAndTerm = (
+  pageTypes: PageType[],
+) => {
+  const term = pageTypes
+    .map((type, index) =>
+      type.url
+        ? segmentsFromTerm(
+          new URL(`http://${type.url}`).pathname,
+        )[index]
+        : null
+    )
+    .filter(Boolean)
+    .join("/");
+
+  const map = pageTypes
     .map((type) => PAGE_TYPE_TO_MAP_PARAM[type.pageType])
+    .filter(Boolean)
     .join(",");
+
+  return [map, term];
+};
 
 /**
  * @title Product listing page loader
@@ -116,18 +136,30 @@ const legacyPLPLoader: LoaderFunction<
   const vtex = createClient(configVTEX);
 
   const count = props.count ?? 12;
-  const term = props.term || ctx.params["0"] || "";
-  const pageTypesPromise = pageTypesFromPathname(term, vtex);
+  const maybeMap = props.map || url.searchParams.get("map") || undefined;
+  const maybeTerm = props.term || ctx.params["0"] || "";
   const page = Number(url.searchParams.get("page")) || 0;
   const O = (url.searchParams.get("O") ||
     SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
-  const map = props.map || url.searchParams.get("map") ||
-    mapParamFromUrl(await pageTypesPromise);
   const _from = page * count;
   const _to = (page + 1) * count - 1;
+
+  const pageTypes = await pageTypesFromPathname(maybeTerm, vtex);
+
+  if (pageTypes.length === 0 && !ft) {
+    return {
+      data: null,
+      status: 404,
+    };
+  }
+
+  const missingParams = typeof maybeMap !== "string" || !maybeTerm;
+  const [map, term] = missingParams
+    ? getMapAndTerm(pageTypes)
+    : [maybeMap, maybeTerm];
 
   const searchArgs = {
     term,
@@ -158,10 +190,7 @@ const legacyPLPLoader: LoaderFunction<
   }).map(([name, facets]) => legacyFacetToFilter(name, facets, url, map))
     .flat()
     .filter((x): x is Filter => Boolean(x));
-  const itemListElement = pageTypesToBreadcrumbList(
-    await pageTypesPromise,
-    url,
-  );
+  const itemListElement = pageTypesToBreadcrumbList(pageTypes, url);
 
   const hasNextPage = Boolean(page < 50 && products.length === count);
   const hasPreviousPage = page > 0;
