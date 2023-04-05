@@ -153,7 +153,6 @@ const plpLoader: LoaderFunction<
     ...args,
     page,
     selectedFacets,
-    fuzzy,
     segment,
   };
 
