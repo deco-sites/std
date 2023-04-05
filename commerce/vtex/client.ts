@@ -210,11 +210,11 @@ export const createClient = ({
     return fetchAPI<LegacyProduct[]>(url.href);
   };
 
-  const legacyFacets = (
+  const legacyFacets = async (
     { term, ...params }:
       & { term: string }
       & LegacyParams,
-  ) => {
+  ): Promise<LegacyFacets> => {
     const url = withLegacyParams(
       new URL(
         `./api/catalog_system/pub/facets/search/${term ?? ""}`,
@@ -223,7 +223,21 @@ export const createClient = ({
       params,
     );
 
-    return fetchAPI<LegacyFacets>(url.href);
+    try {
+      return await fetchAPI<LegacyFacets>(url.href);
+    } catch (error) {
+      // When askign for a route that doesn't exist a.k.a is not a category, catalog will return a 400 status code.
+      // In these cases, just return empty facets intead of throwing an error
+      if (error instanceof HttpError && error.status === 400) {
+        return {
+          Departments: [],
+          Brands: [],
+          SpecificationFilters: {},
+        };
+      }
+
+      throw error;
+    }
   };
 
   const pageType = ({ slug }: { slug: string }) =>

@@ -152,9 +152,9 @@ const plpLoader: LoaderFunction<
     ...args,
     page,
     selectedFacets,
+    fuzzy,
     segment,
-  } //fab7ceb (Proxy segment to VTEX APIs)
-  ;
+  };
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
