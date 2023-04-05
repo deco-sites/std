@@ -93,6 +93,7 @@ const PAGE_TYPE_TO_MAP_PARAM = {
   Brand: "brand",
   Collection: "productClusterIds",
   Cluster: "productClusterIds",
+  Search: null,
   Product: null,
   NotFound: null,
   FullText: null,

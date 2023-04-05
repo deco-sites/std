@@ -658,7 +658,8 @@ export interface PageType {
     | "Collection"
     | "Cluster"
     | "NotFound"
-    | "FullText";
+    | "FullText"
+    | "Search";
 }
 
 export interface Category {

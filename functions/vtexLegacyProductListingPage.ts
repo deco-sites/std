@@ -90,9 +90,10 @@ const PAGE_TYPE_TO_MAP_PARAM = {
   SubCategory: "c",
   Collection: "productClusterIds",
   Cluster: "productClusterIds",
+  Search: "ft",
+  FullText: null,
   Product: null,
   NotFound: null,
-  FullText: null,
 };
 
 const getMapAndTerm = (
@@ -137,7 +138,6 @@ const legacyPLPLoader: LoaderFunction<
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || ctx.params["0"] || "";
-  const pageTypesPromise = pageTypesFromPathname(maybeTerm, vtex);
   const page = Number(url.searchParams.get("page")) || 0;
   const O = (url.searchParams.get("O") ||
     SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
@@ -147,10 +147,19 @@ const legacyPLPLoader: LoaderFunction<
   const _from = page * count;
   const _to = (page + 1) * count - 1;
 
-  const [map, term] =
-    typeof maybeMap !== "string" || typeof maybeTerm !== "string"
-      ? getMapAndTerm(await pageTypesPromise)
-      : [maybeMap, maybeTerm];
+  const pageTypes = await pageTypesFromPathname(maybeTerm, vtex);
+
+  if (pageTypes.length === 0 && !ft) {
+    return {
+      data: null,
+      status: 404,
+    };
+  }
+
+  const missingParams = typeof maybeMap !== "string" || !maybeTerm;
+  const [map, term] = missingParams
+    ? getMapAndTerm(pageTypes)
+    : [maybeMap, maybeTerm];
 
   const searchArgs = {
     term,
@@ -181,10 +190,7 @@ const legacyPLPLoader: LoaderFunction<
   }).map(([name, facets]) => legacyFacetToFilter(name, facets, url, map))
     .flat()
     .filter((x): x is Filter => Boolean(x));
-  const itemListElement = pageTypesToBreadcrumbList(
-    await pageTypesPromise,
-    url,
-  );
+  const itemListElement = pageTypesToBreadcrumbList(pageTypes, url);
 
   const hasNextPage = Boolean(page < 50 && products.length === count);
   const hasPreviousPage = page > 0;
