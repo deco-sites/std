@@ -18,7 +18,7 @@ const legacyProductPageLoader: LoaderFunction<
   req,
   ctx,
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const vtex = createClient(configVTEX);
 
   const url = new URL(req.url);
@@ -27,6 +27,7 @@ const legacyProductPageLoader: LoaderFunction<
   // search products on VTEX. Feel free to change any of these parameters
   const [product] = await vtex.catalog_system.products({
     term: `${ctx.params.slug}/p`,
+    segment,
   });
 
   // Product not found, return the 404 status code

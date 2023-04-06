@@ -51,7 +51,7 @@ const legacyRelatedProductsLoader: LoaderFunction<
   ctx,
   { crossSelling, count },
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX } } = ctx.state;
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
