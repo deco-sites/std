@@ -132,7 +132,7 @@ const legacyPLPLoader: LoaderFunction<
   props,
 ) => {
   const url = new URL(req.url);
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const vtex = createClient(configVTEX);
 
   const count = props.count ?? 12;
@@ -162,6 +162,7 @@ const legacyPLPLoader: LoaderFunction<
     : [maybeMap, maybeTerm];
 
   const searchArgs = {
+    segment,
     term,
     map,
     _from,

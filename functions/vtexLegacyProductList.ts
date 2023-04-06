@@ -48,7 +48,7 @@ const legacyProductListLoader: LoaderFunction<
   ctx,
   props,
 ) => {
-  const { configVTEX } = ctx.state.global;
+  const { global: { configVTEX }, segment } = ctx.state;
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
@@ -71,6 +71,7 @@ const legacyProductListLoader: LoaderFunction<
     _from: 0,
     _to: Math.max(count - 1, 0),
     O: O as LegacySort,
+    segment,
   });
 
   // Transform VTEX product format into schema.org's compatible format
