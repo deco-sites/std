@@ -12,16 +12,17 @@ import * as $3 from "./functions/vndaProductDetailsPage.ts";
 import * as $4 from "./functions/vtexLegacyProductDetailsPage.ts";
 import * as $5 from "./functions/vtexSuggestions.ts";
 import * as $6 from "./functions/vtexNavbar.ts";
-import * as $7 from "./functions/shopifyProductListingPage.ts";
-import * as $8 from "./functions/vtexProductList.ts";
-import * as $9 from "./functions/occProductDetailsPage.ts";
-import * as $10 from "./functions/vndaProductListingPage.ts";
-import * as $11 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $12 from "./functions/vtexProductDetailsPage.ts";
-import * as $13 from "./functions/vtexLegacyProductList.ts";
-import * as $14 from "./functions/shopifyProductList.ts";
-import * as $15 from "./functions/shopifyProductDetailsPage.ts";
-import * as $16 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $7 from "./functions/vtexWishlist.ts";
+import * as $8 from "./functions/shopifyProductListingPage.ts";
+import * as $9 from "./functions/vtexProductList.ts";
+import * as $10 from "./functions/occProductDetailsPage.ts";
+import * as $11 from "./functions/vndaProductListingPage.ts";
+import * as $12 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $13 from "./functions/vtexProductDetailsPage.ts";
+import * as $14 from "./functions/vtexLegacyProductList.ts";
+import * as $15 from "./functions/shopifyProductList.ts";
+import * as $16 from "./functions/shopifyProductDetailsPage.ts";
+import * as $17 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
@@ -69,16 +70,17 @@ const manifest: DecoManifest = {
     "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
     "deco-sites/std/functions/vtexSuggestions.ts": $5,
     "deco-sites/std/functions/vtexNavbar.ts": $6,
-    "deco-sites/std/functions/shopifyProductListingPage.ts": $7,
-    "deco-sites/std/functions/vtexProductList.ts": $8,
-    "deco-sites/std/functions/occProductDetailsPage.ts": $9,
-    "deco-sites/std/functions/vndaProductListingPage.ts": $10,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $11,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $12,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $13,
-    "deco-sites/std/functions/shopifyProductList.ts": $14,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $15,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $16,
+    "deco-sites/std/functions/vtexWishlist.ts": $7,
+    "deco-sites/std/functions/shopifyProductListingPage.ts": $8,
+    "deco-sites/std/functions/vtexProductList.ts": $9,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $10,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $11,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $12,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $13,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $14,
+    "deco-sites/std/functions/shopifyProductList.ts": $15,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $16,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $17,
   },
   "accounts": {
     "deco-sites/std/accounts/vnda.ts": $$0,

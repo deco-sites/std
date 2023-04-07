@@ -1,14 +1,9 @@
 import { signal } from "@preact/signals";
-import { fetchAPI } from "../../../utils/fetchAPI.ts";
-import type {
-  OrderForm,
-  OrderFormItem,
-  SimulationOptions,
-  SimulationOrderForm,
-} from "../types.ts";
 
+import { getClient } from "./useClient.ts";
 import { AnalyticsItem } from "../../types.ts";
 import { mapCategoriesToAnalyticsCategories } from "../../utils/productToAnalyticsItem.ts";
+import type { OrderForm, OrderFormItem } from "../types.ts";
 
 const mapItemCategoriesToAnalyticsCategories = (
   item: OrderFormItem,
@@ -43,59 +38,34 @@ const mapOrderFormItemsToAnalyticsItems = (
   }));
 };
 
-const cart = signal<OrderForm | null>(null);
+export const cart = signal<OrderForm | null>(null);
 const loading = signal<boolean>(true);
 
 interface AddCouponsToCartOptions {
   text: string;
 }
 
-const addCouponsToCart = async ({ text }: AddCouponsToCartOptions) => {
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/coupons`,
-    {
-      method: "POST",
-      body: JSON.stringify({ text }),
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+const addCouponsToCart = async (options: AddCouponsToCartOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).coupons.post(options);
 };
 
 interface CartInstallmentsOptions {
   paymentSystem: number;
 }
 
-const getCartInstallments = async ({
-  paymentSystem,
-}: CartInstallmentsOptions) => {
-  const params = new URLSearchParams({ paymentSystem: `${paymentSystem}` });
-
-  cart.value = await fetchAPI(
-    `/api/checkout/pub/orderForm/${
-      cart.value!.orderFormId
-    }/installments?${params}`,
-  );
+const getCartInstallments = async (options: CartInstallmentsOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).installments.get(options);
 };
 
 interface IgnoreProfileDataOptions {
   ignoreProfileData: boolean;
 }
 
-const ignoreProfileData = async ({
-  ignoreProfileData,
-}: IgnoreProfileDataOptions) => {
-  cart.value = await fetchAPI(
-    `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/profile`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({ ignoreProfileData }),
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+const ignoreProfileData = async (options: IgnoreProfileDataOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).profile.patch(options);
 };
 
 interface ChangePriceOptions {
@@ -103,29 +73,18 @@ interface ChangePriceOptions {
   price: number;
 }
 
-const changePrice = async ({ itemIndex, price }: ChangePriceOptions) => {
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm/${
-      cart.value!.orderFormId
-    }/items/${itemIndex}/price`,
-    {
-      method: "PUT",
-      body: JSON.stringify({ price }),
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+const changePrice = async (options: ChangePriceOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).items.price.put(options);
 };
 
 const getCart = async () => {
-  cart.value = await fetchAPI<OrderForm>(`/api/checkout/pub/orderForm`);
+  cart.value = await getClient().checkout.pub.orderForm("").post();
 };
 
 const removeAllPersonalData = async () => {
-  cart.value = await fetchAPI<OrderForm>(
-    `/checkout/changeToAnonymousUser/${cart.value!.orderFormId}`,
-  );
+  cart.value = await getClient()
+    .checkout.changeToAnonymousUser(cart.value!.orderFormId).get();
 };
 
 interface UpdateItemsOptions {
@@ -136,46 +95,27 @@ interface UpdateItemsOptions {
   allowedOutdatedData?: Array<"paymentData">;
 }
 
-const updateItems = async ({
-  orderItems,
-  allowedOutdatedData = ["paymentData"],
-}: UpdateItemsOptions) => {
-  const params = new URLSearchParams();
-
-  if (allowedOutdatedData) {
-    for (const it of allowedOutdatedData) {
-      params.append("allowedOutdatedData", it);
-    }
-  }
-
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm/${
-      cart.value!.orderFormId
-    }/items/update?${params}`,
-    {
-      method: "POST",
-      body: JSON.stringify({ orderItems }),
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+const updateItems = async (options: UpdateItemsOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).items.update.post(options);
 };
 
+export interface SimulationOptions {
+  items: Array<{
+    id: number;
+    quantity: number;
+    seller: string;
+  }>;
+  postalCode: string;
+  country: string;
+}
+
 const simulate = (data: SimulationOptions) =>
-  fetchAPI<SimulationOrderForm>(
-    `/api/checkout/pub/orderForms/simulation`,
-    {
-      method: "POST",
-      body: JSON.stringify(data),
-    },
-  );
+  getClient().checkout.pub.orderForms.simulation.post(data);
 
 const removeAllItems = async () => {
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/items/removeAll`,
-    { method: "POST" },
-  );
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).items.removeAll.post();
 };
 
 interface AddItemsOptions {
@@ -189,28 +129,9 @@ interface AddItemsOptions {
   allowedOutdatedData?: Array<"paymentData">;
 }
 
-const addItems = async ({
-  orderItems,
-  allowedOutdatedData = ["paymentData"],
-}: AddItemsOptions) => {
-  const params = new URLSearchParams();
-
-  if (allowedOutdatedData) {
-    for (const it of allowedOutdatedData) {
-      params.append("allowedOutdatedData", it);
-    }
-  }
-
-  cart.value = await fetchAPI<OrderForm>(
-    `/api/checkout/pub/orderForm/${cart.value!.orderFormId}/items?${params}`,
-    {
-      method: "POST",
-      body: JSON.stringify({ orderItems }),
-      headers: {
-        "content-type": "application/json",
-      },
-    },
-  );
+const addItems = async (options: AddItemsOptions) => {
+  cart.value = await getClient()
+    .checkout.pub.orderForm(cart.value!.orderFormId).items.post(options);
 };
 
 type Middleware = (fn: () => Promise<void>) => Promise<void>;

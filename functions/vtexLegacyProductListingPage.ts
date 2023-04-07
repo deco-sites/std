@@ -54,7 +54,7 @@ export const pageTypesFromPathname = async (
 
   const results = await Promise.all(
     segments.map((_, index) =>
-      vtex.catalog_system.pageType({
+      vtex.catalog_system.portal.pageType({
         slug: segments.slice(0, index + 1).join("/"),
       })
     ),
@@ -174,8 +174,8 @@ const legacyPLPLoader: LoaderFunction<
 
   // search products on VTEX. Feel free to change any of these parameters
   const [vtexProducts, vtexFacets] = await Promise.all([
-    vtex.catalog_system.products(searchArgs),
-    vtex.catalog_system.facets(searchArgs),
+    vtex.catalog_system.products.search(searchArgs),
+    vtex.catalog_system.facets.search(searchArgs),
   ]);
 
   // Transform VTEX product format into schema.org's compatible format

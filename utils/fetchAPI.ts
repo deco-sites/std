@@ -1,7 +1,7 @@
 import { HttpError } from "./HttpError.ts";
 
 export const fetchAPI = async <T>(
-  input: string | Request,
+  input: string | Request | URL,
   init?: RequestInit,
 ): Promise<T> => {
   const headers = new Headers(init?.headers);

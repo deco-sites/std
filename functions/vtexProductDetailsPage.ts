@@ -14,7 +14,7 @@ const getProductID = async (
   slug: string,
   vtex: ReturnType<typeof createClient>,
 ) => {
-  const page = await vtex.catalog_system.pageType({ slug: `${slug}/p` });
+  const page = await vtex.catalog_system.portal.pageType({ slug: `${slug}/p` });
 
   if (page.pageType !== "Product") {
     return null;

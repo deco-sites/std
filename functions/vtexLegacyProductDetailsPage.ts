@@ -25,7 +25,7 @@ const legacyProductPageLoader: LoaderFunction<
   const skuId = url.searchParams.get("skuId");
 
   // search products on VTEX. Feel free to change any of these parameters
-  const [product] = await vtex.catalog_system.products({
+  const [product] = await vtex.catalog_system.products.search({
     term: `${ctx.params.slug}/p`,
     segment,
   });

@@ -1317,6 +1317,22 @@
           }
         },
         {
+          "title": "deco-sites/std/functions/vtexWishlist.ts",
+          "type": "object",
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/vtexWishlist.ts"
+              ],
+              "default": "deco-sites/std/functions/vtexWishlist.ts"
+            }
+          }
+        },
+        {
           "title": "deco-sites/std/functions/vtexProductList.ts",
           "type": "object",
           "allOf": [
@@ -2845,6 +2861,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw==": {
+      "title": "deco-sites/std/functions/vtexWishlist.ts",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/functions/vtexWishlist.ts"
+          ],
+          "default": "deco-sites/std/functions/vtexWishlist.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Nob3BpZnlQcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
       "title": "deco-sites/std/functions/shopifyProductListingPage.ts",
       "type": "object",
@@ -3701,6 +3733,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhOYXZiYXIudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Nob3BpZnlQcm9kdWN0TGlzdGluZ1BhZ2UudHM="
