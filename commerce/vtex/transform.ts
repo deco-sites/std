@@ -105,6 +105,29 @@ const getHighPriceIndex = (offers: Offer[]) => {
   return it;
 };
 
+const splitCategory = (firstCategory: string) =>
+  firstCategory.split("/").filter(Boolean);
+
+const toAdditionalPropertyCategories = <
+  P extends LegacyProductVTEX | ProductVTEX,
+>(product: P): Product["additionalProperty"] => {
+  const categories = splitCategory(product.categories[0]);
+  const categoryIds = splitCategory(product.categoriesIds[0]);
+
+  return [
+    ...categories.map((category) => ({
+      "@type": "PropertyValue" as const,
+      name: "category",
+      value: category,
+    })),
+    ...categoryIds.map((categoryId) => ({
+      "@type": "PropertyValue" as const,
+      name: "categoryId",
+      value: categoryId,
+    })),
+  ];
+};
+
 export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   product: P,
   sku: P["items"][number],
@@ -125,7 +148,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const groupAdditionalProperty = isLegacyProduct(product)
     ? legacyToProductGroupAdditionalProperties(product)
     : toProductGroupAdditionalProperties(product);
-  const additionalProperty = isLegacySku(sku)
+  const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
@@ -135,8 +158,16 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const highPriceIndex = getHighPriceIndex(offers);
   const lowPriceIndex = 0;
 
+  // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
+  const categoriesString = splitCategory(product.categories[0]).join(">");
+  const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
+
+  const additionalProperty = specificationsAdditionalProperty.concat(
+    categoryAdditionalProperties ?? [],
+  );
   return {
     "@type": "Product",
+    category: categoriesString,
     productID: skuId,
     url: getProductURL(url, product, sku.itemId).href,
     name,
