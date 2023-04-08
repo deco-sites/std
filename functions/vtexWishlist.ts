@@ -35,7 +35,7 @@ const vtexWishlistLoader: LoaderFunction<
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await vtex.search.products({
-    query: `product=${productIds.join(":")}`,
+    query: `product:${productIds.join(";")}`,
     page: 0,
     count: productIds.length,
     sort: "release:desc",
