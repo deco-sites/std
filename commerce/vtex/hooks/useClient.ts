@@ -11,7 +11,7 @@ declare global {
 window.LIVE = window.LIVE || {};
 window.LIVE.integrations = window.LIVE.integrations || {};
 window.LIVE.integrations["vtex"] = window.LIVE.integrations["vtex"] ||
-  createClient({ baseUrl: window.location?.origin });
+  createClient();
 
 export const getClient = () =>
   window.LIVE.integrations["vtex"] as ReturnType<typeof createClient>;
