@@ -27,6 +27,7 @@ import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
 import * as $$3 from "./accounts/shopify.ts";
 import * as $$4 from "./accounts/occ.ts";
+import * as $$$0 from "./loaders/shopifyProductList.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "./sections/SEO.tsx";
@@ -86,6 +87,9 @@ const manifest: DecoManifest = {
     "deco-sites/std/accounts/vtex.ts": $$2,
     "deco-sites/std/accounts/shopify.ts": $$3,
     "deco-sites/std/accounts/occ.ts": $$4,
+  },
+  "loaders": {
+    "deco-sites/std/loaders/shopifyProductList.ts": $$$0,
   },
   "routes": {
     "./routes/404.tsx": $$$$0,
