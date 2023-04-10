@@ -247,8 +247,10 @@ const toAdditionalProperties = (
     )
   ) ?? [];
 
-const toAdditionalPropertiesLegacy = (sku: LegacySkuVTEX): PropertyValue[] =>
-  sku.variations?.flatMap((variation) =>
+const toAdditionalPropertiesLegacy = (sku: LegacySkuVTEX): PropertyValue[] => {
+  const { variations = [], attachments = [] } = sku;
+
+  const specificationProperties = variations.flatMap((variation) =>
     sku[variation].map((value) =>
       ({
         "@type": "PropertyValue",
@@ -257,7 +259,21 @@ const toAdditionalPropertiesLegacy = (sku: LegacySkuVTEX): PropertyValue[] =>
         valueReference: "SPECIFICATION",
       }) as const
     )
-  ) ?? [];
+  );
+
+  const attachmentProperties = attachments.map((attachment) =>
+    ({
+      "@type": "PropertyValue",
+      "@id": `${attachment.id}`,
+      name: attachment.name,
+      value: attachment.domainValues,
+      requied: attachment.required,
+      valueReference: "ATTACHMENT",
+    }) as const
+  );
+
+  return [...specificationProperties, ...attachmentProperties];
+};
 
 const toOffer = ({
   commertialOffer: offer,
