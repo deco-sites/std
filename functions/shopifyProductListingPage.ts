@@ -80,6 +80,7 @@ const searchLoader: LoaderFunction<
         previousPage: hasPreviousPage ? previousPage.toString() : undefined,
         currentPage: page,
       },
+      sortOptions: [],
     },
   };
 };

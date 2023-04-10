@@ -24,6 +24,17 @@ import {
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
 export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
 
+const sortOptions = [
+  { value: "", label: "Relevância" },
+  { value: "price:desc", label: "Maior Preço" },
+  { value: "price:asc", label: "Menor Preço" },
+  { value: "orders:desc", label: "Mais Pedidos" },
+  { value: "name:asc", label: "Nome (A -> Z)" },
+  { value: "name:desc", label: "Nome (Z -> A)" },
+  { value: "release:desc", label: "Lançamentos" },
+  { value: "discount:desc", label: "Maior Desconto" },
+];
+
 const mapLabelledFuzzyToFuzzy = (
   labelledFuzzy?: LabelledFuzzy,
 ): Fuzzy | undefined => {
@@ -206,6 +217,7 @@ const plpLoader: LoaderFunction<
         previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
         currentPage: page,
       },
+      sortOptions,
     },
   };
 }));

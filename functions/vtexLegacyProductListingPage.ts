@@ -33,16 +33,16 @@ export interface Props {
   map?: string;
 }
 
-const SORT_TO_LEGACY_SORT: Record<string, string> = {
-  "price:desc": "OrderByPriceDESC",
-  "price:asc": "OrderByPriceASC",
-  "orders:desc": "OrderByTopSaleDESC",
-  "name:desc": "OrderByNameDESC",
-  "name:asc": "OrderByNameASC",
-  "release:desc": "OrderByReleaseDateDESC",
-  "discount:desc": "OrderByBestDiscountDESC",
-  "": "OrderByScoreDESC",
-};
+const sortOptions = [
+  { value: "price:desc", label: "OrderByPriceDESC" },
+  { value: "price:asc", label: "OrderByPriceASC" },
+  { value: "orders:desc", label: "OrderByTopSaleDESC" },
+  { value: "name:desc", label: "OrderByNameDESC" },
+  { value: "name:asc", label: "OrderByNameASC" },
+  { value: "release:desc", label: "OrderByReleaseDateDESC" },
+  { value: "discount:desc", label: "OrderByBestDiscountDESC" },
+  { value: "", label: "OrderByScoreDESC" },
+];
 
 const segmentsFromTerm = (term: string) => term.split("/").filter(Boolean);
 
@@ -139,8 +139,8 @@ const legacyPLPLoader: LoaderFunction<
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || ctx.params["0"] || "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const O = (url.searchParams.get("O") ||
-    SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
+  const O = (url.searchParams.get("O") || url.searchParams.get("sort") ||
+    sortOptions[0].value) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
@@ -223,6 +223,7 @@ const legacyPLPLoader: LoaderFunction<
           : undefined,
         currentPage: page,
       },
+      sortOptions,
     },
   };
 });

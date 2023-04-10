@@ -41,30 +41,23 @@ const vtexWishlistLoader: LoaderFunction<
 
   const page = Number(url.searchParams.get("page")) || 0;
 
-  const list = await vtex.wishlist.get({ email: user });
-  const productIds = list.data.viewList.data.map((p) => p.productId);
+  const productIds = await vtex.wishlist.get({ email: user })
+    .then((list) => list.data.viewList.data.map((p) => p.productId))
+    .then((array) => array.slice(page * count, (page + 1) * count));
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await vtex.search.products({
     query: `product:${productIds.join(";")}`,
     page: 0,
     count: productIds.length,
-    sort: "release:desc",
+    sort: "discount:desc",
     segment,
   });
-
-  // O(n^2) computation. Maybe a map would help in here, but I guess the number
-  // of products is too small to cause any difference
-  const sortedProducts = productIds
-    .map((productId) =>
-      vtexProducts.find((product) => product.productId === productId)
-    )
-    .filter(Boolean);
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
-  const products = sortedProducts.map((p) =>
+  const products = vtexProducts.map((p) =>
     toProduct(p!, p!.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
@@ -91,6 +84,7 @@ const vtexWishlistLoader: LoaderFunction<
         nextPage: nextPage,
         previousPage: previousPage,
       },
+      sortOptions: [],
     },
   };
 })));
