@@ -11,8 +11,10 @@ import {
 } from "./types.ts";
 
 const DOMAIN_HEADER = "X-Shop-Host";
-const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
-const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
+const BASE_URL_PROD =
+  "https://proxy.decocache.com/https://api.vnda.com.br/api/v2/";
+const BASE_URL_SANDBOX =
+  "https://proxy.decocache.com/https://api.sandbox.vnda.com.br/api/v2/";
 
 export const VNDA_SORT_OPTIONS: SortOption[] = [
   { value: "", label: "Relevância" },
@@ -31,7 +33,7 @@ export const createClient = (params: ConfigVNDA) => {
     method?: string,
     data?: Record<string, unknown>,
   ) => {
-    return fetchAPI<T>(new URL(endpoint, baseUrl).href, {
+    return fetchAPI<T>(new URL(endpoint, baseUrl), {
       body: data ? JSON.stringify(data) : undefined,
       method: method ?? "GET",
       headers: {

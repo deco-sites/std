@@ -95,9 +95,8 @@ export const createClient = ({
   defaultLocale = "en-US",
   defaultHideUnnavailableItems = false,
 }: Partial<ConfigVTEX> = {}) => {
-  const decoAPIUrl =
-    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`;
   const vtexAPIUrl = `https://${account}.vtexcommercestable.com.br`;
+  const decoAPIUrl = `https://proxy.decocache.com/${vtexAPIUrl}/`;
   const withCache = window.location?.origin
     ? window.location.origin
     : decoAPIUrl;

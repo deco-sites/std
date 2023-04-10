@@ -13,7 +13,7 @@ export interface PaginationOptions {
   count?: number;
 }
 
-const baseUrl = "http://service.yourviews.com.br";
+const baseUrl = "http://proxy.decocache.com/http://service.yourviews.com.br";
 
 export const createClient = ({ token, appId }: ConfigYourViews) => {
   const headers = {
