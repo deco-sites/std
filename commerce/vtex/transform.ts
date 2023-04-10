@@ -225,12 +225,16 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
   const categoriesString = splitCategory(product.categories[0]).join(">");
 
-  const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
-  const clusterAdditionalProperties = toAdditionalPropertyClusters(product);
+  const categoryAdditionalProperties =
+    toAdditionalPropertyCategories(product) ?? [];
+  const clusterAdditionalProperties = toAdditionalPropertyClusters(product) ??
+    [];
 
-  const additionalProperty = specificationsAdditionalProperty.concat(
-    categoryAdditionalProperties ?? [],
-  ).concat(clusterAdditionalProperties ?? []);
+  const additionalProperty = [
+    ...specificationsAdditionalProperty,
+    ...categoryAdditionalProperties,
+    ...clusterAdditionalProperties,
+  ];
 
   return {
     "@type": "Product",
