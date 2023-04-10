@@ -267,7 +267,7 @@ const toAdditionalPropertiesLegacy = (sku: LegacySkuVTEX): PropertyValue[] => {
       "@id": `${attachment.id}`,
       name: attachment.name,
       value: attachment.domainValues,
-      requied: attachment.required,
+      required: attachment.required,
       valueReference: "ATTACHMENT",
     }) as const
   );
