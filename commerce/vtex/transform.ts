@@ -105,6 +105,50 @@ const getHighPriceIndex = (offers: Offer[]) => {
   return it;
 };
 
+const splitCategory = (firstCategory: string) =>
+  firstCategory.split("/").filter(Boolean);
+
+const toAdditionalPropertyCategories = <
+  P extends LegacyProductVTEX | ProductVTEX,
+>(product: P): Product["additionalProperty"] => {
+  const categories = splitCategory(product.categories[0]);
+  const categoryIds = splitCategory(product.categoriesIds[0]);
+
+  return [
+    ...categories.map((category, index) => ({
+      "@type": "PropertyValue" as const,
+      name: "category",
+      propertyID: categoryIds[index],
+      value: category,
+    })),
+  ];
+};
+
+const toAdditionalPropertyClusters = <
+  P extends LegacyProductVTEX | ProductVTEX,
+>(product: P): Product["additionalProperty"] => {
+  const mapEntriesToIdName = ([id, name]: [string, unknown]) => ({
+    id,
+    name: name as string,
+  });
+
+  const allClusters = isLegacyProduct(product)
+    ? Object.entries(product.productClusters).map(mapEntriesToIdName)
+    : product.productClusters;
+
+  const highlightsSet = isLegacyProduct(product)
+    ? new Set(Object.keys(product.clusterHighlights))
+    : new Set(product.clusterHighlights.map(({ id }) => id));
+
+  return allClusters.map(({ id, name }) => ({
+    "@type": "PropertyValue" as const,
+    name: "cluster",
+    value: name || "",
+    propertyID: id,
+    description: highlightsSet.has(id) ? "highlight" : undefined,
+  }));
+};
+
 export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   product: P,
   sku: P["items"][number],
@@ -125,7 +169,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const groupAdditionalProperty = isLegacyProduct(product)
     ? legacyToProductGroupAdditionalProperties(product)
     : toProductGroupAdditionalProperties(product);
-  const additionalProperty = isLegacySku(sku)
+  const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
@@ -134,6 +178,17 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     items.map((sku) => toProduct(product, sku, 1, options));
   const highPriceIndex = getHighPriceIndex(offers);
   const lowPriceIndex = 0;
+
+  const categoryAdditionalProperties =
+    toAdditionalPropertyCategories(product) ?? [];
+  const clusterAdditionalProperties = toAdditionalPropertyClusters(product) ??
+    [];
+
+  const additionalProperty = [
+    ...specificationsAdditionalProperty,
+    ...categoryAdditionalProperties,
+    ...clusterAdditionalProperties,
+  ];
 
   return {
     "@type": "Product",
@@ -174,7 +229,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 };
 
 const toBreadcrumbList = (
-  product: ProductVTEX,
+  product: ProductVTEX | LegacyProductVTEX,
   { url }: ProductOptions,
 ): BreadcrumbList => {
   const { categories, productName } = product;

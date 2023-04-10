@@ -629,7 +629,12 @@ export interface IProduct {
   releaseDate: string;
 }
 
-export type Product = IProduct & { items: Item[]; origin?: string };
+export type Product = IProduct & {
+  items: Item[];
+  origin?: string;
+  clusterHighlights: Array<{ id: string; name: string }>;
+  productClusters: Array<{ id: string; name: string }>;
+};
 
 export type LegacyProduct = IProduct & {
   items: LegacyItem[];
