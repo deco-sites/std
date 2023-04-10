@@ -115,17 +115,38 @@ const toAdditionalPropertyCategories = <
   const categoryIds = splitCategory(product.categoriesIds[0]);
 
   return [
-    ...categories.map((category) => ({
+    ...categories.map((category, index) => ({
       "@type": "PropertyValue" as const,
       name: "category",
+      propertyID: categoryIds[index],
       value: category,
     })),
-    ...categoryIds.map((categoryId) => ({
-      "@type": "PropertyValue" as const,
-      name: "categoryId",
-      value: categoryId,
-    })),
   ];
+};
+
+const toAdditionalPropertyClusters = <
+  P extends LegacyProductVTEX | ProductVTEX,
+>(product: P): Product["additionalProperty"] => {
+  const mapEntriesToIdName = ([id, name]: [string, unknown]) => ({
+    id,
+    name: name as string,
+  });
+
+  const allClusters = isLegacyProduct(product)
+    ? Object.entries(product.productClusters).map(mapEntriesToIdName)
+    : product.productClusters;
+
+  const highlightsSet = isLegacyProduct(product)
+    ? new Set(Object.keys(product.clusterHighlights))
+    : new Set(product.clusterHighlights.map(({ id }) => id));
+
+  return allClusters.map(({ id, name }) => ({
+    "@type": "PropertyValue" as const,
+    name: "cluster",
+    value: name || "",
+    propertyID: id,
+    description: highlightsSet.has(id) ? "highlight" : undefined,
+  }));
 };
 
 export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
@@ -160,11 +181,14 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 
   // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
   const categoriesString = splitCategory(product.categories[0]).join(">");
+
   const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
+  const clusterAdditionalProperties = toAdditionalPropertyClusters(product);
 
   const additionalProperty = specificationsAdditionalProperty.concat(
     categoryAdditionalProperties ?? [],
-  );
+  ).concat(clusterAdditionalProperties ?? []);
+
   return {
     "@type": "Product",
     category: categoriesString,
@@ -205,7 +229,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 };
 
 const toBreadcrumbList = (
-  product: ProductVTEX,
+  product: ProductVTEX | LegacyProductVTEX,
   { url }: ProductOptions,
 ): BreadcrumbList => {
   const { categories, productName } = product;
