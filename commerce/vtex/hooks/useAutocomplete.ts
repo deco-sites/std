@@ -1,15 +1,16 @@
-import { ReadonlySignal, signal } from "@preact/signals";
+import { signal } from "@preact/signals";
 import { debounce } from "std/async/debounce.ts";
 
-import { ClientConfigVTEX } from "../../../functions/vtexConfig.ts";
 import { Suggestion } from "../../../commerce/types.ts";
-import { createClient } from "../../../commerce/vtex/client.ts";
 import { toProduct } from "../../../commerce/vtex/transform.ts";
+import { getClient } from "./useClient.ts";
 
-async function vtexSearchSuggestion(
-  client: ReturnType<typeof createClient>,
-  query: string,
-) {
+const suggestions = signal<Suggestion | undefined>(undefined);
+
+const fetchSuggestions = async (query: string) => {
+  const client = getClient();
+  const url = new URL(window.location.href);
+
   try {
     const [{ searches }, { products }] = await Promise.all([
       client.search.suggestedTerms({ query }),
@@ -18,66 +19,37 @@ async function vtexSearchSuggestion(
 
     if (!searches || !products) return;
 
-    const url = new URL(window.location.href);
     return {
       searches,
       products: products.map((p) =>
         toProduct(p, p.items[0], 0, { url, priceCurrency: client.currency() })
       ),
     };
-  } catch (_) {
-    console.error("Something went wrong with the suggestion \n", _);
+  } catch (error) {
+    console.error("Something went wrong with the suggestion \n", error);
     return;
   }
-}
-
-interface UseVTEXAutocompleteProps {
-  configVTEX?: ClientConfigVTEX;
-}
-
-interface AutocompleteHook {
-  setSearch: (search: string) => void;
-  suggestions: ReadonlySignal<Suggestion | undefined>;
-}
-
-let vtexClient: ReturnType<typeof createClient>;
-const suggestions = signal<Suggestion | undefined>(undefined);
-const setSuggestions = (_suggestions: Suggestion | undefined) => {
-  suggestions.value = _suggestions;
 };
 
 const setSearch = debounce(async (search: string) => {
-  if (!vtexClient) return;
-
   if (search === "") {
-    setSuggestions(undefined);
+    suggestions.value = undefined;
     return;
   }
 
-  const _suggestion = await vtexSearchSuggestion(
-    vtexClient,
+  const _suggestion = await fetchSuggestions(
     search,
   );
 
-  setSuggestions(_suggestion);
+  suggestions.value = _suggestion;
 }, 250);
+
+const state = {
+  setSearch,
+  suggestions,
+};
 
 /**
  * This hook only works if the vtex intelligent search app is installed at VTEX Account.
  */
-export default function useAutocomplete(
-  { configVTEX }: UseVTEXAutocompleteProps,
-): AutocompleteHook {
-  if (configVTEX && !vtexClient) {
-    // TODO: create a singleton
-    vtexClient = createClient({
-      ...configVTEX,
-      baseUrl: window.location.origin,
-    });
-  }
-
-  return {
-    setSearch,
-    suggestions,
-  };
-}
+export const useAutocomplete = () => state;

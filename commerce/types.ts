@@ -353,7 +353,7 @@ export interface ProductListingPage {
     nextPage: string | undefined;
     previousPage: string | undefined;
   };
-  sortOptions?: SortOption[];
+  sortOptions: SortOption[];
 }
 
 export interface Search {

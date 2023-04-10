@@ -33,16 +33,16 @@ export interface Props {
   map?: string;
 }
 
-const SORT_TO_LEGACY_SORT: Record<string, string> = {
-  "price:desc": "OrderByPriceDESC",
-  "price:asc": "OrderByPriceASC",
-  "orders:desc": "OrderByTopSaleDESC",
-  "name:desc": "OrderByNameDESC",
-  "name:asc": "OrderByNameASC",
-  "release:desc": "OrderByReleaseDateDESC",
-  "discount:desc": "OrderByBestDiscountDESC",
-  "": "OrderByScoreDESC",
-};
+const sortOptions = [
+  { value: "price:desc", label: "OrderByPriceDESC" },
+  { value: "price:asc", label: "OrderByPriceASC" },
+  { value: "orders:desc", label: "OrderByTopSaleDESC" },
+  { value: "name:desc", label: "OrderByNameDESC" },
+  { value: "name:asc", label: "OrderByNameASC" },
+  { value: "release:desc", label: "OrderByReleaseDateDESC" },
+  { value: "discount:desc", label: "OrderByBestDiscountDESC" },
+  { value: "", label: "OrderByScoreDESC" },
+];
 
 const segmentsFromTerm = (term: string) => term.split("/").filter(Boolean);
 
@@ -54,7 +54,7 @@ export const pageTypesFromPathname = async (
 
   const results = await Promise.all(
     segments.map((_, index) =>
-      vtex.catalog_system.pageType({
+      vtex.catalog_system.portal.pageType({
         slug: segments.slice(0, index + 1).join("/"),
       })
     ),
@@ -139,8 +139,8 @@ const legacyPLPLoader: LoaderFunction<
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || ctx.params["0"] || "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const O = (url.searchParams.get("O") ||
-    SORT_TO_LEGACY_SORT[url.searchParams.get("sort") ?? ""]) as LegacySort;
+  const O = (url.searchParams.get("O") || url.searchParams.get("sort") ||
+    sortOptions[0].value) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
@@ -174,8 +174,8 @@ const legacyPLPLoader: LoaderFunction<
 
   // search products on VTEX. Feel free to change any of these parameters
   const [vtexProducts, vtexFacets] = await Promise.all([
-    vtex.catalog_system.products(searchArgs),
-    vtex.catalog_system.facets(searchArgs),
+    vtex.catalog_system.products.search(searchArgs),
+    vtex.catalog_system.facets.search(searchArgs),
   ]);
 
   // Transform VTEX product format into schema.org's compatible format
@@ -223,6 +223,7 @@ const legacyPLPLoader: LoaderFunction<
           : undefined,
         currentPage: page,
       },
+      sortOptions,
     },
   };
 });

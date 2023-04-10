@@ -6,7 +6,7 @@ declare global {
     dataLayer?: any[];
 
     // deno-lint-ignore no-explicit-any
-    jitsu?: (...args: any[]) => void;
+    jitsu: (...args: any[]) => void;
   }
 }
 

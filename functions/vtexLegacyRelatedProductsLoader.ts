@@ -7,25 +7,6 @@ import type { CrossSellingType } from "../commerce/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
 
-const mapCrossSellingTypeToClientKey = (
-  crossSellingType: CrossSellingType,
-): keyof (ReturnType<typeof createClient>)["catalog_system"][
-  "crossSelling"
-] => {
-  switch (crossSellingType) {
-    case "whosawalsosaw":
-      return "whoSawAlsoSaw";
-    case "whosawalsobought":
-      return "whoSawAlsoBought";
-    case "whoboughtalsobought":
-      return "whoBoughtAlsoBought";
-    case "showtogether":
-      return "showTogether";
-    default:
-      return crossSellingType;
-  }
-};
-
 export interface Props {
   /**
    * @title Related Products
@@ -55,7 +36,7 @@ const legacyRelatedProductsLoader: LoaderFunction<
   const vtex = createClient(configVTEX);
   const url = new URL(req.url);
 
-  const pageType = await vtex.catalog_system.pageType({
+  const pageType = await vtex.catalog_system.portal.pageType({
     slug: `${ctx.params.slug}/p`,
   });
 
@@ -66,18 +47,15 @@ const legacyRelatedProductsLoader: LoaderFunction<
     };
   }
 
-  if (
-    crossSelling === "" || crossSelling === null || crossSelling === undefined
-  ) {
+  if (!crossSelling) {
     return {
       data: null,
     };
   }
 
-  const vtexRelatedProducts = await vtex.catalog_system.crossSelling
-    [mapCrossSellingTypeToClientKey(crossSelling)]({
-      productId: pageType.id,
-    });
+  const vtexRelatedProducts = await vtex.catalog_system.products.crossSelling(
+    { productId: pageType.id, type: crossSelling },
+  );
 
   const relatedProducts = vtexRelatedProducts.slice(0, count ?? Infinity).map((
     p,

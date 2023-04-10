@@ -1,21 +1,23 @@
-import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import {
   Category,
   CrossSellingArgs,
-  CrossSellingType,
   FacetSearchResult,
   LegacyFacets,
   LegacyProduct,
   LegacySort,
+  OrderForm,
   PageType,
   ProductSearchResult,
   SearchArgs,
   Segment,
   SelectedFacet,
+  SimulationOrderForm,
   Suggestion,
+  WishlistItem,
 } from "./types.ts";
-import { getCacheBurstKey, withSegment } from "./utils/segment.ts";
+import { SEGMENT_COOKIE_NAME, serialize } from "./utils/segment.ts";
+import type { Account } from "$live/blocks/account.ts";
 
 const POLICY_KEY = "trade-policy";
 const REGION_KEY = "region-id";
@@ -29,6 +31,34 @@ interface LegacyParams {
   O?: LegacySort;
   map?: string;
 }
+
+/**
+ * Due to a lack of knowledge to configure Cloudflare properly to vary with cookies,
+ * this code adds a key at URL Params to burst the Cloudflare cache
+ */
+export const getCacheBurstKey = async (segment: Partial<Segment>) => {
+  const serial = serialize(segment);
+
+  const buffer = await crypto.subtle.digest(
+    "SHA-1",
+    new TextEncoder().encode(serial),
+  );
+
+  const hex = Array.from(new Uint8Array(buffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return hex;
+};
+
+export const withSegmentCookie = (
+  segment: Partial<Segment>,
+  headers: Headers = new Headers(),
+) => {
+  headers.set("cookie", `${SEGMENT_COOKIE_NAME}=${serialize(segment)}`);
+
+  return headers;
+};
 
 export interface ConfigVTEX extends Account {
   /**
@@ -64,8 +94,17 @@ export const createClient = ({
   defaultPriceCurrency = "USD",
   defaultLocale = "en-US",
   defaultHideUnnavailableItems = false,
-  baseUrl = `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`,
-}: Partial<ConfigVTEX> & { baseUrl?: string } = {}) => {
+}: Partial<ConfigVTEX> = {}) => {
+  const decoAPIUrl =
+    `https://vtex-search-proxy.global.ssl.fastly.net/v2/${account}/`;
+  const vtexAPIUrl = `https://${account}.vtexcommercestable.com.br`;
+  const withCache = window.location?.origin
+    ? window.location.origin
+    : decoAPIUrl;
+  const withoutCache = window.location?.origin
+    ? window.location.origin
+    : vtexAPIUrl;
+
   const addDefaultFacets = (
     facets: SelectedFacet[],
   ) => {
@@ -123,10 +162,10 @@ export const createClient = ({
     return fetchAPI(
       new URL(
         `./api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
-        baseUrl,
-      ).href,
+        withCache,
+      ),
       {
-        headers: segment && withSegment(segment),
+        headers: segment && withSegmentCookie(segment),
       },
     );
   };
@@ -145,8 +184,8 @@ export const createClient = ({
     return fetchAPI(
       new URL(
         `./api/io/_v/api/intelligent-search/search_suggestions?${params.toString()}`,
-        baseUrl,
-      ).href,
+        withCache,
+      ),
     );
   };
 
@@ -160,8 +199,8 @@ export const createClient = ({
     return fetchAPI(
       new URL(
         `./api/io/_v/api/intelligent-search/top_searches?${params.toString()}`,
-        baseUrl,
-      ).href,
+        withCache,
+      ),
     );
   };
 
@@ -183,7 +222,7 @@ export const createClient = ({
     return url;
   };
 
-  const legacyProducts = (
+  const legacyProductSearch = (
     { term, segment, ...params }: {
       term?: string;
       segment?: Partial<Segment>;
@@ -192,7 +231,7 @@ export const createClient = ({
     const url = withLegacyParams(
       new URL(
         `./api/catalog_system/pub/products/search/${term ?? ""}`,
-        baseUrl,
+        withCache,
       ),
       params,
     );
@@ -207,10 +246,10 @@ export const createClient = ({
       url.searchParams.set("utmi_campaign", segment.utmi_campaign);
     }
 
-    return fetchAPI<LegacyProduct[]>(url.href);
+    return fetchAPI<LegacyProduct[]>(url);
   };
 
-  const legacyFacets = (
+  const legacyFacetSearch = (
     { term, ...params }:
       & { term: string }
       & LegacyParams,
@@ -218,59 +257,70 @@ export const createClient = ({
     const url = withLegacyParams(
       new URL(
         `./api/catalog_system/pub/facets/search/${term ?? ""}`,
-        baseUrl,
+        withCache,
       ),
       params,
     );
 
-    return fetchAPI<LegacyFacets>(url.href);
+    return fetchAPI<LegacyFacets>(url);
   };
 
   const pageType = ({ slug }: { slug: string }) =>
     fetchAPI<PageType>(
-      new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, baseUrl).href,
+      new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, withCache),
     );
 
   const categoryTree = ({ categoryLevels }: { categoryLevels: number }) => {
     return fetchAPI<Category[]>(
       new URL(
         `./api/catalog_system/pub/category/tree/${categoryLevels}`,
-        baseUrl,
-      ).href,
+        withCache,
+      ),
     );
   };
 
   const crossSelling = (
-    type: CrossSellingType,
-    { productId }: CrossSellingArgs,
+    { productId, type }: CrossSellingArgs,
   ): Promise<LegacyProduct[]> =>
     fetchAPI(
       new URL(
         `./api/catalog_system/pub/products/crossselling/${type}/${productId}`,
-        baseUrl,
-      ).href,
+        withCache,
+      ),
     );
 
-  const whoSawAlsoSaw = (params: CrossSellingArgs) =>
-    crossSelling("whosawalsosaw", params);
+  const graphqlGET = <T>({ operationName, variables, query }: {
+    operationName?: string;
+    variables: Record<string, unknown>;
+    query: string;
+  }) => {
+    const url = new URL(`./api/io/_v/private/graphql/v1`, withCache);
 
-  const whoSawAlsoBought = (params: CrossSellingArgs) =>
-    crossSelling("whosawalsobought", params);
+    url.searchParams.set("query", query);
+    url.searchParams.set("variables", JSON.stringify(variables));
+    operationName &&
+      url.searchParams.set("operationName", operationName);
 
-  const whoBoughtAlsoBought = (params: CrossSellingArgs) =>
-    crossSelling("whoboughtalsobought", params);
+    return fetchAPI<{ data: T; errors: unknown[] }>(url);
+  };
 
-  const showTogether = (params: CrossSellingArgs) =>
-    crossSelling("showtogether", params);
+  const graphqlPOST = <T>({ operationName, variables, query }: {
+    operationName?: string;
+    variables: Record<string, unknown>;
+    query: string;
+  }) => {
+    const url = new URL(`./api/io/_v/private/graphql/v1`, withoutCache);
 
-  const accessories = (params: CrossSellingArgs) =>
-    crossSelling("accessories", params);
-
-  const similars = (params: CrossSellingArgs) =>
-    crossSelling("similars", params);
-
-  const suggestions = (params: CrossSellingArgs) =>
-    crossSelling("similars", params);
+    return fetchAPI<{ data: T; errors: unknown[] }>(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        operationName: operationName ?? "",
+        variables,
+        query,
+      }),
+    });
+  };
 
   return {
     currency: () => defaultPriceCurrency,
@@ -282,18 +332,260 @@ export const createClient = ({
       topSearches,
     },
     catalog_system: {
-      products: legacyProducts,
-      facets: legacyFacets,
-      pageType,
+      products: {
+        search: legacyProductSearch,
+        crossSelling,
+      },
+      facets: {
+        search: legacyFacetSearch,
+      },
+      portal: {
+        pageType,
+      },
       categoryTree,
-      crossSelling: {
-        whoSawAlsoSaw,
-        whoSawAlsoBought,
-        whoBoughtAlsoBought,
-        showTogether,
-        accessories,
-        similars,
-        suggestions,
+    },
+    wishlist: {
+      get: ({ email }: { email: string }) =>
+        graphqlPOST<{ viewList: { name?: string; data: WishlistItem[] } }>({
+          variables: {
+            name: "Wishlist",
+            shopperId: email,
+          },
+          query:
+            `query GetWithlist($shopperId: String!, $name: String!, $from: Int, $to: Int) { viewList(shopperId: $shopperId, name: $name, from: $from, to: $to) @context(provider: "vtex.wish-list@1.x") { name data { id productId sku title } } }`,
+        }),
+      items: {
+        add: ({ email, item }: {
+          email: string;
+          item: Partial<Omit<WishlistItem, "id">>;
+        }) =>
+          graphqlPOST<{ addToList: boolean }>({
+            variables: {
+              name: "Wishlist",
+              shopperId: email,
+              listItem: item,
+            },
+            query:
+              `mutation AddToWishlist($listItem: ListItemInputType!, $shopperId: String!, $name: String!, $public: Boolean) { addToList(listItem: $listItem, shopperId: $shopperId, name: $name, public: $public) @context(provider: "vtex.wish-list@1.x") }`,
+          }),
+        remove: ({ id, email }: { id: string; email: string }) =>
+          graphqlPOST<{ removeFromList: boolean }>({
+            variables: {
+              name: "Wishlist",
+              shopperId: email,
+              id,
+            },
+            query:
+              `mutation RemoveFromList($id: ID!, $shopperId: String!, $name: String) { removeFromList(id: $id, shopperId: $shopperId, name: $name) @context(provider: "vtex.wish-list@1.x") }`,
+          }),
+      },
+    },
+    io: {
+      _v: {
+        private: {
+          graphql: {
+            v1: {
+              get: graphqlGET,
+              post: graphqlPOST,
+            },
+          },
+        },
+      },
+    },
+    checkout: {
+      changeToAnonymousUser: (orderFormId: string) => ({
+        /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#get-/checkout/changeToAnonymousUser/-orderFormId- */
+        get: () =>
+          fetchAPI<OrderForm>(
+            new URL(
+              `./api/checkout/changeToAnonymousUser/${orderFormId}`,
+              withoutCache,
+            ),
+          ),
+      }),
+      pub: {
+        orderForms: ({
+          simulation: {
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
+            post: (data: {
+              items: Array<{
+                id: number;
+                quantity: number;
+                seller: string;
+              }>;
+              postalCode: string;
+              country: string;
+            }) =>
+              fetchAPI<SimulationOrderForm>(
+                new URL(
+                  `./api/checkout/pub/orderForms/simulation`,
+                  withoutCache,
+                ),
+                {
+                  method: "POST",
+                  body: JSON.stringify(data),
+                },
+              ),
+          },
+        }),
+        orderForm: (orderFormId: string) => ({
+          installments: {
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#get-/api/checkout/pub/orderForm/-orderFormId-/installments */
+            get: ({ paymentSystem }: { paymentSystem: number }) => {
+              const url = new URL(
+                `./api/checkout/pub/orderForm/${orderFormId}/installments`,
+                withoutCache,
+              );
+
+              url.searchParams.set("paymentSystem", `${paymentSystem}`);
+
+              return fetchAPI<OrderForm>(url);
+            },
+          },
+          profile: {
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#patch-/api/checkout/pub/orderForm/-orderFormId-/profile */
+            patch: (
+              { ignoreProfileData }: { ignoreProfileData: boolean },
+            ) =>
+              fetchAPI<OrderForm>(
+                new URL(
+                  `./api/checkout/pub/orderForm/${orderFormId}/profile`,
+                  withoutCache,
+                ),
+                {
+                  method: "PATCH",
+                  body: JSON.stringify({ ignoreProfileData }),
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                },
+              ),
+          },
+          coupons: {
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/coupons */
+            post: (
+              { text }: { text: string },
+            ) =>
+              fetchAPI<OrderForm>(
+                new URL(
+                  `./api/checkout/pub/orderForm/${orderFormId}/coupons`,
+                  withoutCache,
+                ),
+                {
+                  method: "POST",
+                  body: JSON.stringify({ text }),
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                },
+              ),
+          },
+          post: () =>
+            fetchAPI<OrderForm>(
+              new URL(`./api/checkout/pub/orderForm`, withoutCache),
+              {
+                method: "POST",
+              },
+            ),
+          items: ({
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items/update */
+            update: {
+              post: ({
+                orderItems,
+                allowedOutdatedData = ["paymentData"],
+              }: {
+                orderItems: Array<{
+                  quantity: number;
+                  index: number;
+                }>;
+                allowedOutdatedData?: Array<"paymentData">;
+              }) => {
+                const url = new URL(
+                  `./api/checkout/pub/orderForm/${orderFormId}/items/update`,
+                  withoutCache,
+                );
+
+                if (allowedOutdatedData) {
+                  for (const it of allowedOutdatedData) {
+                    url.searchParams.append("allowedOutdatedData", it);
+                  }
+                }
+
+                return fetchAPI<OrderForm>(url, {
+                  method: "POST",
+                  body: JSON.stringify({ orderItems }),
+                  headers: {
+                    "content-type": "application/json",
+                  },
+                });
+              },
+            },
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items */
+            post: ({
+              orderItems,
+              allowedOutdatedData = ["paymentData"],
+            }: {
+              orderItems: Array<{
+                quantity: number;
+                seller: string;
+                id: string;
+                index?: number;
+                price?: number;
+              }>;
+              allowedOutdatedData?: Array<"paymentData">;
+            }) => {
+              const url = new URL(
+                `./api/checkout/pub/orderForm/${orderFormId}/items`,
+                withoutCache,
+              );
+
+              if (allowedOutdatedData) {
+                for (const it of allowedOutdatedData) {
+                  url.searchParams.append("allowedOutdatedData", it);
+                }
+              }
+
+              return fetchAPI<OrderForm>(url, {
+                method: "POST",
+                body: JSON.stringify({ orderItems }),
+                headers: {
+                  "content-type": "application/json",
+                },
+              });
+            },
+            /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items/removeAll */
+            removeAll: {
+              post: () =>
+                fetchAPI<OrderForm>(
+                  new URL(
+                    `./api/checkout/pub/orderForm/${orderFormId}/items/removeAll`,
+                    withoutCache,
+                  ),
+                  { method: "POST" },
+                ),
+            },
+            price: ({
+              /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#put-/api/checkout/pub/orderForm/-orderFormId-/items/-itemIndex-/price */
+              put: ({ itemIndex, price }: {
+                itemIndex: number;
+                price: number;
+              }) =>
+                fetchAPI<OrderForm>(
+                  new URL(
+                    `./api/checkout/pub/orderForm/${orderFormId}/items/${itemIndex}/price`,
+                    withoutCache,
+                  ),
+                  {
+                    method: "PUT",
+                    body: JSON.stringify({ price }),
+                    headers: {
+                      "content-type": "application/json",
+                    },
+                  },
+                ),
+            }),
+          }),
+        }),
       },
     },
   };

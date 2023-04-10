@@ -20,7 +20,7 @@ export interface OrderForm {
   selectableGifts: unknown[];
   totalizers: Totalizer[];
   shippingData: ShippingData;
-  clientProfileData: null;
+  clientProfileData: ClientProfileData | null;
   paymentData: PaymentData;
   marketingData: MarketingData;
   sellers: Seller[];
@@ -37,6 +37,24 @@ export interface OrderForm {
   subscriptionData: null;
   merchantContextData: null;
   itemsOrdination: null;
+}
+
+export interface ClientProfileData {
+  email: string;
+  firstName: null;
+  lastName: null;
+  document: null;
+  documentType: null;
+  phone: null;
+  corporateName: null;
+  tradeName: null;
+  corporateDocument: null;
+  stateInscription: null;
+  corporatePhone: null;
+  isCorporate: boolean;
+  profileCompleteOnLoading: boolean;
+  profileErrorOnLoading: boolean;
+  customerClass: null;
 }
 
 export interface ClientPreferencesData {
@@ -855,12 +873,6 @@ export interface SKU {
   seller: string;
 }
 
-export interface SimulationOptions {
-  items: SKU[];
-  postalCode: string;
-  country: string;
-}
-
 export interface SimulationOrderForm {
   items: Item[];
   ratesAndBenefitsData: RatesAndBenefitsData;
@@ -979,6 +991,7 @@ export type CrossSellingType =
 
 export interface CrossSellingArgs {
   productId: string;
+  type: CrossSellingType;
 }
 
 export interface Segment {
@@ -1003,4 +1016,12 @@ export interface Segment {
 
 export type StateVTEX = LiveState<{ configVTEX?: ConfigVTEX }> & {
   segment?: Partial<Segment>;
+  user?: string; // user email
 };
+
+export interface WishlistItem {
+  id: string;
+  productId: string;
+  sku: string;
+  title: string;
+}
