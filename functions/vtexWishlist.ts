@@ -41,9 +41,9 @@ const vtexWishlistLoader: LoaderFunction<
 
   const page = Number(url.searchParams.get("page")) || 0;
 
-  const productIds = await vtex.wishlist.get({ email: user })
-    .then((list) => list.data.viewList.data.map((p) => p.productId))
-    .then((array) => array.slice(page * count, (page + 1) * count));
+  const allProductIds = await vtex.wishlist.get({ email: user })
+    .then((list) => list.data.viewList.data.map((p) => p.productId));
+  const productIds = allProductIds.slice(page * count, (page + 1) * count);
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await vtex.search.products({
@@ -61,7 +61,9 @@ const vtexWishlistLoader: LoaderFunction<
     toProduct(p!, p!.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
-  const nextPage = products.length > count ? `?page=${page + 1}` : undefined;
+  const nextPage = allProductIds.length > count
+    ? `?page=${page + 1}`
+    : undefined;
   const previousPage = page > 0 ? `?page=${page - 1}` : undefined;
 
   return {
