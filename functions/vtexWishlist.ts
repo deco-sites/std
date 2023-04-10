@@ -6,22 +6,32 @@ import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 import { toProduct } from "../commerce/vtex/transform.ts";
 import { createClient } from "../commerce/vtex/client.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
-import type { Product } from "../commerce/types.ts";
+import type { ProductListingPage } from "../commerce/types.ts";
+
+export interface Props {
+  /**
+   * @title Items per page
+   * @description Number of products per page to display
+   * @default 12
+   */
+  count: number;
+}
 
 /**
  * @title Product list loader
  * @description Usefull for shelves and static galleries.
  */
 const vtexWishlistLoader: LoaderFunction<
-  unknown,
-  Product[] | null,
+  Props,
+  ProductListingPage | null,
   StateVTEX
 > = withUser(withSegment(withISFallback(async (
   req,
   ctx,
-  _,
+  props,
 ) => {
   const { global: { configVTEX }, segment, user } = ctx.state;
+  const { count = 12 } = props;
   const url = new URL(req.url);
   const vtex = createClient(configVTEX);
 
@@ -29,8 +39,9 @@ const vtexWishlistLoader: LoaderFunction<
     return { data: null };
   }
 
-  const list = await vtex.wishlist.get({ email: user });
+  const page = Number(url.searchParams.get("page")) || 0;
 
+  const list = await vtex.wishlist.get({ email: user });
   const productIds = list.data.viewList.data.map((p) => p.productId);
 
   // search products on VTEX. Feel free to change any of these parameters
@@ -57,8 +68,30 @@ const vtexWishlistLoader: LoaderFunction<
     toProduct(p!, p!.items[0], 0, { url, priceCurrency: vtex.currency() })
   );
 
+  const nextPage = products.length > count ? `?page=${page + 1}` : undefined;
+  const previousPage = page > 0 ? `?page=${page - 1}` : undefined;
+
   return {
-    data: products,
+    data: {
+      "@type": "ProductListingPage",
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [{
+          "@type": "ListItem",
+          name: "Wishlist",
+          item: "/wishlist",
+          position: 1,
+        }],
+        numberOfItems: 1,
+      },
+      filters: [],
+      products,
+      pageInfo: {
+        currentPage: page,
+        nextPage: nextPage,
+        previousPage: previousPage,
+      },
+    },
   };
 })));
 
