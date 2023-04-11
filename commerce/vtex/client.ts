@@ -32,25 +32,6 @@ interface LegacyParams {
   map?: string;
 }
 
-/**
- * Due to a lack of knowledge to configure Cloudflare properly to vary with cookies,
- * this code adds a key at URL Params to burst the Cloudflare cache
- */
-export const getCacheBurstKey = async (segment: Partial<Segment>) => {
-  const serial = serialize(segment);
-
-  const buffer = await crypto.subtle.digest(
-    "SHA-1",
-    new TextEncoder().encode(serial),
-  );
-
-  const hex = Array.from(new Uint8Array(buffer))
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-
-  return hex;
-};
-
 export const withSegmentCookie = (
   segment: Partial<Segment>,
   headers: Headers = new Headers(),
@@ -95,14 +76,9 @@ export const createClient = ({
   defaultLocale = "en-US",
   defaultHideUnnavailableItems = false,
 }: Partial<ConfigVTEX> = {}) => {
-  const vtexAPIUrl = `https://${account}.vtexcommercestable.com.br`;
-  const decoAPIUrl = `https://proxy.decocache.com/${vtexAPIUrl}/`;
-  const withCache = window.location?.origin
-    ? window.location.origin
-    : decoAPIUrl;
-  const withoutCache = window.location?.origin
-    ? window.location.origin
-    : vtexAPIUrl;
+  const baseUrl = window.location?.origin ||
+    `https://${account}.vtexcommercestable.com.br`;
+  const withProxyCache = typeof window.location?.origin !== "string";
 
   const addDefaultFacets = (
     facets: SelectedFacet[],
@@ -126,7 +102,7 @@ export const createClient = ({
     return withDefaltFacets;
   };
 
-  const search = async <T>({
+  const search = <T>({
     query = "",
     page,
     count,
@@ -144,7 +120,6 @@ export const createClient = ({
       sort,
       fuzzy,
       locale,
-      segment: segment ? await getCacheBurstKey(segment) : "",
     });
 
     if (defaultHideUnnavailableItems !== undefined) {
@@ -160,10 +135,11 @@ export const createClient = ({
 
     return fetchAPI(
       new URL(
-        `./api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
-        withCache,
+        `/api/io/_v/api/intelligent-search/${type}/${pathname}?${params.toString()}`,
+        baseUrl,
       ),
       {
+        withProxyCache,
         headers: segment && withSegmentCookie(segment),
       },
     );
@@ -182,9 +158,10 @@ export const createClient = ({
 
     return fetchAPI(
       new URL(
-        `./api/io/_v/api/intelligent-search/search_suggestions?${params.toString()}`,
-        withCache,
+        `/api/io/_v/api/intelligent-search/search_suggestions?${params.toString()}`,
+        baseUrl,
       ),
+      { withProxyCache },
     );
   };
 
@@ -197,9 +174,10 @@ export const createClient = ({
 
     return fetchAPI(
       new URL(
-        `./api/io/_v/api/intelligent-search/top_searches?${params.toString()}`,
-        withCache,
+        `/api/io/_v/api/intelligent-search/top_searches?${params.toString()}`,
+        baseUrl,
       ),
+      { withProxyCache },
     );
   };
 
@@ -229,8 +207,8 @@ export const createClient = ({
   ) => {
     const url = withLegacyParams(
       new URL(
-        `./api/catalog_system/pub/products/search/${term ?? ""}`,
-        withCache,
+        `/api/catalog_system/pub/products/search/${term ?? ""}`,
+        baseUrl,
       ),
       params,
     );
@@ -245,7 +223,7 @@ export const createClient = ({
       url.searchParams.set("utmi_campaign", segment.utmi_campaign);
     }
 
-    return fetchAPI<LegacyProduct[]>(url);
+    return fetchAPI<LegacyProduct[]>(url, { withProxyCache });
   };
 
   const legacyFacetSearch = (
@@ -255,26 +233,28 @@ export const createClient = ({
   ) => {
     const url = withLegacyParams(
       new URL(
-        `./api/catalog_system/pub/facets/search/${term ?? ""}`,
-        withCache,
+        `/api/catalog_system/pub/facets/search/${term ?? ""}`,
+        baseUrl,
       ),
       params,
     );
 
-    return fetchAPI<LegacyFacets>(url);
+    return fetchAPI<LegacyFacets>(url, { withProxyCache });
   };
 
   const pageType = ({ slug }: { slug: string }) =>
     fetchAPI<PageType>(
-      new URL(`./api/catalog_system/pub/portal/pagetype/${slug}`, withCache),
+      new URL(`/api/catalog_system/pub/portal/pagetype/${slug}`, baseUrl),
+      { withProxyCache },
     );
 
   const categoryTree = ({ categoryLevels }: { categoryLevels: number }) => {
     return fetchAPI<Category[]>(
       new URL(
-        `./api/catalog_system/pub/category/tree/${categoryLevels}`,
-        withCache,
+        `/api/catalog_system/pub/category/tree/${categoryLevels}`,
+        baseUrl,
       ),
+      { withProxyCache },
     );
   };
 
@@ -283,9 +263,10 @@ export const createClient = ({
   ): Promise<LegacyProduct[]> =>
     fetchAPI(
       new URL(
-        `./api/catalog_system/pub/products/crossselling/${type}/${productId}`,
-        withCache,
+        `/api/catalog_system/pub/products/crossselling/${type}/${productId}`,
+        baseUrl,
       ),
+      { withProxyCache },
     );
 
   const graphqlGET = <T>({ operationName, variables, query }: {
@@ -293,14 +274,14 @@ export const createClient = ({
     variables: Record<string, unknown>;
     query: string;
   }) => {
-    const url = new URL(`./api/io/_v/private/graphql/v1`, withCache);
+    const url = new URL(`/api/io/_v/private/graphql/v1`, baseUrl);
 
     url.searchParams.set("query", query);
     url.searchParams.set("variables", JSON.stringify(variables));
     operationName &&
       url.searchParams.set("operationName", operationName);
 
-    return fetchAPI<{ data: T; errors: unknown[] }>(url);
+    return fetchAPI<{ data: T; errors: unknown[] }>(url, { withProxyCache });
   };
 
   const graphqlPOST = <T>({ operationName, variables, query }: {
@@ -308,7 +289,7 @@ export const createClient = ({
     variables: Record<string, unknown>;
     query: string;
   }) => {
-    const url = new URL(`./api/io/_v/private/graphql/v1`, withoutCache);
+    const url = new URL(`/api/io/_v/private/graphql/v1`, baseUrl);
 
     return fetchAPI<{ data: T; errors: unknown[] }>(url, {
       method: "POST",
@@ -397,8 +378,8 @@ export const createClient = ({
         get: () =>
           fetchAPI<OrderForm>(
             new URL(
-              `./api/checkout/changeToAnonymousUser/${orderFormId}`,
-              withoutCache,
+              `/api/checkout/changeToAnonymousUser/${orderFormId}`,
+              baseUrl,
             ),
           ),
       }),
@@ -416,10 +397,7 @@ export const createClient = ({
               country: string;
             }) =>
               fetchAPI<SimulationOrderForm>(
-                new URL(
-                  `./api/checkout/pub/orderForms/simulation`,
-                  withoutCache,
-                ),
+                new URL(`/api/checkout/pub/orderForms/simulation`, baseUrl),
                 {
                   method: "POST",
                   body: JSON.stringify(data),
@@ -432,8 +410,8 @@ export const createClient = ({
             /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#get-/api/checkout/pub/orderForm/-orderFormId-/installments */
             get: ({ paymentSystem }: { paymentSystem: number }) => {
               const url = new URL(
-                `./api/checkout/pub/orderForm/${orderFormId}/installments`,
-                withoutCache,
+                `/api/checkout/pub/orderForm/${orderFormId}/installments`,
+                baseUrl,
               );
 
               url.searchParams.set("paymentSystem", `${paymentSystem}`);
@@ -448,8 +426,8 @@ export const createClient = ({
             ) =>
               fetchAPI<OrderForm>(
                 new URL(
-                  `./api/checkout/pub/orderForm/${orderFormId}/profile`,
-                  withoutCache,
+                  `/api/checkout/pub/orderForm/${orderFormId}/profile`,
+                  baseUrl,
                 ),
                 {
                   method: "PATCH",
@@ -467,8 +445,8 @@ export const createClient = ({
             ) =>
               fetchAPI<OrderForm>(
                 new URL(
-                  `./api/checkout/pub/orderForm/${orderFormId}/coupons`,
-                  withoutCache,
+                  `/api/checkout/pub/orderForm/${orderFormId}/coupons`,
+                  baseUrl,
                 ),
                 {
                   method: "POST",
@@ -481,7 +459,7 @@ export const createClient = ({
           },
           post: () =>
             fetchAPI<OrderForm>(
-              new URL(`./api/checkout/pub/orderForm`, withoutCache),
+              new URL(`/api/checkout/pub/orderForm`, baseUrl),
               {
                 method: "POST",
               },
@@ -500,8 +478,8 @@ export const createClient = ({
                 allowedOutdatedData?: Array<"paymentData">;
               }) => {
                 const url = new URL(
-                  `./api/checkout/pub/orderForm/${orderFormId}/items/update`,
-                  withoutCache,
+                  `/api/checkout/pub/orderForm/${orderFormId}/items/update`,
+                  baseUrl,
                 );
 
                 if (allowedOutdatedData) {
@@ -534,8 +512,8 @@ export const createClient = ({
               allowedOutdatedData?: Array<"paymentData">;
             }) => {
               const url = new URL(
-                `./api/checkout/pub/orderForm/${orderFormId}/items`,
-                withoutCache,
+                `/api/checkout/pub/orderForm/${orderFormId}/items`,
+                baseUrl,
               );
 
               if (allowedOutdatedData) {
@@ -557,8 +535,8 @@ export const createClient = ({
               post: () =>
                 fetchAPI<OrderForm>(
                   new URL(
-                    `./api/checkout/pub/orderForm/${orderFormId}/items/removeAll`,
-                    withoutCache,
+                    `/api/checkout/pub/orderForm/${orderFormId}/items/removeAll`,
+                    baseUrl,
                   ),
                   { method: "POST" },
                 ),
@@ -571,8 +549,8 @@ export const createClient = ({
               }) =>
                 fetchAPI<OrderForm>(
                   new URL(
-                    `./api/checkout/pub/orderForm/${orderFormId}/items/${itemIndex}/price`,
-                    withoutCache,
+                    `/api/checkout/pub/orderForm/${orderFormId}/items/${itemIndex}/price`,
+                    baseUrl,
                   ),
                   {
                     method: "PUT",
