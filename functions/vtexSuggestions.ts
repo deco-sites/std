@@ -40,7 +40,7 @@ const topSearches: LoaderFunction<
 
   return {
     data: {
-      searches,
+      searches: count ? searches.slice(0, count) : searches,
       products: products.map((p) =>
         toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
       ),
