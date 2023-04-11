@@ -4,7 +4,6 @@
 
 import config from "./deno.json" assert { type: "json" };
 import { DecoManifest } from "$live/types.ts";
-
 import * as $0 from "./functions/vtexConfig.ts";
 import * as $1 from "./functions/vtexProductListingPage.ts";
 import * as $2 from "./functions/vndaProductList.ts";
@@ -40,6 +39,7 @@ import * as $$$$$$$$7 from "./sections/configVTEX.global.tsx";
 import * as $$$$$$$$8 from "./sections/SEOPDP.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
+import * as $live_invoke from "$live/routes/live/invoke/[...name].ts";
 import * as $live_editorData from "$live/routes/live/editorData.ts";
 import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_meta from "$live/routes/live/_meta.ts";
@@ -61,7 +61,7 @@ import * as i1$$$$6 from "$live/matchers/MatchAlways.ts";
 import * as i1$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
-const manifest: DecoManifest = {
+const manifest = {
   "functions": {
     "deco-sites/std/functions/vtexConfig.ts": $0,
     "deco-sites/std/functions/vtexProductListingPage.ts": $1,
@@ -93,6 +93,7 @@ const manifest: DecoManifest = {
     "./routes/404.tsx": $$$$0,
     "./routes/_middleware.ts": $live_middleware,
     "./routes/live/workbench.ts": $live_workbench,
+    "./routes/live/invoke/[...name].ts": $live_invoke,
     "./routes/live/editorData.ts": $live_editorData,
     "./routes/live/inspect.ts": $live_inspect,
     "./routes/live/_meta.ts": $live_meta,
@@ -138,4 +139,6 @@ const manifest: DecoManifest = {
   "baseUrl": import.meta.url,
 };
 
-export default manifest;
+export type Manifest = typeof manifest;
+
+export default manifest satisfies DecoManifest;
