@@ -33,7 +33,7 @@ export const createClient = ({ token, appId }: ConfigYourViews) => {
           string
         >,
       )}`,
-      { headers },
+      { headers, withProxyCache: true },
     );
 
   /** @description https://yourviews.freshdesk.com/support/solutions/articles/5000756179-buscar-as-estrelas-nas-prateleiras */
@@ -48,7 +48,7 @@ export const createClient = ({ token, appId }: ConfigYourViews) => {
         count: count ?? productIds.length,
         productIds: productIds.join(","),
       } as unknown as Record<string, string>)}`,
-      { headers },
+      { headers, withProxyCache: true },
     );
 
   /** @description https://yourviews.freshdesk.com/support/solutions/articles/5000740469-buscar-reviews-de-produto */
@@ -61,6 +61,7 @@ export const createClient = ({ token, appId }: ConfigYourViews) => {
       )}`,
       {
         headers,
+        withProxyCache: true,
       },
     );
 
@@ -77,6 +78,7 @@ export const createClient = ({ token, appId }: ConfigYourViews) => {
       )}`,
       {
         headers,
+        withProxyCache: true,
       },
     );
 

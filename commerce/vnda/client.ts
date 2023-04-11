@@ -28,12 +28,13 @@ export const createClient = (params: ConfigVNDA) => {
 
   const fetcher = <T>(
     endpoint: string,
-    method?: string,
+    method = "GET",
     data?: Record<string, unknown>,
   ) => {
-    return fetchAPI<T>(new URL(endpoint, baseUrl).href, {
+    return fetchAPI<T>(new URL(endpoint, baseUrl), {
       body: data ? JSON.stringify(data) : undefined,
-      method: method ?? "GET",
+      method,
+      withProxyCache: method === "GET",
       headers: {
         [DOMAIN_HEADER]: domain,
         accept: "application/json",
