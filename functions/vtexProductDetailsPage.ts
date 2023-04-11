@@ -83,6 +83,7 @@ const productPageLoader: LoaderFunction<
       query: `sku:${sku.kitItems!.join(";")}`,
       count: sku.kitItems!.length,
       page: 0,
+      segment,
     })
     : {};
 

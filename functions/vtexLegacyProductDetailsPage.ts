@@ -43,6 +43,7 @@ const legacyProductPageLoader: LoaderFunction<
   const kitItems = sku.isKit
     ? await vtex.catalog_system.products.search({
       fq: sku.kitItems!.map((item) => `skuId:${item.itemId}`),
+      segment,
     })
     : [];
 
