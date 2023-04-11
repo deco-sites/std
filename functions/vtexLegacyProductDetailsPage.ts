@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "$live/types.ts";
 
 import { withSegment } from "../commerce/vtex/withSegment.ts";
-import { toProductPage } from "../commerce/vtex/transform.ts";
+import { pickSku, toProductPage } from "../commerce/vtex/transform.ts";
 import { createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
@@ -38,8 +38,16 @@ const legacyProductPageLoader: LoaderFunction<
     };
   }
 
+  const sku = pickSku(product, skuId?.toString());
+
+  const kitItems = sku.isKit
+    ? await vtex.catalog_system.products.search({
+      fq: sku.kitItems!.map((item) => `skuId:${item.itemId}`),
+    })
+    : [];
+
   return {
-    data: toProductPage(product, skuId?.toString(), {
+    data: toProductPage(product, sku, kitItems, {
       url,
       priceCurrency: vtex.currency(),
     }),

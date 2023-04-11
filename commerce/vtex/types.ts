@@ -635,28 +635,23 @@ export interface IProduct {
   categoriesIds: string[];
   link: string;
   description: string;
-  /**
-   * @description Product SKUs.
-   */
-  items: Item[];
   skuSpecifications?: SkuSpecification[];
   priceRange: PriceRange;
   specificationGroups: SpecificationGroup[];
   properties: Array<{ name: string; values: string[] }>;
   selectedProperties: Array<{ key: string; value: string }>;
   releaseDate: string;
+  origin?: string;
 }
 
 export type Product = IProduct & {
   items: Item[];
-  origin?: string;
   clusterHighlights: Array<{ id: string; name: string }>;
   productClusters: Array<{ id: string; name: string }>;
 };
 
 export type LegacyProduct = IProduct & {
   items: LegacyItem[];
-  origin?: string;
   allSpecifications: string[];
 };
 

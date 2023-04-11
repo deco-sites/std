@@ -25,7 +25,7 @@ const CHANNEL_KEYS = new Set([POLICY_KEY, REGION_KEY]);
 
 interface LegacyParams {
   ft?: string;
-  fq?: string;
+  fq?: string | string[];
   _from?: number;
   _to?: number;
   O?: LegacySort;
@@ -189,10 +189,12 @@ export const createClient = ({
     params: LegacyParams,
   ) => {
     for (const key of Object.keys(params)) {
-      const value = params[key as keyof LegacyParams]?.toString();
+      const value = params[key as keyof LegacyParams];
 
-      if (value) {
-        url.searchParams.set(key, value);
+      if (typeof value === "string" || typeof value === "number") {
+        url.searchParams.append(key, `${value}`);
+      } else if (Array.isArray(value)) {
+        value.forEach((val) => url.searchParams.append(key, val));
       }
     }
 
