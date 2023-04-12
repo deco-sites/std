@@ -64,22 +64,65 @@ interface ProductOptions {
   priceCurrency: string;
 }
 
-export const toProductPage = (
-  product: ProductVTEX | LegacyProductVTEX,
+export const pickSku = <T extends ProductVTEX | LegacyProductVTEX>(
+  product: T,
   maybeSkuId: string | undefined,
+): T["items"][number] => {
+  const skuId = maybeSkuId ?? product.items[0]?.itemId;
+
+  for (const item of product.items) {
+    if (item.itemId === skuId) {
+      return item;
+    }
+  }
+
+  throw new Error(`Missing sku ${skuId} on product ${product.productName}`);
+};
+
+const toAccessoryOrSparePartFor = <T extends ProductVTEX | LegacyProductVTEX>(
+  sku: T["items"][number],
+  kitItems: T[],
+  options: ProductOptions,
+) => {
+  const productBySkuId = kitItems.reduce((map, product) => {
+    product.items.forEach((item) => map.set(item.itemId, product));
+
+    return map;
+  }, new Map<string, T>());
+
+  return sku.kitItems?.map(({ itemId }) => {
+    const product = productBySkuId.get(itemId);
+
+    if (!product) {
+      throw new Error(
+        `Expected product for skuId ${itemId} but it was not returned by the search engine`,
+      );
+    }
+
+    const sku = pickSku(product, itemId);
+
+    return toProduct(product, sku, 0, options);
+  });
+};
+
+export const toProductPage = <T extends ProductVTEX | LegacyProductVTEX>(
+  product: T,
+  sku: T["items"][number],
+  kitItems: T[],
   options: ProductOptions,
 ): ProductDetailsPage => {
-  const skuId = maybeSkuId ?? product.items[0]?.itemId;
-  const sku = product.items.find((item) => item.itemId === skuId);
-
-  if (!sku) {
-    throw new Error(`Missing sku ${skuId} on product ${product.productName}`);
-  }
+  const partialProduct = toProduct(product, sku, 0, options);
+  // Get accessories in ProductPage only. I don't see where it's necessary outside this page for now
+  const isAccessoryOrSparePartFor = toAccessoryOrSparePartFor(
+    sku,
+    kitItems,
+    options,
+  );
 
   return {
     "@type": "ProductDetailsPage",
     breadcrumbList: toBreadcrumbList(product, options),
-    product: toProduct(product, sku, 0, options),
+    product: { ...partialProduct, isAccessoryOrSparePartFor },
   };
 };
 
