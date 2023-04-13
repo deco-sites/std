@@ -8,10 +8,10 @@ const suggestions = signal<Suggestion | null>(null);
 
 const fetchSuggestions = async (query: string) => {
   try {
-    return await Runtime.invokeFunction(
-      "deco-sites/std/functions/vtexSuggestions.ts",
-      { count: 4, query },
-    );
+    return await Runtime.invoke({
+      key: "deco-sites/std/functions/vtexSuggestions.ts",
+      props: { count: 4, query },
+    });
   } catch (error) {
     console.error("Something went wrong with the suggestion \n", error);
     return null;
