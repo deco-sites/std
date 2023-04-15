@@ -23,20 +23,18 @@ import * as $15 from "./functions/shopifyProductList.ts";
 import * as $16 from "./functions/shopifyProductDetailsPage.ts";
 import * as $17 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
-import * as $$1 from "./accounts/yourViews.ts";
-import * as $$2 from "./accounts/vtex.ts";
-import * as $$3 from "./accounts/shopify.ts";
-import * as $$4 from "./accounts/occ.ts";
+import * as $$1 from "./accounts/vtex.ts";
+import * as $$2 from "./accounts/shopify.ts";
+import * as $$3 from "./accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
-import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
-import * as $$$$$$$$1 from "./sections/SEO.tsx";
-import * as $$$$$$$$2 from "./sections/SEOPLP.tsx";
-import * as $$$$$$$$3 from "./sections/configOCC.global.tsx";
-import * as $$$$$$$$4 from "./sections/Analytics.tsx";
-import * as $$$$$$$$5 from "./sections/configShopify.global.tsx";
-import * as $$$$$$$$6 from "./sections/configVNDA.global.tsx";
-import * as $$$$$$$$7 from "./sections/configVTEX.global.tsx";
-import * as $$$$$$$$8 from "./sections/SEOPDP.tsx";
+import * as $$$$$$$$0 from "./sections/SEO.tsx";
+import * as $$$$$$$$1 from "./sections/SEOPLP.tsx";
+import * as $$$$$$$$2 from "./sections/configOCC.global.tsx";
+import * as $$$$$$$$3 from "./sections/Analytics.tsx";
+import * as $$$$$$$$4 from "./sections/configShopify.global.tsx";
+import * as $$$$$$$$5 from "./sections/configVNDA.global.tsx";
+import * as $$$$$$$$6 from "./sections/configVTEX.global.tsx";
+import * as $$$$$$$$7 from "./sections/SEOPDP.tsx";
 import * as $$$$$$$$$$$0 from "./extensions/yourViews.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -87,10 +85,9 @@ const manifest = {
   },
   "accounts": {
     "deco-sites/std/accounts/vnda.ts": $$0,
-    "deco-sites/std/accounts/yourViews.ts": $$1,
-    "deco-sites/std/accounts/vtex.ts": $$2,
-    "deco-sites/std/accounts/shopify.ts": $$3,
-    "deco-sites/std/accounts/occ.ts": $$4,
+    "deco-sites/std/accounts/vtex.ts": $$1,
+    "deco-sites/std/accounts/shopify.ts": $$2,
+    "deco-sites/std/accounts/occ.ts": $$3,
   },
   "routes": {
     "./routes/404.tsx": $$$$0,
@@ -104,15 +101,14 @@ const manifest = {
     "./routes/[...catchall].tsx": $live_catchall,
   },
   "sections": {
-    "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
-    "deco-sites/std/sections/SEO.tsx": $$$$$$$$1,
-    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
-    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$3,
-    "deco-sites/std/sections/Analytics.tsx": $$$$$$$$4,
-    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$5,
-    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$6,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$7,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$8,
+    "deco-sites/std/sections/SEO.tsx": $$$$$$$$0,
+    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$1,
+    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$2,
+    "deco-sites/std/sections/Analytics.tsx": $$$$$$$$3,
+    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$4,
+    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$5,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$6,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$7,
     "$live/sections/PageInclude.tsx": i1$$$$0,
   },
   "extensions": {
