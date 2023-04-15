@@ -2280,7 +2280,7 @@
       "$ref": "#/root/extensions",
       "title": "Extension"
     },
-    "ZGVjby1jeC9saXZlL2xvYWRlcnMvYWRkRXh0ZW5zaW9ucy50cw==@Props": {
+    "ZGVjby1jeC9saXZlL2xvYWRlcnMvd2l0aEV4dGVuc2lvbnMudHM=@Props": {
       "type": "object",
       "properties": {
         "data": {
@@ -2296,7 +2296,7 @@
         "data",
         "extension"
       ],
-      "title": "deco-cx/live/loaders/addExtensions.ts@Props"
+      "title": "deco-cx/live/loaders/withExtensions.ts@Props"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag": {
       "$ref": "#/root/flags",
@@ -3216,12 +3216,12 @@
         }
       }
     },
-    "JGxpdmUvbG9hZGVycy9hZGRFeHRlbnNpb25zLnRz": {
-      "title": "$live/loaders/addExtensions.ts",
+    "JGxpdmUvbG9hZGVycy93aXRoRXh0ZW5zaW9ucy50cw==": {
+      "title": "$live/loaders/withExtensions.ts",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvYWRkRXh0ZW5zaW9ucy50cw==@Props"
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvd2l0aEV4dGVuc2lvbnMudHM=@Props"
         }
       ],
       "required": [
@@ -3231,9 +3231,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "$live/loaders/addExtensions.ts"
+            "$live/loaders/withExtensions.ts"
           ],
-          "default": "$live/loaders/addExtensions.ts"
+          "default": "$live/loaders/withExtensions.ts"
         }
       }
     },
@@ -3877,7 +3877,7 @@
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "$ref": "#/definitions/JGxpdmUvbG9hZGVycy9hZGRFeHRlbnNpb25zLnRz"
+          "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93aXRoRXh0ZW5zaW9ucy50cw=="
         }
       ]
     },

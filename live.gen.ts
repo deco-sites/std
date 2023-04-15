@@ -44,7 +44,7 @@ import * as $live_inspect from "$live/routes/live/inspect.ts";
 import * as $live_meta from "$live/routes/live/_meta.ts";
 import * as $live_previews from "$live/routes/live/previews/[...block].tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
-import * as i1$0 from "$live/loaders/addExtensions.ts";
+import * as i1$0 from "$live/loaders/withExtensions.ts";
 import * as i1$$0 from "$live/handlers/routesSelection.ts";
 import * as i1$$1 from "$live/handlers/router.ts";
 import * as i1$$2 from "$live/handlers/devPage.ts";
@@ -116,7 +116,7 @@ const manifest = {
     "$live/extensions/composite.ts": i1$$$$$$$0,
   },
   "loaders": {
-    "$live/loaders/addExtensions.ts": i1$0,
+    "$live/loaders/withExtensions.ts": i1$0,
   },
   "handlers": {
     "$live/handlers/routesSelection.ts": i1$$0,
