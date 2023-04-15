@@ -46,8 +46,7 @@ const getFetcher = (
 };
 
 export default function AddYourViews(config: Props): ExtensionOf<Product> {
-  const client = getFetcher(config);
-  const aggregateRating = aggregateRatingFor(client);
+  const aggregateRating = aggregateRatingFor(getFetcher(config));
 
   return {
     aggregateRating,
@@ -58,9 +57,15 @@ const sameOrder = (
   productIds: readonly string[],
   elements: Rating[],
 ): (Rating | undefined)[] => {
-  const ordered = new Array<Rating | undefined>(productIds.length);
+  const ordered = new Array<Rating | undefined>(productIds.length).fill(
+    undefined,
+  );
   for (let i = 0; i < productIds.length; i++) {
-    ordered[i] = elements.find((e) => e.ProductId === productIds[i]);
+    const ratingIdx = elements.findIndex((e) => e.ProductId === productIds[i]);
+    if (ratingIdx !== -1) {
+      ordered[i] = elements[ratingIdx];
+      elements.splice(ratingIdx, 1); // remove already found rating
+    }
   }
   return ordered;
 };
