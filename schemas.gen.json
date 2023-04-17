@@ -1143,7 +1143,8 @@
         "breadcrumb",
         "filters",
         "products",
-        "pageInfo"
+        "pageInfo",
+        "sortOptions"
       ],
       "title": "ProductListingPage"
     },
@@ -1176,6 +1177,27 @@
                 "deco-sites/std/functions/vtexProductListingPage.ts"
               ],
               "default": "deco-sites/std/functions/vtexProductListingPage.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/functions/vtexWishlist.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw==@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/vtexWishlist.ts"
+              ],
+              "default": "deco-sites/std/functions/vtexWishlist.ts"
             }
           }
         },
@@ -1313,22 +1335,6 @@
                 "deco-sites/std/functions/vndaProductList.ts"
               ],
               "default": "deco-sites/std/functions/vndaProductList.ts"
-            }
-          }
-        },
-        {
-          "title": "deco-sites/std/functions/vtexWishlist.ts",
-          "type": "object",
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/functions/vtexWishlist.ts"
-              ],
-              "default": "deco-sites/std/functions/vtexWishlist.ts"
             }
           }
         },
@@ -1668,6 +1674,13 @@
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhTdWdnZXN0aW9ucy50cw==@Props": {
       "type": "object",
       "properties": {
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Query"
+        },
         "count": {
           "type": [
             "number",
@@ -1795,6 +1808,21 @@
       },
       "required": [],
       "title": "deco-sites/std/functions/vtexNavbar.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "number",
+          "title": "Count",
+          "description": "Number of products per page to display",
+          "default": "12"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Nob3BpZnlQcm9kdWN0TGlzdGluZ1BhZ2UudHM=@Props": {
       "type": "object",
@@ -2355,27 +2383,12 @@
       "$ref": "#/root/sections",
       "title": "Section"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9pc2xhbmQudHM=@Island": {
-      "$ref": "#/root/islands",
-      "title": "Island"
-    },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Island|Section": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9pc2xhbmQudHM=@Island"
-        }
-      ],
-      "title": "Island|Section"
-    },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Island|Section[]": {
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Island|Section"
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
       },
-      "title": "Island|Section[]"
+      "title": "Section[]"
     },
     "ZGVjby1jeC9saXZlL3BhZ2VzL0xpdmVQYWdlLnRzeA==@Props": {
       "type": "object",
@@ -2385,7 +2398,7 @@
           "title": "Name"
         },
         "sections": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Island|Section[]",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]",
           "title": "Sections"
         }
       },
@@ -2864,6 +2877,11 @@
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw==": {
       "title": "deco-sites/std/functions/vtexWishlist.ts",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhXaXNobGlzdC50cw==@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],

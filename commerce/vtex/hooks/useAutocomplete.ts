@@ -2,38 +2,25 @@ import { signal } from "@preact/signals";
 import { debounce } from "std/async/debounce.ts";
 
 import { Suggestion } from "../../../commerce/types.ts";
-import { toProduct } from "../../../commerce/vtex/transform.ts";
-import { getClient } from "./useClient.ts";
+import { Runtime } from "../../sdk/runtime.ts";
 
-const suggestions = signal<Suggestion | undefined>(undefined);
+const suggestions = signal<Suggestion | null>(null);
 
 const fetchSuggestions = async (query: string) => {
-  const client = getClient();
-  const url = new URL(window.location.href);
-
   try {
-    const [{ searches }, { products }] = await Promise.all([
-      client.search.suggestedTerms({ query }),
-      client.search.products({ query, page: 1, count: 4 }),
-    ]);
-
-    if (!searches || !products) return;
-
-    return {
-      searches,
-      products: products.map((p) =>
-        toProduct(p, p.items[0], 0, { url, priceCurrency: client.currency() })
-      ),
-    };
+    return await Runtime.invoke({
+      key: "deco-sites/std/functions/vtexSuggestions.ts",
+      props: { count: 4, query },
+    });
   } catch (error) {
     console.error("Something went wrong with the suggestion \n", error);
-    return;
+    return null;
   }
 };
 
 const setSearch = debounce(async (search: string) => {
   if (search === "") {
-    suggestions.value = undefined;
+    suggestions.value = null;
     return;
   }
 
