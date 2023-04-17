@@ -6,7 +6,7 @@ import type { JSX } from "preact";
 type Props =
   & Omit<JSX.IntrinsicElements["img"], "width" | "height" | "preload">
   & {
-    width: number;
+    width?: number;
     height?: number;
     src: string;
     preload?: boolean;
@@ -19,18 +19,20 @@ const imageKit = new ImageKit({
 
 const FACTORS = [1, 1.5, 2];
 
-export const getSrcSet = (src: string, width: number, height?: number) =>
+export const getSrcSet = (src: string, width?: number, height?: number) =>
   FACTORS
     .map((factor) =>
       `${
         imageKit.url({
           path: src,
-          transformation: [{
-            width: `${Math.trunc(factor * width)}`,
-            height: height ? `${Math.trunc(factor * height)}` : undefined,
-          }],
+          transformation: width
+            ? [{
+              width: `${Math.trunc(factor * width)}`,
+              height: height ? `${Math.trunc(factor * height)}` : undefined,
+            }]
+            : undefined,
         })
-      } ${Math.trunc(factor * width)}w`
+      } ${width ? `${Math.trunc(factor * width)}w` : ""}`
     )
     .join(", ");
 
