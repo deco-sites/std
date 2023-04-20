@@ -134,6 +134,112 @@ const addItems = async (options: AddItemsOptions) => {
     .checkout.pub.orderForm(cart.value!.orderFormId).items.post(options);
 };
 
+interface AddAttachmentOptions {
+  /** @description index of the item in the cart.items array you want to edit */
+  index: number;
+  /** @description attachment name */
+  attachment: string;
+  content: Record<string, string>;
+  expectedOrderFormSections?: string[];
+  noSplitItem?: boolean;
+}
+
+const DEFAULT_EXPECTED_SECTIONS = [
+  "items",
+  "totalizers",
+  "clientProfileData",
+  "shippingData",
+  "paymentData",
+  "sellers",
+  "messages",
+  "marketingData",
+  "clientPreferencesData",
+  "storePreferencesData",
+  "giftRegistryData",
+  "ratesAndBenefitsData",
+  "openTextField",
+  "commercialConditionData",
+  "customData",
+];
+
+const addAttachment = async ({
+  index,
+  attachment,
+  content,
+  noSplitItem = true,
+  expectedOrderFormSections = DEFAULT_EXPECTED_SECTIONS,
+}: AddAttachmentOptions) => {
+  cart.value = await fetchAPI<OrderForm>(
+    `/api/checkout/pub/orderForm/${
+      cart.value!.orderFormId
+    }/items/${index}/attachments/${attachment}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ content, noSplitItem, expectedOrderFormSections }),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
+};
+
+interface UpdateSubscriptionDataOptions {
+  expectedOrderFormSections?: string[];
+  subscriptions: Array<{
+    itemIndex: number;
+    frequency: { interval: number; periodicity: string };
+    validity: { begin: string; end: string };
+  }>;
+}
+
+const updateSubscriptionData = async ({
+  subscriptions,
+  expectedOrderFormSections = DEFAULT_EXPECTED_SECTIONS,
+}: UpdateSubscriptionDataOptions) => {
+  cart.value = await fetchAPI<OrderForm>(
+    `/api/checkout/pub/orderForm/${
+      cart.value!.orderFormId
+    }/attachments/subscriptionData`,
+    {
+      method: "POST",
+      body: JSON.stringify({ expectedOrderFormSections, subscriptions }),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
+};
+
+interface UpdateMarketingDataOptions {
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmipage: string | null;
+  utmiPart: string | null;
+  utmiCampaign: string | null;
+  coupon: string | null;
+  marketingTags: string[];
+  expectedOrderFormSections?: string[];
+}
+
+const updateMarketingData = async ({
+  expectedOrderFormSections = DEFAULT_EXPECTED_SECTIONS,
+  ...body
+}: UpdateMarketingDataOptions) => {
+  cart.value = await fetchAPI<OrderForm>(
+    `/api/checkout/pub/orderForm/${
+      cart.value!.orderFormId
+    }/attachments/marketingData`,
+    {
+      method: "POST",
+      body: JSON.stringify({ expectedOrderFormSections, ...body }),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
+};
+
 type Middleware = (fn: () => Promise<void>) => Promise<void>;
 
 const withCart: Middleware = async (cb) => {
@@ -203,6 +309,16 @@ const state = {
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/coupons */
   addCouponsToCart: (opts: AddCouponsToCartOptions) =>
     withPQueue(() => withCart(() => withLoading(() => addCouponsToCart(opts)))),
+  addAttachment: (opts: AddAttachmentOptions) =>
+    withPQueue(() => withCart(() => withLoading(() => addAttachment(opts)))),
+  updateSubscriptionData: (opts: UpdateSubscriptionDataOptions) =>
+    withPQueue(() =>
+      withCart(() => withLoading(() => updateSubscriptionData(opts)))
+    ),
+  updateMarketingData: (opts: UpdateMarketingDataOptions) =>
+    withPQueue(() =>
+      withCart(() => withLoading(() => updateMarketingData(opts)))
+    ),
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
   simulate,
   mapItemsToAnalyticsItems: mapOrderFormItemsToAnalyticsItems,
