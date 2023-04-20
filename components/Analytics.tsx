@@ -33,7 +33,7 @@ export default function Analtyics({ trackingIds }: Props) {
         id="analytics-script"
         dangerouslySetInnerHTML={{
           __html:
-            `window.DECO_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
+            `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
         }}
       />
     </>
