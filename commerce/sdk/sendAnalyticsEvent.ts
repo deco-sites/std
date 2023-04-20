@@ -17,11 +17,11 @@ declare global {
 export const sendAnalyticsEvent = <T extends AnalyticsEvent>(
   event: T,
 ) => {
-  window.dataLayer?.push({ ecommerce: null });
-  window.dataLayer?.push({
+  window.dataLayer && window.dataLayer.push({ ecommerce: null });
+  window.dataLayer && window.dataLayer.push({
     event: event.name,
     ecommerce: event.params,
   });
 
-  window.jitsu?.("track", "ecommerce", event);
+  window.jitsu && window.jitsu("track", "ecommerce", event);
 };

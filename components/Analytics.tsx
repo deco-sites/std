@@ -1,6 +1,7 @@
 import { context } from "$live/live.ts";
 import GoogleTagManager from "partytown/integrations/GTM.tsx";
 import Script from "partytown/Script.tsx";
+import { sendAnalyticsEvent } from "../commerce/sdk/sendAnalyticsEvent.ts";
 
 export interface Props {
   /**
@@ -14,7 +15,7 @@ export default function Analtyics({ trackingIds }: Props) {
     <>
       {/* TODO: Add debug from query string @author Igor Brasileiro */}
       {/* Add Tag Manager script during production only. To test it locally remove the condition */}
-      {!!context.deploymentId && trackingIds && (
+      {!context.deploymentId && trackingIds && (
         trackingIds.map((trackingId) => (
           <GoogleTagManager trackingId={trackingId.trim()} />
         ))
@@ -27,6 +28,13 @@ export default function Analtyics({ trackingIds }: Props) {
             `debugGlobals = () => { console.table([["datalayer", dataLayer]]); }`,
         }}
         forward={["debugGlobals"]}
+      />
+      <script
+        id="analytics-script"
+        dangerouslySetInnerHTML={{
+          __html:
+            `window.sendAnalyticsEvent = ${sendAnalyticsEvent.toString()}`,
+        }}
       />
     </>
   );
