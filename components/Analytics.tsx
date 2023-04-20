@@ -1,6 +1,7 @@
 import { context } from "$live/live.ts";
 import GoogleTagManager from "partytown/integrations/GTM.tsx";
 import Script from "partytown/Script.tsx";
+import { sendAnalyticsEvent } from "../commerce/sdk/sendAnalyticsEvent.ts";
 
 export interface Props {
   /**
@@ -27,6 +28,13 @@ export default function Analtyics({ trackingIds }: Props) {
             `debugGlobals = () => { console.table([["datalayer", dataLayer]]); }`,
         }}
         forward={["debugGlobals"]}
+      />
+      <script
+        id="analytics-script"
+        dangerouslySetInnerHTML={{
+          __html:
+            `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
+        }}
       />
     </>
   );
