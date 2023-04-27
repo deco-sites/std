@@ -6,6 +6,7 @@ import {
 import { ReqUrl } from "deco-sites/std/functions/reqUrl.ts";
 import { Slug } from "deco-sites/std/functions/slugFromParams.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
+import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
 import { Segment } from "../commerce/vtex/types.ts";
 
 export interface Props {
@@ -20,11 +21,11 @@ export interface Props {
  * @description Works on routes of type /:slug/p
  */
 export default async function legacyProductPageLoader(
-  { vtexClient: vtex, segment, slug, reqUrl }: Props,
-  ctx: any,
+  { vtexClient: _vtex, segment, slug, reqUrl }: Props,
+  ctx: { configVTEX?: ConfigVTEX; reqUrl: string },
 ): Promise<ProductDetailsPage | null> {
-  console.log(ctx);
-  const url = new URL(reqUrl);
+  const vtex = _vtex ?? createClient(ctx?.configVTEX);
+  const url = new URL(reqUrl ?? ctx.reqUrl);
   const skuId = url.searchParams.get("skuId");
 
   // search products on VTEX. Feel free to change any of these parameters

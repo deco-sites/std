@@ -3,12 +3,6 @@ import { ConfigVTEX } from "../commerce/vtex/client.ts";
 
 export type { ConfigVTEX } from "../commerce/vtex/client.ts";
 
-export interface ClientConfigVTEX {
-  account: string;
-  defaultLocale: string;
-  defaultPriceCurrency: string;
-}
-
 // TODO: Drop this when live@1.x
 /**
  * @title Loader to get vtex config and pass to components
@@ -16,7 +10,7 @@ export interface ClientConfigVTEX {
  */
 const vtexConfig: LoaderFunction<
   null,
-  ClientConfigVTEX,
+  ConfigVTEX,
   LiveState<{ configVTEX: ConfigVTEX }>
 > = (_, ctx) => {
   const { configVTEX } = ctx.state.global;

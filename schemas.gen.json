@@ -1826,6 +1826,11 @@
         {
           "title": "deco-sites/std/functions/vtexClient.ts",
           "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC9jbGllbnQudHM=@ConfigVTEX"
+            }
+          ],
           "required": [
             "__resolveType"
           ],
@@ -1841,33 +1846,68 @@
         }
       ]
     },
-    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhDb25maWcudHM=@ClientConfigVTEX": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvYmxvY2tzL2FjY291bnQudHM=@Account": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Account"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC9jbGllbnQudHM=@ConfigVTEX": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
         },
         {
           "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvYmxvY2tzL2FjY291bnQudHM=@Account"
+            }
+          ],
           "properties": {
             "account": {
               "type": "string",
+              "description": "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
               "title": "Account"
             },
             "defaultLocale": {
               "type": "string",
+              "description": "Locale used for VTEX Intelligent Search client.",
               "title": "Default Locale"
             },
             "defaultPriceCurrency": {
               "type": "string",
+              "description": "Default price currency.",
+              "default": "USD",
               "title": "Default Price Currency"
+            },
+            "defaultSalesChannel": {
+              "type": "string",
+              "description": "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
+              "title": "Default Sales Channel"
+            },
+            "defaultRegionId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "title": "Default Region Id"
+            },
+            "defaultHideUnnavailableItems": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "title": "Default Hide Unnavailable Items"
             }
           },
           "required": [
             "account",
             "defaultLocale",
-            "defaultPriceCurrency"
+            "defaultPriceCurrency",
+            "defaultSalesChannel"
           ],
-          "title": "deco-sites/std/functions/vtexConfig.ts@ClientConfigVTEX"
+          "title": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX"
         },
         {
           "title": "deco-sites/std/functions/vtexConfig.ts",
@@ -2388,12 +2428,6 @@
       ],
       "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
-    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvYmxvY2tzL2FjY291bnQudHM=@Account": {
-      "type": "object",
-      "properties": {},
-      "required": [],
-      "title": "Account"
-    },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2Uvb2NjL2NsaWVudC50cw==@ConfigOCC": {
       "type": "object",
       "allOf": [
@@ -2476,58 +2510,6 @@
         "defaultPriceCurrency"
       ],
       "title": "deco-sites/std/commerce/vnda/types.ts@ConfigVNDA"
-    },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC9jbGllbnQudHM=@ConfigVTEX": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2xpdmUvYmxvY2tzL2FjY291bnQudHM=@Account"
-        }
-      ],
-      "properties": {
-        "account": {
-          "type": "string",
-          "description": "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
-          "title": "Account"
-        },
-        "defaultLocale": {
-          "type": "string",
-          "description": "Locale used for VTEX Intelligent Search client.",
-          "title": "Default Locale"
-        },
-        "defaultPriceCurrency": {
-          "type": "string",
-          "description": "Default price currency.",
-          "default": "USD",
-          "title": "Default Price Currency"
-        },
-        "defaultSalesChannel": {
-          "type": "string",
-          "description": "VTEX sales channel. This will be the default sales channel your site. For more info, read here: https://help.vtex.com/tutorial/how-trade-policies-work--6Xef8PZiFm40kg2STrMkMV",
-          "title": "Default Sales Channel"
-        },
-        "defaultRegionId": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Default Region Id"
-        },
-        "defaultHideUnnavailableItems": {
-          "type": [
-            "boolean",
-            "null"
-          ],
-          "title": "Default Hide Unnavailable Items"
-        }
-      },
-      "required": [
-        "account",
-        "defaultLocale",
-        "defaultPriceCurrency",
-        "defaultSalesChannel"
-      ],
-      "title": "deco-sites/std/commerce/vtex/client.ts@ConfigVTEX"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UveW91clZpZXdzL2NsaWVudC50cw==@ConfigYourViews": {
       "type": "object",
@@ -3321,6 +3303,11 @@
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhDbGllbnQudHM=": {
       "title": "deco-sites/std/functions/vtexClient.ts",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC9jbGllbnQudHM=@ConfigVTEX"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
