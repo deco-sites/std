@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
 
+import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import { getClient } from "./useClient.ts";
 import { AnalyticsItem } from "../../types.ts";
 import { mapCategoriesToAnalyticsCategories } from "../../utils/productToAnalyticsItem.ts";
@@ -134,6 +135,81 @@ const addItems = async (options: AddItemsOptions) => {
     .checkout.pub.orderForm(cart.value!.orderFormId).items.post(options);
 };
 
+interface AddItemAttachmentOptions {
+  /** @description index of the item in the cart.items array you want to edit */
+  index: number;
+  /** @description attachment name */
+  attachment: string;
+  content: Record<string, string>;
+  expectedOrderFormSections?: string[];
+  noSplitItem?: boolean;
+}
+
+const DEFAULT_EXPECTED_SECTIONS = [
+  "items",
+  "totalizers",
+  "clientProfileData",
+  "shippingData",
+  "paymentData",
+  "sellers",
+  "messages",
+  "marketingData",
+  "clientPreferencesData",
+  "storePreferencesData",
+  "giftRegistryData",
+  "ratesAndBenefitsData",
+  "openTextField",
+  "commercialConditionData",
+  "customData",
+];
+
+const addItemAttachment = async ({
+  index,
+  attachment,
+  content,
+  noSplitItem = true,
+  expectedOrderFormSections = DEFAULT_EXPECTED_SECTIONS,
+}: AddItemAttachmentOptions) => {
+  cart.value = await fetchAPI<OrderForm>(
+    `/api/checkout/pub/orderForm/${
+      cart.value!.orderFormId
+    }/items/${index}/attachments/${attachment}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ content, noSplitItem, expectedOrderFormSections }),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
+};
+
+interface SendAttachmentOptions {
+  attachmentName: string;
+  expectedOrderFormSections?: string[];
+  // deno-lint-ignore no-explicit-any
+  body: any;
+}
+
+const sendAttachment = async ({
+  attachmentName,
+  body,
+  expectedOrderFormSections = DEFAULT_EXPECTED_SECTIONS,
+}: SendAttachmentOptions) => {
+  cart.value = await fetchAPI<OrderForm>(
+    `/api/checkout/pub/orderForm/${
+      cart.value!.orderFormId
+    }/attachments/${attachmentName}`,
+    {
+      method: "POST",
+      body: JSON.stringify({ expectedOrderFormSections, ...body }),
+      headers: {
+        "content-type": "application/json",
+      },
+    },
+  );
+};
+
 type Middleware = (fn: () => Promise<void>) => Promise<void>;
 
 const withCart: Middleware = async (cb) => {
@@ -203,6 +279,12 @@ const state = {
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/coupons */
   addCouponsToCart: (opts: AddCouponsToCartOptions) =>
     withPQueue(() => withCart(() => withLoading(() => addCouponsToCart(opts)))),
+  addItemAttachment: (opts: AddItemAttachmentOptions) =>
+    withPQueue(() =>
+      withCart(() => withLoading(() => addItemAttachment(opts)))
+    ),
+  sendAttachment: (opts: SendAttachmentOptions) =>
+    withPQueue(() => withCart(() => withLoading(() => sendAttachment(opts)))),
   /** @docs https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForms/simulation */
   simulate,
   mapItemsToAnalyticsItems: mapOrderFormItemsToAnalyticsItems,
