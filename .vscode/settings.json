@@ -20,5 +20,8 @@
   "deno.inlayHints.variableTypes.enabled": false,
   "deno.inlayHints.functionLikeReturnTypes.enabled": false,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "denoland.vscode-deno"
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  }
 }
