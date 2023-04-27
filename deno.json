@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=sections/,static/,functions/ dev.ts",
+    "start": "deno run -A --watch=sections/,functions/ dev.ts",
     "component": "deno eval 'import \"$live/scripts/component.ts\"'",
     "check": "deno fmt && deno lint && deno check dev.ts main.ts",
     "release": "deno eval 'import \"$live/scripts/release.ts\"'"
@@ -10,12 +10,18 @@
   },
   "lint": {
     "files": {
-      "exclude": ["static/", "README.md"]
+      "exclude": [
+        "static/",
+        "README.md"
+      ]
     }
   },
   "fmt": {
     "files": {
-      "exclude": ["static/", "README.md"]
+      "exclude": [
+        "static/",
+        "README.md"
+      ]
     }
   },
   "importMap": "./import_map.json",

@@ -28,6 +28,7 @@ import * as $$2 from "./accounts/vtex.ts";
 import * as $$3 from "./accounts/shopify.ts";
 import * as $$4 from "./accounts/occ.ts";
 import * as $$$$0 from "./routes/404.tsx";
+import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "./sections/SEO.tsx";
 import * as $$$$$$$$2 from "./sections/SEOPLP.tsx";
@@ -92,6 +93,7 @@ const manifest = {
     "deco-sites/std/accounts/yourViews.ts": $$1,
   },
   "routes": {
+    "./routes/_app.tsx": $$$$1,
     "./routes/_middleware.ts": $live_middleware,
     "./routes/[...catchall].tsx": $live_catchall,
     "./routes/404.tsx": $$$$0,
