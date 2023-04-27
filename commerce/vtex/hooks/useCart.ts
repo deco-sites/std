@@ -1,5 +1,6 @@
 import { signal } from "@preact/signals";
 
+import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import { getClient } from "./useClient.ts";
 import { AnalyticsItem } from "../../types.ts";
 import { mapCategoriesToAnalyticsCategories } from "../../utils/productToAnalyticsItem.ts";
@@ -186,7 +187,8 @@ const addItemAttachment = async ({
 interface SendAttachmentOptions {
   attachmentName: string;
   expectedOrderFormSections?: string[];
-  body: unknown;
+  // deno-lint-ignore no-explicit-any
+  body: any;
 }
 
 const sendAttachment = async ({

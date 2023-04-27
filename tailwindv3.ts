@@ -16,7 +16,9 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
-const dev = async (partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS) => {
+const dev = async (
+  partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS,
+) => {
   const config = { ...DEFAULT_OPTIONS, ...partialConfig };
   const start = performance.now();
 
