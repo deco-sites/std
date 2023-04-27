@@ -1,10 +1,10 @@
 import type { LoaderFunction } from "$live/types.ts";
 
-import { withSegment } from "../commerce/vtex/withSegment.ts";
-import { pickSku, toProductPage } from "../commerce/vtex/transform.ts";
-import { createClient } from "../commerce/vtex/client.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
+import { createClient } from "../commerce/vtex/client.ts";
+import { pickSku, toProductPage } from "../commerce/vtex/transform.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
+import { withSegment } from "../commerce/vtex/withSegment.ts";
 
 /**
  * @title VTEX Product Page Loader

@@ -4,7 +4,7 @@ import { getCookies, setCookie } from "std/http/mod.ts";
 import { parse, SEGMENT_COOKIE_NAME, serialize } from "./utils/segment.ts";
 import type { Segment, StateVTEX } from "./types.ts";
 
-const getSegment = (req: Request): Partial<Segment> => {
+export const getSegment = (req: Request): Partial<Segment> => {
   const url = new URL(req.url);
   const cookies = getCookies(req.headers);
   const cookie = cookies[SEGMENT_COOKIE_NAME];
