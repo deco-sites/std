@@ -1,7 +1,7 @@
 import type { LoaderFunction } from "$live/types.ts";
 
 import { createClient } from "../commerce/butterCMS/client.ts";
-import type { StateButterCMS } from "../commerce/butterCMS/types.ts";
+import type { Category, StateButterCMS } from "../commerce/butterCMS/types.ts";
 
 /**
  * @title VTEX Product Page Loader
@@ -9,22 +9,18 @@ import type { StateButterCMS } from "../commerce/butterCMS/types.ts";
  */
 const categoriesLoader: LoaderFunction<
   null,
-  { test: boolean },
+  Category[],
   StateButterCMS
 > = async (
-  req,
+  _req,
   ctx,
 ) => {
-  console.log({ req, ctx });
-
   const { global: { configButterCMS } } = ctx.state;
   const client = createClient(configButterCMS);
 
-  const test = await client.categories();
+  const { data } = await client.categories();
 
-  console.log(test);
-
-  return { data: { test: true } };
+  return { data };
 };
 
 export default categoriesLoader;
