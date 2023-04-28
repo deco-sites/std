@@ -20,18 +20,18 @@ import * as $12 from "./functions/vtexProductList.ts";
 import * as $13 from "./functions/occProductDetailsPage.ts";
 import * as $14 from "./functions/vndaProductListingPage.ts";
 import * as $15 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $16 from "./functions/reqUrl.ts";
-import * as $17 from "./functions/vtexProductDetailsPage.ts";
-import * as $18 from "./functions/vtexLegacyProductList.ts";
-import * as $19 from "./functions/shopifyProductList.ts";
-import * as $20 from "./functions/shopifyProductDetailsPage.ts";
-import * as $21 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $16 from "./functions/vtexProductDetailsPage.ts";
+import * as $17 from "./functions/vtexLegacyProductList.ts";
+import * as $18 from "./functions/shopifyProductList.ts";
+import * as $19 from "./functions/shopifyProductDetailsPage.ts";
+import * as $20 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
 import * as $$3 from "./accounts/shopify.ts";
 import * as $$4 from "./accounts/occ.ts";
 import * as $$$0 from "./loaders/vtexLegacyProductDetailsPage.ts";
+import * as $$$1 from "./loaders/vtexLegacyRelatedProductsLoader.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
@@ -72,10 +72,9 @@ import * as i1$$$$$1 from "$live/flags/everyone.ts";
 const manifest = {
   "functions": {
     "deco-sites/std/functions/occProductDetailsPage.ts": $13,
-    "deco-sites/std/functions/reqUrl.ts": $16,
     "deco-sites/std/functions/segment.ts": $5,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $20,
-    "deco-sites/std/functions/shopifyProductList.ts": $19,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $19,
+    "deco-sites/std/functions/shopifyProductList.ts": $18,
     "deco-sites/std/functions/shopifyProductListingPage.ts": $10,
     "deco-sites/std/functions/slugFromParams.ts": $11,
     "deco-sites/std/functions/vndaProductDetailsPage.ts": $3,
@@ -84,11 +83,11 @@ const manifest = {
     "deco-sites/std/functions/vtexClient.ts": $9,
     "deco-sites/std/functions/vtexConfig.ts": $0,
     "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $18,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $17,
     "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $15,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $21,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $20,
     "deco-sites/std/functions/vtexNavbar.ts": $7,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $17,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $16,
     "deco-sites/std/functions/vtexProductList.ts": $12,
     "deco-sites/std/functions/vtexProductListingPage.ts": $1,
     "deco-sites/std/functions/vtexSuggestions.ts": $6,
@@ -103,6 +102,7 @@ const manifest = {
   },
   "loaders": {
     "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts": $$$0,
+    "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts": $$$1,
   },
   "routes": {
     "./routes/_app.tsx": $$$$1,

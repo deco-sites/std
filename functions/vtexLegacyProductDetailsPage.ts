@@ -26,9 +26,9 @@ const legacyProductPageLoader: LoaderFunction<
       vtexClient: vtex,
       segment: segment!,
       slug: ctx.params.slug,
-      reqUrl: req.url,
     }, {
       reqUrl: req.url,
+      configVTEX,
     }),
   };
 });

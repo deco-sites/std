@@ -990,33 +990,6 @@
         }
       ]
     },
-    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcVVybC50cw==@ReqUrl": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/Resolvable"
-        },
-        {
-          "type": "string",
-          "title": "deco-sites/std/functions/reqUrl.ts@ReqUrl"
-        },
-        {
-          "title": "deco-sites/std/functions/reqUrl.ts",
-          "type": "object",
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/functions/reqUrl.ts"
-              ],
-              "default": "deco-sites/std/functions/reqUrl.ts"
-            }
-          }
-        }
-      ]
-    },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC90eXBlcy50cw==@partialSegment": {
       "anyOf": [
         {
@@ -1268,6 +1241,27 @@
                 "deco-sites/std/functions/vtexProductList.ts"
               ],
               "default": "deco-sites/std/functions/vtexProductList.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UmVsYXRlZFByb2R1Y3RzTG9hZGVyLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts"
             }
           }
         }
@@ -2543,19 +2537,85 @@
         "segment": {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC90eXBlcy50cw==@partialSegment",
           "title": "Segment"
-        },
-        "reqUrl": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcVVybC50cw==@ReqUrl",
-          "title": "Req Url"
         }
       },
       "required": [
         "slug",
         "vtexClient",
-        "segment",
-        "reqUrl"
+        "segment"
       ],
       "title": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UmVsYXRlZFByb2R1Y3RzTG9hZGVyLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "crossSelling": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": ""
+            },
+            {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "const": "whosawalsosaw"
+                },
+                {
+                  "type": "string",
+                  "const": "whosawalsobought"
+                },
+                {
+                  "type": "string",
+                  "const": "whoboughtalsobought"
+                },
+                {
+                  "type": "string",
+                  "const": "showtogether"
+                },
+                {
+                  "type": "string",
+                  "const": "accessories"
+                },
+                {
+                  "type": "string",
+                  "const": "similars"
+                },
+                {
+                  "type": "string",
+                  "const": "suggestions"
+                }
+              ],
+              "type": "string"
+            }
+          ],
+          "type": "string",
+          "title": "Cross Selling",
+          "description": "VTEX Cross Selling API. This loader only works on routes of type /:slug/p"
+        },
+        "count": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Count"
+        },
+        "slug": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3NsdWdGcm9tUGFyYW1zLnRz@Slug",
+          "description": "the product slug",
+          "title": "Slug"
+        },
+        "vtexClient": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdnRleC9jbGllbnQudHM=@ClientVTEX",
+          "description": "the VTEX Client that needs to be used.",
+          "title": "Vtex Client"
+        }
+      },
+      "required": [
+        "slug",
+        "vtexClient"
+      ],
+      "title": "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts@Props"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page": {
       "$ref": "#/root/pages",
@@ -3131,22 +3191,6 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcVVybC50cw==": {
-      "title": "deco-sites/std/functions/reqUrl.ts",
-      "type": "object",
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "deco-sites/std/functions/reqUrl.ts"
-          ],
-          "default": "deco-sites/std/functions/reqUrl.ts"
-        }
-      }
-    },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3NlZ21lbnQudHM=": {
       "title": "deco-sites/std/functions/segment.ts",
       "type": "object",
@@ -3660,6 +3704,27 @@
             "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts"
           ],
           "default": "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UmVsYXRlZFByb2R1Y3RzTG9hZGVyLnRz": {
+      "title": "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UmVsYXRlZFByb2R1Y3RzTG9hZGVyLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts"
+          ],
+          "default": "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts"
         }
       }
     },
@@ -4249,9 +4314,6 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL29jY1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcVVybC50cw=="
-        },
-        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3NlZ21lbnQudHM="
         },
         {
@@ -4344,6 +4406,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UHJvZHVjdERldGFpbHNQYWdlLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4TGVnYWN5UmVsYXRlZFByb2R1Y3RzTG9hZGVyLnRz"
         }
       ]
     },

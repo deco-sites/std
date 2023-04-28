@@ -1,9 +1,9 @@
+import { LoaderContext } from "$live/types.ts";
 import { ClientVTEX } from "deco-sites/std/commerce/vtex/client.ts";
 import {
   pickSku,
   toProductPage,
 } from "deco-sites/std/commerce/vtex/transform.ts";
-import { ReqUrl } from "deco-sites/std/functions/reqUrl.ts";
 import { Slug } from "deco-sites/std/functions/slugFromParams.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
 import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
@@ -13,7 +13,6 @@ export interface Props {
   slug: Slug;
   vtexClient: ClientVTEX;
   segment: Partial<Segment>;
-  reqUrl: ReqUrl;
 }
 
 /**
@@ -21,11 +20,11 @@ export interface Props {
  * @description Works on routes of type /:slug/p
  */
 export default async function legacyProductPageLoader(
-  { vtexClient: _vtex, segment, slug, reqUrl }: Props,
-  ctx: { configVTEX?: ConfigVTEX; reqUrl: string },
+  { vtexClient: _vtex, segment, slug }: Props,
+  ctx: LoaderContext<{ configVTEX?: ConfigVTEX }>,
 ): Promise<ProductDetailsPage | null> {
   const vtex = _vtex ?? createClient(ctx?.configVTEX);
-  const url = new URL(reqUrl ?? ctx.reqUrl);
+  const url = new URL(ctx.reqUrl);
   const skuId = url.searchParams.get("skuId");
 
   // search products on VTEX. Feel free to change any of these parameters
