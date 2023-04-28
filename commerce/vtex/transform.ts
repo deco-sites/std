@@ -20,6 +20,7 @@ import type {
   LegacyItem as LegacySkuVTEX,
   LegacyProduct as LegacyProductVTEX,
   Product as ProductVTEX,
+  SelectedFacet,
   Seller as SellerVTEX,
 } from "./types.ts";
 
@@ -473,6 +474,15 @@ export const filtersToSearchParams = (
   }
 
   return searchParams;
+};
+
+export const mapProductClusterIdsToFacets = (collections?: string[]) => {
+  const selectedFacets: SelectedFacet[] = [];
+  collections?.forEach((collection) => {
+    selectedFacets.push({ key: "productClusterIds", value: collection });
+  });
+
+  return selectedFacets;
 };
 
 export const filtersFromSearchParams = (params: URLSearchParams) => {

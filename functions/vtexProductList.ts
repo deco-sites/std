@@ -2,7 +2,10 @@ import type { LoaderFunction } from "$live/types.ts";
 
 import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import { toProduct } from "../commerce/vtex/transform.ts";
+import {
+  mapProductClusterIdsToFacets,
+  toProduct,
+} from "../commerce/vtex/transform.ts";
 import { createClient } from "../commerce/vtex/client.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
@@ -55,16 +58,8 @@ const productListLoader: LoaderFunction<
   const count = props.count ?? 12;
   const query = props.query || "";
   const sort: Sort = props.sort || "";
-  const selectedFacets: SearchArgs["selectedFacets"] = [];
-
-  if (props.collection) {
-    props.collection.forEach((productClusterId) => {
-      selectedFacets.push({
-        key: "productClusterIds",
-        value: productClusterId,
-      });
-    });
-  }
+  const selectedFacets: SearchArgs["selectedFacets"] =
+    mapProductClusterIdsToFacets(props.collection);
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await vtex.search.products({

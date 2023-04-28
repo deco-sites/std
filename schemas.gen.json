@@ -2022,6 +2022,15 @@
           ],
           "type": "string",
           "title": "Fuzzy"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
+          "pattern": "\\d*",
+          "title": "Collection"
         }
       },
       "required": [

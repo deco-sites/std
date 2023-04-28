@@ -4,6 +4,7 @@ import type { Filter, ProductListingPage } from "../commerce/types.ts";
 import { createClient } from "../commerce/vtex/client.ts";
 import {
   filtersFromSearchParams,
+  mapProductClusterIdsToFacets,
   toFilter,
   toProduct,
 } from "../commerce/vtex/transform.ts";
@@ -65,6 +66,13 @@ export interface Props {
    * @title Fuzzy
    */
   fuzzy?: LabelledFuzzy;
+
+  // TODO: pattern property isn't being handled by RJSF
+  /**
+   * @description Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .
+   * @pattern \d*
+   */
+  collection?: string[];
 }
 
 export const singleFlightKey = (
@@ -86,9 +94,18 @@ const searchArgsOf = (props: Props, url: URL) => {
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const page = Number(url.searchParams.get("page")) ?? 0;
   const sort = url.searchParams.get("sort") as Sort ?? "" as Sort;
-  const selectedFacets = filtersFromSearchParams(url.searchParams);
+  const selectedFacets = [
+    ...filtersFromSearchParams(url.searchParams),
+    ...mapProductClusterIdsToFacets(props.collection),
+  ];
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
+
+  if (props.collection) {
+    props.collection.forEach((collection) => {
+      selectedFacets.push({ key: "productClusterIds", value: collection });
+    });
+  }
 
   return {
     query,
