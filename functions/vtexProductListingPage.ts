@@ -101,12 +101,6 @@ const searchArgsOf = (props: Props, url: URL) => {
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
 
-  if (props.collection) {
-    props.collection.forEach((collection) => {
-      selectedFacets.push({ key: "productClusterIds", value: collection });
-    });
-  }
-
   return {
     query,
     fuzzy,
