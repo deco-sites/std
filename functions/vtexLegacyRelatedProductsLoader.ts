@@ -6,7 +6,7 @@ import { createClient } from "../commerce/vtex/client.ts";
 import type { CrossSellingType } from "../commerce/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
 import type { StateVTEX } from "../commerce/vtex/types.ts";
-import loader from "../loaders/vtexLegacyRelatedProductsLoader.ts";
+
 export interface Props {
   /**
    * @title Related Products
