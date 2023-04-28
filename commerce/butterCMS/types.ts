@@ -1,3 +1,8 @@
+import { LiveState } from "$live/types.ts";
+import { ConfigButterCMS } from "./client.ts";
+
+export type StateButterCMS = LiveState<{ configButterCMS?: ConfigButterCMS }>;
+
 export interface Page {
   data: PageData;
 }

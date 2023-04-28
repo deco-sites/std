@@ -14,7 +14,9 @@ export interface ConfigButterCMS extends Account {
 export type ClientOCC = ReturnType<typeof createClient>;
 
 export const createClient = (
-  { authToken, apiVersion = "v2", defaultLocale }: ConfigButterCMS,
+  { authToken = "", apiVersion = "v2", defaultLocale = "en-us" }: Partial<
+    ConfigButterCMS
+  > = {},
 ) => {
   const baseUrl = `https://api.buttercms.com/${apiVersion}`;
 

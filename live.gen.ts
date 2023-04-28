@@ -17,14 +17,16 @@ import * as $9 from "./functions/vtexClient.ts";
 import * as $10 from "./functions/shopifyProductListingPage.ts";
 import * as $11 from "./functions/slugFromParams.ts";
 import * as $12 from "./functions/vtexProductList.ts";
-import * as $13 from "./functions/occProductDetailsPage.ts";
-import * as $14 from "./functions/vndaProductListingPage.ts";
-import * as $15 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $16 from "./functions/vtexProductDetailsPage.ts";
-import * as $17 from "./functions/vtexLegacyProductList.ts";
-import * as $18 from "./functions/shopifyProductList.ts";
-import * as $19 from "./functions/shopifyProductDetailsPage.ts";
-import * as $20 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $13 from "./functions/butterCMSFeaturedPosts.ts";
+import * as $14 from "./functions/occProductDetailsPage.ts";
+import * as $15 from "./functions/vndaProductListingPage.ts";
+import * as $16 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $17 from "./functions/vtexProductDetailsPage.ts";
+import * as $18 from "./functions/vtexLegacyProductList.ts";
+import * as $19 from "./functions/butterCMSCategories.ts";
+import * as $20 from "./functions/shopifyProductList.ts";
+import * as $21 from "./functions/shopifyProductDetailsPage.ts";
+import * as $22 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
@@ -35,14 +37,15 @@ import * as $$$1 from "./loaders/vtexLegacyRelatedProductsLoader.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
-import * as $$$$$$$$1 from "./sections/SEO.tsx";
-import * as $$$$$$$$2 from "./sections/SEOPLP.tsx";
-import * as $$$$$$$$3 from "./sections/configOCC.global.tsx";
-import * as $$$$$$$$4 from "./sections/Analytics.tsx";
-import * as $$$$$$$$5 from "./sections/configShopify.global.tsx";
-import * as $$$$$$$$6 from "./sections/configVNDA.global.tsx";
-import * as $$$$$$$$7 from "./sections/configVTEX.global.tsx";
-import * as $$$$$$$$8 from "./sections/SEOPDP.tsx";
+import * as $$$$$$$$1 from "./sections/configButterCMS.global.tsx";
+import * as $$$$$$$$2 from "./sections/SEO.tsx";
+import * as $$$$$$$$3 from "./sections/SEOPLP.tsx";
+import * as $$$$$$$$4 from "./sections/configOCC.global.tsx";
+import * as $$$$$$$$5 from "./sections/Analytics.tsx";
+import * as $$$$$$$$6 from "./sections/configShopify.global.tsx";
+import * as $$$$$$$$7 from "./sections/configVNDA.global.tsx";
+import * as $$$$$$$$8 from "./sections/configVTEX.global.tsx";
+import * as $$$$$$$$9 from "./sections/SEOPDP.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -71,23 +74,25 @@ import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
 const manifest = {
   "functions": {
-    "deco-sites/std/functions/occProductDetailsPage.ts": $13,
+    "deco-sites/std/functions/butterCMSCategories.ts": $19,
+    "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $13,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $14,
     "deco-sites/std/functions/segment.ts": $5,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $19,
-    "deco-sites/std/functions/shopifyProductList.ts": $18,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $21,
+    "deco-sites/std/functions/shopifyProductList.ts": $20,
     "deco-sites/std/functions/shopifyProductListingPage.ts": $10,
     "deco-sites/std/functions/slugFromParams.ts": $11,
     "deco-sites/std/functions/vndaProductDetailsPage.ts": $3,
     "deco-sites/std/functions/vndaProductList.ts": $2,
-    "deco-sites/std/functions/vndaProductListingPage.ts": $14,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $15,
     "deco-sites/std/functions/vtexClient.ts": $9,
     "deco-sites/std/functions/vtexConfig.ts": $0,
     "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $17,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $15,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $20,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $18,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $16,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $22,
     "deco-sites/std/functions/vtexNavbar.ts": $7,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $16,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $17,
     "deco-sites/std/functions/vtexProductList.ts": $12,
     "deco-sites/std/functions/vtexProductListingPage.ts": $1,
     "deco-sites/std/functions/vtexSuggestions.ts": $6,
@@ -121,15 +126,16 @@ const manifest = {
     "$live/sections/PageInclude.tsx": i1$$$0,
     "$live/sections/Slot.tsx": i1$$$1,
     "$live/sections/UseSlot.tsx": i1$$$2,
-    "deco-sites/std/sections/Analytics.tsx": $$$$$$$$4,
-    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$3,
-    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$5,
-    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$6,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$7,
+    "deco-sites/std/sections/Analytics.tsx": $$$$$$$$5,
+    "deco-sites/std/sections/configButterCMS.global.tsx": $$$$$$$$1,
+    "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$4,
+    "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$6,
+    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$7,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$8,
     "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
-    "deco-sites/std/sections/SEO.tsx": $$$$$$$$1,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$8,
-    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
+    "deco-sites/std/sections/SEO.tsx": $$$$$$$$2,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$9,
+    "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$3,
   },
   "handlers": {
     "$live/handlers/devPage.ts": i1$0,
