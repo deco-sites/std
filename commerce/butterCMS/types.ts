@@ -197,9 +197,19 @@ export interface BlogPost {
   slug: string;
 }
 
-export interface BlogSection {
+export interface BlogPlace {
+  name: string;
+  slug: string;
+}
+
+export interface BlogSectionPosts {
   title: string;
   posts: BlogPost[];
+}
+
+export interface BlogSectionPlaces {
+  title: string;
+  places: BlogPlace[];
 }
 
 export type OmitedFields = {
@@ -211,5 +221,5 @@ export type OmitedFields = {
 } | {
   ads: AdField[];
 } | {
-  articles?: ArticleField[] | undefined;
+  articles?: ArticleField[];
 };

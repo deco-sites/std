@@ -4,29 +4,33 @@
 
 import config from "./deno.json" assert { type: "json" };
 import { DecoManifest } from "$live/types.ts";
-import * as $0 from "./functions/vtexConfig.ts";
-import * as $1 from "./functions/vtexProductListingPage.ts";
-import * as $2 from "./functions/vndaProductList.ts";
-import * as $3 from "./functions/vndaProductDetailsPage.ts";
-import * as $4 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $5 from "./functions/segment.ts";
-import * as $6 from "./functions/vtexSuggestions.ts";
-import * as $7 from "./functions/vtexNavbar.ts";
-import * as $8 from "./functions/vtexWishlist.ts";
-import * as $9 from "./functions/vtexClient.ts";
-import * as $10 from "./functions/shopifyProductListingPage.ts";
-import * as $11 from "./functions/slugFromParams.ts";
-import * as $12 from "./functions/vtexProductList.ts";
-import * as $13 from "./functions/butterCMSFeaturedPosts.ts";
-import * as $14 from "./functions/occProductDetailsPage.ts";
-import * as $15 from "./functions/vndaProductListingPage.ts";
-import * as $16 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $17 from "./functions/vtexProductDetailsPage.ts";
-import * as $18 from "./functions/vtexLegacyProductList.ts";
-import * as $19 from "./functions/butterCMSCategories.ts";
-import * as $20 from "./functions/shopifyProductList.ts";
-import * as $21 from "./functions/shopifyProductDetailsPage.ts";
-import * as $22 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $0 from "./functions/butterCMSPosts.ts";
+import * as $1 from "./functions/vtexConfig.ts";
+import * as $2 from "./functions/vtexProductListingPage.ts";
+import * as $3 from "./functions/vndaProductList.ts";
+import * as $4 from "./functions/butterCMSAds.ts";
+import * as $5 from "./functions/vndaProductDetailsPage.ts";
+import * as $6 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $7 from "./functions/segment.ts";
+import * as $8 from "./functions/vtexSuggestions.ts";
+import * as $9 from "./functions/vtexNavbar.ts";
+import * as $10 from "./functions/butterCMSPlaces.ts";
+import * as $11 from "./functions/vtexWishlist.ts";
+import * as $12 from "./functions/vtexClient.ts";
+import * as $13 from "./functions/shopifyProductListingPage.ts";
+import * as $14 from "./functions/slugFromParams.ts";
+import * as $15 from "./functions/vtexProductList.ts";
+import * as $16 from "./functions/butterCMSFeaturedPosts.ts";
+import * as $17 from "./functions/occProductDetailsPage.ts";
+import * as $18 from "./functions/butterCMSBrands.ts";
+import * as $19 from "./functions/vndaProductListingPage.ts";
+import * as $20 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $21 from "./functions/vtexProductDetailsPage.ts";
+import * as $22 from "./functions/vtexLegacyProductList.ts";
+import * as $23 from "./functions/butterCMSCategories.ts";
+import * as $24 from "./functions/shopifyProductList.ts";
+import * as $25 from "./functions/shopifyProductDetailsPage.ts";
+import * as $26 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
@@ -74,29 +78,33 @@ import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
 const manifest = {
   "functions": {
-    "deco-sites/std/functions/butterCMSCategories.ts": $19,
-    "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $13,
-    "deco-sites/std/functions/occProductDetailsPage.ts": $14,
-    "deco-sites/std/functions/segment.ts": $5,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $21,
-    "deco-sites/std/functions/shopifyProductList.ts": $20,
-    "deco-sites/std/functions/shopifyProductListingPage.ts": $10,
-    "deco-sites/std/functions/slugFromParams.ts": $11,
-    "deco-sites/std/functions/vndaProductDetailsPage.ts": $3,
-    "deco-sites/std/functions/vndaProductList.ts": $2,
-    "deco-sites/std/functions/vndaProductListingPage.ts": $15,
-    "deco-sites/std/functions/vtexClient.ts": $9,
-    "deco-sites/std/functions/vtexConfig.ts": $0,
-    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $18,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $16,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $22,
-    "deco-sites/std/functions/vtexNavbar.ts": $7,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $17,
-    "deco-sites/std/functions/vtexProductList.ts": $12,
-    "deco-sites/std/functions/vtexProductListingPage.ts": $1,
-    "deco-sites/std/functions/vtexSuggestions.ts": $6,
-    "deco-sites/std/functions/vtexWishlist.ts": $8,
+    "deco-sites/std/functions/butterCMSAds.ts": $4,
+    "deco-sites/std/functions/butterCMSBrands.ts": $18,
+    "deco-sites/std/functions/butterCMSCategories.ts": $23,
+    "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $16,
+    "deco-sites/std/functions/butterCMSPlaces.ts": $10,
+    "deco-sites/std/functions/butterCMSPosts.ts": $0,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $17,
+    "deco-sites/std/functions/segment.ts": $7,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $25,
+    "deco-sites/std/functions/shopifyProductList.ts": $24,
+    "deco-sites/std/functions/shopifyProductListingPage.ts": $13,
+    "deco-sites/std/functions/slugFromParams.ts": $14,
+    "deco-sites/std/functions/vndaProductDetailsPage.ts": $5,
+    "deco-sites/std/functions/vndaProductList.ts": $3,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $19,
+    "deco-sites/std/functions/vtexClient.ts": $12,
+    "deco-sites/std/functions/vtexConfig.ts": $1,
+    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $6,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $22,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $20,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $26,
+    "deco-sites/std/functions/vtexNavbar.ts": $9,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $21,
+    "deco-sites/std/functions/vtexProductList.ts": $15,
+    "deco-sites/std/functions/vtexProductListingPage.ts": $2,
+    "deco-sites/std/functions/vtexSuggestions.ts": $8,
+    "deco-sites/std/functions/vtexWishlist.ts": $11,
   },
   "accounts": {
     "deco-sites/std/accounts/occ.ts": $$4,

@@ -1,8 +1,8 @@
 import type { LoaderFunction } from "$live/types.ts";
 import { createClient } from "../commerce/butterCMS/client.ts";
-import { toFeaturedPosts } from "../commerce/butterCMS/transform.ts";
+import { toFeaturedPlaces } from "../commerce/butterCMS/transform.ts";
 import type {
-  BlogSectionPosts,
+  BlogSectionPlaces,
   StateButterCMS,
 } from "../commerce/butterCMS/types.ts";
 
@@ -12,7 +12,7 @@ import type {
  */
 const featuredPostsLoader: LoaderFunction<
   null,
-  BlogSectionPosts,
+  BlogSectionPlaces,
   StateButterCMS
 > = async (
   _req,
@@ -24,10 +24,10 @@ const featuredPostsLoader: LoaderFunction<
   const { data } = await client.pages();
 
   const section =
-    data.fields.sections.find((section) => section.type === "featured_posts")!
+    data.fields.sections.find((section) => section.type === "featured_brands")!
       .fields;
 
-  return { data: toFeaturedPosts(section) as BlogSectionPosts };
+  return { data: toFeaturedPlaces(section) as BlogSectionPlaces };
 };
 
 export default featuredPostsLoader;
