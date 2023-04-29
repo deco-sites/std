@@ -34,8 +34,16 @@ export type Fields =
   | AdFields
   | ArticleFields;
 
+export enum FieldTypes {
+  Posts = "featured_posts",
+  Places = "featured_places",
+  Brands = "featured_brands",
+  Ads = "featured_ads",
+  Articles = "featured_articles",
+}
+
 export interface PostsSection {
-  type: "featured_posts";
+  type: FieldTypes.Posts;
   fields: PostFields;
 }
 export interface PostFields {
@@ -44,7 +52,7 @@ export interface PostFields {
 }
 
 export interface PlacesSection {
-  type: "featured_places";
+  type: FieldTypes.Places;
   fields: PlacesFields;
 }
 export interface PlacesFields {
@@ -53,7 +61,7 @@ export interface PlacesFields {
 }
 
 export interface BrandSection {
-  type: "featured_brands";
+  type: FieldTypes.Brands;
   fields: BrandFields;
 }
 export interface BrandFields {
@@ -62,7 +70,7 @@ export interface BrandFields {
 }
 
 export interface AdSection {
-  type: "featured_ads";
+  type: FieldTypes.Ads;
   fields: AdFields;
 }
 export interface AdFields {
@@ -71,7 +79,7 @@ export interface AdFields {
 }
 
 export interface ArticleSection {
-  type: "featured_articles";
+  type: FieldTypes.Articles;
   fields: ArticleFields;
 }
 export interface ArticleFields {
