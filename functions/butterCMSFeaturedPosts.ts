@@ -1,7 +1,10 @@
 import type { LoaderFunction } from "$live/types.ts";
-
 import { createClient } from "../commerce/butterCMS/client.ts";
-import type { Page, StateButterCMS } from "../commerce/butterCMS/types.ts";
+import { toFeaturedPosts } from "../commerce/butterCMS/transform.ts";
+import type {
+  BlogSection,
+  StateButterCMS,
+} from "../commerce/butterCMS/types.ts";
 
 /**
  * @title VTEX Product Page Loader
@@ -9,7 +12,7 @@ import type { Page, StateButterCMS } from "../commerce/butterCMS/types.ts";
  */
 const featuredPostsLoader: LoaderFunction<
   null,
-  Page,
+  BlogSection,
   StateButterCMS
 > = async (
   _req,
@@ -18,9 +21,13 @@ const featuredPostsLoader: LoaderFunction<
   const { global: { configButterCMS } } = ctx.state;
   const client = createClient(configButterCMS);
 
-  const data = await client.pages();
+  const { data } = await client.pages();
 
-  return { data };
+  const section =
+    data.fields.sections.find((section) => section.type === "featured_posts")!
+      .fields;
+
+  return { data: toFeaturedPosts(section) as BlogSection };
 };
 
 export default featuredPostsLoader;

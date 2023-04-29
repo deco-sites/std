@@ -27,6 +27,13 @@ export type Section =
   | AdSection
   | ArticleSection;
 
+export type Fields =
+  | PostFields
+  | PlacesFields
+  | BrandFields
+  | AdFields
+  | ArticleFields;
+
 export interface PostsSection {
   type: "featured_posts";
   fields: PostFields;
@@ -180,3 +187,29 @@ export interface Meta {
   previous_page?: number;
   count: number;
 }
+
+export interface BlogPost {
+  title: string;
+  summary?: string;
+  image: string;
+  imageAlt: string;
+  category: string;
+  slug: string;
+}
+
+export interface BlogSection {
+  title: string;
+  posts: BlogPost[];
+}
+
+export type OmitedFields = {
+  previews: PreviewField[];
+} | {
+  places: PlaceField[];
+} | {
+  brands: BrandField[];
+} | {
+  ads: AdField[];
+} | {
+  articles?: ArticleField[] | undefined;
+};
