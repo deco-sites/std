@@ -2,41 +2,57 @@ import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import { CategoriesData, Page, PostsData } from "./types.ts";
 
-export interface ConfigButterCMS extends Account {
+export interface Locales {
+  /**
+   * @title Locale
+   */
+  label: string;
   authToken: string;
+}
+
+export interface ConfigButterCMS extends Account {
+  locales: Locales[];
+  /**
+   * @description Default value: en-us
+   */
+  defaultLocale: string;
   /**
    * @description Default value: v2
    */
-  apiVersion: string;
-  defaultLocale: string;
+  apiVersion?: string;
 }
 
 export type ClientOCC = ReturnType<typeof createClient>;
 
 export const createClient = (
-  { authToken = "", apiVersion = "v2", defaultLocale = "en-us" }: Partial<
+  { locales = [], apiVersion = "v2", defaultLocale = "en-us" }: Partial<
     ConfigButterCMS
   > = {},
 ) => {
-  const baseUrl = `https://api.buttercms.com/${apiVersion}`;
+  const baseUrl = `https://api.buttercms.com`;
+  const authToken =
+    locales.find((locale) => locale.label === defaultLocale)?.authToken ?? "";
 
   const categories = () => {
     const params = new URLSearchParams({
-      authToken,
+      auth_token: authToken,
     });
 
-    const url = new URL(`/categories?${params.toString()}`, baseUrl);
+    const url = new URL(
+      `/${apiVersion}/categories?${params.toString()}`,
+      baseUrl,
+    );
 
     return fetchAPI<CategoriesData>(url);
   };
 
   const post = (slug: string) => {
     const params = new URLSearchParams({
-      authToken,
+      auth_token: authToken,
     });
 
     const url = new URL(
-      `/posts/${slug}?auth_token=?${params.toString()}`,
+      `/${apiVersion}/posts/${slug}?${params.toString()}`,
       baseUrl,
     );
 
@@ -50,15 +66,15 @@ export const createClient = (
     tagSlug?: string,
   ) => {
     const params = new URLSearchParams({
-      authToken,
+      auth_token: authToken,
       page: page.toString(),
-      pageSize: pageSize.toString(),
-      excludeBody: excludeBody.toString(),
-      tagSlug: tagSlug ?? "",
+      page_size: pageSize.toString(),
+      exclude_body: excludeBody.toString(),
+      tag_slug: tagSlug ?? "",
     });
 
     const url = new URL(
-      `/posts?auth_token=?${params.toString()}`,
+      `/${apiVersion}/posts?${params.toString()}`,
       baseUrl,
     );
 
@@ -67,7 +83,7 @@ export const createClient = (
 
   const pages = (locale?: string) => {
     const params = new URLSearchParams({
-      authToken,
+      auth_token: authToken,
       /**
        * @todo after add locales logic there is no use of defaultLocale
        */
@@ -75,7 +91,7 @@ export const createClient = (
     });
 
     const url = new URL(
-      `/pages/*/blog-v2?auth_token=?${params.toString()}`,
+      `/${apiVersion}/pages/*/blog-v2?${params.toString()}`,
       baseUrl,
     );
 
