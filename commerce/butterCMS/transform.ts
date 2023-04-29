@@ -1,5 +1,6 @@
 import type {
   Ad,
+  BlogPost,
   BlogPostPreview,
   BlogSectionPlaces,
   BlogSectionPosts,
@@ -14,6 +15,36 @@ const getFieldValue = ({ ...fields }: OmitedFields) => {
   return Object.values(fields)[0].map((field: Fields) =>
     Object.values(field)[0]
   );
+};
+
+export const toBlogPost = ({
+  published,
+  slug,
+  featured_image,
+  featured_image_alt,
+  author: { first_name, last_name },
+  tags,
+  categories,
+  title,
+  body,
+  seo_title,
+  meta_description,
+}: Post): BlogPost => {
+  return {
+    publishedAt: published,
+    slug,
+    image: featured_image,
+    imageAlt: featured_image_alt,
+    author: `${first_name} ${last_name}`.trim(),
+    tags: tags.map((tag) => tag.slug),
+    category: categories[0],
+    title,
+    body: body!,
+    seo: {
+      title: seo_title,
+      description: meta_description,
+    },
+  };
 };
 
 export const toPostsPreview = (

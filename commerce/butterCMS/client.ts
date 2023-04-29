@@ -1,6 +1,6 @@
 import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
-import { CategoriesData, Page, PostsData } from "./types.ts";
+import { CategoriesData, Page, PostData, PostsData } from "./types.ts";
 
 export interface Locales {
   /**
@@ -56,7 +56,7 @@ export const createClient = (
       baseUrl,
     );
 
-    return fetchAPI<PostsData>(url);
+    return fetchAPI<PostData>(url);
   };
 
   const posts = (

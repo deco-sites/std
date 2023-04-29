@@ -144,6 +144,11 @@ export interface PostsData {
   data: Post[];
 }
 
+export interface PostData {
+  meta: Meta;
+  data: Post;
+}
+
 export interface Post {
   status: string;
   created: string;
@@ -157,9 +162,10 @@ export interface Post {
   featured_image_alt: string;
   url: string;
   featured_image: string;
+  body?: string;
   author: Author;
   tags: Tag[];
-  categories: Tag[];
+  categories: Category[];
 }
 
 export interface Tag {
@@ -238,3 +244,21 @@ export type OmitedFields = {
 } | {
   articles?: ArticleField[];
 };
+
+export interface BlogPost {
+  publishedAt: string;
+  slug: string;
+  image: string;
+  imageAlt: string;
+  author: string;
+  tags: string[];
+  category: Category;
+  title: string;
+  body: string;
+  seo: SEO;
+}
+
+export interface SEO {
+  title: string;
+  description: string;
+}
