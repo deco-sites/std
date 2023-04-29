@@ -194,18 +194,6 @@ export interface Meta {
   count: number;
 }
 
-export interface BlogPostPreview {
-  title: string;
-  summary?: string;
-  image: string;
-  imageAlt: string;
-  category: string;
-  slug: string;
-  ctaText?: string;
-  author?: string;
-  publishedAt?: string;
-}
-
 export interface BlogPlace {
   name: string;
   slug: string;
@@ -246,17 +234,22 @@ export type OmitedFields = {
 };
 
 export interface BlogPost {
-  publishedAt: string;
-  slug: string;
+  title: string;
   image: string;
   imageAlt: string;
+  publishedAt: string;
+  category: Category;
+  slug: string;
   author: string;
   tags: string[];
-  category: Category;
-  title: string;
   body: string;
   seo: SEO;
 }
+
+export type BlogPostPreview = Omit<BlogPost, "seo" | "body" | "tags"> & {
+  summary: string;
+  ctaText?: string;
+};
 
 export interface SEO {
   title: string;
