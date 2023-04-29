@@ -195,6 +195,7 @@ export interface BlogPost {
   imageAlt: string;
   category: string;
   slug: string;
+  ctaText?: string;
 }
 
 export interface BlogPlace {

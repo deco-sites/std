@@ -1,4 +1,5 @@
 import type {
+  Ad,
   BlogSectionPlaces,
   BlogSectionPosts,
   Fields,
@@ -23,11 +24,33 @@ export const toFeaturedPosts = (
     posts: transformedFields.map(({
       featured_image,
       featured_image_alt,
-      meta: _meta, // unused field
+      meta: _,
       ...rest
     }: Preview) => ({
       image: featured_image,
       imageAlt: featured_image_alt,
+      ...rest,
+    })),
+  };
+};
+
+export const toFeaturedAds = (
+  { title, ...fields }: Fields,
+): BlogSectionPosts => {
+  const transformedFields = getFieldValue(fields);
+
+  return {
+    title,
+    posts: transformedFields.map(({
+      image_alt,
+      url_slug,
+      url_text,
+      meta: _,
+      ...rest
+    }: Ad) => ({
+      imageAlt: image_alt,
+      slug: url_slug,
+      ctaText: url_text,
       ...rest,
     })),
   };
@@ -42,7 +65,7 @@ export const toFeaturedPlaces = (
     title,
     places: transformedFields.map(({
       catalogue_slug,
-      meta: _meta, // unused field
+      meta: _,
       ...rest
     }: Place) => ({
       slug: catalogue_slug,

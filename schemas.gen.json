@@ -42,6 +42,13 @@
         "slug": {
           "type": "string",
           "title": "Slug"
+        },
+        "ctaText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Cta Text"
         }
       },
       "required": [
