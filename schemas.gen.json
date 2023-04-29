@@ -13,7 +13,7 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPost": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview": {
       "type": "object",
       "properties": {
         "title": {
@@ -49,6 +49,20 @@
             "null"
           ],
           "title": "Cta Text"
+        },
+        "author": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Author"
+        },
+        "publishedAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Published At"
         }
       },
       "required": [
@@ -58,14 +72,14 @@
         "category",
         "slug"
       ],
-      "title": "BlogPost"
+      "title": "BlogPostPreview"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPost[]": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPost"
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview"
       },
-      "title": "BlogPost[]"
+      "title": "BlogPostPreview[]"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogSectionPosts": {
       "anyOf": [
@@ -80,7 +94,7 @@
               "title": "Title"
             },
             "posts": {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPost[]",
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]",
               "title": "Posts"
             }
           },
@@ -119,22 +133,6 @@
                 "deco-sites/std/functions/butterCMSFeaturedPosts.ts"
               ],
               "default": "deco-sites/std/functions/butterCMSFeaturedPosts.ts"
-            }
-          }
-        },
-        {
-          "title": "deco-sites/std/functions/butterCMSPosts.ts",
-          "type": "object",
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/functions/butterCMSPosts.ts"
-              ],
-              "default": "deco-sites/std/functions/butterCMSPosts.ts"
             }
           }
         }
@@ -269,6 +267,113 @@
           }
         }
       ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3REZXRhaWwudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "number",
+          "title": "Page Size"
+        }
+      },
+      "required": [
+        "pageSize"
+      ],
+      "title": "deco-sites/std/functions/butterCMSPostDetail.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination": {
+      "type": "object",
+      "properties": {
+        "currentPage": {
+          "type": "number",
+          "title": "Current Page"
+        },
+        "nextPage": {
+          "type": "number",
+          "title": "Next Page"
+        },
+        "previousPage": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Previous Page"
+        },
+        "count": {
+          "type": "number",
+          "title": "Count"
+        }
+      },
+      "required": [
+        "currentPage",
+        "nextPage",
+        "previousPage",
+        "count"
+      ],
+      "title": "Pagination"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostList": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "posts": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]",
+              "title": "Posts"
+            },
+            "pagination": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination",
+              "title": "Pagination"
+            }
+          },
+          "required": [
+            "posts",
+            "pagination"
+          ],
+          "title": "deco-sites/std/commerce/butterCMS/types.ts@BlogPostList"
+        },
+        {
+          "title": "deco-sites/std/functions/butterCMSPosts.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/butterCMSPosts.ts"
+              ],
+              "default": "deco-sites/std/functions/butterCMSPosts.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "number",
+          "title": "Page Size"
+        }
+      },
+      "required": [
+        "pageSize"
+      ],
+      "title": "deco-sites/std/functions/butterCMSPosts.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Thing": {
       "title": "Thing"
@@ -3569,9 +3674,35 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3REZXRhaWwudHM=": {
+      "title": "deco-sites/std/functions/butterCMSPostDetail.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3REZXRhaWwudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/functions/butterCMSPostDetail.ts"
+          ],
+          "default": "deco-sites/std/functions/butterCMSPostDetail.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz": {
       "title": "deco-sites/std/functions/butterCMSPosts.ts",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -4755,6 +4886,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1BsYWNlcy50cw=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3REZXRhaWwudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz"

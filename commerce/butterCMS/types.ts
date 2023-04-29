@@ -184,11 +184,11 @@ export interface Author {
 
 export interface Meta {
   next_page: number;
-  previous_page?: number;
+  previous_page: number | null;
   count: number;
 }
 
-export interface BlogPost {
+export interface BlogPostPreview {
   title: string;
   summary?: string;
   image: string;
@@ -196,6 +196,8 @@ export interface BlogPost {
   category: string;
   slug: string;
   ctaText?: string;
+  author?: string;
+  publishedAt?: string;
 }
 
 export interface BlogPlace {
@@ -205,12 +207,24 @@ export interface BlogPlace {
 
 export interface BlogSectionPosts {
   title: string;
-  posts: BlogPost[];
+  posts: BlogPostPreview[];
 }
 
 export interface BlogSectionPlaces {
   title: string;
   places: BlogPlace[];
+}
+
+export interface Pagination {
+  currentPage: number;
+  nextPage: number;
+  previousPage: number | null;
+  count: number;
+}
+
+export interface BlogPostList {
+  posts: BlogPostPreview[];
+  pagination: Pagination;
 }
 
 export type OmitedFields = {

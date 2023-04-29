@@ -1,10 +1,12 @@
 import type {
   Ad,
+  BlogPostPreview,
   BlogSectionPlaces,
   BlogSectionPosts,
   Fields,
   OmitedFields,
   Place,
+  Post,
   Preview,
 } from "./types.ts";
 
@@ -12,6 +14,32 @@ const getFieldValue = ({ ...fields }: OmitedFields) => {
   return Object.values(fields)[0].map((field: Fields) =>
     Object.values(field)[0]
   );
+};
+
+export const toPostsPreview = (
+  posts: Post[],
+): BlogPostPreview[] => {
+  return posts.map<BlogPostPreview>((
+    {
+      title,
+      summary,
+      featured_image,
+      featured_image_alt,
+      categories: [{ name }],
+      slug,
+      author: { first_name, last_name },
+      published,
+    },
+  ) => ({
+    title,
+    summary,
+    image: featured_image,
+    imageAlt: featured_image_alt,
+    category: name,
+    slug,
+    author: `${first_name} ${last_name ?? ""}`.trim(),
+    publishedAt: published,
+  }));
 };
 
 export const toFeaturedPosts = (
