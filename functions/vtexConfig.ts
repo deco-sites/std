@@ -10,7 +10,7 @@ export type { ConfigVTEX } from "../commerce/vtex/client.ts";
  */
 const vtexConfig: LoaderFunction<
   null,
-  ConfigVTEX,
+  ConfigVTEX | null,
   LiveState<{ configVTEX: ConfigVTEX }>
 > = (_, ctx) => {
   const { configVTEX } = ctx.state.global;
