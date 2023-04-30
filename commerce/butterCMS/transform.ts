@@ -83,11 +83,16 @@ export const toFeaturedPosts = (
     posts: transformedFields.map(({
       featured_image,
       featured_image_alt,
+      category,
       meta: _,
       ...rest
     }: Preview) => ({
       image: featured_image,
       imageAlt: featured_image_alt,
+      category: {
+        name: category,
+        slug: "",
+      },
       ...rest,
     })),
   };
@@ -104,12 +109,17 @@ export const toFeaturedAds = (
       image_alt,
       url_slug,
       url_text,
+      category,
       meta: _,
       ...rest
     }: Ad) => ({
       imageAlt: image_alt,
       slug: url_slug,
       ctaText: url_text,
+      category: {
+        name: category,
+        slug: "",
+      },
       ...rest,
     })),
   };
