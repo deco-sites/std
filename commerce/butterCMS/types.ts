@@ -155,12 +155,12 @@ export interface Category {
 }
 
 export interface PostsData {
-  meta: Meta;
+  meta: PaginationMeta;
   data: Post[];
 }
 
 export interface PostData {
-  meta: Meta;
+  meta: PaginationMeta;
   data: Post;
 }
 
@@ -203,7 +203,7 @@ export interface Author {
   twitter_handle: string;
 }
 
-export interface Meta {
+export interface PaginationMeta {
   next_page: number;
   previous_page: number | null;
   count: number;
