@@ -40,6 +40,7 @@ const legacyRelatedProductsLoader: LoaderFunction<
       crossSelling,
       count,
     }, {
+      configVTEX,
       reqUrl: req.url,
     }),
   };
