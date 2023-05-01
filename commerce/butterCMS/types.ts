@@ -229,6 +229,7 @@ export interface Pagination {
   nextPage: number;
   previousPage: number | null;
   count: number;
+  pageSize: number;
 }
 
 export interface BlogPostList {

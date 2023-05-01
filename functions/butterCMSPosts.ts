@@ -38,6 +38,7 @@ const postsLoader: LoaderFunction<
         nextPage: meta.next_page,
         previousPage: meta.previous_page,
         count: meta.count,
+        pageSize,
       },
     },
   };
