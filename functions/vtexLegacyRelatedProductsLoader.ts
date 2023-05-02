@@ -34,15 +34,18 @@ const legacyRelatedProductsLoader: LoaderFunction<
   const vtex = createClient(configVTEX);
 
   return {
-    data: await loader({
-      vtexClient: vtex,
-      slug: ctx.params.slug,
-      crossSelling,
-      count,
-    }, {
-      configVTEX,
-      reqUrl: req.url,
-    }),
+    data: await loader(
+      {
+        vtexClient: vtex,
+        slug: ctx.params.slug,
+        crossSelling,
+        count,
+      },
+      req,
+      {
+        configVTEX,
+      },
+    ),
   };
 });
 

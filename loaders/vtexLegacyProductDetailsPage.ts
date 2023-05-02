@@ -21,10 +21,11 @@ export interface Props {
  */
 export default async function legacyProductPageLoader(
   { vtexClient: _vtex, segment, slug }: Props,
+  req: Request,
   ctx: LoaderContext<{ configVTEX?: ConfigVTEX }>,
 ): Promise<ProductDetailsPage | null> {
   const vtex = _vtex ?? createClient(ctx?.configVTEX);
-  const url = new URL(ctx.reqUrl);
+  const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
 
   // search products on VTEX. Feel free to change any of these parameters

@@ -22,14 +22,15 @@ const legacyProductPageLoader: LoaderFunction<
   const vtex = createClient(configVTEX);
 
   return {
-    data: await loader({
-      vtexClient: vtex,
-      segment: segment!,
-      slug: ctx.params.slug,
-    }, {
-      reqUrl: req.url,
-      configVTEX,
-    }),
+    data: await loader(
+      {
+        vtexClient: vtex,
+        segment: segment!,
+        slug: ctx.params.slug,
+      },
+      req,
+      { configVTEX },
+    ),
   };
 });
 
