@@ -28,7 +28,13 @@ const postsLoader: LoaderFunction<
   const url = new URL(req.url);
   const page = Number(url.searchParams.get("page")) || 1;
 
-  const { data, meta } = await client.posts(page, pageSize, true);
+  const { data, meta } = await client.posts(
+    page,
+    pageSize,
+    true,
+    ctx.params.searchText,
+    ctx.params.categorySlug,
+  );
 
   return {
     data: {

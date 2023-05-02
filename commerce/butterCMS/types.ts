@@ -271,3 +271,8 @@ export interface SEO {
   title: string;
   description: string;
 }
+
+export interface BlogPage {
+  title?: string;
+  breadcrumbList?: Category[];
+}

@@ -64,12 +64,14 @@ export const createClient = (
     pageSize: number,
     excludeBody = true,
     tagSlug?: string,
+    categorySlug?: string,
   ) => {
     const params = new URLSearchParams({
       auth_token: authToken,
       page: page.toString(),
       page_size: pageSize.toString(),
       exclude_body: excludeBody.toString(),
+      category_slug: categorySlug ?? "",
       tag_slug: tagSlug ?? "",
     });
 
@@ -81,13 +83,13 @@ export const createClient = (
     return fetchAPI<PostsData>(url);
   };
 
-  const pages = (locale?: string) => {
+  const pages = (locale = defaultLocale) => {
     const params = new URLSearchParams({
       auth_token: authToken,
       /**
        * @todo after add locales logic there is no use of defaultLocale
        */
-      locale: locale ?? defaultLocale,
+      locale,
     });
 
     const url = new URL(
