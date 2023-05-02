@@ -35,10 +35,11 @@ export interface Props {
  */
 export default async function legacyRelatedProductsLoader(
   { vtexClient: _vtex, slug, crossSelling, count }: Props,
+  req: Request,
   ctx: LoaderContext<{ configVTEX?: ConfigVTEX }>,
 ): Promise<Product[] | null> {
   const vtex = _vtex ?? createClient(ctx?.configVTEX);
-  const url = new URL(ctx.reqUrl);
+  const url = new URL(req.url);
   const pageType = await vtex.catalog_system.portal.pageType({
     slug: `${slug}/p`,
   });
