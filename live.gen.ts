@@ -26,13 +26,14 @@ import * as $18 from "./functions/butterCMSFeaturedPosts.ts";
 import * as $19 from "./functions/occProductDetailsPage.ts";
 import * as $20 from "./functions/butterCMSBrands.ts";
 import * as $21 from "./functions/vndaProductListingPage.ts";
-import * as $22 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $23 from "./functions/vtexProductDetailsPage.ts";
-import * as $24 from "./functions/vtexLegacyProductList.ts";
-import * as $25 from "./functions/butterCMSCategories.ts";
-import * as $26 from "./functions/shopifyProductList.ts";
-import * as $27 from "./functions/shopifyProductDetailsPage.ts";
-import * as $28 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $22 from "./functions/butterCMSRelatedPosts.ts";
+import * as $23 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $24 from "./functions/vtexProductDetailsPage.ts";
+import * as $25 from "./functions/vtexLegacyProductList.ts";
+import * as $26 from "./functions/butterCMSCategories.ts";
+import * as $27 from "./functions/shopifyProductList.ts";
+import * as $28 from "./functions/shopifyProductDetailsPage.ts";
+import * as $29 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
@@ -82,16 +83,17 @@ const manifest = {
   "functions": {
     "deco-sites/std/functions/butterCMSAds.ts": $5,
     "deco-sites/std/functions/butterCMSBrands.ts": $20,
-    "deco-sites/std/functions/butterCMSCategories.ts": $25,
+    "deco-sites/std/functions/butterCMSCategories.ts": $26,
     "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $18,
     "deco-sites/std/functions/butterCMSPage.ts": $1,
     "deco-sites/std/functions/butterCMSPlaces.ts": $12,
     "deco-sites/std/functions/butterCMSPostDetail.ts": $6,
     "deco-sites/std/functions/butterCMSPosts.ts": $0,
+    "deco-sites/std/functions/butterCMSRelatedPosts.ts": $22,
     "deco-sites/std/functions/occProductDetailsPage.ts": $19,
     "deco-sites/std/functions/segment.ts": $9,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $27,
-    "deco-sites/std/functions/shopifyProductList.ts": $26,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $28,
+    "deco-sites/std/functions/shopifyProductList.ts": $27,
     "deco-sites/std/functions/shopifyProductListingPage.ts": $15,
     "deco-sites/std/functions/slugFromParams.ts": $16,
     "deco-sites/std/functions/vndaProductDetailsPage.ts": $7,
@@ -100,11 +102,11 @@ const manifest = {
     "deco-sites/std/functions/vtexClient.ts": $14,
     "deco-sites/std/functions/vtexConfig.ts": $2,
     "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $8,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $24,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $22,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $28,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $25,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $23,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $29,
     "deco-sites/std/functions/vtexNavbar.ts": $11,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $23,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $24,
     "deco-sites/std/functions/vtexProductList.ts": $17,
     "deco-sites/std/functions/vtexProductListingPage.ts": $3,
     "deco-sites/std/functions/vtexSuggestions.ts": $10,

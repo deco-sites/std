@@ -234,7 +234,7 @@ export interface Pagination {
 
 export interface BlogPostList {
   posts: BlogPostPreview[];
-  pagination: Pagination;
+  pagination: Pagination | null;
 }
 
 export type OmitedFields = {

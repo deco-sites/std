@@ -13,19 +13,30 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "slug": {
+          "type": "string",
+          "title": "Slug"
+        }
+      },
+      "required": [
+        "name",
+        "slug"
+      ],
+      "title": "Category"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@omitYm9keSxzZW8sdGFncw==BlogPost": {
       "type": "object",
       "properties": {
         "title": {
           "type": "string",
           "title": "Title"
-        },
-        "summary": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Summary"
         },
         "image": {
           "type": "string",
@@ -35,51 +46,67 @@
           "type": "string",
           "title": "Image Alt"
         },
-        "category": {
+        "publishedAt": {
           "type": "string",
+          "title": "Published At"
+        },
+        "category": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category",
           "title": "Category"
         },
         "slug": {
           "type": "string",
           "title": "Slug"
         },
-        "ctaText": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Cta Text"
-        },
         "author": {
-          "type": [
-            "string",
-            "null"
-          ],
+          "type": "string",
           "title": "Author"
-        },
-        "publishedAt": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Published At"
         }
       },
       "required": [
         "title",
         "image",
         "imageAlt",
+        "publishedAt",
         "category",
-        "slug"
+        "slug",
+        "author"
       ],
-      "title": "BlogPostPreview"
+      "title": "omitYm9keSxzZW8sdGFncw==BlogPost"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@omitYm9keSxzZW8sdGFncw==BlogPost"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "summary": {
+              "type": "string",
+              "title": "Summary"
+            },
+            "ctaText": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "title": "Cta Text"
+            }
+          },
+          "required": [
+            "summary"
+          ]
+        }
+      ],
+      "title": "9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost[]": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview"
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost"
       },
-      "title": "BlogPostPreview[]"
+      "title": "9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost[]"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogSectionPosts": {
       "anyOf": [
@@ -94,7 +121,7 @@
               "title": "Title"
             },
             "posts": {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]",
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost[]",
               "title": "Posts"
             }
           },
@@ -220,24 +247,6 @@
         }
       ]
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "title": "Name"
-        },
-        "slug": {
-          "type": "string",
-          "title": "Slug"
-        }
-      },
-      "required": [
-        "name",
-        "slug"
-      ],
-      "title": "Category"
-    },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category[]": {
       "anyOf": [
         {
@@ -263,6 +272,47 @@
                 "deco-sites/std/functions/butterCMSCategories.ts"
               ],
               "default": "deco-sites/std/functions/butterCMSCategories.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPage": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "title": "Title"
+            },
+            "breadcrumbList": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category[]",
+              "title": "Breadcrumb List"
+            }
+          },
+          "required": [],
+          "title": "deco-sites/std/commerce/butterCMS/types.ts@BlogPage"
+        },
+        {
+          "title": "deco-sites/std/functions/butterCMSPage.ts",
+          "type": "object",
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/butterCMSPage.ts"
+              ],
+              "default": "deco-sites/std/functions/butterCMSPage.ts"
             }
           }
         }
@@ -294,13 +344,9 @@
         {
           "type": "object",
           "properties": {
-            "publishedAt": {
+            "title": {
               "type": "string",
-              "title": "Published At"
-            },
-            "slug": {
-              "type": "string",
-              "title": "Slug"
+              "title": "Title"
             },
             "image": {
               "type": "string",
@@ -309,6 +355,18 @@
             "imageAlt": {
               "type": "string",
               "title": "Image Alt"
+            },
+            "publishedAt": {
+              "type": "string",
+              "title": "Published At"
+            },
+            "category": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category",
+              "title": "Category"
+            },
+            "slug": {
+              "type": "string",
+              "title": "Slug"
             },
             "author": {
               "type": "string",
@@ -321,14 +379,6 @@
               },
               "title": "Tags"
             },
-            "category": {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Category",
-              "title": "Category"
-            },
-            "title": {
-              "type": "string",
-              "title": "Title"
-            },
             "body": {
               "type": "string",
               "title": "Body"
@@ -339,14 +389,14 @@
             }
           },
           "required": [
-            "publishedAt",
-            "slug",
+            "title",
             "image",
             "imageAlt",
+            "publishedAt",
+            "category",
+            "slug",
             "author",
             "tags",
-            "category",
-            "title",
             "body",
             "seo"
           ],
@@ -395,15 +445,31 @@
         "count": {
           "type": "number",
           "title": "Count"
+        },
+        "pageSize": {
+          "type": "number",
+          "title": "Page Size"
         }
       },
       "required": [
         "currentPage",
         "nextPage",
         "previousPage",
-        "count"
+        "count",
+        "pageSize"
       ],
       "title": "Pagination"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination|null": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Pagination|null"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostList": {
       "anyOf": [
@@ -414,11 +480,11 @@
           "type": "object",
           "properties": {
             "posts": {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@BlogPostPreview[]",
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@9a2995a069d16968ece72775e2605f51&omitYm9keSxzZW8sdGFncw==BlogPost[]",
               "title": "Posts"
             },
             "pagination": {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination",
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL3R5cGVzLnRz@Pagination|null",
               "title": "Pagination"
             }
           },
@@ -448,6 +514,27 @@
               "default": "deco-sites/std/functions/butterCMSPosts.ts"
             }
           }
+        },
+        {
+          "title": "deco-sites/std/functions/butterCMSRelatedPosts.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1JlbGF0ZWRQb3N0cy50cw==@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/functions/butterCMSRelatedPosts.ts"
+              ],
+              "default": "deco-sites/std/functions/butterCMSRelatedPosts.ts"
+            }
+          }
         }
       ]
     },
@@ -463,6 +550,26 @@
         "pageSize"
       ],
       "title": "deco-sites/std/functions/butterCMSPosts.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1JlbGF0ZWRQb3N0cy50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "number",
+          "title": "Page Size"
+        },
+        "withPagination": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "With Pagination"
+        }
+      },
+      "required": [
+        "pageSize"
+      ],
+      "title": "deco-sites/std/functions/butterCMSRelatedPosts.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Thing": {
       "title": "Thing"
@@ -3753,6 +3860,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1BhZ2UudHM=": {
+      "title": "deco-sites/std/functions/butterCMSPage.ts",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/functions/butterCMSPage.ts"
+          ],
+          "default": "deco-sites/std/functions/butterCMSPage.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1BsYWNlcy50cw==": {
       "title": "deco-sites/std/functions/butterCMSPlaces.ts",
       "type": "object",
@@ -3803,6 +3926,27 @@
             "deco-sites/std/functions/butterCMSPosts.ts"
           ],
           "default": "deco-sites/std/functions/butterCMSPosts.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1JlbGF0ZWRQb3N0cy50cw==": {
+      "title": "deco-sites/std/functions/butterCMSRelatedPosts.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1JlbGF0ZWRQb3N0cy50cw==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/functions/butterCMSRelatedPosts.ts"
+          ],
+          "default": "deco-sites/std/functions/butterCMSRelatedPosts.ts"
         }
       }
     },
@@ -4975,6 +5119,9 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU0ZlYXR1cmVkUG9zdHMudHM="
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1BhZ2UudHM="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1BsYWNlcy50cw=="
         },
         {
@@ -4982,6 +5129,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1Bvc3RzLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL2J1dHRlckNNU1JlbGF0ZWRQb3N0cy50cw=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL29jY1Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
