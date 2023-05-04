@@ -140,7 +140,7 @@ const legacyPLPLoader: LoaderFunction<
   const maybeTerm = props.term || ctx.params["0"] || "";
   const page = Number(url.searchParams.get("page")) || 0;
   const O = (url.searchParams.get("O") || url.searchParams.get("sort") ||
-    sortOptions[0].value) as LegacySort;
+    sortOptions[0].label) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
