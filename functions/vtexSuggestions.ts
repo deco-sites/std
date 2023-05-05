@@ -1,8 +1,8 @@
-import { LiveState, LoaderFunction } from "$live/types.ts";
+import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/suggestions.ts";
+import { LoaderFunction } from "$live/types.ts";
 import { Suggestion } from "../commerce/types.ts";
-import { ConfigVTEX, createClient } from "../commerce/vtex/client.ts";
-import { toProduct } from "../commerce/vtex/transform.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
+import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 
 export interface Props {
   query?: string;
@@ -13,39 +13,21 @@ export interface Props {
   count?: number;
 }
 
-const topSearches: LoaderFunction<
+/**
+ * @deprecated true
+ */
+const loaderV0: LoaderFunction<
   Props,
   Suggestion | null,
-  LiveState<{ configVTEX: ConfigVTEX }>
-> = withISFallback(async (req, ctx, { count, query }) => {
-  const url = new URL(req.url);
-  const { global: { configVTEX, configVTEX: { defaultLocale } } } = ctx.state;
-  const vtex = createClient(configVTEX);
+  StateVTEX
+> = withISFallback(async (req, ctx, props) => {
+  const data = await loader(
+    props,
+    req,
+    ctx.state,
+  );
 
-  const suggestions = query
-    ? vtex.search.suggestedTerms
-    : vtex.search.topSearches;
-
-  const [{ searches }, { products }] = await Promise.all([
-    suggestions({ query, locale: defaultLocale }),
-    vtex.search.products({
-      query,
-      page: 1,
-      count: count ?? 4,
-      locale: defaultLocale,
-    }),
-  ]);
-
-  if (!searches || !products) return { data: null };
-
-  return {
-    data: {
-      searches: count ? searches.slice(0, count) : searches,
-      products: products.map((p) =>
-        toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
-      ),
-    },
-  };
+  return { data, status: data ? 200 : 404 };
 });
 
-export default topSearches;
+export default loaderV0;

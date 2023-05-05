@@ -1,6 +1,6 @@
-import type { ConfigVTEX } from "../commerce/vtex/client.ts";
+import type { Account } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
-function ConfigSection(_: ConfigVTEX) {
+function ConfigSection(_: Account) {
   return (
     <div>
       "This is a global setting and not a component. Every change here will

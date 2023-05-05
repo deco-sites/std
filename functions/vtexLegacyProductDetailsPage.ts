@@ -1,37 +1,28 @@
-import type { LoaderFunction } from "$live/types.ts";
-
+import loader from "deco-sites/std/packs/vtex/loaders/legacy/productDetailsPage.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
-import { createClient } from "../commerce/vtex/client.ts";
-import type { StateVTEX } from "../commerce/vtex/types.ts";
-import { withSegment } from "../commerce/vtex/withSegment.ts";
-import loader from "../loaders/vtexLegacyProductDetailsPage.ts";
+import type { LoaderFunction } from "$live/types.ts";
+import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 
 /**
- * @title VTEX Product Page Loader
+ * @title VTEX Legacy product details page loader
  * @description Works on routes of type /:slug/p
+ * @deprecated true
  */
-const legacyProductPageLoader: LoaderFunction<
+const loaderV0: LoaderFunction<
   null,
   ProductDetailsPage | null,
   StateVTEX
-> = withSegment(async (
+> = async (
   req,
   ctx,
 ) => {
-  const { global: { configVTEX }, segment } = ctx.state;
-  const vtex = createClient(configVTEX);
+  const data = await loader(
+    { slug: ctx.params.slug },
+    req,
+    ctx.state,
+  );
 
-  return {
-    data: await loader(
-      {
-        vtexClient: vtex,
-        segment: segment!,
-        slug: ctx.params.slug,
-      },
-      req,
-      { configVTEX },
-    ),
-  };
-});
+  return { data, status: data ? 200 : 404 };
+};
 
-export default legacyProductPageLoader;
+export default loaderV0;

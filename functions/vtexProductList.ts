@@ -1,12 +1,8 @@
-import type { LoaderFunction } from "$live/types.ts";
-
-import { withSegment } from "../commerce/vtex/withSegment.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import { toProduct } from "../commerce/vtex/transform.ts";
-import { createClient } from "../commerce/vtex/client.ts";
-import type { StateVTEX } from "../commerce/vtex/types.ts";
+import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/productList.ts";
+import type { LoaderFunction } from "$live/types.ts";
+import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
-import type { SearchArgs, Sort } from "../commerce/vtex/types.ts";
 
 export interface Props {
   /** @description query to use on search */
@@ -36,56 +32,26 @@ export interface Props {
 }
 
 /**
- * @title Product list loader
+ * @title VTEX product list loader
  * @description Usefull for shelves and static galleries.
+ * @deprecated true
  */
-const productListLoader: LoaderFunction<
+const loaderV0: LoaderFunction<
   Props,
   Product[] | null,
   StateVTEX
-> = withSegment(withISFallback(async (
+> = withISFallback(async (
   req,
   ctx,
   props,
 ) => {
-  const { global: { configVTEX }, segment } = ctx.state;
-  const url = new URL(req.url);
-  const vtex = createClient(configVTEX);
-
-  const count = props.count ?? 12;
-  const query = props.query || "";
-  const sort: Sort = props.sort || "";
-  const selectedFacets: SearchArgs["selectedFacets"] = [];
-
-  if (props.collection) {
-    props.collection.forEach((productClusterId) => {
-      selectedFacets.push({
-        key: "productClusterIds",
-        value: productClusterId,
-      });
-    });
-  }
-
-  // search products on VTEX. Feel free to change any of these parameters
-  const { products: vtexProducts } = await vtex.search.products({
-    query,
-    page: 0,
-    count,
-    sort,
-    selectedFacets,
-    segment,
-  });
-
-  // Transform VTEX product format into schema.org's compatible format
-  // If a property is missing from the final `products` array you can add
-  // it in here
-  const products = vtexProducts.map((p) =>
-    toProduct(p, p.items[0], 0, { url, priceCurrency: vtex.currency() })
+  const data = await loader(
+    props,
+    req,
+    ctx.state,
   );
 
-  return {
-    data: products,
-  };
-}));
+  return { data, status: data ? 200 : 404 };
+});
 
-export default productListLoader;
+export default loaderV0;
