@@ -14,6 +14,8 @@ export const toProduct = (
     priceType: "https://schema.org/SalePrice",
     price: Number(minOptionRetailPrice.amount_cents / 100),
   }];
+  const url =
+    `https://www.faire.com/search?brand=${product.brand_token}&product=${product.token}&q=from+deco&signUp=product`;
 
   const price = minOptionRetailPrice.amount_cents / 100;
 
@@ -25,12 +27,12 @@ export const toProduct = (
     "description": product.description,
     "sku": product.taxonomy_type.token,
     "category": product.taxonomy_type.name,
-    url: "",
+    url,
     isVariantOf: {
       "@type": "ProductGroup",
       productGroupID: product.token,
       hasVariant: [],
-      url: "TODO",
+      url,
       name: product.name,
       additionalProperty: [],
     },
