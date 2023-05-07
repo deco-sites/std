@@ -4,8 +4,8 @@ import { createClient } from "../commerce/butterCMS/client.ts";
 import type { Category, StateButterCMS } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Categories Loader
+ * @description Usefull for list blog's categories
  */
 const categoriesLoader: LoaderFunction<
   null,

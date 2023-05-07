@@ -4,8 +4,8 @@ import { toBlogPost } from "../commerce/butterCMS/transform.ts";
 import type { BlogPost, StateButterCMS } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Post Detail Loader
+ * @description Works on routes of type /blog/:slug
  */
 const postDetailLoader: LoaderFunction<
   null,

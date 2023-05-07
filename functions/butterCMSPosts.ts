@@ -7,12 +7,15 @@ import type {
 } from "../commerce/butterCMS/types.ts";
 
 export interface Props {
+  /**
+   * @description Used to declare the size of results
+   */
   pageSize: number;
 }
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Posts Loader
+ * @description Usefull for paginated galleries.
  */
 const postsLoader: LoaderFunction<
   Props,

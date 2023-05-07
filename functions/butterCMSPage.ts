@@ -3,8 +3,8 @@ import { createClient } from "../commerce/butterCMS/client.ts";
 import type { BlogPage, StateButterCMS } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Page Loader
+ * @description Works com any page to retrive page informations like title or breadcrumb
  */
 const blogPageLoader: LoaderFunction<
   null,

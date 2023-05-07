@@ -7,8 +7,8 @@ import type {
 } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Featured Posts Loader
+ * @description Usefull for shelves and static galleries.
  */
 const featuredPostsLoader: LoaderFunction<
   null,

@@ -7,10 +7,10 @@ import type {
 } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Featured Places Loader
+ * @description Usefull for listing places
  */
-const featuredPostsLoader: LoaderFunction<
+const featuredPlacesLoader: LoaderFunction<
   null,
   BlogSectionPlaces,
   StateButterCMS
@@ -30,4 +30,4 @@ const featuredPostsLoader: LoaderFunction<
   return { data: toFeaturedPlaces(section) as BlogSectionPlaces };
 };
 
-export default featuredPostsLoader;
+export default featuredPlacesLoader;

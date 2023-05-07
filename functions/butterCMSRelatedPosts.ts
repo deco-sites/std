@@ -12,8 +12,8 @@ export interface Props {
 }
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Related Posts Loader
+ * @description Usefull for paginated or not galleries. Works on routes of type /blog/:slug
  */
 const relatedPostsLoader: LoaderFunction<
   Props,

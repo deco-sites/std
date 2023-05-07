@@ -7,10 +7,10 @@ import type {
 } from "../commerce/butterCMS/types.ts";
 
 /**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
+ * @title Butter CMS Featured Ads Loader
+ * @description Usefull for shelves and static galleries.
  */
-const featuredPostsLoader: LoaderFunction<
+const featuredAdsLoader: LoaderFunction<
   null,
   BlogSectionPosts,
   StateButterCMS
@@ -30,4 +30,4 @@ const featuredPostsLoader: LoaderFunction<
   return { data: toFeaturedAds(section) as BlogSectionPosts };
 };
 
-export default featuredPostsLoader;
+export default featuredAdsLoader;
