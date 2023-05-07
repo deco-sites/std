@@ -2,7 +2,7 @@ import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetchAPI.ts";
 import { CategoriesData, Page, PostData, PostsData } from "./types.ts";
 
-export interface Locales {
+export interface Locale {
   /**
    * @title Locale
    */
@@ -11,25 +11,28 @@ export interface Locales {
 }
 
 export interface ConfigButterCMS extends Account {
-  locales: Locales[];
+  locales: Locale[];
   /**
    * @description Default value: en-us
+   * @default en-us
    */
   defaultLocale: string;
   /**
    * @description Default value: v2
+   * @default v2
    */
   apiVersion?: string;
 }
 
 export type ClientOCC = ReturnType<typeof createClient>;
 
+const BASE_URL = `https://api.buttercms.com`;
+
 export const createClient = (
   { locales = [], apiVersion = "v2", defaultLocale = "en-us" }: Partial<
     ConfigButterCMS
   > = {},
 ) => {
-  const baseUrl = `https://api.buttercms.com`;
   const authToken =
     locales.find((locale) => locale.label === defaultLocale)?.authToken ?? "";
 
@@ -40,7 +43,7 @@ export const createClient = (
 
     const url = new URL(
       `/${apiVersion}/categories?${params.toString()}`,
-      baseUrl,
+      BASE_URL,
     );
 
     return fetchAPI<CategoriesData>(url);
@@ -53,7 +56,7 @@ export const createClient = (
 
     const url = new URL(
       `/${apiVersion}/posts/${slug}?${params.toString()}`,
-      baseUrl,
+      BASE_URL,
     );
 
     return fetchAPI<PostData>(url);
@@ -77,7 +80,7 @@ export const createClient = (
 
     const url = new URL(
       `/${apiVersion}/posts?${params.toString()}`,
-      baseUrl,
+      BASE_URL,
     );
 
     return fetchAPI<PostsData>(url);
@@ -94,7 +97,7 @@ export const createClient = (
 
     const url = new URL(
       `/${apiVersion}/pages/*/blog-v2?${params.toString()}`,
-      baseUrl,
+      BASE_URL,
     );
 
     return fetchAPI<Page>(url);

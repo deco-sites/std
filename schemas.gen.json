@@ -543,6 +543,7 @@
       "properties": {
         "pageSize": {
           "type": "number",
+          "description": "Used to declare the size of results",
           "title": "Page Size"
         }
       },
@@ -3433,7 +3434,7 @@
       "required": [],
       "title": "deco-sites/std/components/Analytics.tsx@Props"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locales": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale": {
       "type": "object",
       "properties": {
         "label": {
@@ -3449,14 +3450,14 @@
         "label",
         "authToken"
       ],
-      "title": "Locales"
+      "title": "Locale"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locales[]": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale[]": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locales"
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale"
       },
-      "title": "Locales[]"
+      "title": "Locale[]"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@ConfigButterCMS": {
       "type": "object",
@@ -3467,12 +3468,13 @@
       ],
       "properties": {
         "locales": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locales[]",
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale[]",
           "title": "Locales"
         },
         "defaultLocale": {
           "type": "string",
           "description": "Default value: en-us",
+          "default": "en-us",
           "title": "Default Locale"
         },
         "apiVersion": {
@@ -3481,6 +3483,7 @@
             "null"
           ],
           "description": "Default value: v2",
+          "default": "v2",
           "title": "Api Version"
         }
       },
