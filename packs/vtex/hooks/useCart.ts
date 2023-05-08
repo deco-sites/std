@@ -127,6 +127,9 @@ const state = {
   addItemAttachment: wrap(
     Runtime.create("deco-sites/std/actions/vtex/cart/updateItemAttachment.ts"),
   ),
+  removeItemAttachment: wrap(
+    Runtime.create("deco-sites/std/actions/vtex/cart/removeItemAttachment.ts"),
+  ),
   sendAttachment: wrap(
     Runtime.create("deco-sites/std/actions/vtex/cart/updateAttachment.ts"),
   ),

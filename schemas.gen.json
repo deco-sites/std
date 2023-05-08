@@ -1135,6 +1135,11 @@
           "description": "Usefull for shelves and static galleries.",
           "deprecated": true,
           "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lQcm9kdWN0TGlzdC50cw==@Props"
+            }
+          ],
           "required": [
             "__resolveType"
           ],
@@ -1809,6 +1814,37 @@
       ],
       "title": "deco-sites/std/functions/vndaProductListingPage.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lQcm9kdWN0TGlzdC50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "number",
+          "description": "total number of items to display",
+          "title": "Count"
+        },
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "query to use on search",
+          "title": "Query"
+        },
+        "collection": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
+          "pattern": "\\d*",
+          "title": "Collection"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "deco-sites/std/functions/vtexLegacyProductList.ts@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=@Props": {
       "type": "object",
       "properties": {
@@ -2152,9 +2188,8 @@
           "items": {
             "type": "string"
           },
-          "description": "Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .",
-          "pattern": "\\d*",
-          "title": "Collection"
+          "title": "Collection",
+          "pattern": "\\d*"
         }
       },
       "required": [
@@ -6185,6 +6220,48 @@
       ],
       "title": "deco-sites/std/packs/vtex/actions/cart/getInstallment.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL2NhcnQvcmVtb3ZlSXRlbUF0dGFjaG1lbnQudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "number",
+          "description": "index of the item in the cart.items array you want to edit",
+          "title": "Index"
+        },
+        "attachment": {
+          "type": "string",
+          "description": "attachment name",
+          "title": "Attachment"
+        },
+        "content": {
+          "title": "Content",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "expectedOrderFormSections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Expected Order Form Sections"
+        },
+        "noSplitItem": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "No Split Item"
+        }
+      },
+      "required": [
+        "index",
+        "attachment",
+        "content"
+      ],
+      "title": "deco-sites/std/packs/vtex/actions/cart/removeItemAttachment.ts@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL2NhcnQvc2ltdWxhdGlvbi50cw==@Item": {
       "type": "object",
       "properties": {
@@ -6610,6 +6687,11 @@
       "description": "Usefull for shelves and static galleries.",
       "deprecated": true,
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lQcm9kdWN0TGlzdC50cw==@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -7740,6 +7822,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvcmVtb3ZlSXRlbUF0dGFjaG1lbnQudHM=": {
+      "title": "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL2NhcnQvcmVtb3ZlSXRlbUF0dGFjaG1lbnQudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts"
+          ],
+          "default": "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvcmVtb3ZlSXRlbXMudHM=": {
       "title": "deco-sites/std/actions/vtex/cart/removeItems.ts",
       "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items/removeAll",
@@ -8261,6 +8364,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvZ2V0SW5zdGFsbG1lbnQudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvcmVtb3ZlSXRlbUF0dGFjaG1lbnQudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvcmVtb3ZlSXRlbXMudHM="
