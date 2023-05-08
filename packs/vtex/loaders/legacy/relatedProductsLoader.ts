@@ -32,7 +32,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX Related Products Loader
+ * @title VTEX related products - Portal
  * @description Works on routes of type /:slug/p
  */
 async function loader(

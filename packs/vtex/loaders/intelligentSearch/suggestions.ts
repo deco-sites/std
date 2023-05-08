@@ -23,6 +23,9 @@ export interface Props {
   count?: number;
 }
 
+/**
+ * @title VTEX search suggestions - Intelligent Search
+ */
 const loaders = async (
   props: Props,
   req: Request,

@@ -14,6 +14,7 @@ export interface Props {
 }
 
 /**
+ * @title VTEX search suggestions - Intelligent Search (deprecated)
  * @deprecated true
  */
 const loaderV0: LoaderFunction<

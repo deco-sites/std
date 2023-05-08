@@ -47,7 +47,7 @@ const getProductID = async (slug: string, ctx: Context) => {
 };
 
 /**
- * @title VTEX Product Page Loader
+ * @title VTEX product details page - Intelligent Search
  * @description Works on routes of type /:slug/p
  */
 const loader = async (

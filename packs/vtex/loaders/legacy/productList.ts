@@ -45,7 +45,10 @@ export interface ProductIDProps {
   ids: ProductID[];
 }
 
-export type Props = CollectionProps | TermProps | ProductIDProps;
+export type Props =
+  & Partial<CollectionProps>
+  & Partial<TermProps>
+  & Partial<ProductIDProps>;
 
 // deno-lint-ignore no-explicit-any
 const isCollectionProps = (p: any): p is CollectionProps =>
@@ -83,7 +86,7 @@ const fromProps = (
 };
 
 /**
- * @title Legacy product list loader
+ * @title VTEX product list - Portal
  * @description Usefull for shelves and static galleries.
  */
 const loader = async (

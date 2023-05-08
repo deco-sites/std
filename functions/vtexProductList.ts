@@ -25,14 +25,14 @@ export interface Props {
 
   // TODO: pattern property isn't being handled by RJSF
   /**
-   * @description Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .
+   * @title Collection ID
    * @pattern \d*
    */
   collection?: string[];
 }
 
 /**
- * @title VTEX product list loader
+ * @title VTEX product list - Intelligent Search (deprecated)
  * @description Usefull for shelves and static galleries.
  * @deprecated true
  */
@@ -45,8 +45,12 @@ const loaderV0: LoaderFunction<
   ctx,
   props,
 ) => {
+  const p = props.query
+    ? { term: props.query, count: props.count }
+    : { collection: props.collection?.[0], count: props.count };
+
   const data = await loader(
-    props,
+    p,
     req,
     ctx.state,
   );

@@ -150,7 +150,7 @@ const filtersFromPathname = (pages: PageType[]) =>
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
 /**
- * @title Product listing page loader
+ * @title VTEX product listing page - Intelligent Search
  * @description Returns data ready for search pages like category,brand pages
  */
 const loader = async (

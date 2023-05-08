@@ -21,7 +21,7 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 export interface CollectionList {
   // TODO: pattern property isn't being handled by RJSF
   /**
-   * @description Collection ID or (Product Cluster id). For more info: https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search .
+   * @title Collection ID (e.g.: 139)
    * @pattern \d*
    */
   collection: string;
@@ -51,7 +51,11 @@ export interface ProductIDList {
   ids: ProductID[];
 }
 
-export type Props = CollectionList | QueryList | ProductIDList;
+// TODO: Change & to |. Somehow RJS bugs when using |
+export type Props =
+  & Partial<CollectionList>
+  & Partial<QueryList>
+  & Partial<ProductIDList>;
 
 // deno-lint-ignore no-explicit-any
 const isCollectionList = (p: any): p is CollectionList =>
@@ -94,14 +98,14 @@ const fromProps = (props: Props) => {
 };
 
 /**
- * @title Product list loader
- * @description Usefull for shelves and static galleries.
+ * @title VTEX product list - Intelligent Search
+ * @description Usefull for shelves and galleries.
  */
 const loader = async (
   props: Props,
   req: Request,
   ctx: Context,
-): Promise<Product[]> => {
+): Promise<Product[] | null> => {
   const { configVTEX: config } = ctx;
   const { url } = req;
   const vtex = paths(config!);
