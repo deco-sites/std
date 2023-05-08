@@ -13,6 +13,7 @@ import type {
   FacetSearchResult,
   PageType,
   ProductSearchResult,
+  SelectedFacet,
 } from "deco-sites/std/packs/vtex/types.ts";
 import {
   withDefaultFacets,
@@ -80,6 +81,12 @@ export interface Props {
    * @title Fuzzy
    */
   fuzzy?: LabelledFuzzy;
+
+  /**
+   * @title Selected Facets
+   * @description Override selected facets from url
+   */
+  selectedFacets?: SelectedFacet[];
 }
 
 export const singleFlightKey = (
@@ -101,7 +108,8 @@ const searchArgsOf = (props: Props, url: URL) => {
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const page = Number(url.searchParams.get("page")) || 0;
   const sort = url.searchParams.get("sort") as Sort ?? "" as Sort;
-  const selectedFacets = filtersFromSearchParams(url.searchParams);
+  const selectedFacets = props.selectedFacets ||
+    filtersFromSearchParams(url.searchParams);
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
 
