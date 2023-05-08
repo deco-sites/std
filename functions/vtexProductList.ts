@@ -46,7 +46,7 @@ const loaderV0: LoaderFunction<
   props,
 ) => {
   const p = props.query
-    ? { term: props.query, count: props.count }
+    ? { query: props.query, count: props.count }
     : { collection: props.collection?.[0], count: props.count };
 
   const data = await loader(
