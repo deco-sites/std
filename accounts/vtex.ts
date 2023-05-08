@@ -1,7 +1,1 @@
-import type { ConfigVTEX } from "../commerce/vtex/client.ts";
-
-function VTEXAccount(acc: ConfigVTEX) {
-  return acc;
-}
-
-export default VTEXAccount;
+export { default } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
