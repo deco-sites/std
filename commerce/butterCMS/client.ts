@@ -1,5 +1,5 @@
 import { Account } from "$live/blocks/account.ts";
-import { fetchAPI } from "../../utils/fetchAPI.ts";
+import { fetchAPI } from "../../utils/fetch.ts";
 import { CategoriesData, Page, PostData, PostsData } from "./types.ts";
 
 export interface Locale {

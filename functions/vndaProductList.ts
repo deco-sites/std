@@ -1,9 +1,9 @@
-import type { LiveState } from "$live/types.ts";
-import type { Product } from "../commerce/types.ts";
-import type { LoaderFunction } from "$live/types.ts";
 import { ConfigVNDA } from "../commerce/vnda/types.ts";
 import { createClient } from "../commerce/vnda/client.ts";
 import { toProduct } from "../commerce/vnda/transform.ts";
+import type { LiveState } from "$live/types.ts";
+import type { Product } from "../commerce/types.ts";
+import type { LoaderFunction } from "$live/types.ts";
 
 export interface Props {
   /** @description total number of items to display */

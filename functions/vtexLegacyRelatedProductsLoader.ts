@@ -1,10 +1,10 @@
+import loader from "deco-sites/std/packs/vtex/loaders/legacy/relatedProductsLoader.ts";
 import type { LoaderFunction } from "$live/types.ts";
-
 import type { Product } from "../commerce/types.ts";
-import { createClient } from "../commerce/vtex/client.ts";
-import type { CrossSellingType, StateVTEX } from "../commerce/vtex/types.ts";
-import { withSegment } from "../commerce/vtex/withSegment.ts";
-import loader from "../loaders/vtexLegacyRelatedProductsLoader.ts";
+import type {
+  CrossSellingType,
+  StateVTEX,
+} from "deco-sites/std/packs/vtex/types.ts";
 
 export interface Props {
   /**
@@ -19,32 +19,30 @@ export interface Props {
 }
 
 /**
- * @title VTEX Related Products Loader
+ * @title VTEX related products - legacy (deprecated)
  * @description Works on routes of type /:slug/p
+ * @deprecated
  */
-const legacyRelatedProductsLoader: LoaderFunction<
+const loaderV0: LoaderFunction<
   Props,
   Product[] | null,
   StateVTEX
-> = withSegment(async (
+> = async (
   req,
   ctx,
   { crossSelling, count },
 ) => {
-  const { global: { configVTEX } } = ctx.state;
-  const vtex = createClient(configVTEX);
-
-  return {
-    data: await loader({
-      vtexClient: vtex,
+  const data = await loader(
+    {
       slug: ctx.params.slug,
       crossSelling,
       count,
-    }, {
-      configVTEX,
-      reqUrl: req.url,
-    }),
-  };
-});
+    },
+    req,
+    ctx.state,
+  );
 
-export default legacyRelatedProductsLoader;
+  return { data, status: data ? 200 : 404 };
+};
+
+export default loaderV0;
