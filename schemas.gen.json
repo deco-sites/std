@@ -2588,6 +2588,20 @@
           ],
           "type": "string",
           "title": "Sort"
+        },
+        "filters": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "dynamic"
+            },
+            {
+              "type": "string",
+              "const": "static"
+            }
+          ],
+          "type": "string",
+          "title": "Filters"
         }
       },
       "required": [
