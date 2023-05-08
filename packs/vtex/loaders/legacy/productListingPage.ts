@@ -92,7 +92,7 @@ const loader = async (
 
   const pageTypes = await pageTypesFromPathname(maybeTerm, ctx);
 
-  if (pageTypes.length === 0 && !ft) {
+  if (pageTypes.length === 0 && !ft && !fq) {
     return null;
   }
 
@@ -101,12 +101,11 @@ const loader = async (
     ? getMapAndTerm(pageTypes)
     : [maybeMap, maybeTerm];
 
-  params.append("map", map);
-  params.append("_from", _from);
-  params.append("_to", _to);
-  params.append("O", O);
-  params.append("ft", ft);
-  params.append("fq", fq);
+  const args = { map, _from, _to, O, ft, fq };
+
+  Object.entries(args).forEach(([key, value]) =>
+    value && params.append(key, value)
+  );
 
   const [vtexProducts, vtexFacets] = await Promise.all([
     fetchAPI<LegacyProduct[]>(
