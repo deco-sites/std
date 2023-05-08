@@ -439,7 +439,7 @@ export const legacyFacetToFilter = (
 ): Filter | null => {
   const mapSegments = new Set(map.split(","));
   const pathSegments = new Set(
-    url.pathname.split("/").slice(0, mapSegments.size + 1),
+    url.pathname.split("/").slice(0, mapSegments.size + 2),
   );
 
   return {
