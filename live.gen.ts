@@ -94,8 +94,8 @@ import * as i1$$$2 from "$live/sections/UseSlot.tsx";
 import * as i1$$$$0 from "$live/matchers/MatchAlways.ts";
 import * as i1$$$$1 from "$live/matchers/MatchDate.ts";
 import * as i1$$$$2 from "$live/matchers/MatchEnvironment.ts";
-import * as i1$$$$3 from "$live/matchers/MatchMulti.ts";
-import * as i1$$$$4 from "$live/matchers/MatchOrigin.ts";
+import * as i1$$$$3 from "$live/matchers/MatchHost.ts";
+import * as i1$$$$4 from "$live/matchers/MatchMulti.ts";
 import * as i1$$$$5 from "$live/matchers/MatchRandom.ts";
 import * as i1$$$$6 from "$live/matchers/MatchSite.ts";
 import * as i1$$$$7 from "$live/matchers/MatchUserAgent.ts";
@@ -211,8 +211,8 @@ const manifest = {
     "$live/matchers/MatchAlways.ts": i1$$$$0,
     "$live/matchers/MatchDate.ts": i1$$$$1,
     "$live/matchers/MatchEnvironment.ts": i1$$$$2,
-    "$live/matchers/MatchMulti.ts": i1$$$$3,
-    "$live/matchers/MatchOrigin.ts": i1$$$$4,
+    "$live/matchers/MatchHost.ts": i1$$$$3,
+    "$live/matchers/MatchMulti.ts": i1$$$$4,
     "$live/matchers/MatchRandom.ts": i1$$$$5,
     "$live/matchers/MatchSite.ts": i1$$$$6,
     "$live/matchers/MatchUserAgent.ts": i1$$$$7,
