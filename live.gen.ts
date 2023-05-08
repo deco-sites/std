@@ -4,34 +4,41 @@
 
 import config from "./deno.json" assert { type: "json" };
 import { DecoManifest } from "$live/types.ts";
-import * as $0 from "./functions/vtexConfig.ts";
-import * as $1 from "./functions/vtexProductListingPage.ts";
-import * as $2 from "./functions/vndaProductList.ts";
-import * as $3 from "./functions/vndaProductDetailsPage.ts";
-import * as $4 from "./functions/vtexLegacyProductDetailsPage.ts";
-import * as $5 from "./functions/segment.ts";
-import * as $6 from "./functions/vtexSuggestions.ts";
-import * as $7 from "./functions/vtexNavbar.ts";
-import * as $8 from "./functions/vtexWishlist.ts";
-import * as $9 from "./functions/vtexClient.ts";
-import * as $10 from "./functions/shopifyProductListingPage.ts";
-import * as $11 from "./functions/slugFromParams.ts";
-import * as $12 from "./functions/vtexProductList.ts";
-import * as $13 from "./functions/occProductDetailsPage.ts";
-import * as $14 from "./functions/vndaProductListingPage.ts";
-import * as $15 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $16 from "./functions/vtexProductDetailsPage.ts";
-import * as $17 from "./functions/vtexLegacyProductList.ts";
-import * as $18 from "./functions/shopifyProductList.ts";
-import * as $19 from "./functions/shopifyProductDetailsPage.ts";
-import * as $20 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $0 from "./functions/vtexProductListingPage.ts";
+import * as $1 from "./functions/vndaProductList.ts";
+import * as $2 from "./functions/vndaProductDetailsPage.ts";
+import * as $3 from "./functions/vtexLegacyProductDetailsPage.ts";
+import * as $4 from "./functions/vtexSuggestions.ts";
+import * as $5 from "./functions/vtexNavbar.ts";
+import * as $6 from "./functions/vtexWishlist.ts";
+import * as $7 from "./functions/shopifyProductListingPage.ts";
+import * as $8 from "./functions/vtexProductList.ts";
+import * as $9 from "./functions/occProductDetailsPage.ts";
+import * as $10 from "./functions/vndaProductListingPage.ts";
+import * as $11 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $12 from "./functions/vtexProductDetailsPage.ts";
+import * as $13 from "./functions/vtexLegacyProductList.ts";
+import * as $14 from "./functions/shopifyProductList.ts";
+import * as $15 from "./functions/shopifyProductDetailsPage.ts";
+import * as $16 from "./functions/vtexLegacyRelatedProductsLoader.ts";
+import * as $17 from "./functions/requestToParam.ts";
 import * as $$0 from "./accounts/vnda.ts";
 import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
 import * as $$3 from "./accounts/shopify.ts";
 import * as $$4 from "./accounts/occ.ts";
-import * as $$$0 from "./loaders/vtexLegacyProductDetailsPage.ts";
-import * as $$$1 from "./loaders/vtexLegacyRelatedProductsLoader.ts";
+import * as $$$0 from "./loaders/vtex/legacy/productList.ts";
+import * as $$$1 from "./loaders/vtex/legacy/productDetailsPage.ts";
+import * as $$$2 from "./loaders/vtex/legacy/productListingPage.ts";
+import * as $$$3 from "./loaders/vtex/legacy/relatedProductsLoader.ts";
+import * as $$$4 from "./loaders/vtex/wishlist.ts";
+import * as $$$5 from "./loaders/vtex/navbar.ts";
+import * as $$$6 from "./loaders/vtex/intelligentSearch/productList.ts";
+import * as $$$7 from "./loaders/vtex/intelligentSearch/productDetailsPage.ts";
+import * as $$$8 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
+import * as $$$9 from "./loaders/vtex/intelligentSearch/suggestions.ts";
+import * as $$$10 from "./loaders/vtex/cart.ts";
+import * as $$$11 from "./loaders/vtex/user.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
@@ -43,6 +50,20 @@ import * as $$$$$$$$5 from "./sections/configShopify.global.tsx";
 import * as $$$$$$$$6 from "./sections/configVNDA.global.tsx";
 import * as $$$$$$$$7 from "./sections/configVTEX.global.tsx";
 import * as $$$$$$$$8 from "./sections/SEOPDP.tsx";
+import * as $$$$$$$$$$$0 from "./actions/vtex/cart/updateCoupons.ts";
+import * as $$$$$$$$$$$1 from "./actions/vtex/cart/updateAttachment.ts";
+import * as $$$$$$$$$$$2 from "./actions/vtex/cart/updateItems.ts";
+import * as $$$$$$$$$$$3 from "./actions/vtex/cart/updateItemAttachment.ts";
+import * as $$$$$$$$$$$4 from "./actions/vtex/cart/updateUser.ts";
+import * as $$$$$$$$$$$5 from "./actions/vtex/cart/addItems.ts";
+import * as $$$$$$$$$$$6 from "./actions/vtex/cart/removeItems.ts";
+import * as $$$$$$$$$$$7 from "./actions/vtex/cart/getInstallment.ts";
+import * as $$$$$$$$$$$8 from "./actions/vtex/cart/updateItemPrice.ts";
+import * as $$$$$$$$$$$9 from "./actions/vtex/cart/updateProfile.ts";
+import * as $$$$$$$$$$$10 from "./actions/vtex/cart/simulation.ts";
+import * as $$$$$$$$$$$11 from "./actions/vtex/cart/removeItemAttachment.ts";
+import * as $$$$$$$$$$$12 from "./actions/vtex/wishlist/removeItem.ts";
+import * as $$$$$$$$$$$13 from "./actions/vtex/wishlist/addItem.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -71,27 +92,24 @@ import * as i1$$$$$1 from "$live/flags/everyone.ts";
 
 const manifest = {
   "functions": {
-    "deco-sites/std/functions/occProductDetailsPage.ts": $13,
-    "deco-sites/std/functions/segment.ts": $5,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $19,
-    "deco-sites/std/functions/shopifyProductList.ts": $18,
-    "deco-sites/std/functions/shopifyProductListingPage.ts": $10,
-    "deco-sites/std/functions/slugFromParams.ts": $11,
-    "deco-sites/std/functions/vndaProductDetailsPage.ts": $3,
-    "deco-sites/std/functions/vndaProductList.ts": $2,
-    "deco-sites/std/functions/vndaProductListingPage.ts": $14,
-    "deco-sites/std/functions/vtexClient.ts": $9,
-    "deco-sites/std/functions/vtexConfig.ts": $0,
-    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $4,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $17,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $15,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $20,
-    "deco-sites/std/functions/vtexNavbar.ts": $7,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $16,
-    "deco-sites/std/functions/vtexProductList.ts": $12,
-    "deco-sites/std/functions/vtexProductListingPage.ts": $1,
-    "deco-sites/std/functions/vtexSuggestions.ts": $6,
-    "deco-sites/std/functions/vtexWishlist.ts": $8,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $9,
+    "deco-sites/std/functions/requestToParam.ts": $17,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $15,
+    "deco-sites/std/functions/shopifyProductList.ts": $14,
+    "deco-sites/std/functions/shopifyProductListingPage.ts": $7,
+    "deco-sites/std/functions/vndaProductDetailsPage.ts": $2,
+    "deco-sites/std/functions/vndaProductList.ts": $1,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $10,
+    "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $3,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $13,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $11,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $16,
+    "deco-sites/std/functions/vtexNavbar.ts": $5,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $12,
+    "deco-sites/std/functions/vtexProductList.ts": $8,
+    "deco-sites/std/functions/vtexProductListingPage.ts": $0,
+    "deco-sites/std/functions/vtexSuggestions.ts": $4,
+    "deco-sites/std/functions/vtexWishlist.ts": $6,
   },
   "accounts": {
     "deco-sites/std/accounts/occ.ts": $$4,
@@ -101,8 +119,18 @@ const manifest = {
     "deco-sites/std/accounts/yourViews.ts": $$1,
   },
   "loaders": {
-    "deco-sites/std/loaders/vtexLegacyProductDetailsPage.ts": $$$0,
-    "deco-sites/std/loaders/vtexLegacyRelatedProductsLoader.ts": $$$1,
+    "deco-sites/std/loaders/vtex/cart.ts": $$$10,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts": $$$7,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$6,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts": $$$8,
+    "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts": $$$9,
+    "deco-sites/std/loaders/vtex/legacy/productDetailsPage.ts": $$$1,
+    "deco-sites/std/loaders/vtex/legacy/productList.ts": $$$0,
+    "deco-sites/std/loaders/vtex/legacy/productListingPage.ts": $$$2,
+    "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts": $$$3,
+    "deco-sites/std/loaders/vtex/navbar.ts": $$$5,
+    "deco-sites/std/loaders/vtex/user.ts": $$$11,
+    "deco-sites/std/loaders/vtex/wishlist.ts": $$$4,
   },
   "routes": {
     "./routes/_app.tsx": $$$$1,
@@ -130,6 +158,22 @@ const manifest = {
     "deco-sites/std/sections/SEO.tsx": $$$$$$$$1,
     "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$8,
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$2,
+  },
+  "actions": {
+    "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$5,
+    "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$7,
+    "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$11,
+    "deco-sites/std/actions/vtex/cart/removeItems.ts": $$$$$$$$$$$6,
+    "deco-sites/std/actions/vtex/cart/simulation.ts": $$$$$$$$$$$10,
+    "deco-sites/std/actions/vtex/cart/updateAttachment.ts": $$$$$$$$$$$1,
+    "deco-sites/std/actions/vtex/cart/updateCoupons.ts": $$$$$$$$$$$0,
+    "deco-sites/std/actions/vtex/cart/updateItemAttachment.ts": $$$$$$$$$$$3,
+    "deco-sites/std/actions/vtex/cart/updateItemPrice.ts": $$$$$$$$$$$8,
+    "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$2,
+    "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$9,
+    "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$4,
+    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$13,
+    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$12,
   },
   "handlers": {
     "$live/handlers/devPage.ts": i1$0,

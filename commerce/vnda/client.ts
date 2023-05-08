@@ -1,5 +1,5 @@
 import { SortOption } from "../types.ts";
-import { fetchAPI } from "../../utils/fetchAPI.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
 
 import {

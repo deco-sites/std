@@ -1,9 +1,9 @@
-import type { LiveState } from "$live/types.ts";
-import type { LoaderFunction } from "$live/types.ts";
 import { ConfigVNDA } from "../commerce/vnda/types.ts";
 import { createClient } from "../commerce/vnda/client.ts";
-import type { ProductDetailsPage } from "../commerce/types.ts";
 import { toProduct, useVariant } from "../commerce/vnda/transform.ts";
+import type { LiveState } from "$live/types.ts";
+import type { LoaderFunction } from "$live/types.ts";
+import type { ProductDetailsPage } from "../commerce/types.ts";
 
 /**
  * @title VTEX Product Page Loader

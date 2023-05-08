@@ -1,15 +1,14 @@
-import type { LiveState } from "$live/types.ts";
-import type { LoaderFunction } from "$live/types.ts";
 import { createClient } from "../commerce/vnda/client.ts";
-import type { ProductListingPage } from "../commerce/types.ts";
 import { VNDA_SORT_OPTIONS } from "../commerce/vnda/client.ts";
 import { ConfigVNDA, VNDASort } from "../commerce/vnda/types.ts";
-
 import {
   toFilters,
   toProduct,
   typeTagExtractor,
 } from "../commerce/vnda/transform.ts";
+import type { LiveState } from "$live/types.ts";
+import type { LoaderFunction } from "$live/types.ts";
+import type { ProductListingPage } from "../commerce/types.ts";
 
 export interface Props {
   /**
