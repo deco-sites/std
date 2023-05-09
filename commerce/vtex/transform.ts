@@ -7,9 +7,9 @@ import type {
   ProductDetailsPage,
   PropertyValue,
   UnitPriceSpecification,
-} from "deco-sites/std/commerce/types.ts";
+} from "./../types.ts";
 
-import { slugify } from "./slugify.ts";
+import { slugify } from "./utils/slugify.ts";
 import type {
   Category,
   Facet as FacetVTEX,
@@ -21,7 +21,7 @@ import type {
   LegacyProduct as LegacyProductVTEX,
   Product as ProductVTEX,
   Seller as SellerVTEX,
-} from "../types.ts";
+} from "./types.ts";
 
 const isLegacySku = (
   sku: LegacySkuVTEX | SkuVTEX,
@@ -32,15 +32,15 @@ const isLegacyProduct = (
   product: ProductVTEX | LegacyProductVTEX,
 ): product is LegacyProductVTEX => product.origin !== "intelligent-search";
 
-const getCanonicalURL = (origin: string, { linkText }: { linkText: string }) =>
-  new URL(`/${linkText}/p`, origin);
+const getCanonicalURL = (url: URL, { linkText }: { linkText: string }) =>
+  new URL(`/${linkText}/p`, url.origin);
 
 const getProductURL = (
-  origin: string,
+  url: URL,
   product: { linkText: string },
   skuId?: string,
 ) => {
-  const canonicalUrl = getCanonicalURL(origin, product);
+  const canonicalUrl = getCanonicalURL(url, product);
 
   if (skuId) {
     canonicalUrl.searchParams.set("skuId", skuId);
@@ -59,7 +59,7 @@ const DEFAULT_IMAGE = {
 };
 
 interface ProductOptions {
-  baseUrl: string;
+  url: URL;
   /** Price coded currency, e.g.: USD, BRL */
   priceCurrency: string;
 }
@@ -198,7 +198,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   level = 0, // prevent inifinte loop while self referencing the product
   options: ProductOptions,
 ): Product => {
-  const { baseUrl, priceCurrency } = options;
+  const { url, priceCurrency } = options;
   const {
     brand,
     productId,
@@ -236,7 +236,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     "@type": "Product",
     category: categoriesString,
     productID: skuId,
-    url: getProductURL(baseUrl, product, sku.itemId).href,
+    url: getProductURL(url, product, sku.itemId).href,
     name,
     description,
     brand,
@@ -248,7 +248,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
       "@type": "ProductGroup",
       productGroupID: productId,
       hasVariant: hasVariant || [],
-      url: getProductURL(baseUrl, product, sku.itemId).href,
+      url: getProductURL(url, product, sku.itemId).href,
       name: product.productName,
       additionalProperty: groupAdditionalProperty,
       model: productReference,
@@ -273,7 +273,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 
 const toBreadcrumbList = (
   product: ProductVTEX | LegacyProductVTEX,
-  { baseUrl }: ProductOptions,
+  { url }: ProductOptions,
 ): BreadcrumbList => {
   const { categories, productName } = product;
 
@@ -288,14 +288,14 @@ const toBreadcrumbList = (
         return {
           "@type": "ListItem" as const,
           name,
-          item: new URL(`/${item}`, baseUrl).href,
+          item: new URL(`/${item}`, url.origin).href,
           position: index + 1,
         };
       }),
       {
         "@type": "ListItem",
         name: productName,
-        item: getCanonicalURL(baseUrl, product).href,
+        item: getCanonicalURL(url, product).href,
         position: categories.length + 1,
       },
     ],
@@ -439,7 +439,7 @@ export const legacyFacetToFilter = (
 ): Filter | null => {
   const mapSegments = new Set(map.split(","));
   const pathSegments = new Set(
-    url.pathname.split("/").slice(0, mapSegments.size + 2),
+    url.pathname.split("/").slice(0, mapSegments.size + 1),
   );
 
   return {
@@ -497,74 +497,22 @@ export const toFilter = (
     return null;
   }
 
-  /**
-   * Example of facet for price
-   */
-  // {
-  //   values: [
-  //     {
-  //       quantity: 27,
-  //       name: "",
-  //       key: "price",
-  //       selected: false,
-  //       range: { from: 330, to: 350 }
-  //     },
-  //     {
-  //       quantity: 24,
-  //       name: "",
-  //       key: "price",
-  //       selected: false,
-  //       range: { from: 299, to: 330 }
-  //     },
-  //     {
-  //       quantity: 8,
-  //       name: "",
-  //       key: "price",
-  //       selected: false,
-  //       range: { from: 350, to: 389 }
-  //     }
-  //   ],
-  //   type: "PRICERANGE",
-  //   name: "Preço",
-  //   hidden: false,
-  //   key: "price",
-  //   quantity: 3
-  // }
-
-  if (facet.type === "PRICERANGE" || false) {
+  if (facet.type === "PRICERANGE") {
     console.log(facet);
-    /**
-     * If the store wants to display a range UI, this should be changed
-     * to return `"@type": "FilterRange"`.
-     */
-
     return {
-      "@type": "FilterToggle",
-      key: facet.key,
+      "@type": "FilterRange",
       label: facet.name,
-      quantity: facet.quantity,
-      values: (facet.values as FacetValueRange[]).map((
-        { quantity, selected, range },
-      ) => {
-        // TODO: Figure out how to to send new facet
-        const filters: { key: string; value: string }[] = [];
-        // const newFacet = { key: facet.key, };
-        // const filters = selected
-        //   ? selectedFacets.filter((facet) =>
-        //     facet.key !== newFacet.key && facet.value !== newFacet.value
-        //   )
-        //   : [...selectedFacets, newFacet];
-
-        return {
-          quantity,
-          selected,
-          range,
-          url: `?${filtersToSearchParams(filters).toString()}`,
-          // TODO: Figure out how to not pass this
-          label: "",
-          value: "",
-        };
-      }),
+      key: facet.key,
+      values: {
+        min: (facet.values as FacetValueRange[]).reduce(
+          (acc, curr) => acc > curr.range.from ? curr.range.from : acc,
+          Infinity,
+        ),
+        max: (facet.values as FacetValueRange[]).reduce(
+          (acc, curr) => acc < curr.range.to ? curr.range.to : acc,
+          0,
+        ),
+      },
     };
   }
 
