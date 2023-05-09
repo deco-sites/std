@@ -40,7 +40,7 @@ interface Params {
   sort: Sort;
   fuzzy: string;
   locale: string;
-  hideUnavailableItems: string;
+  hideUnavailableItems: boolean;
 }
 
 export const withDefaultParams = ({
