@@ -59,3 +59,21 @@ export const fetchAPI = async <T>(
 
   return response.json();
 };
+
+// TODO: Shortcuted, refactor this into fetchAPI =D
+export const fetchResponse = async <T>(
+  input: string | Request | URL,
+  init?: RequestInit & { withProxyCache?: boolean },
+): Promise<Response> => {
+  const headers = new Headers(init?.headers);
+
+  headers.set("accept", "application/json");
+
+  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
+  const response = await fetchSafe(url, {
+    ...init,
+    headers,
+  });
+
+  return response;
+};

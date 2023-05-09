@@ -1,4 +1,4 @@
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchResponse } from "deco-sites/std/utils/fetch.ts";
 import {
   legacyFacetToFilter,
   toProduct,
@@ -123,8 +123,8 @@ const loader = async (
   const fParams = new URLSearchParams(pParams);
   fmap && fParams.set("map", fmap);
 
-  const [vtexProducts, vtexFacets] = await Promise.all([
-    fetchAPI<LegacyProduct[]>(
+  const [vtexProductsResponse, vtexFacets] = await Promise.all([
+    fetchResponse<LegacyProduct[]>(
       `${search.products.search.term(getTerm(term, map))}?${pParams}`,
       { withProxyCache: true },
     ),
@@ -133,6 +133,10 @@ const loader = async (
       { withProxyCache: true },
     ),
   ]);
+
+  const vtexProducts = await vtexProductsResponse.json() as LegacyProduct[];
+  const resources = vtexProductsResponse.headers.get("resources") ?? "";
+  const [, _total] = resources.split("/");
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
@@ -182,6 +186,8 @@ const loader = async (
       nextPage: hasNextPage ? `?${nextPage.toString()}` : undefined,
       previousPage: hasPreviousPage ? `?${previousPage.toString()}` : undefined,
       currentPage: page,
+      records: parseInt(_total, 10),
+      recordPerPage: parseInt(_to, 10) - parseInt(_from, 10),
     },
     sortOptions,
   };
