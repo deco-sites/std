@@ -18,7 +18,7 @@ import type { Product } from "deco-sites/std/commerce/types.ts";
 import type { Sort } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
-export interface CollectionList {
+export interface CollectionProps extends CommonProps {
   // TODO: pattern property isn't being handled by RJSF
   /**
    * @title Collection ID (e.g.: 139)
@@ -33,7 +33,7 @@ export interface CollectionList {
   count: number;
 }
 
-export interface QueryList {
+export interface QueryProps extends CommonProps {
   /** @description query to use on search */
   query: string;
   /**
@@ -44,27 +44,35 @@ export interface QueryList {
   count: number;
 }
 
-export interface ProductIDList {
+export interface ProductIDProps extends CommonProps {
   /**
    * @description SKU ids to retrieve
    */
   ids: ProductID[];
 }
 
+export interface CommonProps {
+  /**
+   * @title Hide Unavailable Items
+   * @description Do not return out of stock items
+   */
+  hideUnavailableItems?: boolean;
+}
+
 // TODO: Change & to |. Somehow RJS bugs when using |
 export type Props =
-  & Partial<CollectionList>
-  & Partial<QueryList>
-  & Partial<ProductIDList>;
+  & Partial<CollectionProps>
+  & Partial<QueryProps>
+  & Partial<ProductIDProps>;
 
 // deno-lint-ignore no-explicit-any
-const isCollectionList = (p: any): p is CollectionList =>
+const isCollectionList = (p: any): p is CollectionProps =>
   typeof p.collection === "string" && typeof p.count === "number";
 // deno-lint-ignore no-explicit-any
-const isQueryList = (p: any): p is QueryList =>
+const isQueryList = (p: any): p is QueryProps =>
   typeof p.query === "string" && typeof p.count === "number";
 // deno-lint-ignore no-explicit-any
-const isProductIDList = (p: any): p is ProductIDList => Array.isArray(p.ids);
+const isProductIDList = (p: any): p is ProductIDProps => Array.isArray(p.ids);
 
 const fromProps = (props: Props) => {
   if (isProductIDList(props)) {
@@ -73,6 +81,7 @@ const fromProps = (props: Props) => {
       count: props.ids.length || 12,
       sort: "",
       selectedFacets: [],
+      hideUnavailableItems: props.hideUnavailableItems,
     } as const;
   }
 
@@ -82,6 +91,7 @@ const fromProps = (props: Props) => {
       count: props.count || 12,
       sort: props.sort || "",
       selectedFacets: [],
+      hideUnavailableItems: props.hideUnavailableItems,
     } as const;
   }
 
@@ -91,6 +101,7 @@ const fromProps = (props: Props) => {
       count: props.count || 12,
       sort: props.sort || "",
       selectedFacets: [{ key: "productClusterIds", value: props.collection }],
+      hideUnavailableItems: props.hideUnavailableItems,
     } as const;
   }
 

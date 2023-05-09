@@ -87,6 +87,12 @@ export interface Props {
    * @description Override selected facets from url
    */
   selectedFacets?: SelectedFacet[];
+
+  /**
+   * @title Hide Unavailable Items
+   * @description Do not return out of stock items
+   */
+  hideUnavailableItems?: boolean;
 }
 
 export const singleFlightKey = (
@@ -104,6 +110,7 @@ export const singleFlightKey = (
 };
 
 const searchArgsOf = (props: Props, url: URL) => {
+  const hideUnavailableItems = props.hideUnavailableItems;
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const page = Number(url.searchParams.get("page")) || 0;
@@ -119,6 +126,7 @@ const searchArgsOf = (props: Props, url: URL) => {
     page,
     sort,
     count,
+    hideUnavailableItems,
     selectedFacets,
   };
 };
