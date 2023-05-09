@@ -51,7 +51,8 @@ export interface Props {
   sort?: LegacySort;
 
   /**
-   * @todo
+   * @title Filter behavior
+   * @description Set to static to not change the facets when the user filters the search. Dynamic will only show the filters containing products after each filter action
    */
   filters?: "dynamic" | "static";
 }
