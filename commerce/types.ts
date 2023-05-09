@@ -354,6 +354,8 @@ export interface ProductListingPage {
     currentPage: number;
     nextPage: string | undefined;
     previousPage: string | undefined;
+    records?: number | undefined;
+    recordPerPage?: number | undefined;
   };
   sortOptions: SortOption[];
 }

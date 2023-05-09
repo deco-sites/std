@@ -206,7 +206,8 @@ const loader = async (
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
   ]);
-  const { products: vtexProducts, pagination } = productsResult;
+  const { products: vtexProducts, pagination, recordsFiltered } =
+    productsResult;
   const { facets } = facetsResult;
 
   // Transform VTEX product format into schema.org's compatible format
@@ -254,6 +255,8 @@ const loader = async (
       nextPage: hasNextPage ? `?${nextPage}` : undefined,
       previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
       currentPage: page,
+      records: recordsFiltered,
+      recordPerPage: pagination.perPage,
     },
     sortOptions,
   };
