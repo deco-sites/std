@@ -49,6 +49,12 @@ export interface Props {
    * @title Sorting
    */
   sort?: LegacySort;
+
+  /**
+   * @title Filter behavior
+   * @description Set to static to not change the facets when the user filters the search. Dynamic will only show the filters containing products after each filter action
+   */
+  filters?: "dynamic" | "static";
 }
 
 export const sortOptions = [
@@ -61,6 +67,13 @@ export const sortOptions = [
   { label: "discount:desc", value: "OrderByBestDiscountDESC" },
   { label: "relevance:desc", value: "OrderByScoreDESC" },
 ];
+
+const getTerm = (path: string, map: string) => {
+  const mapSegments = map.split(",");
+  const pathSegments = path.replace(/^\/.*/, "").split("/");
+
+  return pathSegments.slice(0, mapSegments.length).join("/");
+};
 
 /**
  * @title VTEX product listing page - Portal
@@ -78,6 +91,7 @@ const loader = async (
   const params = toSegmentParams(segment);
   const search = paths(config!).api.catalog_system.pub;
 
+  const filtersBehavior = props.filters || "dynamic";
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
@@ -100,21 +114,24 @@ const loader = async (
   const [map, term] = missingParams
     ? getMapAndTerm(pageTypes)
     : [maybeMap, maybeTerm];
-
+  const fmap = url.searchParams.get("fmap") ?? map;
   const args = { map, _from, _to, O, ft, fq };
 
-  Object.entries(args).forEach(([key, value]) =>
-    value && params.append(key, value)
-  );
+  const pParams = new URLSearchParams(params);
+  Object.entries(args).map(([key, value]) => value && pParams.set(key, value));
+
+  const fParams = new URLSearchParams(pParams);
+  fmap && fParams.set("map", fmap);
 
   const [vtexProducts, vtexFacets] = await Promise.all([
     fetchAPI<LegacyProduct[]>(
-      `${search.products.search.term(term)}?${params}`,
+      `${search.products.search.term(getTerm(term, map))}?${pParams}`,
       { withProxyCache: true },
     ),
-    fetchAPI<LegacyFacets>(`${search.facets.search.term(term)}?${params}`, {
-      withProxyCache: true,
-    }),
+    fetchAPI<LegacyFacets>(
+      `${search.facets.search.term(getTerm(term, fmap))}?${fParams}`,
+      { withProxyCache: true },
+    ),
   ]);
 
   // Transform VTEX product format into schema.org's compatible format
@@ -130,7 +147,9 @@ const loader = async (
     Departments: vtexFacets.Departments,
     Brands: vtexFacets.Brands,
     ...vtexFacets.SpecificationFilters,
-  }).map(([name, facets]) => legacyFacetToFilter(name, facets, url, map))
+  }).map(([name, facets]) =>
+    legacyFacetToFilter(name, facets, url, map, filtersBehavior)
+  )
     .flat()
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);

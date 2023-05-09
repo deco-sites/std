@@ -409,38 +409,43 @@ const toOffer = ({
     : "https://schema.org/OutOfStock",
 });
 
-const unselect = (facet: LegacyFacet, url: URL, map: string) => {
-  const mapSegments = map.split(",");
-
-  // Do not allow removing root facet to avoid going back to home page
-  if (mapSegments.length === 1) {
-    return `${url.pathname}${url.search}`;
-  }
-
-  const index = mapSegments.findIndex((segment) => segment === facet.Map);
-  mapSegments.splice(index, index > -1 ? 1 : 0);
-  const newUrl = new URL(
-    url.pathname.replace(`/${facet.Value}`, ""),
-    url.origin,
-  );
-  newUrl.search = url.search;
-  if (mapSegments.length > 0) {
-    newUrl.searchParams.set("map", mapSegments.join(","));
-  }
-
-  return `${newUrl.pathname}${newUrl.search}`;
-};
-
 export const legacyFacetToFilter = (
   name: string,
   facets: LegacyFacet[],
   url: URL,
   map: string,
+  behavior: "dynamic" | "static",
 ): Filter | null => {
-  const mapSegments = new Set(map.split(","));
-  const pathSegments = new Set(
-    url.pathname.split("/").slice(0, mapSegments.size + 2),
-  );
+  const mapSegments = map.split(",");
+  const pathSegments = url.pathname
+    .replace(/^\//, "")
+    .split("/")
+    .slice(0, mapSegments.length);
+  const mapSet = new Set(mapSegments);
+  const pathSet = new Set(pathSegments);
+
+  const getLink = (facet: LegacyFacet, selected: boolean) => {
+    // Do not allow removing root facet to avoid going back to home page
+    if (mapSegments.length === 1) {
+      return `${url.pathname}${url.search}`;
+    }
+
+    const index = pathSegments.findIndex((s) => s === facet.Value);
+    const newMap = selected
+      ? [...mapSegments.filter((_, i) => i !== index)]
+      : [...mapSegments, facet.Map];
+    const newPath = selected
+      ? [...pathSegments.filter((_, i) => i !== index)]
+      : [...pathSegments, facet.Value];
+
+    const link = new URL(`/${newPath.join("/")}`, url);
+    link.searchParams.set("map", newMap.join(","));
+    if (behavior === "static") {
+      link.searchParams.set("fmap", url.searchParams.get("fmap") || map);
+    }
+
+    return `${link.pathname}${link.search}`;
+  };
 
   return {
     "@type": "FilterToggle",
@@ -448,14 +453,12 @@ export const legacyFacetToFilter = (
     label: name,
     key: name,
     values: facets.map((facet) => {
-      const selected = mapSegments.has(facet.Map) &&
-        pathSegments.has(facet.Value);
-      const href = selected ? unselect(facet, url, map) : facet.LinkEncoded;
+      const selected = mapSet.has(facet.Map) && pathSet.has(facet.Value);
 
       return ({
         value: facet.Value,
         quantity: facet.Quantity,
-        url: href,
+        url: getLink(facet, selected),
         label: facet.Name,
         selected,
       });
