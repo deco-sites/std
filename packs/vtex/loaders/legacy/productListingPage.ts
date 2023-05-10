@@ -198,7 +198,7 @@ const loader = async (
       previousPage: hasPreviousPage ? `?${previousPage.toString()}` : undefined,
       currentPage: page,
       records: parseInt(_total, 10),
-      recordPerPage: parseInt(_to, 10) - parseInt(_from, 10),
+      recordPerPage: count,
     },
     sortOptions,
   };
