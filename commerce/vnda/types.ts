@@ -109,6 +109,7 @@ export interface VNDACart {
   coupon_code: null;
   discount: null;
   discount_price: number;
+  // deno-lint-ignore no-explicit-any
   extra: Record<any, string>;
   id: number;
   installments: number[];
@@ -116,6 +117,7 @@ export interface VNDACart {
   items_count: number;
   shipping_address_id: null;
   shipping_method: null;
+  // deno-lint-ignore no-explicit-any
   shipping_methods: any[];
   shipping_price: number;
   subtotal: number;
@@ -135,6 +137,7 @@ export interface VNDACart {
 
 export interface Item {
   delivery_days: number;
+  // deno-lint-ignore no-explicit-any
   extra: Record<any, string>;
   id: number;
   place_id: null;
@@ -151,6 +154,7 @@ export interface Item {
   has_customizations: boolean;
   available_quantity: number;
   image_url: string;
+  // deno-lint-ignore no-explicit-any
   variant_attributes: Record<any, string>;
   variant_min_quantity: number;
   variant_name: string;

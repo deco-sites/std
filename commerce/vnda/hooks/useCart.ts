@@ -1,6 +1,6 @@
 import { Signal, signal } from "@preact/signals";
-import { fetchAPI } from "../../../utils/fetchAPI.ts";
 import type { VNDACart } from "../types.ts";
+import { fetchAPI } from "../../../utils/fetch.ts";
 
 const cart = signal<VNDACart | null>(null);
 const loading = signal<boolean>(false);
@@ -40,7 +40,7 @@ const addCouponToCart: UseVNDACartHook["addCouponToCart"] = async (
   const fd = new FormData();
   fd.set("code", text);
 
-  await fetchAPI<any>(`/api/cupom/ajax`, { method: "POST", body: fd });
+  await fetchAPI(`/api/cupom/ajax`, { method: "POST", body: fd });
 };
 
 const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
