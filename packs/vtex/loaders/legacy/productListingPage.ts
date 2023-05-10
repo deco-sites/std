@@ -22,6 +22,8 @@ import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 
+const MAX_ALLOWED_PAGES = 500;
+
 export interface Props {
   /**
    * @description overides the query term
@@ -55,6 +57,13 @@ export interface Props {
    * @description Set to static to not change the facets when the user filters the search. Dynamic will only show the filters containing products after each filter action
    */
   filters?: "dynamic" | "static";
+
+  /**
+   * @title Starting page query parameter offset.
+   * @description Set the starting page offset. Default to 1.
+   * @default 1
+   */
+  pageOffset?: number;
 }
 
 export const sortOptions = [
@@ -100,12 +109,15 @@ const loader = async (
   const segment = getSegment(req);
   const params = toSegmentParams(segment);
   const search = paths(config!).api.catalog_system.pub;
+  const currentPageoffset = props.pageOffset ?? 1;
 
   const filtersBehavior = props.filters || "dynamic";
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
-  const page = Number(url.searchParams.get("page")) || 0;
+  const page = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - (currentPageoffset)
+    : 0;
   const O = url.searchParams.get("O") as LegacySort ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
     sortOptions[0].value;
@@ -169,17 +181,23 @@ const loader = async (
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
-  const hasNextPage = Boolean(page < 50 && products.length === count);
+  const hasMoreResources = parseInt(_to, 10) < parseInt(_total, 10) - 1;
+
+  const hasNextPage = Boolean(
+    page < MAX_ALLOWED_PAGES && hasMoreResources,
+  );
+
   const hasPreviousPage = page > 0;
+
   const nextPage = new URLSearchParams(url.searchParams);
   const previousPage = new URLSearchParams(url.searchParams);
 
   if (hasNextPage) {
-    nextPage.set("page", (page + 1).toString());
+    nextPage.set("page", (page + currentPageoffset + 1).toString());
   }
 
   if (hasPreviousPage) {
-    previousPage.set("page", (page - 1).toString());
+    previousPage.set("page", (page + currentPageoffset - 1).toString());
   }
 
   setSegment(segment, ctx.response.headers);
@@ -196,7 +214,7 @@ const loader = async (
     pageInfo: {
       nextPage: hasNextPage ? `?${nextPage.toString()}` : undefined,
       previousPage: hasPreviousPage ? `?${previousPage.toString()}` : undefined,
-      currentPage: page,
+      currentPage: page + currentPageoffset,
       records: parseInt(_total, 10),
       recordPerPage: count,
     },
