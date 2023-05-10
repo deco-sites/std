@@ -102,6 +102,12 @@ export interface Props {
    * @description Do not return out of stock items
    */
   hideUnavailableItems?: boolean;
+
+  /**
+   * @title Starting page offset
+   * @description Set the starting page offset.
+   */
+  pageOffset?: number;
 }
 
 export const singleFlightKey = (
@@ -122,7 +128,9 @@ const searchArgsOf = (props: Props, url: URL) => {
   const hideUnavailableItems = props.hideUnavailableItems;
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
-  const page = Number(url.searchParams.get("page")) || 0;
+  const page = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 0)
+    : 0;
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
   const selectedFacets = props.selectedFacets ||

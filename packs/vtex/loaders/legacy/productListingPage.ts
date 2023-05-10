@@ -55,6 +55,12 @@ export interface Props {
    * @description Set to static to not change the facets when the user filters the search. Dynamic will only show the filters containing products after each filter action
    */
   filters?: "dynamic" | "static";
+
+  /**
+   * @title Starting page offset
+   * @description Set the starting page offset.
+   */
+  pageOffset?: number;
 }
 
 export const sortOptions = [
@@ -105,7 +111,9 @@ const loader = async (
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
-  const page = Number(url.searchParams.get("page")) || 0;
+  const page = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 0)
+    : 0;
   const O = url.searchParams.get("O") as LegacySort ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
     sortOptions[0].value;
