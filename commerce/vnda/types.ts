@@ -99,3 +99,80 @@ export interface ProductSearchParams {
   wildcard?: boolean;
   type_tags?: { key: string; value: string }[];
 }
+
+export interface VNDACart {
+  agent: null;
+  billing_address_id: null;
+  channel: string;
+  client_id: null;
+  code: string;
+  coupon_code: null;
+  discount: null;
+  discount_price: number;
+  // deno-lint-ignore no-explicit-any
+  extra: Record<any, string>;
+  id: number;
+  installments: number[];
+  items: Item[];
+  items_count: number;
+  shipping_address_id: null;
+  shipping_method: null;
+  // deno-lint-ignore no-explicit-any
+  shipping_methods: any[];
+  shipping_price: number;
+  subtotal: number;
+  subtotal_discount: number;
+  token: string;
+  total: number;
+  total_discount: number;
+  total_for_deposit: number;
+  total_for_slip: number;
+  total_for_pix: number;
+  updated_at: Date;
+  rebate_token: null;
+  rebate_discount: number;
+  user_id: null;
+  handling_days: number;
+}
+
+export interface Item {
+  delivery_days: number;
+  // deno-lint-ignore no-explicit-any
+  extra: Record<any, string>;
+  id: number;
+  place_id: null;
+  price: number;
+  product_id: number;
+  product_name: string;
+  product_reference: string;
+  product_url: string;
+  product_type: string;
+  quantity: number;
+  subtotal: number;
+  total: number;
+  updated_at: Date;
+  has_customizations: boolean;
+  available_quantity: number;
+  image_url: string;
+  // deno-lint-ignore no-explicit-any
+  variant_attributes: Record<any, string>;
+  variant_min_quantity: number;
+  variant_name: string;
+  variant_price: number;
+  variant_intl_price: number;
+  variant_properties: VariantProperties;
+  variant_sku: string;
+  seller: null;
+  seller_name: null;
+}
+
+export interface VariantProperties {
+  property1: Property;
+  property2: Property;
+}
+
+export interface Property {
+  name: string;
+  value: string;
+  defining: boolean;
+}
