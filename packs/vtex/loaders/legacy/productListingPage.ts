@@ -22,6 +22,8 @@ import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 
+const MAX_ALLOWED_PAGES = 500;
+
 export interface Props {
   /**
    * @description overides the query term
@@ -179,8 +181,14 @@ const loader = async (
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
-  const hasNextPage = Boolean(page < 50 && products.length === count);
+  const hasMoreResources = parseInt(_to, 10) < parseInt(_total, 10) - 1;
+
+  const hasNextPage = Boolean(
+    page < MAX_ALLOWED_PAGES && hasMoreResources,
+  );
+
   const hasPreviousPage = page > 0;
+
   const nextPage = new URLSearchParams(url.searchParams);
   const previousPage = new URLSearchParams(url.searchParams);
 
