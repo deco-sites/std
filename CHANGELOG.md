@@ -8,6 +8,10 @@ and this project adheres to
 
 ## Unreleased
 
+## 1.2.6 - 2023-05-10
+### Added
+- `useCart` hook for VNDA.
+
 ## 1.2.5 - 2023-05-10
 ### Added
 - `pageOffset` in Product Listing VTEX loaders.
