@@ -104,8 +104,9 @@ export interface Props {
   hideUnavailableItems?: boolean;
 
   /**
-   * @title Starting page offset
-   * @description Set the starting page offset.
+   * @title Starting page query parameter offset.
+   * @description Set the starting page offset. Default to 1.
+   * @default 1
    */
   pageOffset?: number;
 }
@@ -129,7 +130,7 @@ const searchArgsOf = (props: Props, url: URL) => {
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 0)
+    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 1)
     : 0;
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;

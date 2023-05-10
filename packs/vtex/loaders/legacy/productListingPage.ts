@@ -57,8 +57,9 @@ export interface Props {
   filters?: "dynamic" | "static";
 
   /**
-   * @title Starting page offset
-   * @description Set the starting page offset.
+   * @title Starting page query parameter offset.
+   * @description Set the starting page offset. Default to 1.
+   * @default 1
    */
   pageOffset?: number;
 }
@@ -112,7 +113,7 @@ const loader = async (
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
   const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 0)
+    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 1)
     : 0;
   const O = url.searchParams.get("O") as LegacySort ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
