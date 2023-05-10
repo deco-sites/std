@@ -8,6 +8,10 @@ and this project adheres to
 
 ## Unreleased
 
+### Added
+
+- `pageOffset` in Product Listing VTEX loaders.
+
 ## 1.2.4 - 2023-05-10
 
 ### Fixed
