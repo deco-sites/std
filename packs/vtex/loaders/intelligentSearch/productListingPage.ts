@@ -129,8 +129,9 @@ const searchArgsOf = (props: Props, url: URL) => {
   const hideUnavailableItems = props.hideUnavailableItems;
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
+  const currentPageoffset = props.pageOffset ?? 1;
   const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 1)
+    ? Number(url.searchParams.get("page")) - (currentPageoffset)
     : 0;
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
@@ -199,6 +200,7 @@ const loader = async (
   const vtex = paths(config!);
   const segment = getSegment(req);
   const search = vtex.api.io._v.api["intelligent-search"];
+  const currentPageoffset = props.pageOffset ?? 1;
 
   const {
     selectedFacets: baseSelectedFacets,
@@ -252,11 +254,11 @@ const loader = async (
   const previousPage = new URLSearchParams(url.searchParams);
 
   if (hasNextPage) {
-    nextPage.set("page", (page + 1).toString());
+    nextPage.set("page", (page + currentPageoffset + 1).toString());
   }
 
   if (hasPreviousPage) {
-    previousPage.set("page", (page - 1).toString());
+    previousPage.set("page", (page + currentPageoffset - 1).toString());
   }
 
   setSegment(segment, ctx.response.headers);
@@ -273,7 +275,7 @@ const loader = async (
     pageInfo: {
       nextPage: hasNextPage ? `?${nextPage}` : undefined,
       previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
-      currentPage: page,
+      currentPage: page + currentPageoffset,
       records: recordsFiltered,
       recordPerPage: pagination.perPage,
     },

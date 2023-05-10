@@ -107,13 +107,14 @@ const loader = async (
   const segment = getSegment(req);
   const params = toSegmentParams(segment);
   const search = paths(config!).api.catalog_system.pub;
+  const currentPageoffset = props.pageOffset ?? 1;
 
   const filtersBehavior = props.filters || "dynamic";
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
   const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (props.pageOffset ?? 1)
+    ? Number(url.searchParams.get("page")) - (currentPageoffset)
     : 0;
   const O = url.searchParams.get("O") as LegacySort ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
@@ -184,11 +185,11 @@ const loader = async (
   const previousPage = new URLSearchParams(url.searchParams);
 
   if (hasNextPage) {
-    nextPage.set("page", (page + 1).toString());
+    nextPage.set("page", (page + currentPageoffset + 1).toString());
   }
 
   if (hasPreviousPage) {
-    previousPage.set("page", (page - 1).toString());
+    previousPage.set("page", (page + currentPageoffset - 1).toString());
   }
 
   setSegment(segment, ctx.response.headers);
@@ -205,7 +206,7 @@ const loader = async (
     pageInfo: {
       nextPage: hasNextPage ? `?${nextPage.toString()}` : undefined,
       previousPage: hasPreviousPage ? `?${previousPage.toString()}` : undefined,
-      currentPage: page,
+      currentPage: page + currentPageoffset,
       records: parseInt(_total, 10),
       recordPerPage: count,
     },
