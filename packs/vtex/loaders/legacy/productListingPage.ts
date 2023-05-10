@@ -68,6 +68,16 @@ export const sortOptions = [
   { label: "relevance:desc", value: "OrderByScoreDESC" },
 ];
 
+const IS_TO_LEGACY: Record<string, LegacySort> = {
+  "price:desc": "OrderByPriceDESC",
+  "price:asc": "OrderByPriceASC",
+  "orders:desc": "OrderByTopSaleDESC",
+  "name:desc": "OrderByNameDESC",
+  "release:desc": "OrderByReleaseDateDESC",
+  "discount:desc": "OrderByBestDiscountDESC",
+  "relevance:desc": "OrderByScoreDESC",
+};
+
 const getTerm = (path: string, map: string) => {
   const mapSegments = map.split(",");
   const pathSegments = path.replace(/^\/.*/, "").split("/");
@@ -96,8 +106,10 @@ const loader = async (
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const O = (url.searchParams.get("O") || url.searchParams.get("sort") ||
-    sortOptions[0].value) as LegacySort;
+  const O =
+    (url.searchParams.get("O") ||
+      IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ||
+      sortOptions[0].value) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";

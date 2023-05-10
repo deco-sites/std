@@ -46,6 +46,15 @@ const sortOptions = [
   { value: "discount:desc", label: "discount:desc" },
 ];
 
+const LEGACY_TO_IS: Record<string, Sort> = {
+  OrderByPriceDESC: "price:desc",
+  OrderByPriceASC: "price:asc",
+  OrderByTopSaleDESC: "orders:desc",
+  OrderByNameDESC: "name:desc",
+  OrderByReleaseDateDESC: "release:desc",
+  OrderByBestDiscountDESC: "discount:desc",
+};
+
 const mapLabelledFuzzyToFuzzy = (
   labelledFuzzy?: LabelledFuzzy,
 ): Fuzzy | undefined => {
@@ -114,7 +123,8 @@ const searchArgsOf = (props: Props, url: URL) => {
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const sort = url.searchParams.get("sort") as Sort ?? "" as Sort;
+  const sort = url.searchParams.get("sort") as Sort ??
+    LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
   const selectedFacets = props.selectedFacets ||
     filtersFromSearchParams(url.searchParams);
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
