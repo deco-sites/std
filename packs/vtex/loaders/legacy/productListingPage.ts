@@ -106,10 +106,9 @@ const loader = async (
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
   const page = Number(url.searchParams.get("page")) || 0;
-  const O =
-    (url.searchParams.get("O") ||
-      IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ||
-      sortOptions[0].value) as LegacySort;
+  const O = (url.searchParams.get("O") ??
+    IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
+    sortOptions[0].value) as LegacySort;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
