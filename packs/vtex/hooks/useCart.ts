@@ -52,12 +52,11 @@ const wrap = <T>(action: (p: T) => Promise<OrderForm>) => (p: T) =>
     )
   );
 
+const loadCart = Runtime.create("deco-sites/std/loaders/vtex/cart.ts");
 const getCart = () =>
   withPQueue(() =>
     withLoading(async () => {
-      payload.value = await Runtime.invoke({
-        key: "deco-sites/std/loaders/vtex/cart.ts",
-      });
+      payload.value = await loadCart();
     })
   );
 
