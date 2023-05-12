@@ -1,16 +1,19 @@
-import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
+import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import type {
+  LegacyProduct,
+  LegacySort,
+  ProductID,
+} from "deco-sites/std/packs/vtex/types.ts";
+import { toSegmentParams } from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
 import {
   getSegment,
   setSegment,
+  withSegmentCookie,
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
+import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import { toSegmentParams } from "deco-sites/std/packs/vtex/utils/legacy.ts";
-import type { LegacyProduct } from "deco-sites/std/packs/vtex/types.ts";
-import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
-import type { ProductID } from "deco-sites/std/packs/vtex/types.ts";
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
-import type { Product } from "deco-sites/std/commerce/types.ts";
 
 export interface CollectionProps {
   // TODO: pattern property isn't being handled by RJSF
@@ -104,6 +107,7 @@ const loader = async (
     `${paths(config!).api.catalog_system.pub.products.search}?${params}`,
     {
       withProxyCache: true,
+      headers: withSegmentCookie(segment),
     },
   );
 

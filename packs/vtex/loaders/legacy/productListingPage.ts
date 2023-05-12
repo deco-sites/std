@@ -1,25 +1,26 @@
-import { fetchAPI, fetchResponse } from "deco-sites/std/utils/fetch.ts";
-import {
-  legacyFacetToFilter,
-  toProduct,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import {
-  getSegment,
-  setSegment,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
-import { toSegmentParams } from "deco-sites/std/packs/vtex/utils/legacy.ts";
-import {
-  getMapAndTerm,
-  pageTypesFromPathname,
-  pageTypesToBreadcrumbList,
-} from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import type {
   Filter,
   ProductListingPage,
 } from "deco-sites/std/commerce/types.ts";
-import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
+import {
+  getMapAndTerm,
+  pageTypesFromPathname,
+  pageTypesToBreadcrumbList,
+  toSegmentParams,
+} from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
+import {
+  getSegment,
+  setSegment,
+  withSegmentCookie,
+} from "deco-sites/std/packs/vtex/utils/segment.ts";
+import {
+  legacyFacetToFilter,
+  toProduct,
+} from "deco-sites/std/packs/vtex/utils/transform.ts";
+import { fetchAPI, fetchResponse } from "deco-sites/std/utils/fetch.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 
 const MAX_ALLOWED_PAGES = 500;
@@ -149,7 +150,7 @@ const loader = async (
   const [vtexProductsResponse, vtexFacets] = await Promise.all([
     fetchResponse<LegacyProduct[]>(
       `${search.products.search.term(getTerm(term, map))}?${pParams}`,
-      { withProxyCache: true },
+      { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
     fetchAPI<LegacyFacets>(
       `${search.facets.search.term(getTerm(term, fmap))}?${fParams}`,
