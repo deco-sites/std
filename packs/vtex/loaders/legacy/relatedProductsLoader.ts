@@ -14,6 +14,7 @@ import type {
   PageType,
 } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import { withSegmentCookie } from "deco-sites/std/packs/vtex/utils/segment.ts";
 
 export interface Props {
   /**
@@ -69,7 +70,7 @@ async function loader(
     `${
       api.products.crossselling.type(crossSelling).productId(pageType.id)
     }?${params}`,
-    { withProxyCache: true },
+    { withProxyCache: true, headers: withSegmentCookie(segment) },
   );
 
   const options = {

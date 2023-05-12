@@ -1,18 +1,19 @@
+import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import type { LegacyProduct } from "deco-sites/std/packs/vtex/types.ts";
+import { toSegmentParams } from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
+import {
+  getSegment,
+  setSegment,
+  withSegmentCookie,
+} from "deco-sites/std/packs/vtex/utils/segment.ts";
 import {
   pickSku,
   toProductPage,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
-import {
-  getSegment,
-  setSegment,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import { toSegmentParams } from "deco-sites/std/packs/vtex/utils/legacy.ts";
-import type { LegacyProduct } from "deco-sites/std/packs/vtex/types.ts";
-import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
-import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 export interface Props {
   slug: RequestURLParam;
@@ -38,7 +39,10 @@ async function loader(
 
   const [product] = await fetchAPI<LegacyProduct[]>(
     `${search.term(`${slug}/p`)}?${params}`,
-    { withProxyCache: true },
+    {
+      withProxyCache: true,
+      headers: withSegmentCookie(segment),
+    },
   );
 
   // Product not found, return the 404 status code
