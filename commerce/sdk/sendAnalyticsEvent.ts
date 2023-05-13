@@ -1,15 +1,5 @@
 import { AnalyticsEvent } from "../types.ts";
 
-declare global {
-  interface Window {
-    // deno-lint-ignore no-explicit-any
-    dataLayer?: any[];
-
-    // deno-lint-ignore no-explicit-any
-    jitsu: (...args: any[]) => void;
-  }
-}
-
 /**
  * This function handles all ecommerce analytics events.
  * Add another ecommerce analytics modules here.
