@@ -21,7 +21,7 @@ export interface Props {
    * @title Related Products
    * @description VTEX Cross Selling API. This loader only works on routes of type /:slug/p
    */
-  crossSelling?: "" | CrossSellingType;
+  crossSelling: CrossSellingType;
   /**
    * @description: number of related products
    */
@@ -29,7 +29,11 @@ export interface Props {
   /**
    * @description the product slug
    */
-  slug: RequestURLParam;
+  slug?: RequestURLParam;
+  /**
+   * @description ProductGroup ID
+   */
+  id?: string;
 }
 
 /**
@@ -44,31 +48,44 @@ async function loader(
   const { configVTEX: config } = ctx;
   const { url } = req;
   const {
-    slug,
-    crossSelling,
+    crossSelling = "similars",
     count,
   } = props;
   const api = paths(config!).api.catalog_system.pub;
   const segment = getSegment(req);
   const params = toSegmentParams(segment);
 
-  const pageType = await fetchAPI<PageType>(
-    api.portal.pagetype.term(`${slug}/p`),
-    { withProxyCache: true },
-  );
+  const getProductGroupID = async (props: { slug?: string; id?: string }) => {
+    const { id, slug } = props;
 
-  // Page type doesn't exists or this is not product page
-  if (!pageType || pageType.pageType !== "Product" || !pageType.id) {
-    return null;
-  }
+    if (id) {
+      return id;
+    }
 
-  if (!crossSelling) {
+    if (slug) {
+      const pageType = await fetchAPI<PageType>(
+        api.portal.pagetype.term(`${slug}/p`),
+        { withProxyCache: true },
+      );
+
+      // Page type doesn't exists or this is not product page
+      if (pageType?.pageType === "Product") {
+        return pageType.id;
+      }
+    }
+
     return null;
+  };
+
+  const productId = await getProductGroupID(props);
+
+  if (!productId) {
+    throw new Error("Missing props. Please fill: slug or id");
   }
 
   const vtexRelatedProducts = await fetchAPI<LegacyProduct[]>(
     `${
-      api.products.crossselling.type(crossSelling).productId(pageType.id)
+      api.products.crossselling.type(crossSelling).productId(productId)
     }?${params}`,
     { withProxyCache: true, headers: withSegmentCookie(segment) },
   );

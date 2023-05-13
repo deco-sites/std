@@ -11,7 +11,7 @@ export interface Props {
    * @title Related Products
    * @description VTEX Cross Selling API. This loader only works on routes of type /:slug/p
    */
-  crossSelling?: CrossSellingType;
+  crossSelling: CrossSellingType;
   /**
    * @description: number of related products
    */
