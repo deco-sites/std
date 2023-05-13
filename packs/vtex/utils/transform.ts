@@ -32,15 +32,17 @@ const isLegacyProduct = (
   product: ProductVTEX | LegacyProductVTEX,
 ): product is LegacyProductVTEX => product.origin !== "intelligent-search";
 
-const getCanonicalURL = (origin: string, { linkText }: { linkText: string }) =>
-  new URL(`/${linkText}/p`, origin);
+const getProductGroupURL = (
+  origin: string,
+  { linkText }: { linkText: string },
+) => new URL(`/${linkText}/p`, origin);
 
 const getProductURL = (
   origin: string,
   product: { linkText: string },
   skuId?: string,
 ) => {
-  const canonicalUrl = getCanonicalURL(origin, product);
+  const canonicalUrl = getProductGroupURL(origin, product);
 
   if (skuId) {
     canonicalUrl.searchParams.set("skuId", skuId);
@@ -248,7 +250,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
       "@type": "ProductGroup",
       productGroupID: productId,
       hasVariant: hasVariant || [],
-      url: getProductURL(baseUrl, product, sku.itemId).href,
+      url: getProductGroupURL(baseUrl, product).href,
       name: product.productName,
       additionalProperty: groupAdditionalProperty,
       model: productReference,
@@ -295,7 +297,7 @@ const toBreadcrumbList = (
       {
         "@type": "ListItem",
         name: productName,
-        item: getCanonicalURL(baseUrl, product).href,
+        item: getProductGroupURL(baseUrl, product).href,
         position: categories.length + 1,
       },
     ],
