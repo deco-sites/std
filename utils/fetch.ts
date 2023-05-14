@@ -1,18 +1,21 @@
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 import {
   ExponentialBackoff,
   handleWhen,
   retry,
 } from "https://esm.sh/cockatiel@3.1.1";
-import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 
 // this error is thrown by deno deploy when the connection is closed by the server.
 // check the discussion at discord: https://discord.com/channels/985687648595243068/1107104244517048320/1107111259813466192
 export const CONNECTION_CLOSED_MESSAGE =
   "connection closed before message completed";
 
-const connectionClosedMsg = handleWhen((err) =>
-  err?.message?.includes(CONNECTION_CLOSED_MESSAGE)
-);
+const connectionClosedMsg = handleWhen((err) => {
+  const isConnectionClosed =
+    err?.message?.includes(CONNECTION_CLOSED_MESSAGE) ?? false;
+  isConnectionClosed && console.error("retrying...", err);
+  return isConnectionClosed;
+});
 
 export const retryExceptionOr500 = retry(connectionClosedMsg, {
   maxAttempts: 1,
