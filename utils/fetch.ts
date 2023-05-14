@@ -32,8 +32,12 @@ const toProxyCache = async (
   return proxyUrl;
 };
 
-export const fetchSafe: typeof fetch = async (input, init) => {
-  const response = await fetch(input, init);
+export const fetchSafe = async (
+  input: string | Request | URL,
+  init?: RequestInit & { withProxyCache?: boolean },
+) => {
+  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
+  const response = await fetch(url, init);
 
   if (response.ok) {
     return response;
@@ -51,29 +55,10 @@ export const fetchAPI = async <T>(
 
   headers.set("accept", "application/json");
 
-  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
-  const response = await fetchSafe(url, {
+  const response = await fetchSafe(input, {
     ...init,
     headers,
   });
 
   return response.json();
-};
-
-// TODO: Shortcuted, refactor this into fetchAPI =D
-export const fetchResponse = async <T>(
-  input: string | Request | URL,
-  init?: RequestInit & { withProxyCache?: boolean },
-): Promise<Response> => {
-  const headers = new Headers(init?.headers);
-
-  headers.set("accept", "application/json");
-
-  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
-  const response = await fetchSafe(url, {
-    ...init,
-    headers,
-  });
-
-  return response;
 };
