@@ -1,4 +1,23 @@
-import { HttpError } from "./HttpError.ts";
+import {
+  ExponentialBackoff,
+  handleWhen,
+  retry,
+} from "https://esm.sh/cockatiel@3.1.1";
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
+
+// this error is thrown by deno deploy when the connection is closed by the server.
+// check the discussion at discord: https://discord.com/channels/985687648595243068/1107104244517048320/1107111259813466192
+export const CONNECTION_CLOSED_MESSAGE =
+  "connection closed before message completed";
+
+const connectionClosedMsg = handleWhen((err) =>
+  err?.message?.includes(CONNECTION_CLOSED_MESSAGE)
+);
+
+export const retryExceptionOr500 = retry(connectionClosedMsg, {
+  maxAttempts: 1,
+  backoff: new ExponentialBackoff(),
+});
 
 /**
  * proxy.decocache.com does not vary with the vary header. For this, we must add a stable cache burst
@@ -32,12 +51,19 @@ const toProxyCache = async (
   return proxyUrl;
 };
 
+export interface FetchOptions {
+  withProxyCache?: boolean;
+}
+
 export const fetchSafe = async (
   input: string | Request | URL,
-  init?: RequestInit & { withProxyCache?: boolean },
+  init?: RequestInit & FetchOptions,
 ) => {
   const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
-  const response = await fetch(url, init);
+
+  const response = await retryExceptionOr500.execute(async () =>
+    await fetch(url, init)
+  );
 
   if (response.ok) {
     return response;
@@ -49,7 +75,7 @@ export const fetchSafe = async (
 
 export const fetchAPI = async <T>(
   input: string | Request | URL,
-  init?: RequestInit & { withProxyCache?: boolean },
+  init?: RequestInit & FetchOptions,
 ): Promise<T> => {
   const headers = new Headers(init?.headers);
 
