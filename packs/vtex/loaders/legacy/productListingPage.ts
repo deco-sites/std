@@ -20,7 +20,7 @@ import {
   legacyFacetToFilter,
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { fetchAPI, fetchResponse } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 
 const MAX_ALLOWED_PAGES = 500;
@@ -148,7 +148,7 @@ const loader = async (
   fmap && fParams.set("map", fmap);
 
   const [vtexProductsResponse, vtexFacets] = await Promise.all([
-    fetchResponse<LegacyProduct[]>(
+    fetchSafe(
       `${search.products.search.term(getTerm(term, map))}?${pParams}`,
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
