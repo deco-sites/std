@@ -34,7 +34,6 @@ const processFetch = async (
       searchParams.append("utm_campaign", updatedValue)
     );
   }
-  console.log(url.toString());
   return await _fetch(url.toString(), init);
 };
 
