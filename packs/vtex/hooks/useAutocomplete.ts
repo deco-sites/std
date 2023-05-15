@@ -4,23 +4,28 @@ import { Runtime } from "deco-sites/std/runtime.ts";
 import type { Suggestion } from "deco-sites/std/commerce/types.ts";
 
 const payload = signal<Suggestion | null>(null);
+const loading = signal<boolean>(false);
+
+const suggestions = Runtime.create(
+  "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts",
+);
 
 const setSearch = debounce(async (search: string) => {
   try {
-    payload.value = search !== ""
-      ? await Runtime.invoke({
-        key: "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts",
-        props: { query: search, count: 4 },
-      })
-      : null;
+    payload.value = await suggestions({ query: search, count: 4 });
   } catch (error) {
     console.error("Something went wrong while fetching suggestions \n", error);
-    return null;
+  } finally {
+    loading.value = false;
   }
 }, 250);
 
 const state = {
-  setSearch,
+  setSearch: (s: string) => {
+    loading.value = true;
+    setSearch(s);
+  },
+  loading,
   suggestions: payload,
 };
 
