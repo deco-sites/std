@@ -827,21 +827,31 @@ export interface SpecificationGroup {
   }>;
 }
 
-export type FilterType = "PRICERANGE" | "TEXT" | "NUMBER" | "CATEGORYTREE";
+export type FilterType = RangeFacet["type"] | BooleanFacet["type"];
 
 export interface FacetSearchResult {
   facets: Facet[];
   breadcrumb: Breadcrumb[];
 }
 
-export interface Facet<T = FacetValueBoolean | FacetValueRange> {
-  type: FilterType;
+export interface BaseFacet {
   name: string;
   hidden: boolean;
-  values: T[];
-  quantity: number;
   key: string;
+  quantity: number;
 }
+
+export interface RangeFacet extends BaseFacet {
+  type: "PRICERANGE";
+  values: FacetValueRange[];
+}
+
+export interface BooleanFacet extends BaseFacet {
+  type: "TEXT" | "NUMBER";
+  values: FacetValueBoolean[];
+}
+
+export type Facet = RangeFacet | BooleanFacet;
 
 export interface FacetValueBoolean {
   quantity: number;
@@ -853,6 +863,8 @@ export interface FacetValueBoolean {
 }
 
 export interface FacetValueRange {
+  selected: boolean;
+  quantity: number;
   range: {
     from: number;
     to: number;

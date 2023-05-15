@@ -497,57 +497,43 @@ export const filtersFromSearchParams = (params: URLSearchParams) => {
   return selectedFacets;
 };
 
+const isValueRange = (
+  facet: FacetValueRange | FacetValueBoolean,
+): facet is FacetValueRange =>
+  // deno-lint-ignore no-explicit-any
+  Boolean((facet as any).range);
+
 export const toFilter = (
-  facet: FacetVTEX,
+  { key, name, quantity, values }: FacetVTEX,
   selectedFacets: { key: string; value: string }[],
-): Filter | null => {
-  if (facet.hidden) {
-    return null;
-  }
+): Filter | null => ({
+  "@type": "FilterToggle",
+  key,
+  label: name,
+  quantity: quantity,
+  values: values.map((item) => {
+    const { quantity, selected } = item;
+    const value = isValueRange(item)
+      ? `${item.range.from}:${item.range.to}`
+      : item.value;
+    const label = isValueRange(item) ? value : item.name;
 
-  if (facet.type === "PRICERANGE") {
+    const facet = { key, value };
+    const filters = selected
+      ? selectedFacets.filter((f) =>
+        f.key !== facet.key && f.value !== facet.value
+      )
+      : [...selectedFacets, facet];
+
     return {
-      "@type": "FilterRange",
-      label: facet.name,
-      key: facet.key,
-      values: {
-        min: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc > curr.range.from ? curr.range.from : acc,
-          Infinity,
-        ),
-        max: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc < curr.range.to ? curr.range.to : acc,
-          0,
-        ),
-      },
+      value,
+      quantity,
+      selected,
+      url: `?${filtersToSearchParams(filters)}`,
+      label,
     };
-  }
-
-  return {
-    "@type": "FilterToggle",
-    key: facet.key,
-    label: facet.name,
-    quantity: facet.quantity,
-    values: (facet.values as FacetValueBoolean[]).map((
-      { quantity, name, value, selected },
-    ) => {
-      const newFacet = { key: facet.key, value };
-      const filters = selected
-        ? selectedFacets.filter((facet) =>
-          facet.key !== newFacet.key && facet.value !== newFacet.value
-        )
-        : [...selectedFacets, newFacet];
-
-      return {
-        value,
-        quantity,
-        selected,
-        url: `?${filtersToSearchParams(filters).toString()}`,
-        label: name,
-      };
-    }),
-  };
-};
+  }),
+});
 
 function nodeToNavbar(node: Category): Navbar {
   const url = new URL(node.url, "https://example.com");
