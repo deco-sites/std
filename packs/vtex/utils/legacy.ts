@@ -1,4 +1,4 @@
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
 import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
 import type { Segment } from "deco-sites/std/packs/vtex/types.ts";
