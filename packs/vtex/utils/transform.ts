@@ -5,6 +5,7 @@ import type {
   Offer,
   Product,
   ProductDetailsPage,
+  ProductGroup,
   PropertyValue,
   UnitPriceSpecification,
 } from "deco-sites/std/commerce/types.ts";
@@ -219,10 +220,20 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     : toAdditionalProperties(sku);
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
   const offers = sku.sellers.map(toOffer).sort(bestOfferFirst);
-  const hasVariant = level < 1 &&
-    items.map((sku) => toProduct(product, sku, 1, options));
   const highPriceIndex = getHighPriceIndex(offers);
   const lowPriceIndex = 0;
+
+  const isVariantOf = level < 1
+    ? {
+      "@type": "ProductGroup",
+      productGroupID: productId,
+      hasVariant: items.map((sku) => toProduct(product, sku, 1, options)),
+      url: getProductGroupURL(baseUrl, product).href,
+      name: product.productName,
+      additionalProperty: groupAdditionalProperty,
+      model: productReference,
+    } satisfies ProductGroup
+    : undefined;
 
   // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
   const categoriesString = splitCategory(product.categories[0]).join(">");
@@ -246,15 +257,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     gtin: ean,
     releaseDate,
     additionalProperty,
-    isVariantOf: {
-      "@type": "ProductGroup",
-      productGroupID: productId,
-      hasVariant: hasVariant || [],
-      url: getProductGroupURL(baseUrl, product).href,
-      name: product.productName,
-      additionalProperty: groupAdditionalProperty,
-      model: productReference,
-    },
+    isVariantOf,
     image: images.map(({ imageUrl, imageText }) => ({
       "@type": "ImageObject" as const,
       alternateName: imageText ?? "",
