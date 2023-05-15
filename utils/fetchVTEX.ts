@@ -39,8 +39,6 @@ const processFetch = async (
     }
   });
 
-  console.log(url.toString());
-
   return await _fetch(url.toString(), init);
 };
 
