@@ -853,6 +853,10 @@ export interface FacetValueBoolean {
 }
 
 export interface FacetValueRange {
+  quantity: number;
+  name: string;
+  key: string;
+  selected: boolean;
   range: {
     from: number;
     to: number;

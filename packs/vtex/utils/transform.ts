@@ -505,21 +505,74 @@ export const toFilter = (
     return null;
   }
 
-  if (facet.type === "PRICERANGE") {
+  /**
+   * Example of facet for price
+   */
+  // {
+  //   values: [
+  //     {
+  //       quantity: 27,
+  //       name: "",
+  //       key: "price",
+  //       selected: false,
+  //       range: { from: 330, to: 350 }
+  //     },
+  //     {
+  //       quantity: 24,
+  //       name: "",
+  //       key: "price",
+  //       selected: false,
+  //       range: { from: 299, to: 330 }
+  //     },
+  //     {
+  //       quantity: 8,
+  //       name: "",
+  //       key: "price",
+  //       selected: false,
+  //       range: { from: 350, to: 389 }
+  //     }
+  //   ],
+  //   type: "PRICERANGE",
+  //   name: "Preço",
+  //   hidden: false,
+  //   key: "price",
+  //   quantity: 3
+  // }
+
+  if (facet.type === "PRICERANGE" || false) {
+    console.log(facet);
+    /**
+     * If the store wants to display a range UI, this should be changed
+     * to return `"@type": "FilterRange"`.
+     */
+
     return {
-      "@type": "FilterRange",
-      label: facet.name,
+      "@type": "FilterToggle",
       key: facet.key,
-      values: {
-        min: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc > curr.range.from ? curr.range.from : acc,
-          Infinity,
-        ),
-        max: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc < curr.range.to ? curr.range.to : acc,
-          0,
-        ),
-      },
+      label: facet.name,
+      quantity: facet.quantity,
+      values: (facet.values as FacetValueRange[]).map((
+        { quantity, selected, range },
+      ) => {
+        // TODO: Figure out how to to send new facet
+        const filters: { key: string; value: string }[] = [];
+        // const newFacet = { key: facet.key, };
+        // const filters = selected
+        //   ? selectedFacets.filter((facet) =>
+        //     facet.key !== newFacet.key && facet.value !== newFacet.value
+        //   )
+        //   : [...selectedFacets, newFacet];
+
+        return {
+          quantity,
+          selected,
+          range,
+          url: `?${filtersToSearchParams(filters).toString()}`,
+          // TODO: Figure out how to not pass this
+          label: "",
+          value: "",
+        };
+      }),
     };
   }
 
