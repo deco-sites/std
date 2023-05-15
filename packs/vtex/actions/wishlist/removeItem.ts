@@ -1,6 +1,6 @@
 import { paths } from "../../utils/paths.ts";
 import { parseCookie } from "../../utils/vtexId.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import wishlistLoader from "../../loaders/wishlist.ts";
 import type { WishlistItem } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";

@@ -13,7 +13,7 @@ import {
   pickSku,
   toProductPage,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 
 export interface Props {
   slug: RequestURLParam;

@@ -1,6 +1,6 @@
 import { categoryTreeToNavbar } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import type { Navbar } from "deco-sites/std/commerce/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { Category } from "deco-sites/std/packs/vtex/types.ts";

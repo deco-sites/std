@@ -1,4 +1,4 @@
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
 import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";

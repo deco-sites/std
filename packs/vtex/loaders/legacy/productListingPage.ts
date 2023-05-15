@@ -20,7 +20,7 @@ import {
   legacyFacetToFilter,
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 
 const MAX_ALLOWED_PAGES = 500;
