@@ -105,6 +105,7 @@
               "deco-sites/std/actions/vtex/cart/updateItems.ts",
               "deco-sites/std/actions/vtex/cart/updateProfile.ts",
               "deco-sites/std/actions/vtex/cart/updateUser.ts",
+              "deco-sites/std/actions/vtex/newsletter/subscribe.ts",
               "deco-sites/std/actions/vtex/wishlist/addItem.ts",
               "deco-sites/std/actions/vtex/wishlist/removeItem.ts"
             ]
@@ -2695,7 +2696,9 @@
           "title": "Count"
         }
       },
-      "required": [],
+      "required": [
+        "crossSelling"
+      ],
       "title": "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@NavItem": {
@@ -7364,7 +7367,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|d3465eb5bc0e37e7a380be793cca8efe": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|a805c09cff53d228ce2d0c2acd949331": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7382,13 +7385,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|d3465eb5bc0e37e7a380be793cca8efe"
+      "title": "WorkflowRef|a805c09cff53d228ce2d0c2acd949331"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|d3465eb5bc0e37e7a380be793cca8efe",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|a805c09cff53d228ce2d0c2acd949331",
           "title": "Workflow"
         },
         "id": {
@@ -7740,6 +7743,38 @@
         "ignoreProfileData"
       ],
       "title": "deco-sites/std/packs/vtex/actions/cart/updateProfile.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL25ld2xldHRlci9zdWJzY3JpYmUudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "title": "Email"
+        },
+        "page": {
+          "type": "string",
+          "title": "Page"
+        },
+        "part": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Part"
+        },
+        "campaing": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Campaing"
+        }
+      },
+      "required": [
+        "email",
+        "page"
+      ],
+      "title": "deco-sites/std/packs/vtex/actions/newletter/subscribe.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL3dpc2hsaXN0L2FkZEl0ZW0udHM=@Props": {
       "type": "object",
@@ -9704,6 +9739,28 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L25ld3NsZXR0ZXIvc3Vic2NyaWJlLnRz": {
+      "title": "deco-sites/std/actions/vtex/newsletter/subscribe.ts",
+      "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL25ld2xldHRlci9zdWJzY3JpYmUudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vtex/newsletter/subscribe.ts"
+          ],
+          "default": "deco-sites/std/actions/vtex/newsletter/subscribe.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L3dpc2hsaXN0L2FkZEl0ZW0udHM=": {
       "title": "deco-sites/std/actions/vtex/wishlist/addItem.ts",
       "type": "object",
@@ -10129,6 +10186,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvdXBkYXRlVXNlci50cw=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L25ld3NsZXR0ZXIvc3Vic2NyaWJlLnRz"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L3dpc2hsaXN0L2FkZEl0ZW0udHM="
