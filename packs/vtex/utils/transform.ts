@@ -1,6 +1,8 @@
+import { formatRange } from "deco-sites/std/utils/filters.ts";
 import type {
   BreadcrumbList,
   Filter,
+  FilterToggleValue,
   Navbar,
   Offer,
   Product,
@@ -21,6 +23,7 @@ import type {
   LegacyItem as LegacySkuVTEX,
   LegacyProduct as LegacyProductVTEX,
   Product as ProductVTEX,
+  SelectedFacet,
   Seller as SellerVTEX,
 } from "../types.ts";
 
@@ -472,7 +475,7 @@ export const legacyFacetToFilter = (
 };
 
 export const filtersToSearchParams = (
-  selectedFacets: { key: string; value: string }[],
+  selectedFacets: SelectedFacet[],
 ) => {
   const searchParams = new URLSearchParams();
 
@@ -484,7 +487,7 @@ export const filtersToSearchParams = (
 };
 
 export const filtersFromSearchParams = (params: URLSearchParams) => {
-  const selectedFacets: { key: string; value: string }[] = [];
+  const selectedFacets: SelectedFacet[] = [];
 
   params.forEach((value, name) => {
     const [filter, key] = name.split(".");
@@ -497,57 +500,64 @@ export const filtersFromSearchParams = (params: URLSearchParams) => {
   return selectedFacets;
 };
 
-export const toFilter = (
-  facet: FacetVTEX,
-  selectedFacets: { key: string; value: string }[],
-): Filter | null => {
-  if (facet.hidden) {
-    return null;
+export const mergeFacets = (
+  f1: SelectedFacet[],
+  f2: SelectedFacet[],
+): SelectedFacet[] => {
+  const facetKey = (facet: SelectedFacet) =>
+    `key:${facet.key}-value:${facet.value}`;
+  const merged = new Map<string, SelectedFacet>();
+
+  for (const f of f1) {
+    merged.set(facetKey(f), f);
+  }
+  for (const f of f2) {
+    merged.set(facetKey(f), f);
   }
 
-  if (facet.type === "PRICERANGE") {
-    return {
-      "@type": "FilterRange",
-      label: facet.name,
-      key: facet.key,
-      values: {
-        min: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc > curr.range.from ? curr.range.from : acc,
-          Infinity,
-        ),
-        max: (facet.values as FacetValueRange[]).reduce(
-          (acc, curr) => acc < curr.range.to ? curr.range.to : acc,
-          0,
-        ),
-      },
-    };
-  }
-
-  return {
-    "@type": "FilterToggle",
-    key: facet.key,
-    label: facet.name,
-    quantity: facet.quantity,
-    values: (facet.values as FacetValueBoolean[]).map((
-      { quantity, name, value, selected },
-    ) => {
-      const newFacet = { key: facet.key, value };
-      const filters = selected
-        ? selectedFacets.filter((facet) =>
-          facet.key !== newFacet.key && facet.value !== newFacet.value
-        )
-        : [...selectedFacets, newFacet];
-
-      return {
-        value,
-        quantity,
-        selected,
-        url: `?${filtersToSearchParams(filters).toString()}`,
-        label: name,
-      };
-    }),
-  };
+  return [...merged.values()];
 };
+
+const isValueRange = (
+  facet: FacetValueRange | FacetValueBoolean,
+): facet is FacetValueRange =>
+  // deno-lint-ignore no-explicit-any
+  Boolean((facet as any).range);
+
+const facetToToggle =
+  (selectedFacets: SelectedFacet[], key: string) =>
+  (item: FacetValueRange | FacetValueBoolean): FilterToggleValue => {
+    const { quantity, selected } = item;
+    const isRange = isValueRange(item);
+
+    const value = isRange
+      ? formatRange(item.range.from, item.range.to)
+      : item.value;
+    const label = isRange ? value : item.name;
+    const facet = { key, value };
+
+    const filters = selected
+      ? selectedFacets.filter((f) => f.key !== key || f.value !== value)
+      : [...selectedFacets, facet];
+
+    return {
+      value,
+      quantity,
+      selected,
+      url: `?${filtersToSearchParams(filters)}`,
+      label,
+    };
+  };
+
+export const toFilter =
+  (selectedFacets: SelectedFacet[]) =>
+  ({ key, name, quantity, values }: FacetVTEX): Filter => ({
+    "@type": "FilterToggle",
+    key,
+    label: name,
+    quantity: quantity,
+    values: values.map(facetToToggle(selectedFacets, key)),
+  });
 
 function nodeToNavbar(node: Category): Navbar {
   const url = new URL(node.url, "https://example.com");

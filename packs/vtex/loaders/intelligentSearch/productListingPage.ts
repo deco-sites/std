@@ -1,5 +1,6 @@
 import {
   filtersFromSearchParams,
+  mergeFacets,
   toFilter,
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
@@ -16,6 +17,7 @@ import type {
   SelectedFacet,
 } from "deco-sites/std/packs/vtex/types.ts";
 import {
+  toPath,
   withDefaultFacets,
   withDefaultParams,
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
@@ -25,11 +27,14 @@ import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { parseRange } from "deco-sites/std/utils/filters.ts";
+import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type {
-  Filter,
-  ProductListingPage,
-} from "deco-sites/std/commerce/types.ts";
-import type { Fuzzy, Sort } from "deco-sites/std/packs/vtex/types.ts";
+  Facet,
+  Fuzzy,
+  RangeFacet,
+  Sort,
+} from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
@@ -133,10 +138,12 @@ const searchArgsOf = (props: Props, url: URL) => {
   const page = url.searchParams.get("page")
     ? Number(url.searchParams.get("page")) - (currentPageoffset)
     : 0;
-  const sort = url.searchParams.get("sort") as Sort ??
+  const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
-  const selectedFacets = props.selectedFacets ||
-    filtersFromSearchParams(url.searchParams);
+  const selectedFacets = mergeFacets(
+    props.selectedFacets ?? [],
+    filtersFromSearchParams(url.searchParams),
+  );
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
 
@@ -185,6 +192,31 @@ const filtersFromPathname = (pages: PageType[]) =>
     })
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
+// Search API does not return the selected price filter, so there is no way for the
+// user to remove this price filter after it is set. This function selects the facet
+// so users can clear the price filters
+const selectPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
+  const price = facets.find((f): f is RangeFacet => f.key === "price");
+  const ranges = selectedFacets
+    .filter((k) => k.key === "price")
+    .map((s) => parseRange(s.value))
+    .filter(Boolean);
+
+  if (price) {
+    for (const range of ranges) {
+      if (!range) continue;
+
+      for (const val of price.values) {
+        if (val.range.from === range.from && val.range.to === range.to) {
+          val.selected = true;
+        }
+      }
+    }
+  }
+
+  return facets;
+};
+
 /**
  * @title VTEX product listing page - Intelligent Search
  * @description Returns data ready for search pages like category,brand pages
@@ -214,22 +246,23 @@ const loader = async (
     : baseSelectedFacets;
 
   const selected = withDefaultFacets(selectedFacets, ctx);
+  const fselected = selected.filter((f) => f.key !== "price");
   const params = withDefaultParams({ ...args, page }, ctx);
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
     fetchAPI<ProductSearchResult>(
-      `${search.product_search.facets(selected)}?${params}`,
+      `${search.product_search.facets(toPath(selected))}?${params}`,
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
     fetchAPI<FacetSearchResult>(
-      `${search.facets.facets(selected)}?${params}`,
+      `${search.facets.facets(toPath(fselected))}?${params}`,
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
   ]);
   const { products: vtexProducts, pagination, recordsFiltered } =
     productsResult;
-  const { facets } = facetsResult;
+  const facets = selectPriceFacet(facetsResult.facets, selectedFacets);
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
@@ -240,9 +273,8 @@ const loader = async (
       priceCurrency: config!.defaultPriceCurrency,
     })
   );
-  const filters = facets
-    .map((f) => !f.hidden && toFilter(f, selectedFacets))
-    .filter((x): x is Filter => Boolean(x));
+
+  const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
     baseUrl,

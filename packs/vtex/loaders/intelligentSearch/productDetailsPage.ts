@@ -9,6 +9,7 @@ import {
   withSegmentCookie,
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import {
+  toPath,
   withDefaultFacets,
   withDefaultParams,
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
@@ -85,7 +86,7 @@ const loader = async (
   const params = withDefaultParams({ query, count: 1 }, ctx);
 
   const { products: [product] } = await fetchAPI<ProductSearchResult>(
-    `${search.facets(facets)}?${params}`,
+    `${search.facets(toPath(facets))}?${params}`,
     {
       withProxyCache: true,
       headers: withSegmentCookie(segment),
@@ -107,7 +108,7 @@ const loader = async (
     }, ctx);
 
     const result = await fetchAPI<ProductSearchResult>(
-      `${search.facets(facets)}?${params}`,
+      `${search.facets(toPath(facets))}?${params}`,
       {
         withProxyCache: true,
         headers: withSegmentCookie(segment),

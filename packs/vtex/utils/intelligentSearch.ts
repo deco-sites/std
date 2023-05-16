@@ -28,10 +28,11 @@ export const withDefaultFacets = (
     facets.push(regionFacet);
   }
 
-  return facets
-    .map(({ key, value }) => `${key}/${value}`)
-    .join("/");
+  return facets;
 };
+
+export const toPath = (facets: SelectedFacet[]) =>
+  facets.map(({ key, value }) => `${key}/${value}`).join("/");
 
 interface Params {
   query: string;
