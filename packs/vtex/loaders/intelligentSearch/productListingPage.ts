@@ -193,11 +193,15 @@ const filtersFromPathname = (pages: PageType[]) =>
 // so users can clear the price filters
 const appendPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
   const price = facets.find((f): f is RangeFacet => f.key === "price");
-  const selected = selectedFacets.find((k) => k.key === "price");
-  const range = selected && parseRange(selected.value);
+  const ranges = selectedFacets
+    .filter((k) => k.key === "price")
+    .map((s) => parseRange(s.value))
+    .filter(Boolean);
 
-  if (price && range) {
-    price.values.push({ selected: true, quantity: 0, range });
+  if (price) {
+    for (const range of ranges) {
+      price.values.push({ selected: true, quantity: 0, range: range! });
+    }
   }
 
   return facets;

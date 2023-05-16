@@ -519,9 +519,7 @@ const facetToToggle =
     const facet = { key, value };
 
     const filters = selected
-      ? selectedFacets.filter((f) => f.key !== key && f.value !== value)
-      : isRange
-      ? [...selectedFacets.filter((f) => f.key !== key), facet] // remove other range filters
+      ? selectedFacets.filter((f) => f.key !== key || f.value !== value)
       : [...selectedFacets, facet];
 
     return {
