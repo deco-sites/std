@@ -62,7 +62,6 @@ export interface Props {
   /**
    * @title Starting page query parameter offset.
    * @description Set the starting page offset. Default to 1.
-   * @default 1
    */
   pageOffset?: number;
 }
@@ -121,6 +120,7 @@ const loader = async (
     : 0;
   const O = url.searchParams.get("O") as LegacySort ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
+    props.sort ??
     sortOptions[0].value;
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
