@@ -8,6 +8,7 @@ export const paths = ({ account }: Account) => {
   return {
     "no-cache": {
       "Newsletter.aspx": `${href(`/no-cache/Newsletter.aspx`)}`,
+      "AviseMe.aspx": `${href("/no-cache/AviseMe.aspx")}`,
     },
     api: {
       catalog_system: {
