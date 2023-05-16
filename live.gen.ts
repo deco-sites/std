@@ -72,8 +72,9 @@ import * as $$$$$$$$$$$8 from "./actions/vtex/cart/updateItemPrice.ts";
 import * as $$$$$$$$$$$9 from "./actions/vtex/cart/updateProfile.ts";
 import * as $$$$$$$$$$$10 from "./actions/vtex/cart/simulation.ts";
 import * as $$$$$$$$$$$11 from "./actions/vtex/cart/removeItemAttachment.ts";
-import * as $$$$$$$$$$$12 from "./actions/vtex/wishlist/removeItem.ts";
-import * as $$$$$$$$$$$13 from "./actions/vtex/wishlist/addItem.ts";
+import * as $$$$$$$$$$$12 from "./actions/vtex/newsletter/subscribe.ts";
+import * as $$$$$$$$$$$13 from "./actions/vtex/wishlist/removeItem.ts";
+import * as $$$$$$$$$$$14 from "./actions/vtex/wishlist/addItem.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -210,8 +211,9 @@ const manifest = {
     "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$2,
     "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$9,
     "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$4,
-    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$13,
-    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$12,
+    "deco-sites/std/actions/vtex/newsletter/subscribe.ts": $$$$$$$$$$$12,
+    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$14,
+    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$13,
   },
   "handlers": {
     "$live/handlers/devPage.ts": i1$$0,

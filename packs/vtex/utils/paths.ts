@@ -6,6 +6,9 @@ export const paths = ({ account }: Account) => {
   const href = (path: string) => new URL(path, base).href;
 
   return {
+    "no-cache": {
+      "Newsletter.aspx": `${href(`/no-cache/Newsletter.aspx`)}`,
+    },
     api: {
       catalog_system: {
         pub: {
