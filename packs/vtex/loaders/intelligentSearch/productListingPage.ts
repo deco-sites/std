@@ -1,5 +1,6 @@
 import {
   filtersFromSearchParams,
+  mergeFacets,
   toFilter,
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
@@ -16,6 +17,7 @@ import type {
   SelectedFacet,
 } from "deco-sites/std/packs/vtex/types.ts";
 import {
+  toPath,
   withDefaultFacets,
   withDefaultParams,
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
@@ -138,8 +140,10 @@ const searchArgsOf = (props: Props, url: URL) => {
     : 0;
   const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
-  const selectedFacets = props.selectedFacets ||
-    filtersFromSearchParams(url.searchParams);
+  const selectedFacets = mergeFacets(
+    props.selectedFacets ?? [],
+    filtersFromSearchParams(url.searchParams),
+  );
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
 
@@ -189,9 +193,9 @@ const filtersFromPathname = (pages: PageType[]) =>
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
 // Search API does not return the selected price filter, so there is no way for the
-// user to remove this price filter after it is set. This function injects a facet
+// user to remove this price filter after it is set. This function selects the facet
 // so users can clear the price filters
-const appendPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
+const selectPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
   const price = facets.find((f): f is RangeFacet => f.key === "price");
   const ranges = selectedFacets
     .filter((k) => k.key === "price")
@@ -200,7 +204,13 @@ const appendPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
 
   if (price) {
     for (const range of ranges) {
-      price.values.push({ selected: true, quantity: 0, range: range! });
+      if (!range) continue;
+
+      for (const val of price.values) {
+        if (val.range.from === range.from && val.range.to === range.to) {
+          val.selected = true;
+        }
+      }
     }
   }
 
@@ -236,22 +246,23 @@ const loader = async (
     : baseSelectedFacets;
 
   const selected = withDefaultFacets(selectedFacets, ctx);
+  const fselected = selected.filter((f) => f.key !== "price");
   const params = withDefaultParams({ ...args, page }, ctx);
 
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
     fetchAPI<ProductSearchResult>(
-      `${search.product_search.facets(selected)}?${params}`,
+      `${search.product_search.facets(toPath(selected))}?${params}`,
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
     fetchAPI<FacetSearchResult>(
-      `${search.facets.facets(selected)}?${params}`,
+      `${search.facets.facets(toPath(fselected))}?${params}`,
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
   ]);
   const { products: vtexProducts, pagination, recordsFiltered } =
     productsResult;
-  const facets = appendPriceFacet(facetsResult.facets, selectedFacets);
+  const facets = selectPriceFacet(facetsResult.facets, selectedFacets);
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add

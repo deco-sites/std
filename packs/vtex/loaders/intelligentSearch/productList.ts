@@ -7,6 +7,7 @@ import {
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import {
+  toPath,
   withDefaultFacets,
   withDefaultParams,
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
@@ -129,7 +130,7 @@ const loader = async (
 
   // search products on VTEX. Feel free to change any of these parameters
   const { products: vtexProducts } = await fetchAPI<ProductSearchResult>(
-    `${search.facets(facets)}?${params}`,
+    `${search.facets(toPath(facets))}?${params}`,
     {
       withProxyCache: true,
       headers: withSegmentCookie(segment),

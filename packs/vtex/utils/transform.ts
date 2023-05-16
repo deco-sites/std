@@ -500,6 +500,24 @@ export const filtersFromSearchParams = (params: URLSearchParams) => {
   return selectedFacets;
 };
 
+export const mergeFacets = (
+  f1: SelectedFacet[],
+  f2: SelectedFacet[],
+): SelectedFacet[] => {
+  const facetKey = (facet: SelectedFacet) =>
+    `key:${facet.key}-value:${facet.value}`;
+  const merged = new Map<string, SelectedFacet>();
+
+  for (const f of f1) {
+    merged.set(facetKey(f), f);
+  }
+  for (const f of f2) {
+    merged.set(facetKey(f), f);
+  }
+
+  return [...merged.values()];
+};
+
 const isValueRange = (
   facet: FacetValueRange | FacetValueBoolean,
 ): facet is FacetValueRange =>
