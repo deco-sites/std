@@ -334,7 +334,7 @@ export interface FilterToggle extends FilterBase {
 
 export interface FilterRange extends FilterBase {
   "@type": "FilterRange";
-  values: FilterRangeValue[];
+  values: FilterRangeValue;
 }
 
 export type Filter = FilterToggle | FilterRange;

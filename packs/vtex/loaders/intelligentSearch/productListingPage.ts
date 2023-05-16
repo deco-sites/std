@@ -25,11 +25,14 @@ import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { parseRange } from "deco-sites/std/utils/filters.ts";
+import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type {
-  Filter,
-  ProductListingPage,
-} from "deco-sites/std/commerce/types.ts";
-import type { Fuzzy, Sort } from "deco-sites/std/packs/vtex/types.ts";
+  Facet,
+  Fuzzy,
+  RangeFacet,
+  Sort,
+} from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
@@ -133,7 +136,7 @@ const searchArgsOf = (props: Props, url: URL) => {
   const page = url.searchParams.get("page")
     ? Number(url.searchParams.get("page")) - (currentPageoffset)
     : 0;
-  const sort = url.searchParams.get("sort") as Sort ??
+  const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
   const selectedFacets = props.selectedFacets ||
     filtersFromSearchParams(url.searchParams);
@@ -185,6 +188,21 @@ const filtersFromPathname = (pages: PageType[]) =>
     })
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
+// Search API does not return the selected price filter, so there is no way for the
+// user to remove this price filter after it is set. This function injects a facet
+// so users can clear the price filters
+const appendPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
+  const price = facets.find((f): f is RangeFacet => f.key === "price");
+  const selected = selectedFacets.find((k) => k.key === "price");
+  const range = selected && parseRange(selected.value);
+
+  if (price && range) {
+    price.values.push({ selected: true, quantity: 0, range });
+  }
+
+  return facets;
+};
+
 /**
  * @title VTEX product listing page - Intelligent Search
  * @description Returns data ready for search pages like category,brand pages
@@ -229,7 +247,7 @@ const loader = async (
   ]);
   const { products: vtexProducts, pagination, recordsFiltered } =
     productsResult;
-  const { facets } = facetsResult;
+  const facets = appendPriceFacet(facetsResult.facets, selectedFacets);
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
@@ -240,9 +258,8 @@ const loader = async (
       priceCurrency: config!.defaultPriceCurrency,
     })
   );
-  const filters = facets
-    .map((f) => !f.hidden && toFilter(f, selectedFacets))
-    .filter((x): x is Filter => Boolean(x));
+
+  const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets));
   const itemListElement = pageTypesToBreadcrumbList(
     await pageTypesPromise,
     baseUrl,

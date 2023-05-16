@@ -1,6 +1,8 @@
+import { formatRange } from "deco-sites/std/utils/filters.ts";
 import type {
   BreadcrumbList,
   Filter,
+  FilterToggleValue,
   Navbar,
   Offer,
   Product,
@@ -21,6 +23,7 @@ import type {
   LegacyItem as LegacySkuVTEX,
   LegacyProduct as LegacyProductVTEX,
   Product as ProductVTEX,
+  SelectedFacet,
   Seller as SellerVTEX,
 } from "../types.ts";
 
@@ -472,7 +475,7 @@ export const legacyFacetToFilter = (
 };
 
 export const filtersToSearchParams = (
-  selectedFacets: { key: string; value: string }[],
+  selectedFacets: SelectedFacet[],
 ) => {
   const searchParams = new URLSearchParams();
 
@@ -484,7 +487,7 @@ export const filtersToSearchParams = (
 };
 
 export const filtersFromSearchParams = (params: URLSearchParams) => {
-  const selectedFacets: { key: string; value: string }[] = [];
+  const selectedFacets: SelectedFacet[] = [];
 
   params.forEach((value, name) => {
     const [filter, key] = name.split(".");
@@ -503,26 +506,22 @@ const isValueRange = (
   // deno-lint-ignore no-explicit-any
   Boolean((facet as any).range);
 
-export const toFilter = (
-  { key, name, quantity, values }: FacetVTEX,
-  selectedFacets: { key: string; value: string }[],
-): Filter | null => ({
-  "@type": "FilterToggle",
-  key,
-  label: name,
-  quantity: quantity,
-  values: values.map((item) => {
+const facetToToggle =
+  (selectedFacets: SelectedFacet[], key: string) =>
+  (item: FacetValueRange | FacetValueBoolean): FilterToggleValue => {
     const { quantity, selected } = item;
-    const value = isValueRange(item)
-      ? `${item.range.from}:${item.range.to}`
-      : item.value;
-    const label = isValueRange(item) ? value : item.name;
+    const isRange = isValueRange(item);
 
+    const value = isRange
+      ? formatRange(item.range.from, item.range.to)
+      : item.value;
+    const label = isRange ? value : item.name;
     const facet = { key, value };
+
     const filters = selected
-      ? selectedFacets.filter((f) =>
-        f.key !== facet.key && f.value !== facet.value
-      )
+      ? selectedFacets.filter((f) => f.key !== key && f.value !== value)
+      : isRange
+      ? [...selectedFacets.filter((f) => f.key !== key), facet] // remove other range filters
       : [...selectedFacets, facet];
 
     return {
@@ -532,8 +531,17 @@ export const toFilter = (
       url: `?${filtersToSearchParams(filters)}`,
       label,
     };
-  }),
-});
+  };
+
+export const toFilter =
+  (selectedFacets: SelectedFacet[]) =>
+  ({ key, name, quantity, values }: FacetVTEX): Filter => ({
+    "@type": "FilterToggle",
+    key,
+    label: name,
+    quantity: quantity,
+    values: values.map(facetToToggle(selectedFacets, key)),
+  });
 
 function nodeToNavbar(node: Category): Navbar {
   const url = new URL(node.url, "https://example.com");

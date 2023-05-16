@@ -268,15 +268,15 @@ export function toFilters(
   typeTagsInUse: { key: string; value: string }[],
   cleanUrl: URL,
 ): Filter[] {
-  // const priceRange = {
-  //   "@type": "FilterRange" as const,
-  //   label: "Valor",
-  //   key: "price_range",
-  //   values: {
-  //     min: aggregations.min_price,
-  //     max: aggregations.max_price,
-  //   },
-  // };
+  const priceRange = {
+    "@type": "FilterRange" as const,
+    label: "Valor",
+    key: "price_range",
+    values: {
+      min: aggregations.min_price,
+      max: aggregations.max_price,
+    },
+  };
 
   const types = Object.keys(aggregations.types).map((typeKey) => {
     const typeValues = aggregations.types[typeKey];
@@ -311,7 +311,7 @@ export function toFilters(
   });
 
   return [
-    // priceRange, // TODO
+    priceRange,
     ...types,
   ];
 }
