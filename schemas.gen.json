@@ -2642,8 +2642,7 @@
             "null"
           ],
           "title": "Page Offset",
-          "description": "Set the starting page offset. Default to 1.",
-          "default": "1"
+          "description": "Set the starting page offset. Default to 1."
         }
       },
       "required": [
@@ -3022,8 +3021,7 @@
             "null"
           ],
           "title": "Page Offset",
-          "description": "Set the starting page offset. Default to 1.",
-          "default": "1"
+          "description": "Set the starting page offset. Default to 1."
         }
       },
       "required": [
