@@ -3,7 +3,7 @@ import {
   ExponentialBackoff,
   handleWhen,
   retry,
-} from "https://esm.sh/cockatiel@3.1.1";
+} from "https://esm.sh/cockatiel@3.1.1?target=es2019";
 
 // this error is thrown by deno deploy when the connection is closed by the server.
 // check the discussion at discord: https://discord.com/channels/985687648595243068/1107104244517048320/1107111259813466192
