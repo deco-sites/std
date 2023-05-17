@@ -39,6 +39,7 @@ const nonEmptyArray = <T>(array: T[] | null | undefined) =>
 
 export const toProductPage = (
   product: ProductShopify,
+  url: URL,
   maybeSkuId?: number,
 ): ProductDetailsPage => {
   const skuId = maybeSkuId
@@ -53,7 +54,7 @@ export const toProductPage = (
   return {
     "@type": "ProductDetailsPage",
     breadcrumbList: toBreadcrumbList(product, sku),
-    product: toProduct(product, sku),
+    product: toProduct(product, sku, url),
   };
 };
 
@@ -76,6 +77,7 @@ export const toBreadcrumbList = (
 export const toProduct = (
   product: ProductShopify,
   sku: SkuShopify,
+  url: URL,
   level = 0, // prevent inifinte loop while self referencing the product
 ): Product => {
   const {
@@ -100,7 +102,7 @@ export const toProduct = (
   const additionalProperty = selectedOptions.map(toPropertyValue);
   const allImages = nonEmptyArray([image, ...images.nodes]) ?? [DEFAULT_IMAGE];
   const hasVariant = level < 1 &&
-    variants.nodes.map((variant) => toProduct(product, variant, 1));
+    variants.nodes.map((variant) => toProduct(product, variant, url, 1));
   const priceSpec: UnitPriceSpecification[] = [{
     "@type": "UnitPriceSpecification",
     priceType: "https://schema.org/SalePrice",
@@ -118,7 +120,7 @@ export const toProduct = (
   return {
     "@type": "Product",
     productID,
-    url: getPath(product, sku),
+    url: `${url.host}${getPath(product, sku)}`,
     name: sku.title,
     description,
     sku: productID,
@@ -130,7 +132,7 @@ export const toProduct = (
       "@type": "ProductGroup",
       productGroupID,
       hasVariant: hasVariant || [],
-      url: getPath(product),
+      url: `${url.host}${getPath(product)}`,
       name: product.title,
       additionalProperty: [],
     },
