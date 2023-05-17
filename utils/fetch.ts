@@ -23,7 +23,7 @@ export const retryExceptionOr500 = retry(connectionClosedMsg, {
 });
 
 /**
- * proxy.decocache.com does not vary with the vary header. For this, we must add a stable cache burst
+ * fastly.decocache.com does not vary with the vary header. For this, we must add a stable cache burst
  * key to avoid sharing caches with the same cookies etc
  */
 const toProxyCache = async (
@@ -36,7 +36,7 @@ const toProxyCache = async (
     ? new URL(input.url)
     : input;
 
-  const proxyUrl = new URL(`https://proxy.decocache.com/${url.href}`);
+  const proxyUrl = new URL(`https://fastly.decocache.com/${url.href}`);
 
   const buffer = await crypto.subtle.digest(
     "SHA-1",
