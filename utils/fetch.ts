@@ -64,18 +64,18 @@ export const fetchSafe = async (
 ) => {
   const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
 
+  const start = performance.now();
   const response = await retryExceptionOr500.execute(async () =>
     await fetch(url, init)
   );
 
+  const duration = performance.now() - start;
   const isGet = !init?.method || init.method === "GET";
   const isHit = response.headers.get("x-cache") === "HIT";
   const servedBy = response.headers.get("x-served-by");
+
   if (isGet) {
-    if (!isHit) {
-      console.log(`${url}`, response.headers);
-    }
-    console.log({ servedBy });
+    console.log(`[${duration}ms]: hit: ${isHit}, servedBy: ${servedBy}`);
   }
 
   if (response.ok) {
