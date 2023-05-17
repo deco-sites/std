@@ -68,6 +68,16 @@ export const fetchSafe = async (
     await fetch(url, init)
   );
 
+  const isGet = !init?.method || init.method === "GET";
+  const isHit = response.headers.get("x-cache") === "HIT";
+  const servedBy = response.headers.get("x-served-by");
+  if (isGet) {
+    if (!isHit) {
+      console.log(`${url}`, response.headers);
+    }
+    console.log({ servedBy });
+  }
+
   if (response.ok) {
     return response;
   }
