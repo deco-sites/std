@@ -71,10 +71,13 @@ export const fetchSafe = async (
   const isGet = !init?.method || init.method === "GET";
   const isHit = response.headers.get("x-cache") === "HIT";
   const servedBy = response.headers.get("x-served-by");
+  const age = response.headers.get("Age");
 
   if (isGet) {
     console.log(
-      `[${duration.toFixed(0)}ms]: hit: ${isHit}, servedBy: ${servedBy}`,
+      `[${
+        duration.toFixed(0)
+      }ms]: hit: ${isHit}, servedBy: ${servedBy}, age: ${age}`,
     );
   }
 
