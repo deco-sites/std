@@ -36,7 +36,7 @@ const productPageLoader: LoaderFunction<
     };
   }
 
-  const product = toProductPage(data.product, maybeSkuId);
+  const product = toProductPage(data.product, new URL(_req.url), maybeSkuId);
 
   return { data: product };
 };
