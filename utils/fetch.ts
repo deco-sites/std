@@ -75,7 +75,9 @@ export const fetchSafe = async (
   const servedBy = response.headers.get("x-served-by");
 
   if (isGet) {
-    console.log(`[${duration}ms]: hit: ${isHit}, servedBy: ${servedBy}`);
+    console.log(
+      `[${duration.toFixed(0)}ms]: hit: ${isHit}, servedBy: ${servedBy}`,
+    );
   }
 
   if (response.ok) {
