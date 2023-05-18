@@ -2405,7 +2405,7 @@
         },
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "number of products per page to display"
         }
       },
@@ -2496,7 +2496,7 @@
         },
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "number of products per page to display"
         }
       },
@@ -2549,7 +2549,7 @@
         },
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "number of products per page to display"
         },
         "ft": {
@@ -2619,7 +2619,7 @@
             }
           ],
           "type": "string",
-          "title": "Sort"
+          "title": "Sorting"
         },
         "filters": {
           "anyOf": [
@@ -2633,7 +2633,7 @@
             }
           ],
           "type": "string",
-          "title": "Filters",
+          "title": "Filter behavior",
           "description": "Set to static to not change the facets when the user filters the search. Dynamic will only show the filters containing products after each filter action"
         },
         "pageOffset": {
@@ -2641,8 +2641,14 @@
             "number",
             "null"
           ],
+<<<<<<< HEAD
           "title": "Page Offset",
           "description": "Set the starting page offset. Default to 1."
+=======
+          "title": "Starting page query parameter offset.",
+          "description": "Set the starting page offset. Default to 1.",
+          "default": "1"
+>>>>>>> 04f8cdf (upgrade fresh)
         }
       },
       "required": [
@@ -2685,7 +2691,7 @@
             }
           ],
           "type": "string",
-          "title": "Cross Selling",
+          "title": "Related Products",
           "description": "VTEX Cross Selling API. This loader only works on routes of type /:slug/p"
         },
         "count": {
@@ -2895,7 +2901,7 @@
           "items": {
             "type": "string"
           },
-          "title": "Collection",
+          "title": "Collection ID",
           "pattern": "\\d*"
         }
       },
@@ -2943,7 +2949,7 @@
         },
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "number of products per page to display"
         },
         "sort": {
@@ -2982,7 +2988,7 @@
             }
           ],
           "type": "string",
-          "title": "Sort"
+          "title": "Sorting"
         },
         "fuzzy": {
           "anyOf": [
@@ -3020,8 +3026,14 @@
             "number",
             "null"
           ],
+<<<<<<< HEAD
           "title": "Page Offset",
           "description": "Set the starting page offset. Default to 1."
+=======
+          "title": "Starting page query parameter offset.",
+          "description": "Set the starting page offset. Default to 1.",
+          "default": "1"
+>>>>>>> 04f8cdf (upgrade fresh)
         }
       },
       "required": [
@@ -3148,7 +3160,7 @@
       "properties": {
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "Number of products per page to display",
           "default": "12"
         }
@@ -6007,7 +6019,7 @@
       "properties": {
         "collection": {
           "type": "string",
-          "title": "Collection",
+          "title": "Collection ID (e.g.: 139)",
           "pattern": "\\d*"
         },
         "sort": {
@@ -6391,7 +6403,7 @@
             }
           ],
           "type": "string",
-          "title": "Cross Selling",
+          "title": "Related Products",
           "description": "VTEX Cross Selling API. This loader only works on routes of type /:slug/p"
         },
         "count": {
@@ -6546,7 +6558,7 @@
       "properties": {
         "count": {
           "type": "number",
-          "title": "Count",
+          "title": "Items per page",
           "description": "Number of products per page to display",
           "default": "12"
         }
@@ -6883,7 +6895,7 @@
       "properties": {
         "label": {
           "type": "string",
-          "title": "Label"
+          "title": "Locale"
         },
         "authToken": {
           "type": "string",
@@ -6959,7 +6971,7 @@
             "string",
             "null"
           ],
-          "title": "Canonical",
+          "title": "Canonical URL",
           "default": "https://example.com"
         },
         "imageUrl": {
@@ -6989,7 +7001,7 @@
         },
         "titleTemplate": {
           "type": "string",
-          "title": "Title Template",
+          "title": "Title template",
           "description": "add a %s whenever you want it to be replaced with the product name",
           "default": "%s | Fashion Store"
         },
@@ -6998,7 +7010,7 @@
             "string",
             "null"
           ],
-          "title": "Description",
+          "title": "Meta tag description",
           "description": "If not set, the product description will be used instead"
         },
         "themeColor": {
@@ -7366,7 +7378,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@7511711fe88791a704c3f7928b95597a|WorkflowRef": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7384,13 +7396,13 @@
           ]
         }
       ],
-      "title": "7511711fe88791a704c3f7928b95597a|WorkflowRef"
+      "title": "WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@7511711fe88791a704c3f7928b95597a|WorkflowRef",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e",
           "title": "Workflow"
         },
         "id": {
