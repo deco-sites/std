@@ -2641,14 +2641,8 @@
             "number",
             "null"
           ],
-<<<<<<< HEAD
-          "title": "Page Offset",
-          "description": "Set the starting page offset. Default to 1."
-=======
           "title": "Starting page query parameter offset.",
-          "description": "Set the starting page offset. Default to 1.",
-          "default": "1"
->>>>>>> 04f8cdf (upgrade fresh)
+          "description": "Set the starting page offset. Default to 1."
         }
       },
       "required": [
@@ -3026,14 +3020,8 @@
             "number",
             "null"
           ],
-<<<<<<< HEAD
-          "title": "Page Offset",
-          "description": "Set the starting page offset. Default to 1."
-=======
           "title": "Starting page query parameter offset.",
-          "description": "Set the starting page offset. Default to 1.",
-          "default": "1"
->>>>>>> 04f8cdf (upgrade fresh)
+          "description": "Set the starting page offset. Default to 1."
         }
       },
       "required": [
