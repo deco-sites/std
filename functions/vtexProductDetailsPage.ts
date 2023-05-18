@@ -5,8 +5,8 @@ import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";
 
 /**
- * @title VTEX product details page - Intelligent Search (deprecated)
- * @description Works on routes of type /:slug/p
+ * @title VTEX Intelligent Search - Product Details page
+ * @description For routes of type /:slug/p
  * @deprecated true
  */
 const loaderV0: LoaderFunction<

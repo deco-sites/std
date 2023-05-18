@@ -27,8 +27,8 @@ export interface Props {
 }
 
 /**
- * @title Product listing page loader
- * @description Returns data ready for search pages like category,brand pages
+ * @title VNDA - Product Listing page
+ * @description Useful for category, search, brand and collection pages.
  */
 const searchLoader: LoaderFunction<
   Props,

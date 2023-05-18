@@ -13,7 +13,7 @@ export interface Props {
 }
 
 /**
- * @title Product list loader
+ * @title Shopify - Search Products
  * @description Usefull for shelves and static galleries.
  */
 const searchLoader: LoaderFunction<

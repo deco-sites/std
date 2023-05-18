@@ -32,8 +32,8 @@ export interface Props {
 }
 
 /**
- * @title VTEX product list - Intelligent Search (deprecated)
- * @description Usefull for shelves and static galleries.
+ * @title VTEX Intelligent Search - Search Products
+ * @description Use it in Shelves and static Galleries.
  * @deprecated true
  */
 const loaderV0: LoaderFunction<

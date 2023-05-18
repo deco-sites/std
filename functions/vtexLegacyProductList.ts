@@ -16,7 +16,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX product list - legacy (deprecated)
+ * @title VTEX - Search Products - legacy (deprecated)
  * @description Usefull for shelves and static galleries.
  * @deprecated
  */

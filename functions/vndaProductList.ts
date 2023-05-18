@@ -23,8 +23,8 @@ export interface Props {
 }
 
 /**
- * @title Product list loader
- * @description Usefull for shelves and static galleries.
+ * @title VNDA - Search Products
+ * @description Use it in Shelves and static Galleries.
  */
 const productListLoader: LoaderFunction<
   Props,
