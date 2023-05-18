@@ -47,6 +47,7 @@
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
+              "deco-sites/std/loaders/vtex/components/myHeader.tsx",
               "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts",
@@ -76,6 +77,7 @@
               "deco-sites/std/sections/configVNDA.global.tsx",
               "deco-sites/std/sections/configVTEX.global.tsx",
               "deco-sites/std/sections/configYourViews.global.tsx",
+              "deco-sites/std/sections/Header.tsx",
               "deco-sites/std/sections/SEO.tsx",
               "deco-sites/std/sections/SEOPDP.tsx",
               "deco-sites/std/sections/SEOPLP.tsx",
@@ -5969,6 +5971,32 @@
         }
       ]
     },
+    "ZGVjby1jeC9saXZlL2VuZ2luZS9ibG9jay50cw==@ComponentFunc": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "title": "deco-cx/live/engine/block.ts@ComponentFunc"
+        },
+        {
+          "title": "deco-sites/std/loaders/vtex/components/myHeader.tsx",
+          "type": "object",
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/components/myHeader.tsx"
+              ],
+              "default": "deco-sites/std/loaders/vtex/components/myHeader.tsx"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==@Props": {
       "type": "object",
       "properties": {
@@ -6937,6 +6965,24 @@
       ],
       "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
     },
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvSGVhZGVyLnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "logo": {
+          "type": "string",
+          "title": "Logo"
+        },
+        "Layout": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2VuZ2luZS9ibG9jay50cw==@ComponentFunc",
+          "title": " Layout"
+        }
+      },
+      "required": [
+        "logo",
+        "Layout"
+      ],
+      "title": "deco-sites/std/sections/Header.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPQmFzZS50c3g=@Props": {
       "type": "object",
       "properties": {
@@ -7366,7 +7412,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ef3f4b831bfbc970ac13921b6e55c842": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7384,13 +7430,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e"
+      "title": "WorkflowRef|ef3f4b831bfbc970ac13921b6e55c842"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ce8a781f5f6005ca66fa5203d86e259e",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|ef3f4b831bfbc970ac13921b6e55c842",
           "title": "Workflow"
         },
         "id": {
@@ -8548,6 +8594,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NvbXBvbmVudHMvbXlIZWFkZXIudHN4": {
+      "title": "deco-sites/std/loaders/vtex/components/myHeader.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/vtex/components/myHeader.tsx"
+          ],
+          "default": "deco-sites/std/loaders/vtex/components/myHeader.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
       "title": "VTEX product details page - Intelligent Search",
       "description": "Works on routes of type /:slug/p",
@@ -9160,6 +9222,27 @@
             "deco-sites/std/sections/configYourViews.global.tsx"
           ],
           "default": "deco-sites/std/sections/configYourViews.global.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvSGVhZGVyLnRzeA==": {
+      "title": "deco-sites/std/sections/Header.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvSGVhZGVyLnRzeA==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/sections/Header.tsx"
+          ],
+          "default": "deco-sites/std/sections/Header.tsx"
         }
       }
     },
@@ -10006,6 +10089,9 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NhcnQudHM="
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NvbXBvbmVudHMvbXlIZWFkZXIudHN4"
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw=="
         },
         {
@@ -10123,6 +10209,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnWW91clZpZXdzLmdsb2JhbC50c3g="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvSGVhZGVyLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvU0VPLnRzeA=="
