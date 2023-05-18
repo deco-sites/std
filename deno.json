@@ -10,12 +10,14 @@
   },
   "lint": {
     "exclude": [
+      ".frsh",
       "static/",
       "README.md"
     ]
   },
   "fmt": {
     "exclude": [
+      ".frsh",
       "static/",
       "README.md"
     ]
