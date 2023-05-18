@@ -30,12 +30,13 @@ const mapOrderFormItemsToAnalyticsItems = (
     item_id: item.productId,
     item_name: item.skuName,
     coupon,
-    discount: item.price - item.sellingPrice,
+    discount: Number((item.price - item.sellingPrice).toFixed(2)),
     index,
     item_brand: item.additionalInfo.brandName ?? "",
     item_variant: item.id,
     price: item.price,
     quantity: item.quantity,
+    affiliation: item.seller,
     ...(mapItemCategoriesToAnalyticsCategories(item)),
   }));
 };
