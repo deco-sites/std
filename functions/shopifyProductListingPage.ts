@@ -18,7 +18,7 @@ export interface Props {
 }
 
 /**
- * @title Product listing page loader
+ * @title Shopify - Product Listing page
  * @description Returns data ready for search pages like category,brand pages
  */
 const searchLoader: LoaderFunction<

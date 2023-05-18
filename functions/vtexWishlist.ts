@@ -15,8 +15,8 @@ export interface Props {
 }
 
 /**
- * @title Product list loader
- * @description Usefull for shelves and static galleries.
+ * @title VTEX - Load Wishlist
+ * @description Used with vtex.wish-list app
  * @deprecated true
  */
 const loaderV0: LoaderFunction<
