@@ -89,8 +89,8 @@ const fromProps = (
 };
 
 /**
- * @title VTEX product list - Portal
- * @description Usefull for shelves and static galleries.
+ * @title VTEX Legacy - Search Products
+ * @description Use it in Shelves and static Galleries.
  */
 const loader = async (
   props: Props,

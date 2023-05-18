@@ -48,7 +48,7 @@ const searchLoader: LoaderFunction<
   // If a property is missing from the final `products` array you can add
   // it in here
   const products = data?.products.nodes.map((p) =>
-    toProduct(p, p.variants.nodes[0])
+    toProduct(p, p.variants.nodes[0], new URL(req.url))
   );
 
   const hasNextPage = Boolean(data?.products.pageInfo.hasNextPage ?? false);
