@@ -111,7 +111,6 @@ export interface Props {
   /**
    * @title Starting page query parameter offset.
    * @description Set the starting page offset. Default to 1.
-   * @default 1
    */
   pageOffset?: number;
 }
@@ -138,8 +137,9 @@ const searchArgsOf = (props: Props, url: URL) => {
   const page = url.searchParams.get("page")
     ? Number(url.searchParams.get("page")) - (currentPageoffset)
     : 0;
-  const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
-    LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? sortOptions[0].value;
+  const sort = url.searchParams.get("sort") as Sort ??
+    LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
+    sortOptions[0].value;
   const selectedFacets = mergeFacets(
     props.selectedFacets ?? [],
     filtersFromSearchParams(url.searchParams),
