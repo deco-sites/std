@@ -25,63 +25,31 @@ function addVTEXPortalDataSnippet(accountName: any) {
     pageFacets: [],
     shelfProductIds: [],
   };
-  // categoryName: "",
-  // categoryId: "",
 
   if (isProductPage) {
     props.pageCategory = "Product";
-    // const productSD = structuredDatas.find((
-    //   s,
-    // ) => (s["@type"] === "Product")) || {};
-    //
-    // props.pageDepartment = productSD.additionalProperty.find((p) =>
-    //   p.name === "category"
-    // ).value;
-    // props["productId"] = productSD.productID;
-    // props["productReferenceId"] = new URL(window.location.href).pathname.split(
-    //   "/",
-    // )[1].split("-").pop(); // Isso não é verdade exemplo: https://fashion.deco.site/camisa-masculina-rock/p?skuId=92
-    // props["productEans"] = [
-    //   productSD.gtin,
-    // ];
-    // props["skuStocks"] = {
-    //   [productSD.sku]: productSD.offers?.offers?.[0]?.inventoryLevel.value,
-    // };
-    //
-    // props["productName"] = productSD.name;
-    // props["productBrandName"] = productSD.brand;
-    // props["productDepartmentName"] = props.pageDepartment;
-    // props["productCategoryName"] = props.additionalProperty.findLast((v) =>
-    //   v.name === "category"
-    // )?.value;
-    //
-    // const offer = productSD.offers;
-    // props["productListPriceFrom"] = offer.lowPrice;
-    // props["productListPriceTo"] = offer.highPrice;
-    // props["productPriceFrom"] = offer.lowPrice;
-    // props["productPriceTo"] = offer.highPrice;
-    //
-    // props["productBrandId"] = 930833574;
-    // props["productDepartmentId"] = 4010494;
-    // props["productCategoryId"] = 4010502;
-    // props["sellerId"] = "1";
-    // props["sellerIds"] = "1";
     const scriptEl: HTMLScriptElement | null = document.querySelector(
       'script[data-id="vtex-portal-compat"]',
     );
-    console.log("scruot", scriptEl?.dataset);
     if (scriptEl) {
       Object.assign(props, JSON.parse(scriptEl.dataset.datalayer || "{}"));
     }
   }
 
-  if (!isProductPage) {
-    const breadcrumbSD = structuredDatas.find((
-      s,
-    ) => (s["@type"] === "BreadcrumbList"));
-    props.pageDepartment = breadcrumbSD?.itemListElement?.[0]?.name || ""; // what to do here?;
+  const breadcrumbSD = structuredDatas.find((
+    s,
+  ) => (s["@type"] === "BreadcrumbList"));
+  if (breadcrumbSD) {
+    const department = breadcrumbSD?.itemListElement?.[0];
+    props.pageDepartment = department?.name || null;
     if (props.pageDepartment) {
       props.pageCategory = "Category";
+      const category = breadcrumbSD?.itemListElement
+        ?.[breadcrumbSD?.itemListElement.length - 1];
+      props.categoryName = category?.name;
+    } else {
+      props.pageCategory = new URL(window.location.href).pathname.split("/")
+        .filter(Boolean).join(" ");
     }
   }
 
@@ -147,3 +115,7 @@ export function ProductDetailsTemplate({ product }: { product: Product }) {
     </Head>
   );
 }
+
+// How to use:
+// 1. add the AddVTEXPortalData at routes/_app.tsx before <props.Component />
+// 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
