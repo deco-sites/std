@@ -33,7 +33,7 @@ const dev = async (
   const css = await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS);
   const content = await processor.process(css, { from, to });
 
-  await ensureFile(to);
+  await ensureFile(to).catch(() => console.log({ to }));
   await Deno.writeTextFile(to, content.css, { create: true });
 };
 
