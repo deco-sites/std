@@ -13,23 +13,37 @@ export const mapCategoriesToAnalyticsCategories = (
 };
 
 export const mapProductToAnalyticsItem = (
-  { product, breadcrumbList, price, listPrice, index, coupon }: {
+  { product, breadcrumbList, price, listPrice, coupon }: {
     product: Product;
     breadcrumbList?: BreadcrumbList;
     price?: number;
     listPrice?: number;
-  } & Pick<AnalyticsItem, "price" | "index" | "coupon">,
+  } & Pick<AnalyticsItem, "price" | "coupon">,
 ): AnalyticsItem => {
-  const { name, productID, offers } = product;
+  const { offers } = product;
+
+  const itemId = `${product.isVariantOf?.productGroupID}_${product.sku}`;
+  const itemVariant = product.additionalProperty
+    ?.filter((
+      { valueReference },
+    ) => valueReference === "SPECIFICATION")
+    .map(({ value }) => value)
+    .join(",");
+  const index = Math.max(
+    product.isVariantOf?.hasVariant.findIndex((v) => v.url === product.url) ||
+      0,
+    0,
+  );
+
   return {
-    item_id: product.isVariantOf?.productGroupID ?? "",
+    item_id: itemId,
     quantity: 1,
     price,
-    discount: price && listPrice ? listPrice - price : 0,
-    item_name: name || "",
+    discount: Number((price && listPrice ? listPrice - price : 0).toFixed(2)),
+    item_name: product.isVariantOf?.name || "",
     index,
     coupon,
-    item_variant: productID,
+    item_variant: itemVariant,
     item_brand: product.brand,
     affiliation: offers?.offers[0].seller,
     ...(mapCategoriesToAnalyticsCategories(

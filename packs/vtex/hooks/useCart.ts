@@ -27,7 +27,8 @@ const mapOrderFormItemsToAnalyticsItems = (
   const coupon = orderForm.marketingData?.coupon ?? undefined;
 
   return items.map((item, index) => ({
-    item_id: item.productId,
+    item_id: `${item.productId}_${item.id}`,
+    // TODO: Nao tem info correta
     item_name: item.skuName,
     coupon,
     discount: Number((item.price - item.sellingPrice).toFixed(2)),
