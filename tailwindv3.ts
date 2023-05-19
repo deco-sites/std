@@ -16,31 +16,35 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
-const dev = async (
+const dev = (
   partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS,
 ) => {
   const start = performance.now();
   const config = { ...DEFAULT_OPTIONS, ...partialConfig };
 
-  const processor = postcss([
-    (tailwindcss as PluginCreator)(config),
-    autoprefixer(),
-    cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
-  ]);
+  setTimeout(async () => {
+    const processor = postcss([
+      (tailwindcss as PluginCreator)(config),
+      autoprefixer(),
+      cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
+    ]);
 
-  const css = await Deno.readTextFile(FROM).catch((_) => DEFAULT_TAILWIND_CSS);
-  const content = await processor.process(css, { from: FROM, to: TO });
+    const css = await Deno.readTextFile(FROM).catch((_) =>
+      DEFAULT_TAILWIND_CSS
+    );
+    const content = await processor.process(css, { from: FROM, to: TO });
 
-  await ensureFile(TO);
-  await Deno.writeTextFile(TO, content.css, { create: true });
+    await ensureFile(TO);
+    await Deno.writeTextFile(TO, content.css, { create: true });
 
-  console.info(
-    `🎨 Tailwind css ready in ${
-      cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
-    }`,
-  );
+    console.info(
+      `🎨 Tailwind css ready in ${
+        cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
+      }`,
+    );
 
-  onBundle?.();
+    onBundle?.();
+  }, 500);
 };
 
 export default dev;
