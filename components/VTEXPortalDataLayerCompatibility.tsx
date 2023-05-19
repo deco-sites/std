@@ -149,4 +149,4 @@ export function ProductSKUJson({ product }: ProductSKUJsonProps) {
 // 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
 // 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
 // 3. add ProductShelfIds at product shelves
-// 4. Add ProductSKUJsonProps section to PDP
+// 4. Add VTEXPortalDataLayerCompatibility section to PDP
