@@ -49,7 +49,8 @@ import * as $$$9 from "./loaders/vtex/intelligentSearch/suggestions.ts";
 import * as $$$10 from "./loaders/vtex/cart.ts";
 import * as $$$11 from "./loaders/vtex/user.ts";
 import * as $$$$0 from "./routes/404.tsx";
-import * as $$$$1 from "./routes/_app.tsx";
+import * as $$$$1 from "./routes/styles.css.ts";
+import * as $$$$2 from "./routes/_app.tsx";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "./sections/configButterCMS.global.tsx";
 import * as $$$$$$$$2 from "./sections/SEO.tsx";
@@ -167,7 +168,7 @@ const manifest = {
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$4,
   },
   "routes": {
-    "./routes/_app.tsx": $$$$1,
+    "./routes/_app.tsx": $$$$2,
     "./routes/_middleware.ts": $live_middleware,
     "./routes/[...catchall].tsx": $live_catchall,
     "./routes/404.tsx": $$$$0,
@@ -179,6 +180,7 @@ const manifest = {
     "./routes/live/invoke/index.ts": $live_invoke,
     "./routes/live/previews/[...block].tsx": $live_previews,
     "./routes/live/workbench.ts": $live_workbench,
+    "./routes/styles.css.ts": $$$$1,
   },
   "sections": {
     "$live/sections/PageInclude.tsx": i1$$$$0,
