@@ -1,5 +1,4 @@
-import { Product } from "deco-sites/std/commerce/types.ts";
-import { Head } from "$fresh/runtime.ts";
+import { Product, ProductGroup } from "deco-sites/std/commerce/types.ts";
 
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
@@ -52,6 +51,12 @@ function addVTEXPortalDataSnippet(accountName: any) {
         .filter(Boolean).join(" ");
     }
   }
+
+  document.querySelectorAll("[data-product-id]").forEach(
+    (el) => {
+      props.shelfProductIds.push((el as HTMLDivElement).dataset.productId);
+    },
+  );
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push(props);
@@ -106,16 +111,28 @@ export function ProductDetailsTemplate({ product }: { product: Product }) {
   };
 
   return (
-    <Head>
-      <script
-        data-id="vtex-portal-compat"
-        data-datalayer={JSON.stringify(template)}
-      >
-      </script>
-    </Head>
+    <script
+      data-id="vtex-portal-compat"
+      data-datalayer={JSON.stringify(template)}
+    >
+    </script>
+  );
+}
+
+interface ProductShelfIdsProps {
+  product: Product;
+}
+export function ProductCardId({ product }: ProductShelfIdsProps) {
+  if (!product.isVariantOf?.productGroupID) return null;
+  return (
+    <div
+      data-product-id={product.isVariantOf?.productGroupID}
+      style={{ display: "none" }}
+    />
   );
 }
 
 // How to use:
-// 1. add the AddVTEXPortalData at routes/_app.tsx before <props.Component />
+// 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
 // 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
+// 3. add ProductShelfIds at product shelves
