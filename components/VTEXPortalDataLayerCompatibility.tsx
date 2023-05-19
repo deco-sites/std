@@ -1,4 +1,4 @@
-import { Product, ProductGroup } from "deco-sites/std/commerce/types.ts";
+import { Product } from "deco-sites/std/commerce/types.ts";
 
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
@@ -132,7 +132,21 @@ export function ProductCardId({ product }: ProductShelfIdsProps) {
   );
 }
 
+export interface ProductSKUJsonProps {
+  product: unknown;
+}
+export function ProductSKUJson({ product }: ProductSKUJsonProps) {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `var skuJson = ${JSON.stringify(product)}`,
+      }}
+    />
+  );
+}
+
 // How to use:
 // 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
 // 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
 // 3. add ProductShelfIds at product shelves
+// 4. Add ProductSKUJsonProps section to PDP
