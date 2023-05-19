@@ -1,4 +1,4 @@
-import { cyan } from "std/fmt/colors.ts";
+import { ensureFile } from "std/fs/mod.ts";
 import postcss, { PluginCreator } from "npm:postcss@8.4.22";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import tailwindcss, { Config as TailwindConfig } from "npm:tailwindcss@3.3.1";
@@ -18,9 +18,11 @@ const DEFAULT_TAILWIND_CSS = `
 
 const dev = async (
   partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS,
+  postCSSConfig?: { from?: string | URL; to?: string | URL },
 ) => {
   const config = { ...DEFAULT_OPTIONS, ...partialConfig };
-  const start = performance.now();
+  const from = postCSSConfig?.from ?? FROM;
+  const to = postCSSConfig?.to ?? TO;
 
   const processor = postcss([
     (tailwindcss as PluginCreator)(config),
@@ -28,15 +30,11 @@ const dev = async (
     cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
   ]);
 
-  const css = await Deno.readTextFile(FROM).catch((_) => DEFAULT_TAILWIND_CSS);
-  const content = await processor.process(css, { from: FROM, to: TO });
-  await Deno.writeTextFile(TO, content.css);
+  const css = await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS);
+  const content = await processor.process(css, { from, to });
 
-  console.info(
-    `${cyan("TailwindCSS v3")} generation took: ${
-      (performance.now() - start).toFixed(0)
-    }ms`,
-  );
+  await ensureFile(to);
+  await Deno.writeTextFile(to, content.css, { create: true });
 };
 
 export default dev;
