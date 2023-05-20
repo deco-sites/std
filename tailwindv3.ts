@@ -19,10 +19,10 @@ const DEFAULT_TAILWIND_CSS = `
 const dev = (
   partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS,
 ) => {
-  const start = performance.now();
-  const config = { ...DEFAULT_OPTIONS, ...partialConfig };
+  const cb = async () => {
+    const start = performance.now();
+    const config = { ...DEFAULT_OPTIONS, ...partialConfig };
 
-  setTimeout(async () => {
     const processor = postcss([
       (tailwindcss as PluginCreator)(config),
       autoprefixer(),
@@ -44,7 +44,11 @@ const dev = (
     );
 
     onBundle?.();
-  }, 500);
+  };
+
+  new Promise(() => {
+    cb();
+  });
 };
 
 export default dev;
