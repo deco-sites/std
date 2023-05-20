@@ -4,7 +4,7 @@ import postcss, { PluginCreator } from "npm:postcss@8.4.22";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import tailwindcss, { Config as TailwindConfig } from "npm:tailwindcss@3.3.1";
 import cssnano from "npm:cssnano@6.0.0";
-import { FROM, onBundle, TO } from "./routes/styles.css.ts";
+import { FROM, tailwindBundle, TO } from "./routes/styles.css.ts";
 
 const DEFAULT_OPTIONS = {
   content: ["./**/*.tsx"],
@@ -43,7 +43,7 @@ const dev = (
       }`,
     );
 
-    onBundle?.();
+    tailwindBundle.resolve();
   };
 
   new Promise(() => {

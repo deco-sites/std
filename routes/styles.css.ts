@@ -1,18 +1,19 @@
+import { deferred } from "std/async/deferred.ts";
 import { context } from "$live/live.ts";
 import type { Handlers } from "$fresh/server.ts";
 
 export const TO = "./.frsh/tailwind.css";
 export const FROM = "./tailwind.css";
 
-export let onBundle: undefined | (() => void);
+export const tailwindBundle = deferred();
 
-const bundle = context.isDeploy
-  ? Promise.resolve()
-  : new Promise<void>((r) => onBundle = r);
+if (context.isDeploy) {
+  tailwindBundle.resolve();
+}
 
 export const handler: Handlers = {
   GET: async () => {
-    await bundle;
+    await tailwindBundle;
 
     try {
       const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
