@@ -115,8 +115,11 @@ export function ProductDetailsTemplate({ product }: { product: Product }) {
     <script
       data-id="vtex-portal-compat"
       data-datalayer={JSON.stringify(template)}
-    >
-    </script>
+      dangerouslySetInnerHTML={{
+        __html:
+          `window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: "productView" })`,
+      }}
+    />
   );
 }
 
