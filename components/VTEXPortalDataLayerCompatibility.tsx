@@ -2,6 +2,7 @@ import { Product } from "deco-sites/std/commerce/types.ts";
 
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
+  const url = new URL(window.location.href);
   const structuredDataScripts =
     document.querySelectorAll('script[type="application/ld+json"]') || [];
   // deno-lint-ignore no-explicit-any
@@ -61,6 +62,16 @@ function addVTEXPortalDataSnippet(accountName: any) {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.unshift(props);
+
+  if (url.pathname === "/") {
+    window.dataLayer.push({ event: "homeView" });
+  } else if (props.pageCategory === "Product") {
+    window.dataLayer.push({ event: "productView" });
+  } else if (props.pageCategory === "Category") {
+    window.dataLayer.push({ event: "categoryView" });
+  } else {
+    window.dataLayer.push({ event: "otherView" });
+  }
 }
 
 export function AddVTEXPortalData({ accountName }: { accountName: string }) {
@@ -115,10 +126,6 @@ export function ProductDetailsTemplate({ product }: { product: Product }) {
     <script
       data-id="vtex-portal-compat"
       data-datalayer={JSON.stringify(template)}
-      dangerouslySetInnerHTML={{
-        __html:
-          `window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: "productView" })`,
-      }}
     />
   );
 }
