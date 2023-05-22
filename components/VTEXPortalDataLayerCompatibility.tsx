@@ -42,9 +42,10 @@ function addVTEXPortalDataSnippet(accountName: any) {
     const department = breadcrumbSD?.itemListElement?.[0];
     props.pageDepartment = department?.name || null;
     if (props.pageDepartment) {
-      props.pageCategory = "Category";
+      !isProductPage && (props.pageCategory = "Category");
       const category = breadcrumbSD?.itemListElement
         ?.[breadcrumbSD?.itemListElement.length - 1];
+      // TODO: Corrigir na pDP
       props.categoryName = category?.name;
     } else {
       props.pageCategory = new URL(window.location.href).pathname.split("/")
@@ -59,7 +60,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
   );
 
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push(props);
+  window.dataLayer.unshift(props);
 }
 
 export function AddVTEXPortalData({ accountName }: { accountName: string }) {
