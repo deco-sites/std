@@ -11,6 +11,9 @@ import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import type { LegacyProduct } from "deco-sites/std/packs/vtex/types.ts";
 import { withSegmentCookie } from "deco-sites/std/packs/vtex/utils/segment.ts";
 
+/**
+ * @description Useful if any analytics uses de skuJson from VTEX.
+ */
 export default function VTEXPortalDataLayerCompatibility({ product }: Props) {
   return <ProductSKUJson product={product} />;
 }
