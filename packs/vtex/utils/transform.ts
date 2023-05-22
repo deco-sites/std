@@ -486,10 +486,27 @@ export const filtersToSearchParams = (
   return searchParams;
 };
 
-export const filtersFromSearchParams = (params: URLSearchParams) => {
-  const selectedFacets: SelectedFacet[] = [];
+/**
+ * Transform ?map urls into selected facets. This happens when a store is migrating
+ * to Deco and also migrating from VTEX Legacy to VTEX Intelligent Search.
+ */
+export const legacyFacetsFromURL = (url: URL) => {
+  const mapSegments = url.searchParams.get("map")?.split(",") ?? [];
+  const pathSegments = url.pathname.split("/").slice(1); // Remove first slash
+  const length = Math.min(mapSegments.length, pathSegments.length);
 
-  params.forEach((value, name) => {
+  const selectedFacets: SelectedFacet[] = [];
+  for (let it = 0; it < length; it++) {
+    selectedFacets.push({ key: mapSegments[it], value: pathSegments[it] });
+  }
+
+  return selectedFacets;
+};
+
+export const filtersFromURL = (url: URL) => {
+  const selectedFacets: SelectedFacet[] = legacyFacetsFromURL(url);
+
+  url.searchParams.forEach((value, name) => {
     const [filter, key] = name.split(".");
 
     if (filter === "filter" && typeof key === "string") {
