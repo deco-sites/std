@@ -5,7 +5,7 @@
 import { forwardRef } from "preact/compat";
 import type { JSX } from "preact";
 
-import { getSrcSet } from "./Image.tsx";
+import { getOptimizedMediaUrl, getSrcSet } from "./Image.tsx";
 
 type Props =
   & Omit<JSX.IntrinsicElements["video"], "width" | "height" | "preload">
@@ -19,11 +19,18 @@ const Video = forwardRef<HTMLVideoElement, Props>((props, ref) => {
   const { loading = "lazy" } = props;
   const srcSet = getSrcSet(props.src, props.width, props.height);
 
+  const optimizedVideoSrc = getOptimizedMediaUrl({
+    originalSrc: props.src,
+    width: props.width,
+    height: props.height,
+    factor: 1,
+  });
+
   return (
     <video
       {...props}
       preload={undefined}
-      src={props.src}
+      src={optimizedVideoSrc}
       srcSet={srcSet}
       loading={loading}
       ref={ref}
