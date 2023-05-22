@@ -2,7 +2,7 @@ import { deferred } from "std/async/deferred.ts";
 import { context } from "$live/live.ts";
 import type { Handlers } from "$fresh/server.ts";
 
-export const TO = "./.frsh/tailwind.css";
+export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
 export const tailwindBundle = deferred();
