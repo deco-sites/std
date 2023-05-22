@@ -1,5 +1,5 @@
 import {
-  filtersFromSearchParams,
+  filtersFromURL,
   mergeFacets,
   toFilter,
   toProduct,
@@ -142,7 +142,7 @@ const searchArgsOf = (props: Props, url: URL) => {
     sortOptions[0].value;
   const selectedFacets = mergeFacets(
     props.selectedFacets ?? [],
-    filtersFromSearchParams(url.searchParams),
+    filtersFromURL(url),
   );
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
