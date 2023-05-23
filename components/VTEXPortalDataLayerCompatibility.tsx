@@ -95,7 +95,9 @@ export function AddVTEXPortalData(
   );
 }
 
-type ProductDetailsProps = ScriptProps & { product: Product };
+interface ProductDetailsProps {
+  product: Product;
+}
 
 export function ProductDetailsTemplate(
   { product, ...props }: ProductDetailsProps,
@@ -137,7 +139,7 @@ export function ProductDetailsTemplate(
   };
 
   return (
-    <Script
+    <script
       {...props}
       data-id="vtex-portal-compat"
       data-datalayer={JSON.stringify(template)}
@@ -179,6 +181,6 @@ export function ProductSKUJson(
  * How to use VTEX Portal DataLayer Compatibility:
  * 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
  * 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
- * 3. add ProductShelfIds at product shelves
+ * 3. add ProductInfo at product shelves
  * 4. Add VTEXPortalDataLayerCompatibility section to PDP
  */
