@@ -171,11 +171,3 @@ export function ProductSKUJson(
     />
   );
 }
-
-/**
- * How to use VTEX Portal DataLayer Compatibility:
- * 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
- * 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
- * 3. add ProductInfo at product shelves
- * 4. Add VTEXPortalDataLayerCompatibility section to PDP
- */
