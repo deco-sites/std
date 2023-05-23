@@ -8,7 +8,7 @@ We are committed to avoiding breaking changes at all costs. The product is still
 
 If and when breaking changes occur, they will be signaled with a new Major version on the git tags.
 
-# VTEX Portal Data Layer Compatibility
+## VTEX Portal Data Layer Compatibility
 How to use:
 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />. Example:
 ```tsx
