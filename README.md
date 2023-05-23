@@ -8,6 +8,46 @@ We are committed to avoiding breaking changes at all costs. The product is still
 
 If and when breaking changes occur, they will be signaled with a new Major version on the git tags.
 
+## VTEX Portal Data Layer Compatibility
+How to use:
+1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />. Example:
+```tsx
+// routes/_app.tsx
+export default function App(props) {
+  return (
+    <>
+    {/* ... */}
+      <props.Component />
+      <GTM trackingId={id} /> // or can be Analytics Section, that would be inside <props.Component />
+      <AddVTEXPortalData accountName="{{ vtexAccountNameHere }}" type="module" />
+    </>
+  )
+}
+```
+2. Add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p. Example:
+```tsx
+// sections/ProductDetails.tsx
+export default function ProductDetails({ page }: Props) {
+  if (!page) {
+    return null;
+  }
+
+  return (
+    <>
+      {/* Breadcrumb */}
+      <Breadcrumb
+        itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
+      />
+      <Head>
+        <ProductDetailsTemplate product={page.product} />
+      </Head>
+      {/* ... */}
+    </>
+  );
+}
+```
+3. Add ProductInfo to all rendered products on all pages.
+4. Add VTEXPortalDataLayerCompatibility section to PDP if necessary, to add skuJson.
 
 # Thanks to all contributors!
 

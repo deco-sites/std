@@ -59,8 +59,9 @@ import * as $$$$$$$$4 from "./sections/configOCC.global.tsx";
 import * as $$$$$$$$5 from "./sections/Analytics.tsx";
 import * as $$$$$$$$6 from "./sections/configShopify.global.tsx";
 import * as $$$$$$$$7 from "./sections/configVNDA.global.tsx";
-import * as $$$$$$$$8 from "./sections/configVTEX.global.tsx";
-import * as $$$$$$$$9 from "./sections/SEOPDP.tsx";
+import * as $$$$$$$$8 from "./sections/VTEXPortalDataLayerCompatibility.tsx";
+import * as $$$$$$$$9 from "./sections/configVTEX.global.tsx";
+import * as $$$$$$$$10 from "./sections/SEOPDP.tsx";
 import * as $$$$$$$$$$$0 from "./actions/vtex/notifyme.ts";
 import * as $$$$$$$$$$$1 from "./actions/vtex/cart/updateCoupons.ts";
 import * as $$$$$$$$$$$2 from "./actions/vtex/cart/updateAttachment.ts";
@@ -191,11 +192,12 @@ const manifest = {
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$4,
     "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$6,
     "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$7,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$8,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$9,
     "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
     "deco-sites/std/sections/SEO.tsx": $$$$$$$$2,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$9,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$10,
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$3,
+    "deco-sites/std/sections/VTEXPortalDataLayerCompatibility.tsx": $$$$$$$$8,
   },
   "actions": {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,
