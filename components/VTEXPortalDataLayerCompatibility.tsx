@@ -153,12 +153,7 @@ interface ProductInfoProps {
 
 export function ProductInfo({ product }: ProductInfoProps) {
   if (!product.isVariantOf?.productGroupID) return null;
-  return (
-    <div
-      data-product-id={product.isVariantOf?.productGroupID}
-      style={{ display: "none" }}
-    />
-  );
+  return <script data-product-id={product.isVariantOf?.productGroupID} />;
 }
 
 export interface ProductSKUJsonProps {
