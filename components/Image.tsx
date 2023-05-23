@@ -19,17 +19,26 @@ const imageKit = new ImageKit({
 
 const FACTORS = [1, 1.5, 2];
 
+export const getOptimizedMediaUrl = (
+  { originalSrc, width, height, factor }: {
+    originalSrc: string;
+    width: number;
+    height?: number;
+    factor: number;
+  },
+) =>
+  imageKit.url({
+    path: originalSrc,
+    transformation: [{
+      width: `${Math.trunc(factor * width)}`,
+      height: height ? `${Math.trunc(factor * height)}` : undefined,
+    }],
+  });
+
 export const getSrcSet = (src: string, width: number, height?: number) =>
   FACTORS
     .map((factor) =>
-      `${
-        imageKit.url({
-          path: src,
-          transformation: [{
-            width: `${Math.trunc(factor * width)}`,
-            height: height ? `${Math.trunc(factor * height)}` : undefined,
-          }],
-        })
+      `${getOptimizedMediaUrl({ originalSrc: src, width, height, factor })})
       } ${Math.trunc(factor * width)}w`
     )
     .join(", ");
