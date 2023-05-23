@@ -1,4 +1,8 @@
 import { Product } from "deco-sites/std/commerce/types.ts";
+import Script from "partytown/Script.tsx";
+import { ComponentProps } from "preact";
+
+type ScriptProps = ComponentProps<typeof Script>;
 
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
@@ -74,9 +78,15 @@ function addVTEXPortalDataSnippet(accountName: any) {
   }
 }
 
-export function AddVTEXPortalData({ accountName }: { accountName: string }) {
+interface AddVTEXPortalData {
+  accountName: string;
+}
+export function AddVTEXPortalData(
+  { accountName, ...props }: ScriptProps & AddVTEXPortalData,
+) {
   return (
-    <script
+    <Script
+      {...props}
       id="datalayer-portal-compat"
       dangerouslySetInnerHTML={{
         __html: `(${addVTEXPortalDataSnippet.toString()})('${accountName}')`,
@@ -85,7 +95,11 @@ export function AddVTEXPortalData({ accountName }: { accountName: string }) {
   );
 }
 
-export function ProductDetailsTemplate({ product }: { product: Product }) {
+type ProductDetailsProps = ScriptProps & { product: Product };
+
+export function ProductDetailsTemplate(
+  { product, ...props }: ProductDetailsProps,
+) {
   const departament = product.additionalProperty?.find((p) =>
     p.name === "category"
   );
@@ -123,17 +137,19 @@ export function ProductDetailsTemplate({ product }: { product: Product }) {
   };
 
   return (
-    <script
+    <Script
+      {...props}
       data-id="vtex-portal-compat"
       data-datalayer={JSON.stringify(template)}
     />
   );
 }
 
-interface ProductShelfIdsProps {
+interface ProductInfoProps {
   product: Product;
 }
-export function ProductCardId({ product }: ProductShelfIdsProps) {
+
+export function ProductInfo({ product }: ProductInfoProps) {
   if (!product.isVariantOf?.productGroupID) return null;
   return (
     <div
@@ -146,9 +162,12 @@ export function ProductCardId({ product }: ProductShelfIdsProps) {
 export interface ProductSKUJsonProps {
   product: unknown;
 }
-export function ProductSKUJson({ product }: ProductSKUJsonProps) {
+export function ProductSKUJson(
+  { product, ...props }: ScriptProps & ProductSKUJsonProps,
+) {
   return (
-    <script
+    <Script
+      {...props}
       dangerouslySetInnerHTML={{
         __html: `var skuJson = ${JSON.stringify(product)}`,
       }}
@@ -156,8 +175,10 @@ export function ProductSKUJson({ product }: ProductSKUJsonProps) {
   );
 }
 
-// How to use:
-// 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
-// 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
-// 3. add ProductShelfIds at product shelves
-// 4. Add VTEXPortalDataLayerCompatibility section to PDP
+/**
+ * How to use VTEX Portal DataLayer Compatibility:
+ * 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />
+ * 2. add the ProductDetailsTemplate at ProductDetails.tsx for routes /:slug/p
+ * 3. add ProductShelfIds at product shelves
+ * 4. Add VTEXPortalDataLayerCompatibility section to PDP
+ */
