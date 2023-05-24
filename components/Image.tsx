@@ -38,8 +38,9 @@ export const getOptimizedMediaUrl = (
 export const getSrcSet = (src: string, width: number, height?: number) =>
   FACTORS
     .map((factor) =>
-      `${getOptimizedMediaUrl({ originalSrc: src, width, height, factor })})
-      } ${Math.trunc(factor * width)}w`
+      `${getOptimizedMediaUrl({ originalSrc: src, width, height, factor })} ${
+        Math.trunc(factor * width)
+      }w`
     )
     .join(", ");
 
