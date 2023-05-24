@@ -13,24 +13,27 @@ type Props =
     width: number;
     height: number;
     src: string;
+    forceOptimizedSrc?: boolean;
   };
 
 const Video = forwardRef<HTMLVideoElement, Props>((props, ref) => {
   const { loading = "lazy" } = props;
   const srcSet = getSrcSet(props.src, props.width, props.height);
 
-  const optimizedVideoSrc = getOptimizedMediaUrl({
-    originalSrc: props.src,
-    width: props.width,
-    height: props.height,
-    factor: 1,
-  });
+  const src = props.forceOptimizedSrc
+    ? getOptimizedMediaUrl({
+      originalSrc: props.src,
+      width: props.width,
+      height: props.height,
+      factor: 1,
+    })
+    : props.src;
 
   return (
     <video
       {...props}
       preload={undefined}
-      src={optimizedVideoSrc}
+      src={src}
       srcSet={srcSet}
       loading={loading}
       ref={ref}
