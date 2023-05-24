@@ -22,7 +22,8 @@ const loader = async (
   const page = Number(url.searchParams.get("page")) || 0;
   const count = props.count || Infinity;
   const { configVTEX: config } = ctx;
-  const { cookie, user } = parseCookie(req.headers, config!.account);
+  const { cookie, payload } = parseCookie(req.headers, config!.account);
+  const user = payload?.sub;
 
   if (!user) {
     return [];

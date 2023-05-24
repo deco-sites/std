@@ -2,19 +2,21 @@ import { parseCookie } from "../utils/vtexId.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 export interface User {
+  id: string;
   email: string;
 }
 
 function loader(_props: unknown, req: Request, ctx: Context): User | null {
   const { configVTEX: config } = ctx;
-  const { user } = parseCookie(req.headers, config!.account);
+  const { payload } = parseCookie(req.headers, config!.account);
 
-  if (!user) {
+  if (!payload?.sub || !payload?.userId) {
     return null;
   }
 
   return {
-    email: user,
+    id: payload.userId,
+    email: payload.sub,
   };
 }
 

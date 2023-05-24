@@ -16,7 +16,8 @@ const action = async (
   ctx: Context,
 ): Promise<WishlistItem[]> => {
   const { configVTEX: config } = ctx;
-  const { cookie, user } = parseCookie(req.headers, config!.account);
+  const { cookie, payload } = parseCookie(req.headers, config!.account);
+  const user = payload?.sub;
 
   if (!user) {
     return [];
