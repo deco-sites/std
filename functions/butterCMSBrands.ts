@@ -8,7 +8,7 @@ import type {
 
 /**
  * @title Butter CMS Featured Brands Loader
- * @description Usefull for list featured blog's brands.
+ * @description Useful for list featured blog's brands.
  */
 const featuredBrandsLoader: LoaderFunction<
   null,

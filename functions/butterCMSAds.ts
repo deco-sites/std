@@ -8,7 +8,7 @@ import type {
 
 /**
  * @title Butter CMS Featured Ads Loader
- * @description Usefull for shelves and static galleries.
+ * @description Useful for shelves and static galleries.
  */
 const featuredAdsLoader: LoaderFunction<
   null,

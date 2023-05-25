@@ -111,7 +111,7 @@ const fromProps = (props: Props) => {
 
 /**
  * @title VTEX product list - Intelligent Search
- * @description Usefull for shelves and galleries.
+ * @description Useful for shelves and galleries.
  */
 const loader = async (
   props: Props,

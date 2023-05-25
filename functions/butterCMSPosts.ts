@@ -15,7 +15,7 @@ export interface Props {
 
 /**
  * @title Butter CMS Posts Loader
- * @description Usefull for paginated galleries.
+ * @description Useful for paginated galleries.
  */
 const postsLoader: LoaderFunction<
   Props,

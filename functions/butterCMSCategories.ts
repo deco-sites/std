@@ -5,7 +5,7 @@ import type { Category, StateButterCMS } from "../commerce/butterCMS/types.ts";
 
 /**
  * @title Butter CMS Categories Loader
- * @description Usefull for list blog's categories
+ * @description Useful for list blog's categories
  */
 const categoriesLoader: LoaderFunction<
   null,
