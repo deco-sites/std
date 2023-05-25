@@ -1,4 +1,5 @@
 import { ensureFile } from "std/fs/mod.ts";
+import { join, toFileUrl } from "std/path/mod.ts";
 import { cyan } from "std/fmt/colors.ts";
 import postcss, { PluginCreator } from "npm:postcss@8.4.23";
 import autoprefixer from "npm:autoprefixer@10.4.14";
@@ -24,7 +25,7 @@ const dev = async (
   // Try to recover config from default file, a.k.a tailwind.config.ts
   const config = partialConfig
     ? { ...DEFAULT_OPTIONS, ...partialConfig }
-    : await import(`${Deno.cwd()}/tailwind.config.ts`)
+    : await import(toFileUrl(join(Deno.cwd(), "tailwind.config.ts")).href)
       .then((mod) => mod.default)
       .catch(() => DEFAULT_OPTIONS);
 
