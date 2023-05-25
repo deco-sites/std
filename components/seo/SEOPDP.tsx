@@ -10,39 +10,34 @@ export interface Props {
   /**
    * @title Title template
    * @description add a %s whenever you want it to be replaced with the product name
-   * @default %s | Fashion Store
+   * @default %s | Deco.cx
    */
-  titleTemplate: string;
-  /**
-   * @title Meta tag description
-   * @description If not set, the product description will be used instead
-   */
+  titleTemplate?: string;
+  /** @title Page title override */
+  title?: string;
+  /** @title Meta tag description override */
   description?: string;
-  themeColor?: string;
 }
 
-function SeoPDP({ page, titleTemplate, description, ...baseSeo }: Props) {
+function SeoPDP(
+  { page, titleTemplate, title, description }: Props,
+) {
   const product = page?.product;
   const breadcrumbList = page?.breadcrumbList;
+  const seo = page?.seo;
   const { isVariantOf, ...currentProduct } = product ?? {};
 
-  const title = titleTemplate.replace("%s", product?.name ?? "");
-  const desc = description || product?.description;
+  const t = title ||
+    titleTemplate?.replace("%s", seo?.title || product?.name || "") ||
+    seo?.title;
+  const d = description || seo?.description;
+  const c = seo?.canonical ||
+    (breadcrumbList && canonicalFromBreadcrumblist(breadcrumbList));
   const imageUrl = product?.image?.[0]?.url;
-
-  const canonical = breadcrumbList &&
-    canonicalFromBreadcrumblist(breadcrumbList);
 
   return (
     <>
-      <SEOBase
-        {...baseSeo}
-        title={title}
-        description={desc}
-        imageUrl={imageUrl}
-        canonical={canonical}
-      />
-
+      <SEOBase title={t} description={d} imageUrl={imageUrl} canonical={c} />
       <ScriptLDJson {...currentProduct} />
       <ScriptLDJson {...breadcrumbList} />
     </>

@@ -26,6 +26,7 @@ import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
+  pageTypesToSeo,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import { parseRange } from "deco-sites/std/utils/filters.ts";
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
@@ -275,10 +276,8 @@ const loader = async (
   );
 
   const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets));
-  const itemListElement = pageTypesToBreadcrumbList(
-    await pageTypesPromise,
-    baseUrl,
-  );
+  const pageTypes = await pageTypesPromise;
+  const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
   const hasNextPage = Boolean(pagination.next.proxyUrl);
   const hasPreviousPage = page > 0;
@@ -312,6 +311,7 @@ const loader = async (
       recordPerPage: pagination.perPage,
     },
     sortOptions,
+    seo: pageTypesToSeo(pageTypes, req),
   };
 };
 

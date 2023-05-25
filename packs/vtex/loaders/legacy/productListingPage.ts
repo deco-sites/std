@@ -8,6 +8,7 @@ import {
   getMapAndTerm,
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
+  pageTypesToSeo,
   toSegmentParams,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
@@ -220,6 +221,7 @@ const loader = async (
       recordPerPage: count,
     },
     sortOptions,
+    seo: pageTypesToSeo(pageTypes, req),
   };
 };
 

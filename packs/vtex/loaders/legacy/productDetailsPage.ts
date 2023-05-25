@@ -66,10 +66,17 @@ async function loader(
 
   setSegment(segment, ctx.response.headers);
 
-  return toProductPage(product, sku, kitItems, {
-    baseUrl,
-    priceCurrency: config!.defaultPriceCurrency,
-  });
+  return {
+    ...toProductPage(product, sku, kitItems, {
+      baseUrl,
+      priceCurrency: config!.defaultPriceCurrency,
+    }),
+    seo: {
+      title: product.productTitle,
+      description: product.metaTagDescription,
+      canonical: new URL(`/${product.linkText}/p`, url.origin).href,
+    },
+  };
 }
 
 export default loader;

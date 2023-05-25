@@ -343,6 +343,7 @@ export interface ProductDetailsPage {
   "@type": "ProductDetailsPage";
   breadcrumbList: BreadcrumbList;
   product: Product;
+  seo?: Seo | null;
 }
 
 export interface ProductListingPage {
@@ -358,6 +359,13 @@ export interface ProductListingPage {
     recordPerPage?: number | undefined;
   };
   sortOptions: SortOption[];
+  seo?: Seo | null;
+}
+
+export interface Seo {
+  title: string;
+  description: string;
+  canonical: string;
 }
 
 export interface Search {
