@@ -653,6 +653,8 @@ export type Product = IProduct & {
 };
 
 export type LegacyProduct = IProduct & {
+  metaTagDescription: string;
+  productTitle: string;
   items: LegacyItem[];
   allSpecifications: string[];
 };

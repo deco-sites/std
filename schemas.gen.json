@@ -1522,6 +1522,40 @@
       ],
       "title": "Product"
     },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Seo": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "canonical": {
+          "type": "string",
+          "title": "Canonical"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "canonical"
+      ],
+      "title": "Seo"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Seo|null": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Seo"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Seo|null"
+    },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage": {
       "type": "object",
       "properties": {
@@ -1537,6 +1571,10 @@
         "product": {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product",
           "title": "Product"
+        },
+        "seo": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Seo|null",
+          "title": "Seo"
         }
       },
       "required": [
@@ -1871,7 +1909,7 @@
         },
         {
           "title": "VTEX product list - Intelligent Search",
-          "description": "Useful for shelves and galleries.",
+          "description": "Usefull for shelves and galleries.",
           "type": "object",
           "allOf": [
             {
@@ -2211,6 +2249,10 @@
         "sortOptions": {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@SortOption[]",
           "title": "Sort Options"
+        },
+        "seo": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Seo|null",
+          "title": "Seo"
         }
       },
       "required": [
@@ -6994,30 +7036,31 @@
           "title": "Page"
         },
         "titleTemplate": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "title": "Title template",
           "description": "add a %s whenever you want it to be replaced with the product name",
-          "default": "%s | Fashion Store"
+          "default": "%s | Deco.cx"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Page title override"
         },
         "description": {
           "type": [
             "string",
             "null"
           ],
-          "title": "Meta tag description",
-          "description": "If not set, the product description will be used instead"
-        },
-        "themeColor": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Theme Color"
+          "title": "Meta tag description override"
         }
       },
       "required": [
-        "page",
-        "titleTemplate"
+        "page"
       ],
       "title": "deco-sites/std/components/seo/SEOPDP.tsx@Props"
     },
@@ -7028,40 +7071,28 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductListingPage|null",
           "title": "Page"
         },
+        "titleTemplate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Title template",
+          "description": "add a %s whenever you want it to be replaced with the product name",
+          "default": "%s | Deco.cx"
+        },
         "title": {
           "type": [
             "string",
             "null"
           ],
-          "title": "Title"
+          "title": "Page title override"
         },
         "description": {
           "type": [
             "string",
             "null"
           ],
-          "title": "Description"
-        },
-        "url": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Url"
-        },
-        "imageUrl": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Image Url"
-        },
-        "themeColor": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Theme Color"
+          "title": "Meta tag description override"
         }
       },
       "required": [
@@ -8591,7 +8622,7 @@
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
       "title": "VTEX product list - Intelligent Search",
-      "description": "Useful for shelves and galleries.",
+      "description": "Usefull for shelves and galleries.",
       "type": "object",
       "allOf": [
         {

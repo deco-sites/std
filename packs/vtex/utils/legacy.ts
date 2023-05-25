@@ -4,6 +4,7 @@ import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
 import type { Segment } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { PageType } from "deco-sites/std/packs/vtex/types.ts";
+import type { Seo } from "deco-sites/std/commerce/types.ts";
 
 export const toSegmentParams = (segment: Partial<Segment>) => {
   const params = new URLSearchParams();
@@ -30,7 +31,7 @@ const PAGE_TYPE_TO_MAP_PARAM = {
   Cluster: "productClusterIds",
   Search: "ft",
   FullText: null,
-  Product: null,
+  Product: "p",
   NotFound: null,
 };
 
@@ -100,4 +101,18 @@ export const pageTypesToBreadcrumbList = (
       position,
     });
   });
+};
+
+export const pageTypesToSeo = (pages: PageType[], req: Request): Seo | null => {
+  const current = pages.at(-1);
+
+  if (!current) {
+    return null;
+  }
+
+  return {
+    title: current.title!,
+    description: current.metaTagDescription!,
+    canonical: new URL(current.url!, req.url).href,
+  };
 };

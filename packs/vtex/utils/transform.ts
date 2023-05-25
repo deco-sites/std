@@ -116,7 +116,7 @@ export const toProductPage = <T extends ProductVTEX | LegacyProductVTEX>(
   sku: T["items"][number],
   kitItems: T[],
   options: ProductOptions,
-): ProductDetailsPage => {
+): Omit<ProductDetailsPage, "seo"> => {
   const partialProduct = toProduct(product, sku, 0, options);
   // Get accessories in ProductPage only. I don't see where it's necessary outside this page for now
   const isAccessoryOrSparePartFor = toAccessoryOrSparePartFor(

@@ -19,6 +19,7 @@ import type {
   Product,
   ProductSearchResult,
 } from "deco-sites/std/packs/vtex/types.ts";
+import { pageTypesToSeo } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
 import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
@@ -31,15 +32,7 @@ export interface Props {
  * When there's no ?skuId querystring, we need to figure out the product id
  * from the pathname. For this, we use the pageType api
  */
-const getProductID = async (slug: string, ctx: Context) => {
-  const vtex = paths(ctx.configVTEX!);
-  const page = await fetchAPI<PageType>(
-    vtex.api.catalog_system.pub.portal.pagetype.term(
-      `${slug}/p`,
-    ),
-    { withProxyCache: true },
-  );
-
+const getProductID = (page: PageType) => {
   if (page.pageType !== "Product") {
     return null;
   }
@@ -62,9 +55,14 @@ const loader = async (
   const vtex = paths(config!);
   const segment = getSegment(req);
 
+  const pageTypePromise = fetchAPI<PageType>(
+    vtex.api.catalog_system.pub.portal.pagetype.term(`${slug}/p`),
+    { withProxyCache: true },
+  );
+
   const url = new URL(baseUrl);
   const skuId = url.searchParams.get("skuId");
-  const productId = !skuId && await getProductID(slug, ctx);
+  const productId = !skuId && getProductID(await pageTypePromise);
 
   /**
    * Fetch the exact skuId. If no one was provided, try fetching the product
@@ -118,12 +116,19 @@ const loader = async (
     kitItems = result.products;
   }
 
+  const pageType = await pageTypePromise;
+
   setSegment(segment, ctx.response.headers);
 
-  return toProductPage(product, sku, kitItems, {
-    baseUrl,
-    priceCurrency: config!.defaultPriceCurrency,
-  });
+  return {
+    ...toProductPage(product, sku, kitItems, {
+      baseUrl,
+      priceCurrency: config!.defaultPriceCurrency,
+    }),
+    seo: pageType.pageType === "Product"
+      ? pageTypesToSeo([pageType], req)
+      : null,
+  };
 };
 
 export default loader;
