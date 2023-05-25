@@ -1,6 +1,6 @@
 import { ensureFile } from "std/fs/mod.ts";
 import { cyan } from "std/fmt/colors.ts";
-import postcss, { PluginCreator } from "npm:postcss@8.4.22";
+import postcss, { PluginCreator } from "npm:postcss@8.4.23";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import tailwindcss, { Config as TailwindConfig } from "npm:tailwindcss@3.3.2";
 import cssnano from "npm:cssnano@6.0.0";
