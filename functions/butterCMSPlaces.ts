@@ -8,7 +8,7 @@ import type {
 
 /**
  * @title Butter CMS Featured Places Loader
- * @description Usefull for listing places
+ * @description Useful for listing places
  */
 const featuredPlacesLoader: LoaderFunction<
   null,

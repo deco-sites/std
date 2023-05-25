@@ -14,7 +14,7 @@ export interface Props {
 
 /**
  * @title Shopify - Search Products
- * @description Usefull for shelves and static galleries.
+ * @description Useful for shelves and static galleries.
  */
 const searchLoader: LoaderFunction<
   Props,

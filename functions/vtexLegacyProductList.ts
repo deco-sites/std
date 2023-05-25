@@ -17,7 +17,7 @@ export interface Props {
 
 /**
  * @title VTEX - Search Products - legacy (deprecated)
- * @description Usefull for shelves and static galleries.
+ * @description Useful for shelves and static galleries.
  * @deprecated
  */
 const loaderV0: LoaderFunction<

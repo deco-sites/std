@@ -13,7 +13,7 @@ export interface Props {
 
 /**
  * @title Butter CMS Related Posts Loader
- * @description Usefull for paginated or not galleries. Works on routes of type /blog/:slug
+ * @description Useful for paginated or not galleries. Works on routes of type /blog/:slug
  */
 const relatedPostsLoader: LoaderFunction<
   Props,
