@@ -17,10 +17,16 @@ const DEFAULT_TAILWIND_CSS = `
 `;
 
 const dev = async (
-  partialConfig: Partial<TailwindConfig> = DEFAULT_OPTIONS,
+  partialConfig?: Partial<TailwindConfig>,
 ) => {
   const start = performance.now();
-  const config = { ...DEFAULT_OPTIONS, ...partialConfig };
+
+  // Try to recover config from default file, a.k.a tailwind.config.ts
+  const config = partialConfig
+    ? { ...DEFAULT_OPTIONS, ...partialConfig }
+    : await import(`${Deno.cwd()}/tailwind.config.ts`)
+      .then((mod) => mod.default)
+      .catch(() => DEFAULT_OPTIONS);
 
   const processor = postcss([
     (tailwindcss as PluginCreator)(config),
