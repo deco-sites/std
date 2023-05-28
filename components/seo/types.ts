@@ -1,6 +1,8 @@
-import { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type { LoaderReturnType } from "$live/types.ts";
+import { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type {
+  BreadcrumbList,
+  Product,
   ProductDetailsPage,
   ProductListingPage,
 } from "../../commerce/types.ts";
@@ -56,4 +58,16 @@ export interface PreviewItens {
   width: number;
   height: number;
   path: string;
+}
+
+export interface ProductSEO extends ProductListingSEO {
+  currentProduct: Omit<Product, "isVariantOf">;
+  imageUrl?: string;
+}
+
+export interface ProductListingSEO {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  breadcrumb: BreadcrumbList;
 }
