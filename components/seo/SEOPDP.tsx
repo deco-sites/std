@@ -19,6 +19,8 @@ export interface Props {
   description?: string;
 }
 
+export const stripHtmlTags = (rawString?: string) =>
+  rawString?.replace(/(<([^>]+)>)/gi, "");
 function SeoPDP(
   { page, titleTemplate, title, description }: Props,
 ) {
@@ -37,7 +39,12 @@ function SeoPDP(
 
   return (
     <>
-      <SEOBase title={t} description={d} imageUrl={imageUrl} canonical={c} />
+      <SEOBase
+        title={t}
+        description={stripHtmlTags(d)}
+        imageUrl={imageUrl}
+        canonical={c}
+      />
       <ScriptLDJson {...currentProduct} />
       <ScriptLDJson {...breadcrumbList} />
     </>
