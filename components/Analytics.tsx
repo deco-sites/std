@@ -8,9 +8,13 @@ export interface Props {
    * @description google tag manager container id. For more info: https://developers.google.com/tag-platform/tag-manager/web#standard_web_page_installation .
    */
   trackingIds?: string[];
+  /**
+   * @description custom url for serving google tag manager. Set either this url or the tracking id
+   */
+  src?: string;
 }
 
-export default function Analtyics({ trackingIds }: Props) {
+export default function Analtyics({ trackingIds, src }: Props) {
   return (
     <>
       {/* TODO: Add debug from query string @author Igor Brasileiro */}
@@ -20,6 +24,7 @@ export default function Analtyics({ trackingIds }: Props) {
           <GoogleTagManager trackingId={trackingId.trim()} />
         ))
       )}
+      {!!context.deploymentId && src && <GoogleTagManager src={src} />}
 
       <Script
         dangerouslySetInnerHTML={{
