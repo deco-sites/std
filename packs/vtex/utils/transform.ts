@@ -284,20 +284,21 @@ const toBreadcrumbList = (
   { baseUrl }: ProductOptions,
 ): BreadcrumbList => {
   const { categories, productName } = product;
+  const names = categories[0]?.split("/").filter(Boolean);
+  const segments = names.map(slugify);
 
   return {
     "@type": "BreadcrumbList",
     itemListElement: [
-      ...categories.reverse().map((categoryPath, index) => {
-        const splitted = categoryPath.split("/").filter(Boolean);
-        const name = splitted[splitted.length - 1];
-        const item = splitted.map(slugify).join("/");
+      ...names.map((name, index) => {
+        const position = index + 1;
 
         return {
           "@type": "ListItem" as const,
           name,
-          item: new URL(`/${item}`, baseUrl).href,
-          position: index + 1,
+          item:
+            new URL(`/${segments.slice(0, position).join("/")}`, baseUrl).href,
+          position,
         };
       }),
       {
