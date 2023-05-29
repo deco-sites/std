@@ -24,10 +24,10 @@ function SeoPLP(
 ) {
   const { seo, breadcrumb } = page || {};
 
-  const t = title ||
+  const t = seo?.title ||
     titleTemplate?.replace("%s", seo?.title || "") ||
-    seo?.title;
-  const d = description || seo?.description;
+    title;
+  const d = seo?.description || description;
   const c = seo?.canonical ||
     (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
 

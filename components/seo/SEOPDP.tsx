@@ -27,10 +27,10 @@ function SeoPDP(
   const seo = page?.seo;
   const { isVariantOf, ...currentProduct } = product ?? {};
 
-  const t = title ||
+  const t = seo?.title ||
     titleTemplate?.replace("%s", seo?.title || product?.name || "") ||
-    seo?.title;
-  const d = description || seo?.description;
+    title;
+  const d = seo?.description || description;
   const c = seo?.canonical ||
     (breadcrumbList && canonicalFromBreadcrumblist(breadcrumbList));
   const imageUrl = product?.image?.[0]?.url;
