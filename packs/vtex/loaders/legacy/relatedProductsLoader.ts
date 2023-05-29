@@ -34,6 +34,10 @@ export interface Props {
    * @description ProductGroup ID
    */
   id?: string;
+  /**
+   * @description remove unavailable items from result
+   */
+  hideUnavailableItems?: boolean;
 }
 
 /**
@@ -48,6 +52,7 @@ async function loader(
   const { configVTEX: config } = ctx;
   const { url } = req;
   const {
+    hideUnavailableItems,
     crossSelling = "similars",
     count,
   } = props;
@@ -100,6 +105,17 @@ async function loader(
     .map((p) => toProduct(p, p.items[0], 0, options));
 
   setSegment(segment, ctx.response.headers);
+
+  // Search API does not offer a way to filter out in stock products
+  // This is a scape hatch
+  if (hideUnavailableItems) {
+    const inStock = (p: Product) =>
+      p.offers?.offers.find((o) =>
+        o.availability === "https://schema.org/InStock"
+      );
+
+    return relatedProducts.filter(inStock);
+  }
 
   return relatedProducts;
 }
