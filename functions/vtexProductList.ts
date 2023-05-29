@@ -29,6 +29,12 @@ export interface Props {
    * @pattern \d*
    */
   collection?: string[];
+
+  /**
+   * @title Hide Unavailable Items
+   * @description Do not return out of stock items
+   */
+  hideUnavailableItems?: boolean;
 }
 
 /**

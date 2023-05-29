@@ -17,10 +17,12 @@ export interface Props {
   title?: string;
   /** @title Meta tag description override */
   description?: string;
+  /** @title Use Description Meta Tag from VTEX Catalog */
+  useMetaTagFromCatalog?: boolean;
 }
 
 function SeoPDP(
-  { page, titleTemplate, title, description }: Props,
+  { page, titleTemplate, title, description, useMetaTagFromCatalog }: Props,
 ) {
   const product = page?.product;
   const breadcrumbList = page?.breadcrumbList;
@@ -30,7 +32,14 @@ function SeoPDP(
   const t = title ||
     titleTemplate?.replace("%s", seo?.title || product?.name || "") ||
     seo?.title;
-  const d = description || seo?.description;
+
+  const productDescription = useMetaTagFromCatalog
+    ? page?.product.additionalProperty?.find(({ name }) =>
+      name === "metaTagDescription"
+    )?.value
+    : seo?.description;
+
+  const d = description || productDescription;
   const c = seo?.canonical ||
     (breadcrumbList && canonicalFromBreadcrumblist(breadcrumbList));
   const imageUrl = product?.image?.[0]?.url;

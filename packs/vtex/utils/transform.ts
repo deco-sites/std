@@ -198,6 +198,20 @@ const toAdditionalPropertyClusters = <
   }));
 };
 
+const toAdditionalMetaTag = <
+  P extends LegacyProductVTEX | ProductVTEX,
+>(product: P): Product["additionalProperty"] => {
+  if (!isLegacyProduct(product)) {
+    return [];
+  }
+
+  return [{
+    "@type": "PropertyValue" as const,
+    name: "metaTagDescription",
+    value: product.metaTagDescription,
+  }];
+};
+
 export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   product: P,
   sku: P["items"][number],
@@ -243,10 +257,13 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 
   const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
   const clusterAdditionalProperties = toAdditionalPropertyClusters(product);
+  const metaTagAdditionalProperties = toAdditionalMetaTag(product);
 
   const additionalProperty = specificationsAdditionalProperty.concat(
     categoryAdditionalProperties ?? [],
-  ).concat(clusterAdditionalProperties ?? []);
+  ).concat(clusterAdditionalProperties ?? []).concat(
+    metaTagAdditionalProperties ?? [],
+  );
 
   return {
     "@type": "Product",
