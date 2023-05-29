@@ -30,7 +30,7 @@ export interface CollectionProps extends CommonProps {
    * @description search sort parameter
    */
   sort?: Sort;
-  /** @description total number of items to display */
+  /** @description total number of items to display. Required for collection */
   count: number;
 }
 
@@ -41,7 +41,7 @@ export interface QueryProps extends CommonProps {
    * @description search sort parameter
    */
   sort?: Sort;
-  /** @description total number of items to display */
+  /** @description total number of items to display. Required for query */
   count: number;
 }
 
@@ -73,7 +73,8 @@ const isCollectionList = (p: any): p is CollectionProps =>
 const isQueryList = (p: any): p is QueryProps =>
   typeof p.query === "string" && typeof p.count === "number";
 // deno-lint-ignore no-explicit-any
-const isProductIDList = (p: any): p is ProductIDProps => Array.isArray(p.ids);
+const isProductIDList = (p: any): p is ProductIDProps =>
+  Array.isArray(p.ids) && p.ids.length > 0;
 
 const fromProps = (props: Props) => {
   if (isProductIDList(props)) {
