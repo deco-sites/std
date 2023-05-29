@@ -8,20 +8,10 @@
   "githooks": {
     "pre-commit": "check"
   },
-  "lint": {
-    "exclude": [
-      ".frsh",
-      "static/",
-      "README.md"
-    ]
-  },
-  "fmt": {
-    "exclude": [
-      ".frsh",
-      "static/",
-      "README.md"
-    ]
-  },
+  "exclude": [
+    "static/",
+    "README.md"
+  ],
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
