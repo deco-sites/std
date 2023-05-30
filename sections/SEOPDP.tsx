@@ -1,1 +1,1 @@
-export { default } from "../components/seo/SEOPLP.tsx";
+export { default } from "../components/seo/SEOPDP.tsx";
