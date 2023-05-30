@@ -1909,7 +1909,7 @@
         },
         {
           "title": "VTEX product list - Intelligent Search",
-          "description": "Usefull for shelves and galleries.",
+          "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
             {
@@ -7100,42 +7100,6 @@
       "required": [],
       "title": "deco-sites/std/components/seo/types.ts@Props"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUExQLnRzeA==@Props": {
-      "type": "object",
-      "properties": {
-        "page": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductListingPage|null",
-          "title": "Page"
-        },
-        "titleTemplate": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Title template",
-          "description": "add a %s whenever you want it to be replaced with the product name",
-          "default": "%s | Deco.cx"
-        },
-        "title": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Page title override"
-        },
-        "description": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Meta tag description override"
-        }
-      },
-      "required": [
-        "page"
-      ],
-      "title": "deco-sites/std/components/seo/SEOPLP.tsx@Props"
-    },
     "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUERQLnRzeA==@Props": {
       "type": "object",
       "properties": {
@@ -7171,6 +7135,42 @@
         "page"
       ],
       "title": "deco-sites/std/components/seo/SEOPDP.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUExQLnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductListingPage|null",
+          "title": "Page"
+        },
+        "titleTemplate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Title template",
+          "description": "add a %s whenever you want it to be replaced with the product name",
+          "default": "%s | Deco.cx"
+        },
+        "title": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Page title override"
+        },
+        "description": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Meta tag description override"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/std/components/seo/SEOPLP.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvVlRFWFBvcnRhbERhdGFMYXllckNvbXBhdGliaWxpdHkudHN4@LoaderProps": {
       "type": "object",
@@ -8728,7 +8728,7 @@
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
       "title": "VTEX product list - Intelligent Search",
-      "description": "Usefull for shelves and galleries.",
+      "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
         {
@@ -9345,7 +9345,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUExQLnRzeA==@Props"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUERQLnRzeA==@Props"
         }
       ],
       "required": [
@@ -9366,7 +9366,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUERQLnRzeA==@Props"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy9zZW8vU0VPUExQLnRzeA==@Props"
         }
       ],
       "required": [
