@@ -3,11 +3,7 @@ import type {
   ProductDetailsPage,
   ProductListingPage,
 } from "../commerce/types.ts";
-import {
-  ProductListingSEO,
-  ProductSEO,
-  Props,
-} from "../components/seo/types.ts";
+import { Props } from "../components/seo/types.ts";
 
 export const canonicalFromBreadcrumblist = (
   { itemListElement }: BreadcrumbList,
@@ -18,38 +14,28 @@ export const canonicalFromBreadcrumblist = (
     ).item
     : undefined;
 
-export function getProductSEO(
+export function tagsFromProduct(
   page: ProductDetailsPage | null,
   template: string,
-): ProductSEO | null {
+) {
   if (!page) return null;
 
-  const product = page.product;
-  const breadcrumb = page.breadcrumbList;
-  const seo = page.seo;
-  const { isVariantOf: _isVariantOf, ...currentProduct } = product ?? {};
+  const { product, breadcrumbList: breadcrumb, seo } = page;
 
-  const title = template?.replace("%s", seo?.title || product?.name || "") ||
+  const title = template?.replace("%s", seo?.title || "") ||
     seo?.title;
   const description = seo?.description;
   const canonical = seo?.canonical ||
     (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
   const imageUrl = product?.image?.[0]?.url;
 
-  return {
-    currentProduct,
-    title,
-    description,
-    canonical,
-    imageUrl,
-    breadcrumb,
-  };
+  return { title, description, canonical, imageUrl };
 }
 
-export function getProductListingSEO(
+export function tagsFromListing(
   page: ProductListingPage | null,
   template: string,
-): ProductListingSEO | null {
+) {
   if (!page) return null;
 
   const { seo, breadcrumb } = page;
@@ -60,23 +46,20 @@ export function getProductListingSEO(
   const canonical = seo?.canonical ||
     (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
 
-  return { title, description, canonical, breadcrumb };
+  return { title, description, canonical, imageUrl: "" };
 }
 
-export function handleSEO(
-  props: Omit<Props, "pdpTitleTemplate" | "plpTitleTemplate" | "pdp" | "plp">,
-  pdp: ProductSEO | null,
-  plp: ProductListingSEO | null,
-) {
-  return {
-    title: pdp?.title || plp?.title || props.title,
-    description: pdp?.description || plp?.description || props.description,
-    canonical: pdp?.canonical || plp?.canonical || props.canonical,
-    image: pdp?.imageUrl || props.image,
-    type: props.type,
-    themeColor: props.themeColor,
-    favicon: props.favicon,
-    currentProduct: pdp?.currentProduct,
-    breadcrumb: pdp?.breadcrumb ?? plp?.breadcrumb,
-  };
-}
+export const handleSEO = (
+  props: Props,
+  ctx:
+    | ReturnType<typeof tagsFromProduct>
+    | ReturnType<typeof tagsFromListing>,
+) => ({
+  title: ctx?.title || props.title,
+  image: ctx?.imageUrl || props.image,
+  canonical: ctx?.canonical || props.canonical,
+  description: (ctx?.description || props.description)?.replace(
+    /(<([^>]+)>)/gi,
+    "",
+  ),
+});

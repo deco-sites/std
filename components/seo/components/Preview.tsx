@@ -1,85 +1,57 @@
-import type { Dimensions, PreviewProps, Props } from "../types.ts";
+import { useMemo } from "preact/hooks";
 import WhatsApp from "./WhatsApp.tsx";
 import PreviewItem from "./PreviewItem.tsx";
 import LinkedIn from "./LinkedIn.tsx";
 import Discord from "./Discord.tsx";
-import { useSignal } from "@preact/signals";
 import Facebook from "./Facebook.tsx";
 import Telegram from "./Telegram.tsx";
 import Google from "./Google.tsx";
 import Twitter from "./Twitter.tsx";
 import Slack from "./Slack.tsx";
 import instructions from "./instructions.json" assert { type: "json" };
+import type { Props } from "../types.ts";
 
-export default function PreviewHandler(props: Props) {
-  const { image } = props;
-  const dimensions = useSignal<Dimensions>({ width: 0, height: 0 });
-
-  const getMeta = async (url: string) => {
-    if (typeof document !== "undefined") {
-      const img = document.createElement("img");
-      img.src = url;
-      await img.decode();
-      return img;
-    }
-  };
-
-  const getPath = () => {
-    if (typeof document !== "undefined") {
-      const path = window.location.host;
-      return path;
-    }
-
-    return "website.com";
-  };
-
-  getMeta(image).then((img) => {
-    if (img !== undefined) {
-      dimensions.value = {
-        width: img.width,
-        height: img.naturalHeight,
-      };
-    }
-  });
-
-  const path = getPath();
+function PreviewHandler(props: Props) {
+  const path = useMemo(() => window.location?.host || "website.com", []);
 
   return (
     <section class="flex flex-col items-center">
-      <header class="px-10 w-full max-w-[1156px] py-8 text-primary">
+      <header class="px-10 w-full max-w-6xl py-8 text-primary">
         <h1 class="font-semibold text-xl pb-1">Preview</h1>
-        <p class="text-[15px]">
+        <p class="text-base">
           How your website is displayed on search engines and social media
         </p>
       </header>
-      <div class="flex flex-col max-w-[1156px] items-center">
-        <div class="flex flex-col items-center gap-[32px] mb-[20px] lg:(grid grid-cols-2 items-start justify-center)">
+      <div class="flex flex-col max-w-6xl items-center">
+        <div class="flex flex-col items-center gap-8 mb-5 lg:grid lg:grid-cols-2 lg:justify-center">
           <PreviewItem instructions={instructions.google} title="Google">
-            <Google {...{ ...props, ...dimensions.value, path }} />
+            <Google {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.linkedin} title="Linkedin">
-            <LinkedIn {...{ ...props, ...dimensions.value, path }} />
+            <LinkedIn {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.whatsapp} title="Whatsapp">
-            <WhatsApp {...{ ...props, ...dimensions.value, path }} />
+            <WhatsApp {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.telegram} title="Telegram">
-            <Telegram {...{ ...props, ...dimensions.value, path }} />
+            <Telegram {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.facebook} title="Facebook">
-            <Facebook {...{ ...props, ...dimensions.value, path }} />
+            <Facebook {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.twitter} title="Twitter">
-            <Twitter {...{ ...props, ...dimensions.value, path }} />
+            <Twitter {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.discord} title="Discord">
-            <Discord {...{ ...props, ...dimensions.value, path }} />
+            <Discord {...props} path={path} />
           </PreviewItem>
           <PreviewItem instructions={instructions.slack} title="Slack">
-            <Slack {...{ ...props, ...dimensions.value, path }} />
+            <Slack {...props} path={path} />
           </PreviewItem>
         </div>
       </div>
     </section>
   );
 }
+
+export default PreviewHandler;

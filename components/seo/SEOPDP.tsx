@@ -1,12 +1,8 @@
+import Metatags from "./Metatags.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
-
-import ScriptLDJson from "./ScriptLDJson.tsx";
-import SEOBase from "./SEOBase.tsx";
-import { canonicalFromBreadcrumblist } from "../../utils/seo.ts";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
 
 export interface Props {
-  page: LoaderReturnType<ProductDetailsPage | null>;
   /**
    * @title Title template
    * @description add a %s whenever you want it to be replaced with the product name
@@ -17,38 +13,9 @@ export interface Props {
   title?: string;
   /** @title Meta tag description override */
   description?: string;
+  page: LoaderReturnType<ProductDetailsPage | null>;
 }
 
-export const stripHtmlTags = (rawString?: string) =>
-  rawString?.replace(/(<([^>]+)>)/gi, "");
-function SeoPDP(
-  { page, titleTemplate, title, description }: Props,
-) {
-  const product = page?.product;
-  const breadcrumbList = page?.breadcrumbList;
-  const seo = page?.seo;
-  const { isVariantOf, ...currentProduct } = product ?? {};
-
-  const t = seo?.title ||
-    titleTemplate?.replace("%s", seo?.title || product?.name || "") ||
-    title;
-  const d = seo?.description || description;
-  const c = seo?.canonical ||
-    (breadcrumbList && canonicalFromBreadcrumblist(breadcrumbList));
-  const imageUrl = product?.image?.[0]?.url;
-
-  return (
-    <>
-      <SEOBase
-        title={t}
-        description={stripHtmlTags(d)}
-        imageUrl={imageUrl}
-        canonical={c}
-      />
-      <ScriptLDJson {...currentProduct} />
-      <ScriptLDJson {...breadcrumbList} />
-    </>
-  );
-}
+const SeoPDP = (props: Props) => <Metatags {...props} context={props.page} />;
 
 export default SeoPDP;

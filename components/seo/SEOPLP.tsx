@@ -1,8 +1,5 @@
+import Metatags from "./Metatags.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
-
-import ScriptLDJson from "./ScriptLDJson.tsx";
-import SEOBase from "./SEOBase.tsx";
-import { canonicalFromBreadcrumblist } from "../../utils/seo.ts";
 import type { ProductListingPage } from "../../commerce/types.ts";
 
 export interface Props {
@@ -19,24 +16,6 @@ export interface Props {
   description?: string;
 }
 
-function SeoPLP(
-  { page, titleTemplate, title, description }: Props,
-) {
-  const { seo, breadcrumb } = page || {};
-
-  const t = seo?.title ||
-    titleTemplate?.replace("%s", seo?.title || "") ||
-    title;
-  const d = seo?.description || description;
-  const c = seo?.canonical ||
-    (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
-
-  return (
-    <>
-      <SEOBase title={t} description={d} canonical={c} />
-      <ScriptLDJson {...breadcrumb} />
-    </>
-  );
-}
+const SeoPLP = (props: Props) => <Metatags {...props} context={props.page} />;
 
 export default SeoPLP;

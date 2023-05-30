@@ -1,8 +1,6 @@
+import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type { LoaderReturnType } from "$live/types.ts";
-import { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type {
-  BreadcrumbList,
-  Product,
   ProductDetailsPage,
   ProductListingPage,
 } from "../../commerce/types.ts";
@@ -15,32 +13,28 @@ export interface Dimensions {
 }
 
 export interface Props {
-  title: string;
+  title?: string;
   /**
-   * @title Product title template
-   * @description add a %s whenever you want it to be replaced with the product name
-   * @default %s | Deco.cx
-   */
-  pdpTitleTemplate: string;
-  /**
-   * @title Product listing title template
+   * @title Title template
    * @description add a %s whenever you want it to be replaced with the category name or search term
    * @default %s | Deco.cx
    */
-  plpTitleTemplate: string;
-  description: string;
+  titleTemplate?: string;
+  description?: string;
   /** @default website */
-  type: OGType;
+  type?: OGType;
   /** @description Recommended: 1200 x 630 px (up to 5MB) */
-  image: LiveImage;
+  image?: LiveImage;
   /** @description Recommended: 16 x 16 px */
-  favicon: LiveImage;
+  favicon?: LiveImage;
   /** @description Suggested color that browsers should use to customize the display of the page or of the surrounding user interface */
-  themeColor: string;
+  themeColor?: string;
   /** @title Canonical URL */
   canonical?: string;
-  pdp: LoaderReturnType<ProductDetailsPage | null>;
-  plp: LoaderReturnType<ProductListingPage | null>;
+
+  context?:
+    | LoaderReturnType<ProductDetailsPage | null>
+    | LoaderReturnType<ProductListingPage | null>;
 }
 
 export interface PreviewProps {
@@ -50,24 +44,12 @@ export interface PreviewProps {
 }
 
 export interface PreviewItens {
-  title: string;
-  description: string;
-  image: LiveImage;
-  type: OGType;
-  themeColor: string;
-  width: number;
-  height: number;
-  path: string;
-}
-
-export interface ProductSEO extends ProductListingSEO {
-  currentProduct: Omit<Product, "isVariantOf">;
-  imageUrl?: string;
-}
-
-export interface ProductListingSEO {
   title?: string;
   description?: string;
-  canonical?: string;
-  breadcrumb: BreadcrumbList;
+  image?: LiveImage;
+  type?: OGType;
+  themeColor?: string;
+  width?: number;
+  height?: number;
+  path?: string;
 }

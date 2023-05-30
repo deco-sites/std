@@ -1,23 +1,23 @@
 import { PreviewItens } from "../types.ts";
 import { textShortner } from "./helpers/textShortner.tsx";
 
-export default function Google(props: PreviewItens) {
-  const { title, description, path } = props;
-  const descriptionMaxLength = 130;
+const MAX_DESCRIPTION_LENGTH = 130;
 
+function Google({ title, description, path }: PreviewItens) {
   return (
-    <div class="p-[24px] flex flex-col gap-[4px] bg-white border border-light-border rounded-[8px]">
-      <p class="text-xs font-normal leading-[19px]">
+    <div class="p-6 flex flex-col gap-1 bg-white border border-light-border rounded-lg">
+      <p class="text-xs font-normal leading-5">
         {path}
-        <span class="text-common ml-[10px] font-semibold">&#8942;</span>
+        <span class="text-common ml-2 font-semibold">&#8942;</span>
       </p>
-      <p class="text-[20px] font-thin text-third leading-[19px]  overflow-ellipsis 
-        overflow-hidden max-w-[360px]  whitespace-nowrap break-words">
+      <p class="text-xl font-thin text-third leading-5  overflow-ellipsis overflow-hidden max-w-sm whitespace-nowrap break-words">
         {title}
       </p>
-      <p class="text-xs font-normal text-common leading-[19px] max-w-[352px] break-words leading-[22px]">
-        {textShortner(description, descriptionMaxLength)}
+      <p class="text-xs font-normal text-common leading-5 max-w-sm break-words">
+        {description && textShortner(description, MAX_DESCRIPTION_LENGTH)}
       </p>
     </div>
   );
 }
+
+export default Google;

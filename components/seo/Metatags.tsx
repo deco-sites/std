@@ -1,39 +1,24 @@
 import { Head } from "$fresh/runtime.ts";
 import {
-  getProductListingSEO,
-  getProductSEO,
   handleSEO,
+  tagsFromListing,
+  tagsFromProduct,
 } from "../../utils/seo.ts";
 import ScriptLDJson from "./ScriptLDJson.tsx";
 import Preview from "./components/Preview.tsx";
 import type { Props } from "./types.ts";
 
-function SEOBase({
-  pdpTitleTemplate,
-  plpTitleTemplate,
-  pdp,
-  plp,
-  ...props
-}: Props) {
-  const twitterCard = props.type === "website"
-    ? "summary"
-    : "summary_large_image";
+function Metatags(props: Props) {
+  const { titleTemplate = "", context, type, themeColor, favicon } = props;
+  const twitterCard = type === "website" ? "summary" : "summary_large_image";
 
-  const {
-    title,
-    description,
-    image,
-    type,
-    themeColor,
-    favicon,
-    canonical,
-    currentProduct,
-    breadcrumb,
-  } = handleSEO(
-    props,
-    getProductSEO(pdp, pdpTitleTemplate),
-    getProductListingSEO(plp, plpTitleTemplate),
-  );
+  const tags = context?.["@type"] === "ProductDetailsPage"
+    ? tagsFromProduct(context, titleTemplate)
+    : context?.["@type"] === "ProductListingPage"
+    ? tagsFromListing(context, titleTemplate)
+    : null;
+
+  const { title, description, image, canonical } = handleSEO(props, tags);
 
   return (
     <>
@@ -60,12 +45,19 @@ function SEOBase({
         {/* Link tags */}
         {canonical && <link rel="canonical" href={canonical} />}
       </Head>
-      {pdp && currentProduct ? <ScriptLDJson {...currentProduct} /> : null}
-      {(pdp || plp) && breadcrumb ? <ScriptLDJson {...breadcrumb} /> : null}
+      {context?.["@type"] === "ProductDetailsPage" && (
+        <>
+          <ScriptLDJson {...{ ...context.product, isVariantOf: [] }} />
+          <ScriptLDJson {...context.breadcrumbList} />
+        </>
+      )}
+      {context?.["@type"] === "ProductListingPage" && (
+        <ScriptLDJson {...context.breadcrumb} />
+      )}
     </>
   );
 }
 
 export { Preview };
 
-export default SEOBase;
+export default Metatags;
