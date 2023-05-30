@@ -25,6 +25,8 @@ function Metatags(props: Props) {
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
+        <meta name="theme-color" content={themeColor} />
+        <link rel="icon" href={favicon} />
 
         {/* Twitter tags */}
         <meta property="twitter:title" content={title} />
@@ -36,11 +38,6 @@ function Metatags(props: Props) {
         <meta property="og:description" content={description} />
         <meta property="og:type" content={type} />
         <meta property="og:image" content={image} />
-
-        <title>{title}</title>
-        <meta name="theme-color" content={themeColor} />
-        <meta name="description" content={description} />
-        <link rel="icon" href={favicon} />
 
         {/* Link tags */}
         {canonical && <link rel="canonical" href={canonical} />}
