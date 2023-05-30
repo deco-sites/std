@@ -1,0 +1,35 @@
+{
+  "google": [
+    "The image does not affect this preview.",
+    "The visualization mode does not affect this preview."
+  ],
+  "linkedin": [
+    "The image size does not affect this preview.",
+    "The visualization mode does not affect this preview."
+  ],
+  "whatsapp": [
+    "The preview will be a “horizontal list” if your image's width or height is less than 300 px.",
+    "The visualization mode does not affect this preview."
+  ],
+  "telegram": [
+    "The preview will keep image's aspect ratio if it's bigger than 300 px.",
+    "The preview will show a squared image if it's width or height is less than 300 px."
+  ],
+  "facebook": [
+    "The preview will be a card with an horizontal image, if your image is horizontal",
+    "The preview will be a “horizontal list” with a vertical image if your image vertical",
+    "The visualization mode does not affect this preview."
+  ],
+  "twitter": [
+    "The image size does not affect this preview."
+  ],
+  "slack": [
+    "The preview will keep image's aspect ratio if it's bigger than 300 px.",
+    "The preview will show a squared image if it's width or height is less than 300 px."
+  ],
+  "discord": [
+    "The preview will keep image's aspect ratio if it's bigger than 300 px.",
+    "The preview will show a squared image if it's width or height is less than 300 px.",
+    "The theme color affects the color of the left bar"
+  ]
+}
