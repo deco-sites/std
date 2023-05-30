@@ -1909,7 +1909,7 @@
         },
         {
           "title": "VTEX product list - Intelligent Search",
-          "description": "Usefull for shelves and galleries.",
+          "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
             {
@@ -8728,7 +8728,7 @@
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
       "title": "VTEX product list - Intelligent Search",
-      "description": "Usefull for shelves and galleries.",
+      "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
         {
