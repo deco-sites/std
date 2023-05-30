@@ -8,10 +8,7 @@
   "githooks": {
     "pre-commit": "check"
   },
-  "exclude": [
-    "static/",
-    "README.md"
-  ],
+  "exclude": ["static", "README.md"],
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
