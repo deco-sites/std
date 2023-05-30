@@ -39,9 +39,9 @@ export function tagsFromListing(
   if (!page) return null;
 
   const { seo, breadcrumb } = page;
-
-  const title = template?.replace("%s", seo?.title || "") ||
-    seo?.title;
+  const title = seo?.title && template
+    ? template.replace("%s", seo.title || "")
+    : seo?.title;
   const description = seo?.description;
   const canonical = seo?.canonical ||
     (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
