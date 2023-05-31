@@ -110,11 +110,8 @@ export function AddVTEXPortalData(
       id="datalayer-portal-compat"
       dangerouslySetInnerHTML={{
         __html: `if (document.readyState === "complete") {
-
-        console.log("if");
           (${addVTEXPortalDataSnippet.toString()})('${accountName}');
         } else {
-        console.log("else");
           const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
           addEventListener("load", init);
         }`,
