@@ -1909,7 +1909,7 @@
         },
         {
           "title": "VTEX product list - Intelligent Search",
-          "description": "Useful for shelves and galleries.",
+          "description": "Usefull for shelves and galleries.",
           "type": "object",
           "allOf": [
             {
@@ -3065,6 +3065,14 @@
           ],
           "title": "Starting page query parameter offset.",
           "description": "Set the starting page offset. Default to 1."
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Apply the loader logic using this url intead of the one from request",
+          "title": "Url"
         }
       },
       "required": [
@@ -6670,6 +6678,20 @@
         "to": {
           "type": "string",
           "title": "To"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "permanent"
+            },
+            {
+              "type": "string",
+              "const": "temporary"
+            }
+          ],
+          "type": "string",
+          "title": "Type"
         }
       },
       "required": [
@@ -6792,6 +6814,13 @@
         "name": {
           "type": "string",
           "title": "Name"
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Path"
         },
         "layout": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page",
@@ -7522,7 +7551,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|a7dd1dc82cac75852b4d2ea195ef01a8": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@8ec121e989a885814ba390d3dbc08cd6|WorkflowRef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7540,13 +7569,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|a7dd1dc82cac75852b4d2ea195ef01a8"
+      "title": "8ec121e989a885814ba390d3dbc08cd6|WorkflowRef"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|a7dd1dc82cac75852b4d2ea195ef01a8",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@8ec121e989a885814ba390d3dbc08cd6|WorkflowRef",
           "title": "Workflow"
         },
         "id": {
@@ -8728,7 +8757,7 @@
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
       "title": "VTEX product list - Intelligent Search",
-      "description": "Useful for shelves and galleries.",
+      "description": "Usefull for shelves and galleries.",
       "type": "object",
       "allOf": [
         {

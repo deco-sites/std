@@ -114,6 +114,11 @@ export interface Props {
    * @description Set the starting page offset. Default to 1.
    */
   pageOffset?: number;
+
+  /**
+   * @description Apply the loader logic using this url intead of the one from request
+   */
+  url?: string;
 }
 
 export const singleFlightKey = (
@@ -227,7 +232,7 @@ const loader = async (
   req: Request,
   ctx: Context,
 ): Promise<ProductListingPage | null> => {
-  const { url: baseUrl } = req;
+  const baseUrl = props.url || req.url;
   const { configVTEX: config } = ctx;
   const url = new URL(baseUrl);
   const vtex = paths(config!);
