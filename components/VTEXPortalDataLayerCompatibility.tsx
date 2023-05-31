@@ -56,8 +56,10 @@ function addVTEXPortalDataSnippet(accountName: any) {
     shelfProductIds: [],
   };
 
+  const department = breadcrumbSD?.itemListElement?.[0];
   if (pageType === "productView") {
     props.pageCategory = "Product";
+    props.pageDepartment = department?.name || null;
     const scriptEl: HTMLScriptElement | null = document.querySelector(
       'script[data-id="vtex-portal-compat"]',
     );
@@ -66,7 +68,6 @@ function addVTEXPortalDataSnippet(accountName: any) {
     }
   }
 
-  const department = breadcrumbSD?.itemListElement?.[0];
   if (pageType === "departmentView") {
     props.pageCategory = "Department";
     props.pageDepartment = department?.name || null;
@@ -94,7 +95,10 @@ function addVTEXPortalDataSnippet(accountName: any) {
   );
 
   window.dataLayer = window.dataLayer || [];
+  // VTEX Default position is first...
   window.dataLayer.unshift(props);
+  // But GTM handles .push function
+  window.dataLayer.push(props);
   window.dataLayer.push({ event: pageType });
 }
 
