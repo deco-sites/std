@@ -7,6 +7,7 @@ type ScriptProps = ComponentProps<typeof Script>;
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
   const url = new URL(window.location.href);
+  const isSearchPage = url.pathname.startsWith("/s");
   const structuredDataScripts =
     document.querySelectorAll('script[type="application/ld+json"]') || [];
   // deno-lint-ignore no-explicit-any
@@ -43,7 +44,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
   const breadcrumbSD = structuredDatas.find((
     s,
   ) => (s["@type"] === "BreadcrumbList"));
-  if (breadcrumbSD) {
+  if (breadcrumbSD && !isSearchPage) {
     const department = breadcrumbSD?.itemListElement?.[0];
     props.pageDepartment = department?.name || null;
     if (props.pageDepartment) {
@@ -56,6 +57,9 @@ function addVTEXPortalDataSnippet(accountName: any) {
       props.pageCategory = new URL(window.location.href).pathname.split("/")
         .filter(Boolean).join(" ");
     }
+  } else if (isSearchPage) {
+    props.pageCategory = "InternalSiteSearch";
+    props.siteSearchTerm = url.searchParams.get("q");
   }
 
   document.querySelectorAll("[data-product-id]").forEach(
