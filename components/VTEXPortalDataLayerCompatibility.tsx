@@ -94,7 +94,10 @@ function addVTEXPortalDataSnippet(accountName: any) {
   );
 
   window.dataLayer = window.dataLayer || [];
+  // VTEX Default position is first...
   window.dataLayer.unshift(props);
+  // But GTM handles .push function
+  window.dataLayer.push(props);
   window.dataLayer.push({ event: pageType });
 }
 
