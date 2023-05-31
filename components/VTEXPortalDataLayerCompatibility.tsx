@@ -15,7 +15,33 @@ function addVTEXPortalDataSnippet(accountName: any) {
   structuredDataScripts.forEach((v: any) => {
     structuredDatas.push(JSON.parse(v.text));
   });
-  const isProductPage = structuredDatas.some((s) => s["@type"] === "Product");
+  const breadcrumbSD = structuredDatas.find((
+    s,
+  ) => (s["@type"] === "BreadcrumbList"));
+
+  // deno-lint-ignore no-explicit-any
+  const getPageType = (hasStructuredData: undefined | Record<string, any>) => {
+    if (url.pathname === "/") return "homeView";
+
+    const isProductPage = structuredDatas.some((s) => s["@type"] === "Product");
+    if (isProductPage) return "productView";
+
+    const isSearchPage = url.pathname === "/s";
+    if (isSearchPage) return "internalSiteSearchView";
+
+    const pathNames = url.pathname.split("/").filter(Boolean);
+
+    if (pathNames.length === 1 && hasStructuredData) {
+      return "departmentView";
+    }
+
+    if (pathNames.length >= 2 && hasStructuredData) {
+      return "categoryView";
+    }
+
+    return "otherView";
+  };
+  const pageType = getPageType(breadcrumbSD);
 
   // deno-lint-ignore no-explicit-any
   const props: Record<string, any> = {
@@ -30,7 +56,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
     shelfProductIds: [],
   };
 
-  if (isProductPage) {
+  if (pageType === "productView") {
     props.pageCategory = "Product";
     const scriptEl: HTMLScriptElement | null = document.querySelector(
       'script[data-id="vtex-portal-compat"]',
@@ -40,22 +66,25 @@ function addVTEXPortalDataSnippet(accountName: any) {
     }
   }
 
-  const breadcrumbSD = structuredDatas.find((
-    s,
-  ) => (s["@type"] === "BreadcrumbList"));
-  if (breadcrumbSD) {
-    const department = breadcrumbSD?.itemListElement?.[0];
+  const department = breadcrumbSD?.itemListElement?.[0];
+  if (pageType === "departmentView") {
+    props.pageCategory = "Department";
     props.pageDepartment = department?.name || null;
-    if (props.pageDepartment) {
-      !isProductPage && (props.pageCategory = "Category");
-      const category = breadcrumbSD?.itemListElement
-        ?.[breadcrumbSD?.itemListElement.length - 1];
-      // TODO: Corrigir na pDP
-      props.categoryName = category?.name;
-    } else {
-      props.pageCategory = new URL(window.location.href).pathname.split("/")
-        .filter(Boolean).join(" ");
-    }
+    props.departmentName = department?.name || null;
+    props.categoryName = department?.name || null;
+  }
+
+  const category = breadcrumbSD?.itemListElement
+    ?.[1];
+  if (pageType === "categoryView") {
+    props.pageCategory = "Category";
+    props.pageDepartment = department?.name || null;
+    props.categoryName = category?.name || null;
+  }
+
+  if (pageType === "internalSiteSearchView") {
+    props.pageCategory = "InternalSiteSearch";
+    props.siteSearchTerm = url.searchParams.get("q");
   }
 
   document.querySelectorAll("[data-product-id]").forEach(
@@ -66,16 +95,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.unshift(props);
-
-  if (url.pathname === "/") {
-    window.dataLayer.push({ event: "homeView" });
-  } else if (props.pageCategory === "Product") {
-    window.dataLayer.push({ event: "productView" });
-  } else if (props.pageCategory === "Category") {
-    window.dataLayer.push({ event: "categoryView" });
-  } else {
-    window.dataLayer.push({ event: "otherView" });
-  }
+  window.dataLayer.push({ event: pageType });
 }
 
 interface AddVTEXPortalData {
@@ -89,7 +109,12 @@ export function AddVTEXPortalData(
       {...props}
       id="datalayer-portal-compat"
       dangerouslySetInnerHTML={{
-        __html: `(${addVTEXPortalDataSnippet.toString()})('${accountName}')`,
+        __html: `if (document.readyState === "complete") {
+          (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+        } else {
+          const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+          addEventListener("load", init);
+        }`,
       }}
     />
   );
