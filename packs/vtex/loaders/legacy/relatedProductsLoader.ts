@@ -85,7 +85,6 @@ async function loader(
   const productId = await getProductGroupID(props);
 
   if (!productId) {
-    // throw new Error("Missing props. Please fill: slug or id");
     return null;
   }
 
