@@ -26,7 +26,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
     const isProductPage = structuredDatas.some((s) => s["@type"] === "Product");
     if (isProductPage) return "productView";
 
-    const isSearchPage = url.pathname.startsWith("/s");
+    const isSearchPage = url.pathname === "/s";
     if (isSearchPage) return "internalSiteSearchView";
 
     const pathNames = url.pathname.split("/").filter(Boolean);
