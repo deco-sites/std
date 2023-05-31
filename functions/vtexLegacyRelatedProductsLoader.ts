@@ -16,6 +16,10 @@ export interface Props {
    * @description: number of related products
    */
   count?: number;
+  /**
+   * @description remove unavailable items from result
+   */
+  hideUnavailableItems?: boolean;
 }
 
 /**
@@ -30,13 +34,14 @@ const loaderV0: LoaderFunction<
 > = async (
   req,
   ctx,
-  { crossSelling, count },
+  { crossSelling, count, hideUnavailableItems },
 ) => {
   const data = await loader(
     {
       slug: ctx.params.slug,
       crossSelling,
       count,
+      hideUnavailableItems,
     },
     req,
     ctx.state,
