@@ -73,6 +73,8 @@ function addVTEXPortalDataSnippet(accountName: any) {
     window.dataLayer.push({ event: "productView" });
   } else if (props.pageCategory === "Category") {
     window.dataLayer.push({ event: "categoryView" });
+  } else if (url.pathname.startsWith("/s")) {
+    window.dataLayer.push({ event: "internalSiteSearchView" });
   } else {
     window.dataLayer.push({ event: "otherView" });
   }
