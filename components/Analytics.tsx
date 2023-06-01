@@ -12,19 +12,33 @@ export interface Props {
    * @description custom url for serving google tag manager. Set either this url or the tracking id
    */
   src?: string;
+  /**
+   * @description run GTM directly on the main thread, without Partytown. This is useful for debugging purposes. Default: false
+   */
+  dangerouslyRunOnMainThread?: boolean;
 }
 
-export default function Analtyics({ trackingIds, src }: Props) {
+export default function Analtyics(
+  { trackingIds, src, dangerouslyRunOnMainThread }: Props,
+) {
   return (
     <>
       {/* TODO: Add debug from query string @author Igor Brasileiro */}
       {/* Add Tag Manager script during production only. To test it locally remove the condition */}
       {!!context.deploymentId && trackingIds && (
         trackingIds.map((trackingId) => (
-          <GoogleTagManager trackingId={trackingId.trim()} />
+          <GoogleTagManager
+            trackingId={trackingId.trim()}
+            dangerouslyRunOnMainThread={dangerouslyRunOnMainThread}
+          />
         ))
       )}
-      {!!context.deploymentId && src && <GoogleTagManager src={src} />}
+      {!!context.deploymentId && src && (
+        <GoogleTagManager
+          src={src}
+          dangerouslyRunOnMainThread={dangerouslyRunOnMainThread}
+        />
+      )}
 
       <Script
         dangerouslySetInnerHTML={{
