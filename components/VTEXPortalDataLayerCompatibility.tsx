@@ -6,6 +6,7 @@ type ScriptProps = ComponentProps<typeof Script>;
 
 // deno-lint-ignore no-explicit-any
 function addVTEXPortalDataSnippet(accountName: any) {
+  performance.mark("start-vtex-dl");
   const url = new URL(window.location.href);
   const structuredDataScripts =
     document.querySelectorAll('script[type="application/ld+json"]') || [];
@@ -100,6 +101,8 @@ function addVTEXPortalDataSnippet(accountName: any) {
   // But GTM handles .push function
   window.dataLayer.push(props);
   window.dataLayer.push({ event: pageType });
+  performance.mark("end-vtex-dl");
+  performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
 }
 
 interface AddVTEXPortalData {
