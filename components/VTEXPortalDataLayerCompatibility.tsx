@@ -5,7 +5,7 @@ import { ComponentProps } from "preact";
 declare global {
   interface Window {
     // deno-lint-ignore no-explicit-any
-    dl_product: any;
+    datalayer_product: any;
     shelfProductIds: string[];
   }
 }
@@ -69,7 +69,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   if (pageType === "productView") {
     props.pageCategory = "Product";
     props.pageDepartment = department?.name || null;
-    const product = window.dl_product || {};
+    const product = window.datalayer_product || {};
     Object.assign(props, product);
   }
 
@@ -178,7 +178,7 @@ export function ProductDetailsTemplate(
       {...props}
       defer
       dangerouslySetInnerHTML={{
-        __html: `window.dl_product = ${JSON.stringify(template)};`,
+        __html: `window.datalayer_product = ${JSON.stringify(template)};`,
       }}
     />
   );
