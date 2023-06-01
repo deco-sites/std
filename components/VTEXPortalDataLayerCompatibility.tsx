@@ -4,8 +4,15 @@ import { ComponentProps } from "preact";
 
 type ScriptProps = ComponentProps<typeof Script>;
 
-// deno-lint-ignore no-explicit-any
-function addVTEXPortalDataSnippet(accountName: any) {
+async function addVTEXPortalDataSnippet(accountName: string) {
+  const nextTick = async (cb: () => void) => {
+    if ("scheduler" in window) {
+      // deno-lint-ignore no-explicit-any
+      await (window.scheduler as any).postTask(cb);
+    } else {
+      setTimeout(cb, 0);
+    }
+  };
   performance.mark("start-vtex-dl");
   const url = new URL(window.location.href);
   const structuredDataScripts =
@@ -61,9 +68,9 @@ function addVTEXPortalDataSnippet(accountName: any) {
   if (pageType === "productView") {
     props.pageCategory = "Product";
     props.pageDepartment = department?.name || null;
-    const scriptEl: HTMLScriptElement | null = document.querySelector(
-      'script[data-id="vtex-portal-compat"]',
-    );
+    const scriptEl = document.getElementById(
+      "vtex-portal-compat",
+    ) as HTMLScriptElement | null;
     if (scriptEl) {
       Object.assign(props, JSON.parse(scriptEl.dataset.datalayer || "{}"));
     }
@@ -89,20 +96,27 @@ function addVTEXPortalDataSnippet(accountName: any) {
     props.siteSearchTerm = url.searchParams.get("q");
   }
 
-  document.querySelectorAll("[data-product-id]").forEach(
-    (el) => {
-      props.shelfProductIds.push((el as HTMLDivElement).dataset.productId);
-    },
-  );
+  await nextTick(() => {
+    performance.mark("start-qsa-prod");
+    document.querySelectorAll("script[data-product-id]").forEach(
+      (el) => {
+        props.shelfProductIds.push((el as HTMLDivElement).dataset.productId);
+      },
+    );
+    performance.mark("end-qsa-prod");
+  });
 
-  window.dataLayer = window.dataLayer || [];
-  // VTEX Default position is first...
-  window.dataLayer.unshift(props);
-  // But GTM handles .push function
-  window.dataLayer.push(props);
-  window.dataLayer.push({ event: pageType });
-  performance.mark("end-vtex-dl");
-  performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
+  await nextTick(() => {
+    window.dataLayer = window.dataLayer || [];
+    // VTEX Default position is first...
+    window.dataLayer.unshift(props);
+    // But GTM handles .push function
+    window.dataLayer.push(props);
+    window.dataLayer.push({ event: pageType });
+    performance.mark("end-vtex-dl");
+    performance.measure("qsa-prod-id", "start-qsa-prod", "end-qsa-prod");
+    performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
+  });
 }
 
 interface AddVTEXPortalData {
