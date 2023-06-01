@@ -114,11 +114,13 @@ export function AddVTEXPortalData(
     <Script
       {...props}
       id="datalayer-portal-compat"
+      defer
       dangerouslySetInnerHTML={{
-        __html: `if (document.readyState === "complete") {
-          (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+        __html:
+          `const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+        if (document.readyState === "complete") {
+          init()
         } else {
-          const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
           addEventListener("load", init);
         }`,
       }}
@@ -189,6 +191,8 @@ export function ProductInfo({ product, ...props }: ProductInfoProps) {
   return (
     <Script
       {...props}
+      defer
+      data-product-info
       dangerouslySetInnerHTML={{
         __html:
           `window.shelfProductIds = window.shelfProductIds || []; window.shelfProductIds.push("${product.isVariantOf.productGroupID}")`,
