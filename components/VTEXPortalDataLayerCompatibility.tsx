@@ -2,10 +2,18 @@ import { Product } from "deco-sites/std/commerce/types.ts";
 import Script from "partytown/Script.tsx";
 import { ComponentProps } from "preact";
 
+declare global {
+  interface Window {
+    // deno-lint-ignore no-explicit-any
+    datalayer_product: any;
+    shelfProductIds: string[];
+  }
+}
+
 type ScriptProps = ComponentProps<typeof Script>;
 
-// deno-lint-ignore no-explicit-any
-function addVTEXPortalDataSnippet(accountName: any) {
+function addVTEXPortalDataSnippet(accountName: string) {
+  performance.mark("start-vtex-dl");
   const url = new URL(window.location.href);
   const structuredDataScripts =
     document.querySelectorAll('script[type="application/ld+json"]') || [];
@@ -18,6 +26,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
   const breadcrumbSD = structuredDatas.find((
     s,
   ) => (s["@type"] === "BreadcrumbList"));
+  performance.mark("end-sd");
 
   // deno-lint-ignore no-explicit-any
   const getPageType = (hasStructuredData: undefined | Record<string, any>) => {
@@ -60,12 +69,8 @@ function addVTEXPortalDataSnippet(accountName: any) {
   if (pageType === "productView") {
     props.pageCategory = "Product";
     props.pageDepartment = department?.name || null;
-    const scriptEl: HTMLScriptElement | null = document.querySelector(
-      'script[data-id="vtex-portal-compat"]',
-    );
-    if (scriptEl) {
-      Object.assign(props, JSON.parse(scriptEl.dataset.datalayer || "{}"));
-    }
+    const product = window.datalayer_product || {};
+    Object.assign(props, product);
   }
 
   if (pageType === "departmentView") {
@@ -88,11 +93,7 @@ function addVTEXPortalDataSnippet(accountName: any) {
     props.siteSearchTerm = url.searchParams.get("q");
   }
 
-  document.querySelectorAll("[data-product-id]").forEach(
-    (el) => {
-      props.shelfProductIds.push((el as HTMLDivElement).dataset.productId);
-    },
-  );
+  props.shelfProductIds = window.shelfProductIds || [];
 
   window.dataLayer = window.dataLayer || [];
   // VTEX Default position is first...
@@ -100,6 +101,9 @@ function addVTEXPortalDataSnippet(accountName: any) {
   // But GTM handles .push function
   window.dataLayer.push(props);
   window.dataLayer.push({ event: pageType });
+  performance.mark("end-vtex-dl");
+  performance.measure("vtex-dl-qs-ld-json", "start-vtex-dl", "end-sd");
+  performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
 }
 
 interface AddVTEXPortalData {
@@ -112,11 +116,13 @@ export function AddVTEXPortalData(
     <Script
       {...props}
       id="datalayer-portal-compat"
+      defer
       dangerouslySetInnerHTML={{
-        __html: `if (document.readyState === "complete") {
-          (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+        __html:
+          `const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
+        if (document.readyState === "complete") {
+          init()
         } else {
-          const init = () => (${addVTEXPortalDataSnippet.toString()})('${accountName}');
           addEventListener("load", init);
         }`,
       }}
@@ -168,21 +174,34 @@ export function ProductDetailsTemplate(
   };
 
   return (
-    <script
+    <Script
       {...props}
-      data-id="vtex-portal-compat"
-      data-datalayer={JSON.stringify(template)}
+      defer
+      dangerouslySetInnerHTML={{
+        __html: `window.datalayer_product = ${JSON.stringify(template)};`,
+      }}
     />
   );
 }
 
 interface ProductInfoProps {
   product: Product;
+  type?: string;
 }
 
-export function ProductInfo({ product }: ProductInfoProps) {
+export function ProductInfo({ product, ...props }: ProductInfoProps) {
   if (!product.isVariantOf?.productGroupID) return null;
-  return <script data-product-id={product.isVariantOf?.productGroupID} />;
+  return (
+    <Script
+      {...props}
+      defer
+      data-product-info
+      dangerouslySetInnerHTML={{
+        __html:
+          `window.shelfProductIds = window.shelfProductIds || []; window.shelfProductIds.push("${product.isVariantOf.productGroupID}")`,
+      }}
+    />
+  );
 }
 
 export interface ProductSKUJsonProps {
