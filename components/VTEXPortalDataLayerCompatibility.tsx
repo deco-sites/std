@@ -26,6 +26,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   const breadcrumbSD = structuredDatas.find((
     s,
   ) => (s["@type"] === "BreadcrumbList"));
+  performance.mark("end-sd");
 
   // deno-lint-ignore no-explicit-any
   const getPageType = (hasStructuredData: undefined | Record<string, any>) => {
@@ -101,6 +102,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   window.dataLayer.push(props);
   window.dataLayer.push({ event: pageType });
   performance.mark("end-vtex-dl");
+  performance.measure("vtex-dl-qs-ld-json", "start-vtex-dl", "end-sd");
   performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
 }
 
@@ -174,6 +176,7 @@ export function ProductDetailsTemplate(
   return (
     <Script
       {...props}
+      defer
       dangerouslySetInnerHTML={{
         __html: `window.dl_product = ${JSON.stringify(template)};`,
       }}
