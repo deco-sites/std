@@ -2,17 +2,17 @@ import { Product } from "deco-sites/std/commerce/types.ts";
 import Script from "partytown/Script.tsx";
 import { ComponentProps } from "preact";
 
+declare global {
+  interface Window {
+    // deno-lint-ignore no-explicit-any
+    dl_product: any;
+    shelfProductIds: string[];
+  }
+}
+
 type ScriptProps = ComponentProps<typeof Script>;
 
-async function addVTEXPortalDataSnippet(accountName: string) {
-  const nextTick = async (cb: () => void) => {
-    if ("scheduler" in window) {
-      // deno-lint-ignore no-explicit-any
-      await (window.scheduler as any).postTask(cb);
-    } else {
-      setTimeout(cb, 0);
-    }
-  };
+function addVTEXPortalDataSnippet(accountName: string) {
   performance.mark("start-vtex-dl");
   const url = new URL(window.location.href);
   const structuredDataScripts =
@@ -68,12 +68,8 @@ async function addVTEXPortalDataSnippet(accountName: string) {
   if (pageType === "productView") {
     props.pageCategory = "Product";
     props.pageDepartment = department?.name || null;
-    const scriptEl = document.getElementById(
-      "vtex-portal-compat",
-    ) as HTMLScriptElement | null;
-    if (scriptEl) {
-      Object.assign(props, JSON.parse(scriptEl.dataset.datalayer || "{}"));
-    }
+    const product = window.dl_product || {};
+    Object.assign(props, product);
   }
 
   if (pageType === "departmentView") {
@@ -96,27 +92,16 @@ async function addVTEXPortalDataSnippet(accountName: string) {
     props.siteSearchTerm = url.searchParams.get("q");
   }
 
-  await nextTick(() => {
-    performance.mark("start-qsa-prod");
-    document.querySelectorAll("script[data-product-id]").forEach(
-      (el) => {
-        props.shelfProductIds.push((el as HTMLDivElement).dataset.productId);
-      },
-    );
-    performance.mark("end-qsa-prod");
-  });
+  props.shelfProductIds = window.shelfProductIds || [];
 
-  await nextTick(() => {
-    window.dataLayer = window.dataLayer || [];
-    // VTEX Default position is first...
-    window.dataLayer.unshift(props);
-    // But GTM handles .push function
-    window.dataLayer.push(props);
-    window.dataLayer.push({ event: pageType });
-    performance.mark("end-vtex-dl");
-    performance.measure("qsa-prod-id", "start-qsa-prod", "end-qsa-prod");
-    performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
-  });
+  window.dataLayer = window.dataLayer || [];
+  // VTEX Default position is first...
+  window.dataLayer.unshift(props);
+  // But GTM handles .push function
+  window.dataLayer.push(props);
+  window.dataLayer.push({ event: pageType });
+  performance.mark("end-vtex-dl");
+  performance.measure("vtex-dl-compat", "start-vtex-dl", "end-vtex-dl");
 }
 
 interface AddVTEXPortalData {
@@ -185,21 +170,31 @@ export function ProductDetailsTemplate(
   };
 
   return (
-    <script
+    <Script
       {...props}
-      data-id="vtex-portal-compat"
-      data-datalayer={JSON.stringify(template)}
+      dangerouslySetInnerHTML={{
+        __html: `window.dl_product = ${JSON.stringify(template)};`,
+      }}
     />
   );
 }
 
 interface ProductInfoProps {
   product: Product;
+  type?: string;
 }
 
-export function ProductInfo({ product }: ProductInfoProps) {
+export function ProductInfo({ product, ...props }: ProductInfoProps) {
   if (!product.isVariantOf?.productGroupID) return null;
-  return <script data-product-id={product.isVariantOf?.productGroupID} />;
+  return (
+    <Script
+      {...props}
+      dangerouslySetInnerHTML={{
+        __html:
+          `window.shelfProductIds = window.shelfProductIds || []; window.shelfProductIds.push("${product.isVariantOf.productGroupID}")`,
+      }}
+    />
+  );
 }
 
 export interface ProductSKUJsonProps {
