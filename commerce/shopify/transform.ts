@@ -120,7 +120,7 @@ export const toProduct = (
   return {
     "@type": "Product",
     productID,
-    url: `${url.host}${getPath(product, sku)}`,
+    url: `${url.origin}${getPath(product, sku)}`,
     name: sku.title,
     description,
     sku: productID,
