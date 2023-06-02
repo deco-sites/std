@@ -2,6 +2,7 @@
   "definitions": {
     "Resolvable": {
       "title": "Select from saved",
+      "type": "object",
       "required": [
         "__resolveType"
       ],
@@ -43,6 +44,7 @@
               "deco-sites/std/accounts/vnda.ts",
               "deco-sites/std/accounts/vtex.ts",
               "deco-sites/std/accounts/yourViews.ts",
+              "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
@@ -2602,6 +2604,7 @@
             "null"
           ],
           "description": "FullText term",
+          "$comment": "https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search",
           "title": "Ft"
         },
         "fq": {
@@ -2609,6 +2612,7 @@
             "string",
             "null"
           ],
+          "$comment": "https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search",
           "title": "Fq"
         },
         "map": {
@@ -3360,6 +3364,130 @@
         "appId"
       ],
       "title": "deco-sites/std/commerce/yourViews/client.ts@ConfigYourViews"
+    },
+    "ZGVjby1jeC9saXZlL3JvdXRlcy9fbWlkZGxld2FyZS50cw==@MiddlewareConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "state": {
+              "title": "State",
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/Resolvable"
+              },
+              "description": "Configure your loaders global state."
+            }
+          },
+          "required": [
+            "state"
+          ],
+          "title": "deco-cx/live/routes/_middleware.ts@MiddlewareConfig",
+          "description": "Global configurations for ./routes/_middleware.ts route"
+        },
+        {
+          "title": "Shared application State Loader.",
+          "description": "Set the application state using resolvables.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/loaders/state.ts"
+              ],
+              "default": "$live/loaders/state.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
+      "$ref": "#/root/loaders",
+      "title": "Loader"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag": {
+      "$ref": "#/root/flags",
+      "title": "Flag"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section": {
+      "$ref": "#/root/sections",
+      "title": "Section"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page": {
+      "$ref": "#/root/pages",
+      "title": "Page"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page"
+        }
+      ],
+      "title": "4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section"
+    },
+    "ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "value": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "StateProp"
+    },
+    "ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp"
+      },
+      "title": "StateProp[]"
+    },
+    "ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp[]",
+          "title": "State"
+        }
+      },
+      "required": [
+        "state"
+      ],
+      "title": "deco-cx/live/loaders/state.ts@Props"
     },
     "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecution": {
       "anyOf": [
@@ -6499,6 +6627,14 @@
           "type": "string",
           "title": "Path Template"
         },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
         "handler": {
           "type": "object",
           "properties": {
@@ -6557,13 +6693,13 @@
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
-        "domainUrl": {
+        "hostname": {
           "type": "string",
-          "title": "Domain Url"
+          "title": "Hostname"
         }
       },
       "required": [
-        "domainUrl"
+        "hostname"
       ],
       "title": "deco-sites/std/loaders/vtex/proxy.ts@Props"
     },
@@ -6692,10 +6828,6 @@
       ],
       "title": "deco-sites/std/packs/vtex/loaders/wishlist.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page": {
-      "$ref": "#/root/pages",
-      "title": "Page"
-    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
       "properties": {
@@ -6791,21 +6923,32 @@
       ],
       "title": "deco-cx/live/handlers/router.ts@RouterConfig"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag"
+        },
+        {
+          "$ref": "#/definitions/JGxpdmUvZmxhZ3MvYXVkaWVuY2UudHM="
+        },
+        {
+          "$ref": "#/definitions/JGxpdmUvZmxhZ3MvZXZlcnlvbmUudHM="
+        }
+      ],
+      "title": "15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag"
+      },
+      "title": "15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag[]"
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3JvdXRlc1NlbGVjdGlvbi50cw==@SelectionConfig": {
       "type": "object",
       "properties": {
         "audiences": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "$ref": "#/definitions/JGxpdmUvZmxhZ3MvYXVkaWVuY2UudHM="
-              },
-              {
-                "$ref": "#/definitions/JGxpdmUvZmxhZ3MvZXZlcnlvbmUudHM="
-              }
-            ]
-          },
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag[]",
           "title": "Audiences"
         }
       },
@@ -6830,10 +6973,6 @@
         "workflow"
       ],
       "title": "deco-cx/live/handlers/workflowRunner.ts@Config"
-    },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section": {
-      "$ref": "#/root/sections",
-      "title": "Section"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]": {
       "type": "array",
@@ -7593,7 +7732,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@8ec121e989a885814ba390d3dbc08cd6|WorkflowRef": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7611,13 +7750,13 @@
           ]
         }
       ],
-      "title": "8ec121e989a885814ba390d3dbc08cd6|WorkflowRef"
+      "title": "WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@8ec121e989a885814ba390d3dbc08cd6|WorkflowRef",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1",
           "title": "Workflow"
         },
         "id": {
@@ -8711,6 +8850,28 @@
             "deco-sites/std/accounts/yourViews.ts"
           ],
           "default": "deco-sites/std/accounts/yourViews.ts"
+        }
+      }
+    },
+    "JGxpdmUvbG9hZGVycy9zdGF0ZS50cw==": {
+      "title": "Shared application State Loader.",
+      "description": "Set the application state using resolvables.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "$live/loaders/state.ts"
+          ],
+          "default": "$live/loaders/state.ts"
         }
       }
     },
@@ -10148,24 +10309,6 @@
           "default": "deco-sites/std/actions/vtex/wishlist/removeItem.ts"
         }
       }
-    },
-    "ZGVjby1jeC9saXZlL3JvdXRlcy9fbWlkZGxld2FyZS50cw==@MiddlewareConfig": {
-      "type": "object",
-      "properties": {
-        "state": {
-          "title": "State",
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/Resolvable"
-          },
-          "description": "Configure your loaders global state."
-        }
-      },
-      "required": [
-        "state"
-      ],
-      "title": "deco-cx/live/routes/_middleware.ts@MiddlewareConfig",
-      "description": "Global configurations for ./routes/_middleware.ts route"
     }
   },
   "root": {
@@ -10286,6 +10429,9 @@
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "$ref": "#/definitions/JGxpdmUvbG9hZGVycy9zdGF0ZS50cw=="
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZXZlbnRzLnRz"

@@ -3,8 +3,9 @@ import { Route } from "$live/flags/audience.ts";
 export interface Props {
   /**
    * A valid VTEX Store domain.
+   * @example fashion.bravtexstores.com.br
    */
-  domainUrl: string;
+  hostname: string;
 }
 
 const pathsToProxy = [
@@ -32,7 +33,7 @@ const buildProxyRoutes = (url: string) =>
  * @title VTEX Proxy Routes
  */
 export default function VTEXProxy(
-  { domainUrl }: Props,
+  { hostname }: Props,
 ): Route[] {
-  return buildProxyRoutes(domainUrl);
+  return buildProxyRoutes(`https://${hostname}`);
 }
