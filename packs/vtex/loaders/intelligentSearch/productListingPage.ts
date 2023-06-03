@@ -218,10 +218,6 @@ const selectPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
   return facets;
 };
 
-/**
- * @title VTEX Intelligent Search - Product Listing page
- * @description Returns data ready for search pages like category,brand pages
- */
 const loader = async (
   props: Props,
   req: Request,

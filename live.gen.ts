@@ -88,8 +88,9 @@ import * as $live_release from "$live/routes/live/release.ts";
 import * as $live_meta from "$live/routes/live/_meta.ts";
 import * as $live_previews from "$live/routes/live/previews/[...block].tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
-import * as i1$0 from "$live/loaders/workflows/events.ts";
-import * as i1$1 from "$live/loaders/workflows/get.ts";
+import * as i1$0 from "$live/loaders/state.ts";
+import * as i1$1 from "$live/loaders/workflows/events.ts";
+import * as i1$2 from "$live/loaders/workflows/get.ts";
 import * as i1$$0 from "$live/handlers/devPage.ts";
 import * as i1$$1 from "$live/handlers/fresh.ts";
 import * as i1$$2 from "$live/handlers/proxy.ts";
@@ -155,8 +156,9 @@ const manifest = {
     "deco-sites/std/accounts/yourViews.ts": $$1,
   },
   "loaders": {
-    "$live/loaders/workflows/events.ts": i1$0,
-    "$live/loaders/workflows/get.ts": i1$1,
+    "$live/loaders/state.ts": i1$0,
+    "$live/loaders/workflows/events.ts": i1$1,
+    "$live/loaders/workflows/get.ts": i1$2,
     "deco-sites/std/loaders/vtex/cart.ts": $$$10,
     "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts": $$$7,
     "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$6,
