@@ -8,6 +8,12 @@ export interface Account extends AccountBlock {
   account: string;
 
   /**
+   * @title Public store URL
+   * @description Domain that is registered on License Manager (e.g: www.mystore.com.br)
+   */
+  publicUrl?: string;
+
+  /**
    * @description Locale used for VTEX Intelligent Search client.
    */
   defaultLocale: string;
