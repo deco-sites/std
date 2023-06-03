@@ -107,7 +107,13 @@ const fromProps = (props: Props) => {
     } as const;
   }
 
-  throw new Error(`Unknown props: ${JSON.stringify(props)}`);
+  return {
+    query: props.query,
+    count: props.count || 12,
+    sort: props.sort,
+    hideUnavailableItems: props.hideUnavailableItems,
+    selectedFacets: [],
+  };
 };
 
 const loader = async (
