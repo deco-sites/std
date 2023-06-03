@@ -3308,6 +3308,14 @@
           "description": "VTEX Account name. For more info, read here: https://help.vtex.com/en/tutorial/o-que-e-account-name--i0mIGLcg3QyEy8OCicEoC.",
           "title": "Account"
         },
+        "publicUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Public store URL",
+          "description": "Domain that is registered on License Manager (e.g: www.mystore.com.br)"
+        },
         "defaultLocale": {
           "type": "string",
           "description": "Locale used for VTEX Intelligent Search client.",
@@ -6670,11 +6678,6 @@
         {
           "title": "VTEX Proxy Routes",
           "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
           "required": [
             "__resolveType"
           ],
@@ -6689,19 +6692,6 @@
           }
         }
       ]
-    },
-    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
-      "type": "object",
-      "properties": {
-        "hostname": {
-          "type": "string",
-          "title": "Hostname"
-        }
-      },
-      "required": [
-        "hostname"
-      ],
-      "title": "deco-sites/std/loaders/vtex/proxy.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL3VzZXIudHM=@User": {
       "type": "object",
@@ -9135,11 +9125,6 @@
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz": {
       "title": "VTEX Proxy Routes",
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-        }
-      ],
       "required": [
         "__resolveType"
       ],
