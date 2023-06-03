@@ -222,7 +222,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
-  const offers = sku.sellers.map(toOffer).sort(bestOfferFirst);
+  const offers = (sku.sellers ?? []).map(toOffer).sort(bestOfferFirst);
   const highPriceIndex = getHighPriceIndex(offers);
   const lowPriceIndex = 0;
 
