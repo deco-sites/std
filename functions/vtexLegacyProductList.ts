@@ -15,11 +15,7 @@ export interface Props {
   collection?: string[];
 }
 
-/**
- * @title VTEX - Search Products - legacy (deprecated)
- * @description Useful for shelves and static galleries.
- * @deprecated
- */
+/** @deprecated */
 const loaderV0: LoaderFunction<
   Props,
   Product[] | null,

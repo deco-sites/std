@@ -1841,8 +1841,7 @@
           }
         },
         {
-          "title": "VTEX - Search Products - legacy (deprecated)",
-          "description": "Useful for shelves and static galleries.",
+          "title": "deco-sites/std/functions/vtexLegacyProductList.ts",
           "deprecated": true,
           "type": "object",
           "allOf": [
@@ -1887,8 +1886,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Search Products",
-          "description": "Use it in Shelves and static Galleries.",
+          "title": "deco-sites/std/functions/vtexProductList.ts",
           "deprecated": true,
           "type": "object",
           "allOf": [
@@ -2347,6 +2345,7 @@
         },
         {
           "title": "deco-sites/std/functions/vtexProductListingPage.ts",
+          "deprecated": true,
           "type": "object",
           "allOf": [
             {
@@ -8512,8 +8511,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhMZWdhY3lQcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX - Search Products - legacy (deprecated)",
-      "description": "Useful for shelves and static galleries.",
+      "title": "deco-sites/std/functions/vtexLegacyProductList.ts",
       "deprecated": true,
       "type": "object",
       "allOf": [
@@ -8621,8 +8619,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhQcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Intelligent Search - Search Products",
-      "description": "Use it in Shelves and static Galleries.",
+      "title": "deco-sites/std/functions/vtexProductList.ts",
       "deprecated": true,
       "type": "object",
       "allOf": [
@@ -8645,6 +8642,7 @@
     },
     "ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3Z0ZXhQcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
       "title": "deco-sites/std/functions/vtexProductListingPage.ts",
+      "deprecated": true,
       "type": "object",
       "allOf": [
         {

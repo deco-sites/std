@@ -110,10 +110,6 @@ const fromProps = (props: Props) => {
   throw new Error(`Unknown props: ${JSON.stringify(props)}`);
 };
 
-/**
- * @title VTEX product list - Intelligent Search
- * @description Useful for shelves and galleries.
- */
 const loader = async (
   props: Props,
   req: Request,

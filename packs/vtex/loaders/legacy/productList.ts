@@ -88,10 +88,6 @@ const fromProps = (
   return params;
 };
 
-/**
- * @title VTEX Legacy - Search Products
- * @description Use it in Shelves and static Galleries.
- */
 const loader = async (
   props: Props,
   req: Request,

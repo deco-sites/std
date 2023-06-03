@@ -31,11 +31,7 @@ export interface Props {
   collection?: string[];
 }
 
-/**
- * @title VTEX Intelligent Search - Search Products
- * @description Use it in Shelves and static Galleries.
- * @deprecated true
- */
+/** @deprecated true */
 const loaderV0: LoaderFunction<
   Props,
   Product[] | null,
