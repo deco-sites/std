@@ -114,7 +114,7 @@ const loader = async (
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
-  const products = vtexProducts.map((p) =>
+  const products = vtexProducts?.map((p) =>
     toProduct(p, p.items[0], 0, {
       baseUrl: baseUrl,
       priceCurrency: config!.defaultPriceCurrency,
