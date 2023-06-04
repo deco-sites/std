@@ -10,9 +10,9 @@ const suggestions = Runtime.create(
   "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts",
 );
 
-const setSearch = debounce(async (search: string) => {
+const setSearch = debounce(async (search: string, count: number) => {
   try {
-    payload.value = await suggestions({ query: search, count: 4 });
+    payload.value = await suggestions({ query: search, count });
   } catch (error) {
     console.error("Something went wrong while fetching suggestions \n", error);
   } finally {
@@ -21,9 +21,9 @@ const setSearch = debounce(async (search: string) => {
 }, 250);
 
 const state = {
-  setSearch: (s: string) => {
+  setSearch: (query: string, count: number) => {
     loading.value = true;
-    setSearch(s);
+    setSearch(query, count);
   },
   loading,
   suggestions: payload,
