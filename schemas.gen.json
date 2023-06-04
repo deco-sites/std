@@ -6859,6 +6859,14 @@
           ],
           "description": "the base path of the url.",
           "title": "Base Path"
+        },
+        "host": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Host that should be used when proxying the request",
+          "title": "Host"
         }
       },
       "required": [
@@ -6925,7 +6933,7 @@
           "$ref": "#/definitions/JGxpdmUvZmxhZ3MvZXZlcnlvbmUudHM="
         }
       ],
-      "title": "15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag"
+      "title": "Audiences"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag[]": {
       "type": "array",
@@ -7722,7 +7730,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7740,13 +7748,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1"
+      "title": "WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|e29a510094f99cc5c9cd7ec147a284f1",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de",
           "title": "Workflow"
         },
         "id": {
