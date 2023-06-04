@@ -31,6 +31,11 @@ export interface Props {
   themeColor?: string;
   /** @title Canonical URL */
   canonical?: string;
+  /**
+   * @title Disable indexing
+   * @description In testing, you can use this to prevent search engines from indexing your site
+   */
+  noIndexNoFollow?: boolean;
 
   context?:
     | LoaderReturnType<ProductDetailsPage | null>

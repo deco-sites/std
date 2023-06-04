@@ -41,6 +41,11 @@ function Metatags(props: Props) {
 
         {/* Link tags */}
         {canonical && <link rel="canonical" href={canonical} />}
+
+        {/* No index, no follow */}
+        {props?.noIndexNoFollow && (
+          <meta name="robots" content="noindex, nofollow" />
+        )}
       </Head>
       {context?.["@type"] === "ProductDetailsPage" && (
         <>
