@@ -21,7 +21,7 @@ const setSearch = debounce(async (search: string, count: number) => {
 }, 250);
 
 const state = {
-  setSearch: (query: string, count: number) => {
+  setSearch: (query: string, count = 4) => {
     loading.value = true;
     setSearch(query, count);
   },
