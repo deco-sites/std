@@ -1,4 +1,4 @@
-import { fetchAPI } from "../../utils/fetchAPI.ts";
+import { fetchAPI } from "../../utils/fetch.ts";
 import { FaireSearchResult } from "./types.ts";
 
 export default {
