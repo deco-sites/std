@@ -110,9 +110,11 @@ export const pageTypesToSeo = (pages: PageType[], req: Request): Seo | null => {
     return null;
   }
 
+  const [_, pathname] = current.url?.split(".vtexcommercestable.com.br") ?? [];
+
   return {
     title: current.title!,
     description: current.metaTagDescription!,
-    canonical: new URL(current.url!, req.url).href,
+    canonical: new URL(pathname, req.url).href,
   };
 };
