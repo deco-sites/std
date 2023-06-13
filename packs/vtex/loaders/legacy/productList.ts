@@ -57,7 +57,8 @@ export type Props =
 const isCollectionProps = (p: any): p is CollectionProps =>
   typeof p.collection === "string" && typeof p.count === "number";
 // deno-lint-ignore no-explicit-any
-const isProductIDProps = (p: any): p is ProductIDProps => Array.isArray(p.ids);
+const isProductIDProps = (p: any): p is ProductIDProps =>
+  Array.isArray(p.ids) && p.ids.length > 0;
 
 const fromProps = (
   props: Props,
