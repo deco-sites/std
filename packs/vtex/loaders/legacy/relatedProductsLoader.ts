@@ -85,7 +85,9 @@ async function loader(
   const productId = await getProductGroupID(props);
 
   if (!productId) {
-    throw new Error("Missing props. Please fill: slug or id");
+    console.warn(`Could not find product for props: ${JSON.stringify(props)}`);
+
+    return null;
   }
 
   const vtexRelatedProducts = await fetchAPI<LegacyProduct[]>(
