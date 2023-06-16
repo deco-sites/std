@@ -13,25 +13,18 @@ const loader = async (
   req: Request,
   ctx: Context,
 ): Promise<ProductDetailsPage | null> => {
-  const url = new URL(req.url);
   const { configNuvemShop: config } = ctx;
-  // const configNuvemShop = {
-  //   userAgent: "My Awsome App (lucis@deco.cx)",
-  //   accessToken: "87d04ece2a751e7334994dbd3d135647967dfe11",
-  //   storeId: "2734114",
-  // };
-  console.log(ctx);
+
   const client = createClient(config);
 
-  const productResult = await client?.product.get(
-    parseInt(url.searchParams.get("id")! || props.slug),
-  );
+  // parseInt(url.searchParams.get("id")! || props.slug),
+  const nuvemProduct = await client?.product.getBySlug(props.slug);
 
-  if (!productResult) {
+  if (!nuvemProduct) {
     return null;
   }
 
-  const product = toProduct(productResult);
+  const product = toProduct(nuvemProduct, new URL(req.url));
 
   return {
     "@type": "ProductDetailsPage",

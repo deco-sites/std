@@ -15,6 +15,7 @@ import {
 
 export function toProduct(
   product: ProductBaseNuvemShop,
+  baseUrl: URL,
 ): Product {
   const {
     id,
@@ -24,17 +25,23 @@ export function toProduct(
     categories,
     brand,
     variants,
+    canonical_url,
     ...remainingAttibutes
   } = product;
 
   const offers = variants.map((variant) => getOffer(variant));
   const prices = getLowestPromotionalPrice(offers);
 
+  const nuvemUrl = new URL(canonical_url);
+  const localUrl = new URL(nuvemUrl.pathname, baseUrl.origin);
+
   const schemaProduct: Product = {
     "@type": "Product",
     productID: id?.toString() || "",
     name: getPreferredLanguage(name), // Assuming there's only one name
     description: getPreferredLanguage(description), // Assuming there's only one description
+    url: localUrl.href,
+    // TODO: Check what to do here
     sku: "",
     additionalProperty: getProperties(remainingAttibutes),
     isVariantOf: {

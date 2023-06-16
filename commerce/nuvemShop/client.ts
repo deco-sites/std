@@ -63,10 +63,11 @@ export const createClient = (params: ConfigNuvemShop | undefined) => {
     );
   };
 
-  const getProduct = async (productId: number) => {
+  const getProductBySlug = async (slug: string) => {
     try {
-      const endpoint = `products/${productId}`;
-      return await fetcher<ProductBaseNuvemShop>(endpoint);
+      const endpoint = `products/?handle=${encodeURIComponent(slug)}`;
+      const [product] = await fetcher<ProductBaseNuvemShop[]>(endpoint);
+      return product;
     } catch {
       // the VNDA's API does not returns "ok" when a product is not found.
       // so this try/catch is needed to avoid crashes
@@ -89,7 +90,7 @@ export const createClient = (params: ConfigNuvemShop | undefined) => {
   return {
     product: {
       search: searchProduct,
-      get: getProduct,
+      getBySlug: getProductBySlug,
     },
   };
 };

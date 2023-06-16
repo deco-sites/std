@@ -20,7 +20,7 @@ export interface Props {
 
 const loader = async (
   props: Props,
-  _: Request,
+  req: Request,
   // ctx: Context,
 ): Promise<Product[] | null> => {
   // const { configNuvemShop: config } = ctx;
@@ -38,7 +38,7 @@ const loader = async (
   });
 
   const products = result?.map((product) => {
-    return toProduct(product);
+    return toProduct(product, new URL(req.url));
   });
 
   console.log({ products: products?.length });

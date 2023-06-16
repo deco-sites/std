@@ -37,6 +37,7 @@ export interface ProductBaseNuvemShop {
   created_at: Date;
   updated_at: Date;
   requires_shipping: boolean;
+  canonical_url: string;
 }
 export interface ProductVariant {
   id: number;
