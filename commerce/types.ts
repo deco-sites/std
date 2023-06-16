@@ -262,8 +262,8 @@ export interface Product extends Omit<Thing, "@type"> {
   // TODO: Make json schema generator support self-referencing types
   // /** A pointer to another, somehow related product (or multiple products). */
   // isRelatedTo?: Product[];
-  // /** A pointer to another, functionally similar product (or multiple products). */
-  // isSimilarTo?: Product[];
+  /** A pointer to another, functionally similar product (or multiple products). */
+  isSimilarTo?: Product[];
   /** Indicates the kind of product that this is a variant of. In the case of {@link https://schema.org/ProductModel ProductModel}, this is a pointer (from a ProductModel) to a base product from which this product is a variant. It is safe to infer that the variant inherits all product features from the base model, unless defined locally. This is not transitive. In the case of a {@link https://schema.org/ProductGroup ProductGroup}, the group description also serves as a template, representing a set of Products that vary on explicitly defined, specific dimensions only (so it defines both a set of variants, as well as which values distinguish amongst those variants). When used with {@link https://schema.org/ProductGroup ProductGroup}, this property can apply to any {@link https://schema.org/Product Product} included in the group. */
   isVariantOf?: ProductGroup;
   /** An offer to provide this item—for example, an offer to sell a product, rent the DVD of a movie, perform a service, or give away tickets to an event. Use {@link https://schema.org/businessFunction businessFunction} to indicate the kind of transaction offered, i.e. sell, lease, etc. This property can also be used to describe a {@link https://schema.org/Demand Demand}. While this property is listed as expected on a number of common types, it can be used in others. In that case, using a second type, such as Product or a subtype of Product, can clarify the nature of the offer. */

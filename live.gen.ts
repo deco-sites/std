@@ -87,7 +87,8 @@ import * as $live_editorData from "$live/routes/live/editorData.ts";
 import * as $live_inspect from "$live/routes/live/inspect/[...block].ts";
 import * as $live_release from "$live/routes/live/release.ts";
 import * as $live_meta from "$live/routes/live/_meta.ts";
-import * as $live_previews from "$live/routes/live/previews/[...block].tsx";
+import * as $live_previews_block from "$live/routes/live/previews/[...block].tsx";
+import * as $live_previews_index from "$live/routes/live/previews/index.tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
 import * as i1$0 from "$live/loaders/state.ts";
 import * as i1$1 from "$live/loaders/workflows/events.ts";
@@ -185,7 +186,8 @@ const manifest = {
     "./routes/live/inspect/[...block].ts": $live_inspect,
     "./routes/live/invoke/[...key].ts": $live_invoke_key,
     "./routes/live/invoke/index.ts": $live_invoke,
-    "./routes/live/previews/[...block].tsx": $live_previews,
+    "./routes/live/previews/[...block].tsx": $live_previews_block,
+    "./routes/live/previews/index.tsx": $live_previews_index,
     "./routes/live/release.ts": $live_release,
     "./routes/live/workbench.ts": $live_workbench,
     "./routes/styles.css.ts": $$$$1,
