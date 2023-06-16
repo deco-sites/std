@@ -1479,6 +1479,13 @@
           ],
           "title": "In Product Group With I D"
         },
+        "isSimilarTo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product"
+          },
+          "title": "Is Similar To"
+        },
         "isVariantOf": {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductGroup",
           "title": "Is Variant Of"
@@ -6993,10 +7000,6 @@
           ],
           "title": "Path"
         },
-        "layout": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page",
-          "title": "Layout"
-        },
         "sections": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]",
           "title": "Sections"
@@ -7620,9 +7623,8 @@
           "type": "string",
           "title": "The audience name (will be used on cookies).",
           "description": "Add a meaningful short word for the audience name.",
-          "maxLength": 22,
           "minLength": 3,
-          "pattern": "^[A-Za-z0-9_]+$"
+          "pattern": "^[A-Za-z0-9_-]+$"
         },
         "routes": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]",
@@ -7738,7 +7740,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|fd0fcd78c4b899b30e00299b516a5aff": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -7756,13 +7758,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de"
+      "title": "WorkflowRef|fd0fcd78c4b899b30e00299b516a5aff"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|dd83f657b723ebb8e9d97470ddbe37de",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|fd0fcd78c4b899b30e00299b516a5aff",
           "title": "Workflow"
         },
         "id": {
@@ -10705,7 +10707,8 @@
       "required": [
         "./routes/_middleware.ts",
         "./routes/[...catchall].tsx",
-        "./routes/index.tsx"
+        "./routes/index.tsx",
+        "./routes/live/previews/index.tsx"
       ],
       "properties": {
         "./routes/_middleware.ts": {
@@ -10726,6 +10729,13 @@
           "anyOf": [
             {
               "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler"
+            }
+          ]
+        },
+        "./routes/live/previews/index.tsx": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page"
             }
           ]
         }
