@@ -24,6 +24,7 @@ export interface Props {
   maxPrice?: number;
 }
 
+// TODO: Falta ajustar o tipo
 /**
  * @title NuvemShop - Product Listing page
  * @description Useful for category, search, brand and collection pages.
