@@ -1,4 +1,5 @@
 import type { NuvemShopSort } from "deco-sites/std/commerce/nuvemShop/types.ts";
+import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import {
   createClient,
   NUVEMSHOP_SORT_OPTIONS,
@@ -24,7 +25,6 @@ export interface Props {
   maxPrice?: number;
 }
 
-// TODO: Falta ajustar o tipo
 /**
  * @title NuvemShop - Product Listing page
  * @description Useful for category, search, brand and collection pages.
@@ -33,15 +33,9 @@ const loader = async (
   props: Props,
   req: Request,
   ctx: Context,
-) => {
+): Promise<ProductListingPage | null> => {
   const url = new URL(req.url);
-  // const { configNuvemShop } = ctx.state.global;
-  const configNuvemShop = {
-    userAgent: "My Awsome App (lucis@deco.cx)",
-    accessToken: "87d04ece2a751e7334994dbd3d135647967dfe11",
-    storeId: "2734114",
-  };
-  console.log({ props, req, ctx });
+  const { configNuvemShop } = ctx;
   const client = createClient(configNuvemShop);
 
   const per_page = props.limit ?? 10;
@@ -61,7 +55,7 @@ const loader = async (
   });
 
   const products = result?.map((product) => {
-    return toProduct(product);
+    return toProduct(product, new URL(req.url));
   });
 
   const nextPage = new URLSearchParams(url.searchParams);
@@ -71,27 +65,25 @@ const loader = async (
   previousPage.set("page", (page - 1).toString());
 
   return {
-    data: {
-      "@type": "ProductListingPage",
-      // TODO: Find out what's the right breadcrumb on vnda
-      breadcrumb: {
-        "@type": "BreadcrumbList",
-        itemListElement: [],
-        numberOfItems: 0,
-      },
-      products: products,
-      pageInfo: {
-        nextPage: `?${nextPage}`,
-        previousPage: `?${previousPage}`,
-        currentPage: page,
-      },
-      sortOptions: NUVEMSHOP_SORT_OPTIONS,
-      filters: toFilters(
-        typeof minPrice === "number" ? minPrice : parseFloat(minPrice || "0"),
-        typeof maxPrice === "number" ? maxPrice : parseFloat(maxPrice || "0"),
-        sort,
-      ),
+    "@type": "ProductListingPage",
+    // TODO: Find out what's the right breadcrumb on vnda
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [],
+      numberOfItems: 0,
     },
+    products: products ?? [],
+    pageInfo: {
+      nextPage: `?${nextPage}`,
+      previousPage: `?${previousPage}`,
+      currentPage: page,
+    },
+    sortOptions: NUVEMSHOP_SORT_OPTIONS,
+    filters: toFilters(
+      typeof minPrice === "number" ? minPrice : parseFloat(minPrice || "0"),
+      typeof maxPrice === "number" ? maxPrice : parseFloat(maxPrice || "0"),
+      sort,
+    ),
   };
 };
 
