@@ -47,7 +47,7 @@ export interface ProductVariant {
   price?: number;
   promotional_price?: number;
   stock_management?: boolean;
-  stock?: string;
+  stock?: number | null;
   weight: number;
   width: number;
   height: number;

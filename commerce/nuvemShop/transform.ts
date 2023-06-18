@@ -38,8 +38,14 @@ export function toProduct(
   const schemaProduct: Product = {
     "@type": "Product",
     productID: id?.toString() || "",
+    gtin: id?.toString() || "",
     name: getPreferredLanguage(name), // Assuming there's only one name
-    description: getPreferredLanguage(description), // Assuming there's only one description
+    // NuvemShop description is returned as HTML and special characters and
+    // not working properly
+    description: getPreferredLanguage(description).replace(
+      /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
+      "",
+    ),
     url: localUrl.href,
     // TODO: Check what to do here
     sku: "",
@@ -75,10 +81,10 @@ function getOffer(variant: ProductVariant): Offer {
     "@type": "Offer",
     seller: "NuvemShop",
     inventoryLevel: {
-      value: variant.stock ? parseInt(variant.stock) : 0,
+      value: getStockVariant(variant.stock),
     } as QuantitativeValue,
     price: variant.promotional_price || 0,
-    availability: variant.stock_management
+    availability: getStockVariant(variant.stock) > 0
       ? "https://schema.org/InStock"
       : "https://schema.org/OutOfStock",
     priceSpecification: [
@@ -94,6 +100,14 @@ function getOffer(variant: ProductVariant): Offer {
       },
     ],
   };
+}
+
+function getStockVariant(stock: number | null | undefined): number {
+  // NuvemShop returns null when the stock is equal to infinity, so when null
+  // is returned i tem has a stock of infinity.
+  if (stock === null) return 9999;
+  else if (!stock) return 0;
+  else return stock;
 }
 
 function getPreferredLanguage(
@@ -135,7 +149,12 @@ function productVariantToProduct(
     productID: product_id?.toString() || "",
     sku: sku?.toString() || "",
     name: getPreferredLanguage(name) + " " + variant.name,
-    description: getPreferredLanguage(description),
+    // NuvemShop description is returned as HTML and special characters and
+    // not working properly
+    description: getPreferredLanguage(description).replace(
+      /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
+      "",
+    ),
     image: images.map((image: ProductImage) => ({
       "@type": "ImageObject",
       url: image.src,

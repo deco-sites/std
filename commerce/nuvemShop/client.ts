@@ -76,13 +76,9 @@ export const createClient = (params: ConfigNuvemShop | undefined) => {
   };
 
   const searchProduct = (params: ProductSearchParams) => {
-    const { type_tags, ...knownParams } = params;
-    const typeTagsEntries = type_tags?.map((tag) => [tag.key, tag.value]) ?? [];
-    const qs = paramsToQueryString({
-      ...knownParams,
-      ...Object.fromEntries(typeTagsEntries),
-    });
+    const qs = paramsToQueryString(params);
 
+    console.log({ params, qs });
     const endpoint = `products?${qs}`;
     return fetcher<ProductBaseNuvemShop[]>(endpoint);
   };
