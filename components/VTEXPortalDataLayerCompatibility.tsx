@@ -29,7 +29,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   performance.mark("end-sd");
 
   // deno-lint-ignore no-explicit-any
-  const getPageType = (hasStructuredData: undefined | Record<string, any>) => {
+  const getPageType = (structuredData: undefined | Record<string, any>) => {
     if (url.pathname === "/") return "homeView";
 
     const isProductPage = structuredDatas.some((s) => s["@type"] === "Product");
@@ -38,13 +38,11 @@ function addVTEXPortalDataSnippet(accountName: string) {
     const isSearchPage = url.pathname === "/s";
     if (isSearchPage) return "internalSiteSearchView";
 
-    const pathNames = url.pathname.split("/").filter(Boolean);
-
-    if (pathNames.length === 1 && hasStructuredData) {
+    if (structuredData?.itemList?.length === 1) {
       return "departmentView";
     }
 
-    if (pathNames.length >= 2 && hasStructuredData) {
+    if (structuredData?.itemList?.length >= 2) {
       return "categoryView";
     }
 
@@ -91,6 +89,11 @@ function addVTEXPortalDataSnippet(accountName: string) {
   if (pageType === "internalSiteSearchView") {
     props.pageCategory = "InternalSiteSearch";
     props.siteSearchTerm = url.searchParams.get("q");
+  }
+
+  if (pageType === "otherView") {
+    const pathNames = url.pathname.split("/").filter(Boolean);
+    props.pageCategory = pathNames.pop();
   }
 
   props.shelfProductIds = window.shelfProductIds || [];
