@@ -1,6 +1,9 @@
 import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
+import {
+  pickSku,
+  toProduct,
+} from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import {
   getSegment,
@@ -35,7 +38,7 @@ export interface Props {
    */
   id?: string;
   /**
-   * @description remove unavailable items from result
+   * @description remove unavailable items from result. This may result in slower websites
    */
   hideUnavailableItems?: boolean;
 }
@@ -104,7 +107,7 @@ async function loader(
 
   const relatedProducts = vtexRelatedProducts
     .slice(0, count ?? Infinity)
-    .map((p) => toProduct(p, p.items[0], 0, options));
+    .map((p) => toProduct(p, pickSku(p), 0, options));
 
   setSegment(segment, ctx.response.headers);
 

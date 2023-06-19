@@ -70,11 +70,21 @@ interface ProductOptions {
   priceCurrency: string;
 }
 
+/** Returns first available sku */
+const findFirstAvailable = (items: Array<LegacySkuVTEX | SkuVTEX>) =>
+  items?.find((item) =>
+    Boolean(
+      item?.sellers?.find((s) => s.commertialOffer?.AvailableQuantity > 0),
+    )
+  );
+
 export const pickSku = <T extends ProductVTEX | LegacyProductVTEX>(
   product: T,
-  maybeSkuId: string | undefined,
+  maybeSkuId?: string,
 ): T["items"][number] => {
-  const skuId = maybeSkuId ?? product.items[0]?.itemId;
+  const skuId = maybeSkuId ??
+    findFirstAvailable(product.items)?.itemId ??
+    product.items[0]?.itemId;
 
   for (const item of product.items) {
     if (item.itemId === skuId) {
