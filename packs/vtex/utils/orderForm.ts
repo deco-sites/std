@@ -8,12 +8,12 @@ export const parseCookie = (headers: Headers) => {
   const ofidCookie = cookies[VTEX_CHECKOUT_COOKIE];
 
   /**
-   * There's two cookies preset for VTEX Auth:
+   * There are two cookies present for VTEX Auth:
    *
    * - VtexIdClientAutCookie_{accountName}
    * - VtexIdClientAutCookie_{crypto.randomUuid()}
    *
-   * Here, we sort them to get the first one and pass forward its values
+   * Here, we sort them to get the first one and pass forward its value
    */
   const authCookieName = Object.keys(cookies).toSorted((a, z) =>
     a.length - z.length
