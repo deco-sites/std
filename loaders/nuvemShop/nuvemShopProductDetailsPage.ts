@@ -1,5 +1,8 @@
 import { createClient } from "deco-sites/std/commerce/nuvemShop/client.ts";
-import { toProduct } from "deco-sites/std/commerce/nuvemShop/transform.ts";
+import {
+  getBreadCrumbs,
+  toProduct,
+} from "deco-sites/std/commerce/nuvemShop/transform.ts";
 import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import type { Context } from "deco-sites/std/commerce/nuvemShop/types.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
@@ -14,25 +17,27 @@ const loader = async (
   ctx: Context,
 ): Promise<ProductDetailsPage | null> => {
   const { configNuvemShop: config } = ctx;
-
   const client = createClient(config);
+  const { url: baseUrl } = req;
+  const url = new URL(baseUrl);
 
-  // parseInt(url.searchParams.get("id")! || props.slug),
+  const sku = url.searchParams.get("sku");
+
   const nuvemProduct = await client?.product.getBySlug(props.slug);
 
   if (!nuvemProduct) {
     return null;
   }
 
-  const product = toProduct(nuvemProduct, new URL(req.url));
+  const product = toProduct(nuvemProduct, new URL(req.url), sku);
 
   return {
     "@type": "ProductDetailsPage",
     // TODO: Find out what's the right breadcrumb on nuvem shop
     breadcrumbList: {
       "@type": "BreadcrumbList",
-      itemListElement: [],
-      numberOfItems: 0,
+      itemListElement: getBreadCrumbs(nuvemProduct),
+      numberOfItems: nuvemProduct.categories.length + 1,
     },
     product,
   };

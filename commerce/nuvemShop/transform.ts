@@ -1,5 +1,6 @@
 import {
   Filter,
+  ListItem,
   Offer,
   Product,
   PropertyValue,
@@ -7,7 +8,7 @@ import {
 } from "deco-sites/std/commerce/types.ts";
 import {
   LanguageTypes,
-  NuvemShopSort,
+  PriceInterval,
   ProductBaseNuvemShop,
   ProductImage,
   ProductVariant,
@@ -16,6 +17,7 @@ import {
 export function toProduct(
   product: ProductBaseNuvemShop,
   baseUrl: URL,
+  sku: string | null = null,
 ): Product {
   const {
     id,
@@ -26,7 +28,6 @@ export function toProduct(
     brand,
     variants,
     canonical_url,
-    ...remainingAttibutes
   } = product;
 
   const offers = variants.map((variant) => getOffer(variant));
@@ -34,6 +35,8 @@ export function toProduct(
 
   const nuvemUrl = new URL(canonical_url);
   const localUrl = new URL(nuvemUrl.pathname, baseUrl.origin);
+
+  const productVariants = getVariants(product, localUrl.href);
 
   const schemaProduct: Product = {
     "@type": "Product",
@@ -46,16 +49,16 @@ export function toProduct(
       /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
       "",
     ),
-    url: localUrl.href,
+    url: `${localUrl.href}${sku ? `?sku=${sku}` : ""}`,
     // TODO: Check what to do here
-    sku: "",
-    additionalProperty: getProperties(remainingAttibutes),
+    sku: productVariants[0].sku,
+    additionalProperty: getProperties(product.variants, product.attributes),
     isVariantOf: {
       "@type": "ProductGroup",
       productGroupID: id?.toString() || "",
-      hasVariant: getVariants(product),
+      hasVariant: productVariants,
       name: getPreferredLanguage(name),
-      additionalProperty: getProperties(remainingAttibutes),
+      additionalProperty: getProperties(product.variants, product.attributes),
     },
     image: images.map((image: ProductImage) => ({
       "@type": "ImageObject",
@@ -63,7 +66,7 @@ export function toProduct(
     })),
     offers: {
       "@type": "AggregateOffer" as const,
-      priceCurrency: "USD",
+      priceCurrency: "BRL",
       highPrice: prices.price,
       lowPrice: prices.promotionalPrice,
       offerCount: variants.length,
@@ -126,7 +129,7 @@ function getPreferredLanguage(
   }
 }
 
-function getVariants(product: ProductBaseNuvemShop) {
+function getVariants(product: ProductBaseNuvemShop, url: string) {
   return product.variants.map((variant) => {
     const { values } = variant;
     const name = values.reduce(
@@ -134,23 +137,24 @@ function getVariants(product: ProductBaseNuvemShop) {
       ``,
     );
     const variantWithName = { ...variant, name: name.trim() };
-    return productVariantToProduct(variantWithName, product);
+    return productVariantToProduct(variantWithName, product, url);
   });
 }
 
 function productVariantToProduct(
   variant: ProductVariant,
-  { name, description, images, categories, brand }: ProductBaseNuvemShop,
+  product: ProductBaseNuvemShop,
+  url: string,
 ): Product {
   const { product_id, sku, promotional_price, price } = variant;
-  // Map the basic properties
+  const { name, description, images, categories, brand } = product;
+
   const schemaProduct: Product = {
     "@type": "Product",
     productID: product_id?.toString() || "",
-    sku: sku?.toString() || "",
+    sku: "",
     name: getPreferredLanguage(name) + " " + variant.name,
-    // NuvemShop description is returned as HTML and special characters and
-    // not working properly
+    // NuvemShop description is returned as HTML and special characters and not working properly
     description: getPreferredLanguage(description).replace(
       /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
       "",
@@ -163,7 +167,7 @@ function productVariantToProduct(
     brand: brand,
     offers: {
       "@type": "AggregateOffer" as const,
-      priceCurrency: "USD",
+      priceCurrency: "BRL",
       highPrice: price || 0,
       lowPrice: promotional_price || 0,
       offerCount: 1,
@@ -176,34 +180,27 @@ function productVariantToProduct(
       name: getPreferredLanguage(name),
       additionalProperty: [],
     },
+    additionalProperty: getProperties([variant], product.attributes),
+    url: `${url}?sku=${sku}`,
   };
 
   return schemaProduct;
 }
 
-function getProperties(product: {
-  handle: string[];
-  published: boolean;
-  free_shipping: boolean;
-  video_url: string;
-  seo_title: string;
-  seo_description: string;
-  attributes: string[];
-  tags: string;
-  created_at: Date;
-  updated_at: Date;
-  requires_shipping: boolean;
-}): PropertyValue[] {
-  const properties = Object.entries(product);
-
-  return properties.filter(([_, value]) => value).map(([key, value]) => ({
-    "@type": "PropertyValue",
-    value: typeof value === "object"
-      ? getPreferredLanguage(value as LanguageTypes)
-      : value?.toString(),
-    name: key,
-    valueReference: "SPECIFICATION",
-  }));
+function getProperties(
+  productVariants: ProductVariant[],
+  attributes: LanguageTypes[],
+): PropertyValue[] {
+  return productVariants.map(({ values }) => {
+    return values.map((value, index) =>
+      ({
+        "@type": "PropertyValue",
+        name: getPreferredLanguage(attributes[index]),
+        value: getPreferredLanguage(value),
+        valueReference: "SPECIFICATION",
+      }) as const
+    );
+  }).flat();
 }
 
 function getLowestPromotionalPrice(
@@ -245,14 +242,65 @@ function getLowestPromotionalPrice(
   }, initialPrices);
 }
 
+function getFilterPriceIntervals(
+  products: ProductBaseNuvemShop[],
+): PriceInterval[] {
+  const prices = products.flatMap((product) =>
+    product.variants
+      .filter((variant) => variant.price !== undefined)
+      .map((variant) => variant.price!)
+  );
+
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+
+  const size = 3;
+  const intervalSize = (maxPrice - minPrice) / size;
+
+  return Array.from({ length: size }).map((_, index) => {
+    const intervalMin = minPrice + index * intervalSize;
+    const intervalMax = intervalMin + intervalSize;
+    const quantity = products.filter((product) => {
+      const productMinPrice = calculateProductMinPrice(product);
+      return productMinPrice <= intervalMax && productMinPrice >= intervalMin;
+    }).length;
+
+    return {
+      minPrice: intervalMin.toFixed(2),
+      maxPrice: intervalMax.toFixed(2),
+      quantity,
+    };
+  });
+}
+
+function calculateProductMinPrice(product: ProductBaseNuvemShop): number {
+  const { variants } = product;
+
+  const { minPrice } = variants.reduce(
+    (acc, variant) => {
+      const { price } = variant;
+      if (price !== undefined) {
+        return {
+          minPrice: Math.min(acc.minPrice, price),
+        };
+      }
+      return acc;
+    },
+    { minPrice: Number.MAX_SAFE_INTEGER },
+  );
+
+  return minPrice;
+}
+
 export function toFilters(
+  products: ProductBaseNuvemShop[],
   maxPrice: number,
   minPrice: number,
-  sort: NuvemShopSort,
+  url: string,
 ): Filter[] {
   const priceRange = {
     "@type": "FilterRange" as const,
-    label: "Valor",
+    label: "Preço",
     key: "price_range",
     values: {
       min: maxPrice,
@@ -260,33 +308,64 @@ export function toFilters(
     },
   };
 
-  const sortFilter = {
-    "@type": "FilterRange" as const,
-    label: "Sort",
-    key: "sort_by",
-    values: {
-      min: getIndexSort(sort),
-      max: getIndexSort(sort),
-    },
+  const priceIntervals = getFilterPriceIntervals(products);
+
+  const priceToggle = {
+    "@type": "FilterToggle" as const,
+    label: "Preço",
+    key: "price_toggle",
+    values: priceIntervals.map((
+      { minPrice, maxPrice, quantity },
+    ) => ({
+      quantity: quantity,
+      label: `R$${minPrice} - R$${maxPrice}`,
+      value: `${minPrice}`,
+      selected: isIntervalSelected(url, minPrice),
+      url: getLink(url, minPrice, maxPrice),
+    })),
+    quantity: products.length,
   };
 
-  return [
-    priceRange,
-    sortFilter,
-  ];
+  return [priceRange, priceToggle];
 }
 
-const getIndexSort = (sort: NuvemShopSort): number => {
-  const sortOptions: NuvemShopSort[] = [
-    "user",
-    "price-ascending, cost-ascending",
-    "price-descending, cost-descending",
-    "alpha-ascending, name-ascending",
-    "alpha-descending, name-descending",
-    "created-at-ascending",
-    "created-at-descending",
-    "best-selling",
-  ];
+const isIntervalSelected = (url: string, minPrice: string) => {
+  const productUrl = new URL(url);
+  return productUrl.searchParams.toString().includes(`min_price=${minPrice}`);
+};
 
-  return sortOptions.indexOf(sort);
+const getLink = (url: string, minPrice: string, maxPrice: string): string => {
+  const productUrl = new URL(url);
+  productUrl.searchParams.delete("min_price");
+  productUrl.searchParams.delete("max_price");
+  productUrl.searchParams.append("min_price", minPrice);
+  productUrl.searchParams.append("max_price", maxPrice);
+
+  return productUrl.href;
+};
+
+export const getBreadCrumbs = (
+  product: ProductBaseNuvemShop,
+): ListItem[] => {
+  const nuvemUrl = new URL(product.canonical_url);
+  const localUrl = new URL(nuvemUrl.pathname, nuvemUrl.origin);
+
+  return [
+    ...product.categories.map((category, index) => {
+      const position = index + 1;
+
+      return {
+        "@type": "ListItem" as const,
+        name: getPreferredLanguage(category.name),
+        item: `/${getPreferredLanguage(category.name)}`,
+        position,
+      };
+    }),
+    {
+      "@type": "ListItem",
+      name: getPreferredLanguage(product.name),
+      item: localUrl.href,
+      position: product.categories.length + 1,
+    },
+  ];
 };

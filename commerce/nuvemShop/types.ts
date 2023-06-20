@@ -12,7 +12,7 @@ export interface ConfigNuvemShop {
   accessToken: string;
 
   /**
-   * @description The id of the store in nuvemshop. CHeck: https://tiendanube.github.io/api-documentation/intro#making-a-request.
+   * @description The id of the store in nuvemshop. Check: https://tiendanube.github.io/api-documentation/intro#languages-and-internationalization
    */
   storeId: string;
 }
@@ -32,7 +32,7 @@ export interface ProductBaseNuvemShop {
   video_url: string;
   seo_title: string;
   seo_description: string;
-  attributes: string[];
+  attributes: LanguageTypes[];
   tags: string;
   created_at: Date;
   updated_at: Date;
@@ -87,10 +87,10 @@ export interface Category {
 
 export type NuvemShopSort =
   | "user"
-  | "price-ascending, cost-ascending"
-  | "price-descending, cost-descending"
-  | "alpha-ascending, name-ascending"
-  | "alpha-descending, name-descending"
+  | "price-ascending"
+  | "price-descending"
+  | "alpha-ascending"
+  | "alpha-descending"
   | "created-at-ascending"
   | "created-at-descending"
   | "best-selling";
@@ -98,15 +98,22 @@ export type NuvemShopSort =
 export interface ProductSearchParams {
   q?: string;
   page?: number;
-  sort?: NuvemShopSort;
-  per_page?: number;
-  type_tags?: { key: string; value: string }[];
+  sort_by?: NuvemShopSort;
+  per_page: number;
+  price_min?: string | null;
+  price_max?: string | null;
 }
 
 export interface LanguageTypes {
   pt?: string;
   en?: string;
   es?: string;
+}
+
+export interface PriceInterval {
+  minPrice: string;
+  maxPrice: string;
+  quantity: number;
 }
 
 export type Context = FnContext<{

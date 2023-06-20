@@ -7,6 +7,16 @@ import {
 
 const BASE_URL = "https://api.nuvemshop.com.br/v1";
 
+export const NUVEMSHOP_SORT_OPTIONS = [
+  { value: "best-selling", label: "Relevância" },
+  { value: "created-descending", label: "Mais recentes" },
+  { value: "created-ascending", label: "Mais antigos" },
+  { value: "price-ascending", label: "Menor preço" },
+  { value: "price-descending", label: "Maior preço" },
+  { value: "alpha-ascending", label: "A-Z" },
+  { value: "alpha-descending", label: "Z-A" },
+];
+
 const paramsToQueryString = (
   params: ProductSearchParams | { key: string; value: string }[],
 ) => {
@@ -30,14 +40,6 @@ const paramsToQueryString = (
   return new URLSearchParams(transformedValues);
 };
 
-export const NUVEMSHOP_SORT_OPTIONS = [
-  { value: "best-selling", label: "Relevância" },
-  { value: "created-at-ascending", label: "Mais recentes" },
-  { value: "created-at-descending", label: "Mais antigos" },
-  { value: "price-ascending, cost-ascending", label: "Menor preço" },
-  { value: "price-descending, cost-descending", label: "Maior preço" },
-];
-
 export const createClient = (params: ConfigNuvemShop | undefined) => {
   if (!params) return;
 
@@ -48,38 +50,40 @@ export const createClient = (params: ConfigNuvemShop | undefined) => {
   ) => {
     const { userAgent, accessToken, storeId } = params;
 
-    return fetchAPI<T>(
-      new URL(`${BASE_URL}/${storeId}/${endpoint}`, BASE_URL),
-      {
-        body: data ? JSON.stringify(data) : undefined,
-        method,
-        headers: {
-          "accept": "application/json",
-          "Authentication": `bearer ${accessToken}`,
-          "user-agent": userAgent,
-          "content-type": "application/json",
-        },
-      },
-    );
-  };
+    console.log(`${BASE_URL}/${storeId}/${endpoint}`);
 
-  const getProductBySlug = async (slug: string) => {
     try {
-      const endpoint = `products/?handle=${encodeURIComponent(slug)}`;
-      const [product] = await fetcher<ProductBaseNuvemShop[]>(endpoint);
-      return product;
-    } catch {
-      // the VNDA's API does not returns "ok" when a product is not found.
-      // so this try/catch is needed to avoid crashes
-      return null;
+      return fetchAPI<T>(
+        new URL(`${BASE_URL}/${storeId}/${endpoint}`, BASE_URL),
+        {
+          body: data ? JSON.stringify(data) : undefined,
+          method,
+          headers: {
+            "accept": "application/json",
+            "Authentication": `bearer ${accessToken}`,
+            "user-agent": userAgent,
+            "content-type": "application/json",
+          },
+        },
+      );
+    } catch (error) {
+      throw new Error(error);
     }
   };
 
-  const searchProduct = (params: ProductSearchParams) => {
+  const getProductBySlug = async (slug: string) => {
+    const endpoint = `products/?handle=${encodeURIComponent(slug)}`;
+    const [product] = await fetcher<ProductBaseNuvemShop[]>(endpoint);
+    return product;
+  };
+
+  const searchProduct = (
+    params: ProductSearchParams,
+  ) => {
     const qs = paramsToQueryString(params);
 
-    console.log({ params, qs });
     const endpoint = `products?${qs}`;
+
     return fetcher<ProductBaseNuvemShop[]>(endpoint);
   };
 

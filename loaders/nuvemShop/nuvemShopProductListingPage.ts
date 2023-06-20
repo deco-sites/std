@@ -1,9 +1,8 @@
-import type { NuvemShopSort } from "deco-sites/std/commerce/nuvemShop/types.ts";
+import type {
+  ProductBaseNuvemShop,
+} from "deco-sites/std/commerce/nuvemShop/types.ts";
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
-import {
-  createClient,
-  NUVEMSHOP_SORT_OPTIONS,
-} from "deco-sites/std/commerce/nuvemShop/client.ts";
+import { createClient } from "deco-sites/std/commerce/nuvemShop/client.ts";
 import {
   toFilters,
   toProduct,
@@ -20,9 +19,10 @@ export interface Props {
    * @description number of products per page to display
    */
   limit: number;
-  sort?: NuvemShopSort;
-  minPrice?: number;
-  maxPrice?: number;
+  // Sort in NuvemShort do not work when using q in query params
+  // sort?: NuvemShopSort;
+  minPrice?: string;
+  maxPrice?: string;
 }
 
 /**
@@ -39,20 +39,30 @@ const loader = async (
   const client = createClient(configNuvemShop);
 
   const per_page = props.limit ?? 10;
-  const sort = props.sort || url.searchParams.get("sort_by") as NuvemShopSort ||
-    "user";
+  const page = Number(url.searchParams.get("page")) || 0;
+
   const minPrice = props.minPrice || url.searchParams.get("min_price");
   const maxPrice = props.maxPrice || url.searchParams.get("max_price");
-  const page = Number(url.searchParams.get("page")) || 1;
 
-  const q = /*ctx.params.slug ||*/ props.term || url.searchParams.get("q") ||
+  // Sort in NuvemShort do not work when using q in query params
+  // const sort = props.sort || url.searchParams.get("sort") as NuvemShopSort;
+
+  const q = url.pathname || props.term || url.searchParams.get("q") ||
     undefined;
 
-  const result = await client?.product.search({
-    q,
-    sort,
-    per_page,
-  });
+  let result: ProductBaseNuvemShop[] | undefined;
+
+  try {
+    result = await client?.product.search({
+      q,
+      per_page,
+      page,
+      price_max: maxPrice,
+      price_min: minPrice,
+    });
+  } catch {
+    result = [];
+  }
 
   const products = result?.map((product) => {
     return toProduct(product, new URL(req.url));
@@ -66,11 +76,17 @@ const loader = async (
 
   return {
     "@type": "ProductListingPage",
-    // TODO: Find out what's the right breadcrumb on vnda
     breadcrumb: {
       "@type": "BreadcrumbList",
-      itemListElement: [],
-      numberOfItems: 0,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          name: q?.replace("/", "") || "",
+          item: `${q?.replace("/", "")}`,
+          position: 1,
+        },
+      ],
+      numberOfItems: 1,
     },
     products: products ?? [],
     pageInfo: {
@@ -78,11 +94,13 @@ const loader = async (
       previousPage: `?${previousPage}`,
       currentPage: page,
     },
-    sortOptions: NUVEMSHOP_SORT_OPTIONS,
+    // sortOptions: NUVEMSHOP_SORT_OPTIONS, Sort in NuvemShort do not work when using q in query params
+    sortOptions: [],
     filters: toFilters(
+      result || [],
       typeof minPrice === "number" ? minPrice : parseFloat(minPrice || "0"),
       typeof maxPrice === "number" ? maxPrice : parseFloat(maxPrice || "0"),
-      sort,
+      req.url,
     ),
   };
 };

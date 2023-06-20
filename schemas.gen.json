@@ -3407,7 +3407,7 @@
         },
         "storeId": {
           "type": "string",
-          "description": "The id of the store in nuvemshop. CHeck: https://tiendanube.github.io/api-documentation/intro#making-a-request.",
+          "description": "The id of the store in nuvemshop. Check: https://tiendanube.github.io/api-documentation/intro#languages-and-internationalization",
           "title": "Store Id"
         }
       },
@@ -3947,7 +3947,7 @@
             "string",
             "null"
           ],
-          "description": "query to use on search",
+          "description": "query to use on search. if used will break sort",
           "title": "Term"
         },
         "limit": {
@@ -3964,23 +3964,23 @@
             },
             {
               "type": "string",
-              "const": "price-ascending, cost-ascending",
-              "default": "price-ascending, cost-ascending"
+              "const": "price-ascending",
+              "default": "price-ascending"
             },
             {
               "type": "string",
-              "const": "price-descending, cost-descending",
-              "default": "price-descending, cost-descending"
+              "const": "price-descending",
+              "default": "price-descending"
             },
             {
               "type": "string",
-              "const": "alpha-ascending, name-ascending",
-              "default": "alpha-ascending, name-ascending"
+              "const": "alpha-ascending",
+              "default": "alpha-ascending"
             },
             {
               "type": "string",
-              "const": "alpha-descending, name-descending",
-              "default": "alpha-descending, name-descending"
+              "const": "alpha-descending",
+              "default": "alpha-descending"
             },
             {
               "type": "string",
@@ -4024,62 +4024,16 @@
           "title": "Items per page",
           "description": "number of products per page to display"
         },
-        "sort": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "user",
-              "default": "user"
-            },
-            {
-              "type": "string",
-              "const": "price-ascending, cost-ascending",
-              "default": "price-ascending, cost-ascending"
-            },
-            {
-              "type": "string",
-              "const": "price-descending, cost-descending",
-              "default": "price-descending, cost-descending"
-            },
-            {
-              "type": "string",
-              "const": "alpha-ascending, name-ascending",
-              "default": "alpha-ascending, name-ascending"
-            },
-            {
-              "type": "string",
-              "const": "alpha-descending, name-descending",
-              "default": "alpha-descending, name-descending"
-            },
-            {
-              "type": "string",
-              "const": "created-at-ascending",
-              "default": "created-at-ascending"
-            },
-            {
-              "type": "string",
-              "const": "created-at-descending",
-              "default": "created-at-descending"
-            },
-            {
-              "type": "string",
-              "const": "best-selling",
-              "default": "best-selling"
-            }
-          ],
-          "type": "string",
-          "title": "Sort"
-        },
         "minPrice": {
           "type": [
-            "number",
+            "string",
             "null"
           ],
           "title": "Min Price"
         },
         "maxPrice": {
           "type": [
-            "number",
+            "string",
             "null"
           ],
           "title": "Max Price"
