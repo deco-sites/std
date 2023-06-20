@@ -133,12 +133,14 @@ export function AddVTEXPortalData(
   );
 }
 
-interface ProductDetailsProps {
+interface ProductDetailsTemplateProps {
   product: Product;
 }
 
 export function ProductDetailsTemplate(
-  { product, ...props }: ProductDetailsProps,
+  { product, ...props }:
+    & ScriptProps
+    & ProductDetailsTemplateProps,
 ) {
   const departament = product.additionalProperty?.find((p) =>
     p.name === "category"
@@ -189,10 +191,11 @@ export function ProductDetailsTemplate(
 
 interface ProductInfoProps {
   product: Product;
-  type?: string;
 }
 
-export function ProductInfo({ product, ...props }: ProductInfoProps) {
+export function ProductInfo(
+  { product, ...props }: ScriptProps & ProductInfoProps,
+) {
   if (!product.isVariantOf?.productGroupID) return null;
   return (
     <Script
