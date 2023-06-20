@@ -9,6 +9,9 @@ We are committed to avoiding breaking changes at all costs. The product is still
 If and when breaking changes occur, they will be signaled with a new Major version on the git tags.
 
 ## VTEX Portal Data Layer Compatibility
+
+> :warning: The compatibility layer requires structured data from the SEO/SEOPLP/SEOPDP component to be present on every page.
+
 How to use:
 1. add the AddVTEXPortalData at routes/_app.tsx after <props.Component />. Example:
 ```tsx
@@ -38,9 +41,7 @@ export default function ProductDetails({ page }: Props) {
       <Breadcrumb
         itemListElement={breadcrumbList?.itemListElement.slice(0, -1)}
       />
-      <Head>
-        <ProductDetailsTemplate product={page.product} />
-      </Head>
+      <ProductDetailsTemplate product={page.product} />
       {/* ... */}
     </>
   );
@@ -48,6 +49,8 @@ export default function ProductDetails({ page }: Props) {
 ```
 3. Add ProductInfo to all rendered products on all pages.
 4. Add VTEXPortalDataLayerCompatibility section to PDP if necessary, to add skuJson.
+
+To disable the scripts to work outside partytown, change the all components type property to something different from `text/partytown`, example: `type="module"`.
 
 # Thanks to all contributors!
 
