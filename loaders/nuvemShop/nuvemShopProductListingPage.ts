@@ -18,8 +18,6 @@ export interface Props {
   limit: number;
   // Sort in NuvemShort do not work when using q in query params
   // sort?: NuvemShopSort;
-  minPrice?: string;
-  maxPrice?: string;
 }
 
 /**
