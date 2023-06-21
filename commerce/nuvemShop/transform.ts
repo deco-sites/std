@@ -17,63 +17,100 @@ import {
 export function toProduct(
   product: ProductBaseNuvemShop,
   baseUrl: URL,
-  sku: string | null = null,
-): Product {
-  const {
-    id,
-    name,
-    description,
-    images,
-    categories,
-    brand,
-    variants,
-    canonical_url,
-  } = product;
-
-  const offers = variants.map((variant) => getOffer(variant));
-  const prices = getLowestPromotionalPrice(offers);
+  sku: string | null,
+): Product[] {
+  const { canonical_url } = product;
 
   const nuvemUrl = new URL(canonical_url);
   const localUrl = new URL(nuvemUrl.pathname, baseUrl.origin);
 
-  const productVariants = getVariants(product, localUrl.href);
+  return getVariants(product, localUrl.href, sku);
+}
+
+function getVariants(
+  product: ProductBaseNuvemShop,
+  url: string,
+  sku: string | null,
+) {
+  const products = product
+    .variants.filter((variant) => !sku || variant.sku === sku)
+    .map(
+      (variant) => {
+        const { values } = variant;
+
+        const name = values.reduce(
+          (name, value) => name + " " + getPreferredLanguage(value),
+          ``,
+        );
+        const variantWithName = { ...variant, name: name.trim() };
+
+        return productVariantToProduct(variantWithName, product, url);
+      },
+    );
+  return products;
+}
+
+function productVariantToProduct(
+  variant: ProductVariant,
+  product: ProductBaseNuvemShop,
+  url: string,
+): Product {
+  const { product_id, sku, promotional_price, price } = variant;
+  const { name, description, images, categories, brand, attributes } = product;
 
   const schemaProduct: Product = {
     "@type": "Product",
-    productID: id?.toString() || "",
-    gtin: id?.toString() || "",
-    name: getPreferredLanguage(name), // Assuming there's only one name
-    // NuvemShop description is returned as HTML and special characters and
-    // not working properly
+    productID: product_id?.toString() || "",
+    sku: sku,
+    name: getPreferredLanguage(name) + " " + variant.name,
+    // NuvemShop description is returned as HTML and special characters and not working properly
     description: getPreferredLanguage(description).replace(
       /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
       "",
     ),
-    url: `${localUrl.href}${sku ? `?sku=${sku}` : ""}`,
-    // TODO: Check what to do here
-    sku: productVariants[0].sku,
-    additionalProperty: getProperties(product.variants, product.attributes),
-    isVariantOf: {
-      "@type": "ProductGroup",
-      productGroupID: id?.toString() || "",
-      hasVariant: productVariants,
-      name: getPreferredLanguage(name),
-      additionalProperty: getProperties(product.variants, product.attributes),
-    },
     image: images.map((image: ProductImage) => ({
       "@type": "ImageObject",
       url: image.src,
     })),
+    category: getPreferredLanguage(categories[0]?.name || ""), // Assuming there's only one category
+    brand: brand,
     offers: {
       "@type": "AggregateOffer" as const,
       priceCurrency: "BRL",
-      highPrice: prices.price,
-      lowPrice: prices.promotionalPrice,
-      offerCount: variants.length,
-      offers,
+      highPrice: price || 0,
+      lowPrice: promotional_price || 0,
+      offerCount: 1,
+      offers: [getOffer(variant)],
     },
-    brand: brand,
-    category: getPreferredLanguage(categories[0]?.name || ""), // Assuming there's only one category
+    isVariantOf: {
+      "@type": "ProductGroup",
+      productGroupID: product_id?.toString() || "",
+      hasVariant: [
+        {
+          additionalProperty: getProperties(
+            [variant],
+            attributes,
+          ),
+          url: `${url}?sku=${sku}`,
+        } as Product,
+        ...getVariants(
+          {
+            ...product,
+            variants: product.variants.filter((variant) => variant.sku !== sku),
+          },
+          url,
+          null,
+        ),
+      ],
+      name: getPreferredLanguage(name),
+      url: ``,
+      additionalProperty: [],
+    },
+    additionalProperty: getProperties(
+      product.variants,
+      attributes,
+    ),
+    url: `${url}?sku=${sku}`,
   };
 
   return schemaProduct;
@@ -129,69 +166,11 @@ function getPreferredLanguage(
   }
 }
 
-function getVariants(product: ProductBaseNuvemShop, url: string) {
-  return product.variants.map((variant) => {
-    const { values } = variant;
-    const name = values.reduce(
-      (name, value) => name + " " + getPreferredLanguage(value),
-      ``,
-    );
-    const variantWithName = { ...variant, name: name.trim() };
-    return productVariantToProduct(variantWithName, product, url);
-  });
-}
-
-function productVariantToProduct(
-  variant: ProductVariant,
-  product: ProductBaseNuvemShop,
-  url: string,
-): Product {
-  const { product_id, sku, promotional_price, price } = variant;
-  const { name, description, images, categories, brand } = product;
-
-  const schemaProduct: Product = {
-    "@type": "Product",
-    productID: product_id?.toString() || "",
-    sku: "",
-    name: getPreferredLanguage(name) + " " + variant.name,
-    // NuvemShop description is returned as HTML and special characters and not working properly
-    description: getPreferredLanguage(description).replace(
-      /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g,
-      "",
-    ),
-    image: images.map((image: ProductImage) => ({
-      "@type": "ImageObject",
-      url: image.src,
-    })),
-    category: getPreferredLanguage(categories[0]?.name || ""), // Assuming there's only one category
-    brand: brand,
-    offers: {
-      "@type": "AggregateOffer" as const,
-      priceCurrency: "BRL",
-      highPrice: price || 0,
-      lowPrice: promotional_price || 0,
-      offerCount: 1,
-      offers: [getOffer(variant)],
-    },
-    isVariantOf: {
-      "@type": "ProductGroup",
-      productGroupID: product_id?.toString() || "",
-      hasVariant: [],
-      name: getPreferredLanguage(name),
-      additionalProperty: [],
-    },
-    additionalProperty: getProperties([variant], product.attributes),
-    url: `${url}?sku=${sku}`,
-  };
-
-  return schemaProduct;
-}
-
 function getProperties(
   productVariants: ProductVariant[],
   attributes: LanguageTypes[],
 ): PropertyValue[] {
-  return productVariants.map(({ values }) => {
+  const data = productVariants.map(({ values }) => {
     return values.map((value, index) =>
       ({
         "@type": "PropertyValue",
@@ -200,46 +179,19 @@ function getProperties(
         valueReference: "SPECIFICATION",
       }) as const
     );
-  }).flat();
-}
+  });
 
-function getLowestPromotionalPrice(
-  offers: Offer[],
-): { promotionalPrice: number; price: number } {
-  const initialPrices = { promotionalPrice: Infinity, price: 0 };
-
-  return offers.reduce((lowestPrices, offer) => {
-    const { price, promotionalPrice } = offer.priceSpecification.reduce(
-      (prices, priceSpec) => {
-        if (
-          priceSpec.priceType === "https://schema.org/ListPrice" &&
-          priceSpec.price && priceSpec.price < prices.price
-        ) {
-          prices.price = priceSpec.price;
-        }
-        if (
-          priceSpec.priceType === "https://schema.org/SalePrice" &&
-          priceSpec.price && priceSpec.price < prices.promotionalPrice
-        ) {
-          prices.promotionalPrice = priceSpec.price;
-        }
-        return prices;
-      },
-      {
-        price: lowestPrices.price,
-        promotionalPrice: lowestPrices.promotionalPrice,
-      },
+  return data.flat().reduce((accumulator, current) => {
+    const isDuplicate = accumulator.some(
+      (item) => item.name === current.name && item.value === current.value,
     );
 
-    return {
-      price: (price < lowestPrices.price || lowestPrices.price === 0)
-        ? price
-        : lowestPrices.price,
-      promotionalPrice: (promotionalPrice < lowestPrices.promotionalPrice)
-        ? promotionalPrice
-        : lowestPrices.promotionalPrice,
-    };
-  }, initialPrices);
+    if (!isDuplicate) {
+      accumulator.push(current);
+    }
+
+    return accumulator;
+  }, [] as PropertyValue[]);
 }
 
 function getFilterPriceIntervals(

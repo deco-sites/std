@@ -3,10 +3,7 @@ import type {
 } from "deco-sites/std/commerce/nuvemShop/types.ts";
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import { createClient } from "deco-sites/std/commerce/nuvemShop/client.ts";
-import {
-  toFilters,
-  toProduct,
-} from "deco-sites/std/commerce/nuvemShop/transform.ts";
+import { toProduct } from "deco-sites/std/commerce/nuvemShop/transform.ts";
 import type { Context } from "deco-sites/std/commerce/nuvemShop/types.ts";
 
 export interface Props {
@@ -47,8 +44,11 @@ const loader = async (
   // Sort in NuvemShort do not work when using q in query params
   // const sort = props.sort || url.searchParams.get("sort") as NuvemShopSort;
 
-  const q = url.pathname || props.term || url.searchParams.get("q") ||
+  let q = props.term || url.searchParams.get("q") ||
+    decodeURIComponent(url.pathname) ||
     undefined;
+
+  q = q?.replace("/", "");
 
   let result: ProductBaseNuvemShop[] | undefined;
 
@@ -65,8 +65,8 @@ const loader = async (
   }
 
   const products = result?.map((product) => {
-    return toProduct(product, new URL(req.url));
-  });
+    return [...toProduct(product, new URL(req.url))];
+  }).flat();
 
   const nextPage = new URLSearchParams(url.searchParams);
   nextPage.set("page", (page + 1).toString());
@@ -81,8 +81,8 @@ const loader = async (
       itemListElement: [
         {
           "@type": "ListItem",
-          name: q?.replace("/", "") || "",
-          item: `${q?.replace("/", "")}`,
+          name: q || "",
+          item: `${q}`,
           position: 1,
         },
       ],
@@ -96,12 +96,13 @@ const loader = async (
     },
     // sortOptions: NUVEMSHOP_SORT_OPTIONS, Sort in NuvemShort do not work when using q in query params
     sortOptions: [],
-    filters: toFilters(
-      result || [],
-      typeof minPrice === "number" ? minPrice : parseFloat(minPrice || "0"),
-      typeof maxPrice === "number" ? maxPrice : parseFloat(maxPrice || "0"),
-      req.url,
-    ),
+    // filters: toFilters(
+    //   result || [],
+    //   typeof minPrice === "number" ? minPrice : parseFloat(minPrice || "0"),
+    //   typeof maxPrice === "number" ? maxPrice : parseFloat(maxPrice || "0"),
+    //   req.url,
+    // ),
+    filters: [], // NuvemShop right now don't receive product variant query params in products route
   };
 };
 

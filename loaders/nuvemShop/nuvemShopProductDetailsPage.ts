@@ -29,7 +29,7 @@ const loader = async (
     return null;
   }
 
-  const product = toProduct(nuvemProduct, new URL(req.url), sku);
+  const [product] = toProduct(nuvemProduct, new URL(req.url), sku);
 
   return {
     "@type": "ProductDetailsPage",

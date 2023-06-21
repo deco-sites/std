@@ -31,9 +31,10 @@ const paramsToQueryString = (
     }
 
     if (Array.isArray(value)) {
+      // @ts-ignore value type 'never'
       return value.flatMap((v) => [key, v.toString()]);
     }
-
+    // @ts-ignore value type 'never'
     return [key, value?.toString()];
   }).filter((v) => v.length);
 
