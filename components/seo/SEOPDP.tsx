@@ -17,17 +17,17 @@ export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>;
   structuredData?: {
     useDataFromSEO?: boolean;
-    useOnlyLastCategory?: boolean;
   };
 }
 
 const SeoPDP = (props: Props) => {
-  const context = (() => {
-    if (!props.structuredData?.useDataFromSEO || !props.page?.product) {
+  const context = (function prepareProductForStructuredData() {
+    if (!props.page?.product) {
       return props.page;
     }
 
     const product = props.page?.product;
+
     // For "Calçados>Masculino>Chinelos & Sandálias", only returns "Chinelos & Sandálias"
     const lastCategory =
       product.category?.split(DEFAULT_CATEGORY_SEPARATOR).reverse()[0];
@@ -36,11 +36,11 @@ const SeoPDP = (props: Props) => {
       ...props.page,
       product: {
         ...product,
-        name: props.page?.seo?.title,
-        description: props.page?.seo?.description,
-        category: props.structuredData?.useOnlyLastCategory
-          ? lastCategory
-          : product.category,
+        category: lastCategory,
+        ...(props.structuredData?.useDataFromSEO && {
+          name: props.page?.seo?.title,
+          description: props.page?.seo?.description,
+        }),
       },
     } as ProductDetailsPage;
   })();
