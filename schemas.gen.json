@@ -47,6 +47,8 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
+              "deco-sites/std/loaders/faireSearch.ts",
+              "deco-sites/std/loaders/faireSearchPage.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts",
@@ -1918,6 +1920,28 @@
           }
         },
         {
+          "title": "Faire - Search products",
+          "description": "Usefull for shelves and static galleries.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaC50cw==@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/faireSearch.ts"
+              ],
+              "default": "deco-sites/std/loaders/faireSearch.ts"
+            }
+          }
+        },
+        {
           "title": "VTEX product list - Intelligent Search",
           "description": "Useful for shelves and galleries.",
           "type": "object",
@@ -2396,6 +2420,28 @@
                 "deco-sites/std/functions/vtexWishlist.ts"
               ],
               "default": "deco-sites/std/functions/vtexWishlist.ts"
+            }
+          }
+        },
+        {
+          "title": "Faire - Search Page",
+          "description": "Uses ?s",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaFBhZ2UudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/faireSearchPage.ts"
+              ],
+              "default": "deco-sites/std/loaders/faireSearchPage.ts"
             }
           }
         },
@@ -3694,6 +3740,40 @@
         "id"
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaC50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "query to use on search",
+          "title": "Query"
+        },
+        "count": {
+          "type": "number",
+          "description": "total number of items to display",
+          "title": "Count"
+        }
+      },
+      "required": [
+        "query",
+        "count"
+      ],
+      "title": "deco-sites/std/loaders/faireSearch.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaFBhZ2UudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "number",
+          "description": "total number of items to display",
+          "title": "Items"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "deco-sites/std/loaders/faireSearchPage.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@Fields": {
       "type": "object",
@@ -8933,6 +9013,50 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaC50cw==": {
+      "title": "Faire - Search products",
+      "description": "Usefull for shelves and static galleries.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaC50cw==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/faireSearch.ts"
+          ],
+          "default": "deco-sites/std/loaders/faireSearch.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaFBhZ2UudHM=": {
+      "title": "Faire - Search Page",
+      "description": "Uses ?s",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaFBhZ2UudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/faireSearchPage.ts"
+          ],
+          "default": "deco-sites/std/loaders/faireSearchPage.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NhcnQudHM=": {
       "title": "deco-sites/std/loaders/vtex/cart.ts",
       "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#get-/api/checkout/pub/orderForm",
@@ -10447,6 +10571,12 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaC50cw=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9mYWlyZVNlYXJjaFBhZ2UudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NhcnQudHM="
