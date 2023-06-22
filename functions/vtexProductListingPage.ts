@@ -7,7 +7,7 @@ import type { ProductListingPage } from "../commerce/types.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 
 /**
- * @title VTEX Intelligent Search - Product Listing page
+ * @title VTEX Intelligent Search - Product Listing page (deprecated)
  * @description Useful for category, search, brand and collection pages.
  * @deprecated true
  */

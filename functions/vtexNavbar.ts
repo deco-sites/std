@@ -12,6 +12,7 @@ export interface Props {
 }
 
 /**
+ * @title Navigation Bar
  * @deprecated true
  */
 const loaderV0: LoaderFunction<

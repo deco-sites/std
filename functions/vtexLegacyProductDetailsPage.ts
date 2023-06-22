@@ -4,7 +4,7 @@ import type { LoaderFunction } from "$live/types.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 
 /**
- * @title VTEX product details page - legacy (deprecated)
+ * @title VTEX Catalog - Product Details Page (deprecated)
  * @description Works on routes of type /:slug/p
  * @deprecated true
  */

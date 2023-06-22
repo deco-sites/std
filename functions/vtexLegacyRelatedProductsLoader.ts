@@ -19,7 +19,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX Legacy - Related Products (deprecated)
+ * @title VTEX Catalog - Related Products (deprecated)
  * @description Works on routes of type /:slug/p
  * @deprecated
  */

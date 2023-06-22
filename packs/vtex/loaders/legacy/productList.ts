@@ -90,7 +90,7 @@ const fromProps = (
 };
 
 /**
- * @title VTEX Legacy - Search Products
+ * @title VTEX Catalog - Search Products
  * @description Use it in Shelves and static Galleries.
  */
 const loader = async (

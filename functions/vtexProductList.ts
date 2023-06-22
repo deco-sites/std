@@ -1,8 +1,8 @@
-import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/productList.ts";
 import type { LoaderFunction } from "$live/types.ts";
+import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/productList.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 import type { Product } from "../commerce/types.ts";
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 
 export interface Props {
   /** @description query to use on search */
@@ -32,7 +32,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX Intelligent Search - Search Products
+ * @title VTEX Intelligent Search - Search Products (deprecated)
  * @description Use it in Shelves and static Galleries.
  * @deprecated true
  */
@@ -45,12 +45,11 @@ const loaderV0: LoaderFunction<
   ctx,
   props,
 ) => {
-  const p = props.query
-    ? { query: props.query, count: props.count }
-    : { collection: props.collection?.[0], count: props.count };
+  const { query, collection, count, sort } = props;
+  const p = query ? { query } : { collection: collection?.[0] };
 
   const data = await loader(
-    p,
+    { ...p, count, sort },
     req,
     ctx.state,
   );

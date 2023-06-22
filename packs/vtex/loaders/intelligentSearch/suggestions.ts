@@ -25,7 +25,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX search suggestions - Intelligent Search
+ * @title VTEX Intelligent Search - Search Suggestions
  */
 const loaders = async (
   props: Props,

@@ -41,7 +41,7 @@ const getProductID = (page: PageType) => {
 };
 
 /**
- * @title VTEX product details page - Intelligent Search
+ * @title VTEX Intelligent Search - Product Details Page
  * @description Works on routes of type /:slug/p
  */
 const loader = async (

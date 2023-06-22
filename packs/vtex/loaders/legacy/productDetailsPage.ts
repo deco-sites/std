@@ -20,7 +20,7 @@ export interface Props {
 }
 
 /**
- * @title VTEX Legacy - Product Details page
+ * @title VTEX Catalog - Product Details Page
  * @description For routes of type /:slug/p
  */
 async function loader(

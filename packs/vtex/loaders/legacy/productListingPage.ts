@@ -96,7 +96,7 @@ const getTerm = (path: string, map: string) => {
 };
 
 /**
- * @title VTEX product listing page - Portal
+ * @title VTEX Catalog - Product Listing Page
  * @description Returns data ready for search pages like category,brand pages
  */
 const loader = async (
