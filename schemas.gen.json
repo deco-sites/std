@@ -47,6 +47,8 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
+              "deco-sites/std/loaders/message.ts",
+              "deco-sites/std/loaders/messages.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts",
@@ -3694,6 +3696,178 @@
         "id"
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "string",
+          "title": "Message text"
+        },
+        {
+          "title": "Get a message from messages",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/message.ts"
+              ],
+              "default": "deco-sites/std/loaders/message.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText@record": {
+      "title": "Unknown record",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText"
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText@record@record": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "title": "Unknown record",
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText@record"
+          }
+        },
+        {
+          "title": "Internationalization",
+          "description": "Used to display messages in different languages.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/messages.ts"
+              ],
+              "default": "deco-sites/std/loaders/messages.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageKey": {
+      "type": "string",
+      "title": "Message key"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText@record@record",
+          "title": "Messages"
+        },
+        "key": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageKey",
+          "title": "Key"
+        }
+      },
+      "required": [
+        "messages",
+        "key"
+      ],
+      "title": "deco-sites/std/loaders/message.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Language": {
+      "type": "string",
+      "title": "Language"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@i18nMessage": {
+      "type": "object",
+      "properties": {
+        "lang": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Language",
+          "title": "Language",
+          "description": "The target user language",
+          "default": "en-US"
+        },
+        "text": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText",
+          "title": "Text"
+        }
+      },
+      "required": [
+        "lang",
+        "text"
+      ],
+      "title": "i18nMessage"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@i18nMessage[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@i18nMessage"
+      },
+      "title": "i18nMessage[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Message": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageKey",
+          "title": "Message key"
+        },
+        "i18n": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@i18nMessage[]",
+          "title": "Messages",
+          "description": "Internationalization messages"
+        },
+        "defaultText": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@MessageText",
+          "title": "Default Message"
+        }
+      },
+      "required": [
+        "key",
+        "i18n",
+        "defaultText"
+      ],
+      "title": "Message"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Message[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Message"
+      },
+      "title": "Message[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Message[]",
+          "title": "Messages"
+        }
+      },
+      "required": [
+        "messages"
+      ],
+      "title": "deco-sites/std/loaders/messages.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@Fields": {
       "type": "object",
@@ -8933,6 +9107,49 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlLnRz": {
+      "title": "Get a message from messages",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/message.ts"
+          ],
+          "default": "deco-sites/std/loaders/message.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==": {
+      "title": "Internationalization",
+      "description": "Used to display messages in different languages.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/messages.ts"
+          ],
+          "default": "deco-sites/std/loaders/messages.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NhcnQudHM=": {
       "title": "deco-sites/std/loaders/vtex/cart.ts",
       "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#get-/api/checkout/pub/orderForm",
@@ -10447,6 +10664,12 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9tZXNzYWdlcy50cw=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2NhcnQudHM="

@@ -36,19 +36,21 @@ import * as $$1 from "./accounts/yourViews.ts";
 import * as $$2 from "./accounts/vtex.ts";
 import * as $$3 from "./accounts/shopify.ts";
 import * as $$4 from "./accounts/occ.ts";
-import * as $$$0 from "./loaders/vtex/legacy/productList.ts";
-import * as $$$1 from "./loaders/vtex/legacy/productDetailsPage.ts";
-import * as $$$2 from "./loaders/vtex/legacy/productListingPage.ts";
-import * as $$$3 from "./loaders/vtex/legacy/relatedProductsLoader.ts";
-import * as $$$4 from "./loaders/vtex/wishlist.ts";
-import * as $$$5 from "./loaders/vtex/navbar.ts";
-import * as $$$6 from "./loaders/vtex/proxy.ts";
-import * as $$$7 from "./loaders/vtex/intelligentSearch/productList.ts";
-import * as $$$8 from "./loaders/vtex/intelligentSearch/productDetailsPage.ts";
-import * as $$$9 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
-import * as $$$10 from "./loaders/vtex/intelligentSearch/suggestions.ts";
-import * as $$$11 from "./loaders/vtex/cart.ts";
-import * as $$$12 from "./loaders/vtex/user.ts";
+import * as $$$0 from "./loaders/messages.ts";
+import * as $$$1 from "./loaders/vtex/legacy/productList.ts";
+import * as $$$2 from "./loaders/vtex/legacy/productDetailsPage.ts";
+import * as $$$3 from "./loaders/vtex/legacy/productListingPage.ts";
+import * as $$$4 from "./loaders/vtex/legacy/relatedProductsLoader.ts";
+import * as $$$5 from "./loaders/vtex/wishlist.ts";
+import * as $$$6 from "./loaders/vtex/navbar.ts";
+import * as $$$7 from "./loaders/vtex/proxy.ts";
+import * as $$$8 from "./loaders/vtex/intelligentSearch/productList.ts";
+import * as $$$9 from "./loaders/vtex/intelligentSearch/productDetailsPage.ts";
+import * as $$$10 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
+import * as $$$11 from "./loaders/vtex/intelligentSearch/suggestions.ts";
+import * as $$$12 from "./loaders/vtex/cart.ts";
+import * as $$$13 from "./loaders/vtex/user.ts";
+import * as $$$14 from "./loaders/message.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -161,19 +163,22 @@ const manifest = {
     "$live/loaders/state.ts": i1$0,
     "$live/loaders/workflows/events.ts": i1$1,
     "$live/loaders/workflows/get.ts": i1$2,
-    "deco-sites/std/loaders/vtex/cart.ts": $$$11,
-    "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts": $$$8,
-    "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$7,
-    "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts": $$$9,
-    "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts": $$$10,
-    "deco-sites/std/loaders/vtex/legacy/productDetailsPage.ts": $$$1,
-    "deco-sites/std/loaders/vtex/legacy/productList.ts": $$$0,
-    "deco-sites/std/loaders/vtex/legacy/productListingPage.ts": $$$2,
-    "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts": $$$3,
-    "deco-sites/std/loaders/vtex/navbar.ts": $$$5,
-    "deco-sites/std/loaders/vtex/proxy.ts": $$$6,
-    "deco-sites/std/loaders/vtex/user.ts": $$$12,
-    "deco-sites/std/loaders/vtex/wishlist.ts": $$$4,
+    "deco-sites/std/loaders/message.ts": $$$14,
+    "deco-sites/std/loaders/messages.ts": $$$0,
+    "deco-sites/std/loaders/vtex/cart.ts": $$$12,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts": $$$9,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$8,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts":
+      $$$10,
+    "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts": $$$11,
+    "deco-sites/std/loaders/vtex/legacy/productDetailsPage.ts": $$$2,
+    "deco-sites/std/loaders/vtex/legacy/productList.ts": $$$1,
+    "deco-sites/std/loaders/vtex/legacy/productListingPage.ts": $$$3,
+    "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts": $$$4,
+    "deco-sites/std/loaders/vtex/navbar.ts": $$$6,
+    "deco-sites/std/loaders/vtex/proxy.ts": $$$7,
+    "deco-sites/std/loaders/vtex/user.ts": $$$13,
+    "deco-sites/std/loaders/vtex/wishlist.ts": $$$5,
   },
   "routes": {
     "./routes/_app.tsx": $$$$2,
