@@ -20,6 +20,10 @@ export interface Props {
   };
 }
 
+function removeHTMLTags(str?: string) {
+  return str?.replace(/<[^>]*>/g, "");
+}
+
 const SeoPDP = (props: Props) => {
   const context = (function prepareProductForStructuredData() {
     if (!props.page?.product) {
@@ -38,8 +42,8 @@ const SeoPDP = (props: Props) => {
         ...product,
         category: lastCategory,
         ...(props.structuredData?.useDataFromSEO && {
-          name: props.page?.seo?.title,
-          description: props.page?.seo?.description,
+          name: removeHTMLTags(props.page?.seo?.title),
+          description: removeHTMLTags(props.page?.seo?.description),
         }),
       },
     } as ProductDetailsPage;
