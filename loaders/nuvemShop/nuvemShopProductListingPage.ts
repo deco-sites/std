@@ -36,8 +36,8 @@ const loader = async (
   const per_page = props.limit ?? 10;
   const page = Number(url.searchParams.get("page")) || 0;
 
-  const minPrice = props.minPrice || url.searchParams.get("min_price");
-  const maxPrice = props.maxPrice || url.searchParams.get("max_price");
+  const minPrice = url.searchParams.get("min_price");
+  const maxPrice = url.searchParams.get("max_price");
 
   // Sort in NuvemShort do not work when using q in query params
   // const sort = props.sort || url.searchParams.get("sort") as NuvemShopSort;
