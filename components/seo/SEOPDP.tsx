@@ -14,8 +14,28 @@ export interface Props {
   /** @title Meta tag description override */
   description?: string;
   page: LoaderReturnType<ProductDetailsPage | null>;
+  structuredData?: {
+    useDataFromSEO?: boolean;
+  };
 }
 
-const SeoPDP = (props: Props) => <Metatags {...props} context={props.page} />;
+const SeoPDP = (props: Props) => {
+  const context = (() => {
+    if (props.structuredData?.useDataFromSEO) {
+      return {
+        ...props.page,
+        product: {
+          ...props.page?.product,
+          name: props.page?.seo?.title,
+          description: props.page?.seo?.description,
+        },
+      } as ProductDetailsPage;
+    } else {
+      return props.page;
+    }
+  })();
+
+  return <Metatags {...props} context={context} />;
+};
 
 export default SeoPDP;
