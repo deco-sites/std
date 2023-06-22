@@ -11,6 +11,7 @@ import type {
   PropertyValue,
   UnitPriceSpecification,
 } from "deco-sites/std/commerce/types.ts";
+import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
 
 import { slugify } from "./slugify.ts";
 import type {
@@ -249,7 +250,9 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     : undefined;
 
   // From schema.org: A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy
-  const categoriesString = splitCategory(product.categories[0]).join(">");
+  const categoriesString = splitCategory(product.categories[0]).join(
+    DEFAULT_CATEGORY_SEPARATOR,
+  );
 
   const categoryAdditionalProperties = toAdditionalPropertyCategories(product);
   const clusterAdditionalProperties = toAdditionalPropertyClusters(product);
