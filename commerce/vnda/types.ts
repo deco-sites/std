@@ -191,3 +191,100 @@ export interface VNDAShipping {
   address: VNDAAddress;
   methods: VNDAShippingMethod[];
 }
+
+export interface VNDARelatedItemTag {
+  name: string;
+  title: string;
+  subtitle: string;
+  description: string | null;
+  importance: string | null;
+  type: string | null;
+  image_url: string | null;
+}
+
+export interface VNDARelatedItemAttribute {
+  name: string;
+  mandatory: boolean;
+  values: unknown[];
+}
+
+export interface VNDARelatedItemInstallment {
+  number: number;
+  price: number;
+  interest: boolean;
+  interest_rate: number;
+  total: number;
+}
+
+export interface VNDAInventory {
+  name: string | null;
+  slug: string;
+  available: boolean;
+  price: number;
+  sale_price: number;
+  quantity: number;
+  quantity_sold: number;
+  place: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface VNDARelatedItemVariant {
+  id: number;
+  sku: string;
+  sku_lowercase: string;
+  name: string;
+  full_name: string;
+  main: boolean;
+  available: boolean;
+  image_url: string | null;
+  price: number;
+  sale_price: number;
+  intl_price: number;
+  installments: VNDARelatedItemInstallment[];
+  stock: number;
+  quantity: number;
+  quantity_sold: number;
+  min_quantity: number;
+  available_quantity: number;
+  custom_attributes: unknown | null;
+  attribute1: string;
+  attribute2: string;
+  attribute3: string;
+  properties: Record<string, Property | null>;
+  inventories: VNDAInventory[];
+  handling_days: number;
+  barcode: string;
+  weight: number;
+  width: number;
+  height: number;
+  length: number;
+}
+
+export interface VNDARelatedItem {
+  id: number;
+  active: boolean;
+  available: boolean;
+  subscription: boolean;
+  slug: string;
+  reference: string;
+  name: string;
+  description: string;
+  image_url: string;
+  url: string;
+  tags: VNDARelatedItemTag[];
+  price: number;
+  on_sale: boolean;
+  sale_price: number;
+  intl_price: number;
+  discount_id: number;
+  discount_rule: string | null;
+  discount: number | null;
+  images: { sku: string | null; url: string }[];
+  attribute: Record<string, VNDARelatedItemAttribute>;
+  variants: VNDARelatedItemVariant[];
+  installments: VNDARelatedItemInstallment[];
+}
+
+export type VNDACoupon = unknown;
