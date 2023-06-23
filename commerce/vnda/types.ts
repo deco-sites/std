@@ -153,3 +153,41 @@ export interface Property {
   value: string;
   defining: boolean;
 }
+
+export interface VNDAShippingMethod {
+  delivery_days: number;
+  description: string;
+  name: string;
+  price: number;
+  shipping_method_id: number;
+  value: string;
+  countries: string[] | null;
+  fulfillment_company: string | null;
+  value_needed_to_discount: number | null;
+}
+
+export interface VNDAAddress {
+  city: string;
+  client_address_id: string | null;
+  company_name: string | null;
+  complement: string | null;
+  email: string | null;
+  first_name: string | null;
+  first_phone: string | null;
+  first_phone_area: string | null;
+  id: string;
+  last_name: string | null;
+  neighborhood: string;
+  reference: string | null;
+  second_phone: string | null;
+  second_phone_area: string | null;
+  state: string;
+  street_name: string;
+  street_number: string;
+  zip: string;
+}
+
+export interface VNDAShipping {
+  address: VNDAAddress;
+  methods: VNDAShippingMethod[];
+}
