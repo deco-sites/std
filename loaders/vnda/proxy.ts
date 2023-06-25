@@ -36,7 +36,6 @@ const buildProxyRoutes = (
         : `https://${publicDomain}`,
     )).hostname;
 
-    // Rejects TLD mystore.com, which VTEX doesn't support it carrefour.com.br / CNAME
     if (!hostname || hostname.split(".").length <= 2) {
       throw new Error(`Invalid hostname from '${internalDomain}'`);
     }
