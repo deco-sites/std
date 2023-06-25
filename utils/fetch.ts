@@ -62,7 +62,7 @@ export const fetchSafe = async (
   input: string | Request | URL,
   init?: RequestInit & FetchOptions,
 ) => {
-  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
+  const url = input;
 
   const response = await retryExceptionOr500.execute(async () =>
     await fetch(url, init)
