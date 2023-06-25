@@ -25,7 +25,7 @@ const addItemToCart: UseVNDACartHook["addItemToCart"] = async (
   fd.set("sku", itemId);
   fd.set("quantity", `${quantity}`);
 
-  const vndaCart = await fetchAPI<VNDACart>(`/api/carrinho/adicionar`, {
+  const vndaCart = await fetchAPI<VNDACart>(`/carrinho/adicionar`, {
     method: "POST",
     body: fd,
   });
@@ -40,7 +40,7 @@ const addCouponToCart: UseVNDACartHook["addCouponToCart"] = async (
   const fd = new FormData();
   fd.set("code", text);
 
-  await fetchAPI(`/api/cupom/ajax`, { method: "POST", body: fd });
+  await fetchAPI(`/cupom/ajax`, { method: "POST", body: fd });
 };
 
 const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
@@ -48,7 +48,7 @@ const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
 ) => {
   if (quantity > 0) {
     cart.value = await fetchAPI<VNDACart>(
-      "/api/carrinho/quantidade/atualizar",
+      "/carrinho/quantidade/atualizar",
       {
         method: "POST",
         body: JSON.stringify({ item_id: itemId, quantity }),
@@ -56,7 +56,7 @@ const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
     );
   } else {
     cart.value = await fetchAPI<VNDACart>(
-      "/api/carrinho/remover",
+      "/carrinho/remover",
       {
         method: "POST",
         body: JSON.stringify({ item_id: itemId }),
@@ -66,7 +66,7 @@ const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
 };
 
 const fetchAndSetCart = async () => {
-  const vndaCart = await fetchAPI<VNDACart>(`/api/carrinho`);
+  const vndaCart = await fetchAPI<VNDACart>(`/carrinho`);
 
   cart.value = vndaCart;
 };

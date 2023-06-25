@@ -49,6 +49,7 @@ import * as $$$9 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
 import * as $$$10 from "./loaders/vtex/intelligentSearch/suggestions.ts";
 import * as $$$11 from "./loaders/vtex/cart.ts";
 import * as $$$12 from "./loaders/vtex/user.ts";
+import * as $$$13 from "./loaders/vnda/proxy.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -59,10 +60,9 @@ import * as $$$$$$$$3 from "./sections/SEOPLP.tsx";
 import * as $$$$$$$$4 from "./sections/configOCC.global.tsx";
 import * as $$$$$$$$5 from "./sections/Analytics.tsx";
 import * as $$$$$$$$6 from "./sections/configShopify.global.tsx";
-import * as $$$$$$$$7 from "./sections/configVNDA.global.tsx";
-import * as $$$$$$$$8 from "./sections/VTEXPortalDataLayerCompatibility.tsx";
-import * as $$$$$$$$9 from "./sections/configVTEX.global.tsx";
-import * as $$$$$$$$10 from "./sections/SEOPDP.tsx";
+import * as $$$$$$$$7 from "./sections/VTEXPortalDataLayerCompatibility.tsx";
+import * as $$$$$$$$8 from "./sections/configVTEX.global.tsx";
+import * as $$$$$$$$9 from "./sections/SEOPDP.tsx";
 import * as $$$$$$$$$$$0 from "./actions/vtex/notifyme.ts";
 import * as $$$$$$$$$$$1 from "./actions/vtex/cart/updateCoupons.ts";
 import * as $$$$$$$$$$$2 from "./actions/vtex/cart/updateAttachment.ts";
@@ -161,6 +161,7 @@ const manifest = {
     "$live/loaders/state.ts": i1$0,
     "$live/loaders/workflows/events.ts": i1$1,
     "$live/loaders/workflows/get.ts": i1$2,
+    "deco-sites/std/loaders/vnda/proxy.ts": $$$13,
     "deco-sites/std/loaders/vtex/cart.ts": $$$11,
     "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts": $$$8,
     "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$7,
@@ -200,13 +201,12 @@ const manifest = {
     "deco-sites/std/sections/configButterCMS.global.tsx": $$$$$$$$1,
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$4,
     "deco-sites/std/sections/configShopify.global.tsx": $$$$$$$$6,
-    "deco-sites/std/sections/configVNDA.global.tsx": $$$$$$$$7,
-    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$9,
+    "deco-sites/std/sections/configVTEX.global.tsx": $$$$$$$$8,
     "deco-sites/std/sections/configYourViews.global.tsx": $$$$$$$$0,
     "deco-sites/std/sections/SEO.tsx": $$$$$$$$2,
-    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$10,
+    "deco-sites/std/sections/SEOPDP.tsx": $$$$$$$$9,
     "deco-sites/std/sections/SEOPLP.tsx": $$$$$$$$3,
-    "deco-sites/std/sections/VTEXPortalDataLayerCompatibility.tsx": $$$$$$$$8,
+    "deco-sites/std/sections/VTEXPortalDataLayerCompatibility.tsx": $$$$$$$$7,
   },
   "actions": {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,

@@ -1,4 +1,4 @@
-import { ConfigVNDA } from "../commerce/vnda/types.ts";
+import { Account as ConfigVNDA } from "../packs/vnda/vndaAccount.ts";
 import { createClient } from "../commerce/vnda/client.ts";
 import { toProduct, useVariant } from "../commerce/vnda/transform.ts";
 import type { LiveState } from "$live/types.ts";
