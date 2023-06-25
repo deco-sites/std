@@ -29,6 +29,7 @@ export const retryExceptionOr500 = retry(connectionClosedMsg, {
 const toProxyCache = async (
   input: string | Request | URL,
   init?: RequestInit,
+  urlOverride?: string,
 ) => {
   const url = typeof input === "string"
     ? new URL(input)
@@ -58,11 +59,16 @@ export interface FetchOptions {
   withProxyCache?: boolean;
 }
 
+const PROXY_CACHE_URL = Deno !== undefined && Deno !== null
+  ? Deno.env.get("DECO_PROXY_CACHE_URL")
+  : undefined;
 export const fetchSafe = async (
   input: string | Request | URL,
   init?: RequestInit & FetchOptions,
 ) => {
-  const url = init?.withProxyCache ? await toProxyCache(input, init) : input;
+  const url = init?.withProxyCache && PROXY_CACHE_URL === undefined
+    ? await toProxyCache(input, init)
+    : input;
 
   const response = await retryExceptionOr500.execute(async () =>
     await fetch(url, init)
