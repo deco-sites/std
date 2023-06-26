@@ -29,7 +29,7 @@ export interface Account extends AccountBlock {
    */
   defaultSalesChannel: string;
   defaultRegionId?: string;
-  defaultHideUnnavailableItems?: boolean;
+  defaultHideUnavailableItems?: boolean;
 }
 
 export type Context = FnContext<{

@@ -1,9 +1,8 @@
 import { SortOption } from "../types.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
-
+import { Account as ConfigVNDA } from "../../packs/vnda/vndaAccount.ts";
 import {
-  ConfigVNDA,
   ProductGetParams,
   ProductGetResultVNDA,
   ProductSearchParams,

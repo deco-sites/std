@@ -1,6 +1,7 @@
 import { createClient } from "../commerce/vnda/client.ts";
 import { VNDA_SORT_OPTIONS } from "../commerce/vnda/client.ts";
-import { ConfigVNDA, VNDASort } from "../commerce/vnda/types.ts";
+import { Account as ConfigVNDA } from "../packs/vnda/vndaAccount.ts";
+import { VNDASort } from "../commerce/vnda/types.ts";
 import {
   toFilters,
   toProduct,

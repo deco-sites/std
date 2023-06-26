@@ -61,7 +61,7 @@ export const withDefaultParams = ({
     fuzzy,
     locale: locale ?? ctx.configVTEX!.defaultLocale,
     hideUnavailableItems: `${
-      hideUnavailableItems ?? ctx.configVTEX!.defaultHideUnnavailableItems ??
+      hideUnavailableItems ?? ctx.configVTEX!.defaultHideUnavailableItems ??
         false
     }`,
   });
