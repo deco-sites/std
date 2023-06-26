@@ -93,7 +93,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
 
   if (pageType === "otherView") {
     const pathNames = url.pathname.split("/").filter(Boolean);
-    props.pageCategory = pathNames.pop();
+    props.pageCategory = pathNames.pop() || null;
   }
 
   props.shelfProductIds = window.shelfProductIds || [];
