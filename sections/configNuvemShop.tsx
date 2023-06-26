@@ -1,6 +1,6 @@
-import type { ConfigNuvemShop } from "../commerce/nuvemShop/types.ts";
+import type { Account } from "../commerce/nuvemShop/types.ts";
 
-function ConfigSection(_: ConfigNuvemShop) {
+function ConfigSection(_: Account) {
   return (
     <div>
       "This is a global setting and not a component. Every change here will

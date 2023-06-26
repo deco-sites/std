@@ -1,6 +1,6 @@
 import type { FnContext } from "$live/types.ts";
 
-export interface ConfigNuvemShop {
+export interface Account {
   /**
    * @description Header to define our app. For example, https://tiendanube.github.io/api-documentation/intro#authentication.
    */
@@ -117,10 +117,10 @@ export interface PriceInterval {
 }
 
 export type Context = FnContext<{
-  configNuvemShop?: ConfigNuvemShop;
+  configNuvemShop?: Account;
 }>;
 
-function account(acc: ConfigNuvemShop) {
+function account(acc: Account) {
   return acc;
 }
 

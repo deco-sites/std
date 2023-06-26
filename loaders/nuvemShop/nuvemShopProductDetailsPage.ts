@@ -33,7 +33,6 @@ const loader = async (
 
   return {
     "@type": "ProductDetailsPage",
-    // TODO: Find out what's the right breadcrumb on nuvem shop
     breadcrumbList: {
       "@type": "BreadcrumbList",
       itemListElement: getBreadCrumbs(nuvemProduct),

@@ -1,4 +1,4 @@
-import { ConfigNuvemShop } from "./types.ts";
+import { Account } from "./types.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import {
   ProductBaseNuvemShop,
@@ -41,7 +41,7 @@ const paramsToQueryString = (
   return new URLSearchParams(transformedValues);
 };
 
-export const createClient = (params: ConfigNuvemShop | undefined) => {
+export const createClient = (params: Account | undefined) => {
   if (!params) return;
 
   const fetcher = <T>(
@@ -50,8 +50,6 @@ export const createClient = (params: ConfigNuvemShop | undefined) => {
     data?: Record<string, unknown>,
   ) => {
     const { userAgent, accessToken, storeId } = params;
-
-    console.log(`${BASE_URL}/${storeId}/${endpoint}`);
 
     try {
       return fetchAPI<T>(
