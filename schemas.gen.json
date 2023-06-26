@@ -3761,6 +3761,11 @@
         {
           "title": "VNDA Proxy Routes",
           "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props"
+            }
+          ],
           "required": [
             "__resolveType"
           ],
@@ -3791,6 +3796,21 @@
           }
         }
       ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props": {
+      "type": "object",
+      "properties": {
+        "pagesToProxy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "ex: /p/fale-conosco",
+          "title": "Pages To Proxy"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/loaders/vnda/proxy.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@Fields": {
       "type": "object",
@@ -8977,6 +8997,11 @@
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz": {
       "title": "VNDA Proxy Routes",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
