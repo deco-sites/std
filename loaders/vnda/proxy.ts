@@ -17,12 +17,14 @@ const PATHS_TO_PROXY = [
   "/sitemap.xml",
   "/stylesheets/*",
   "/v/s",
+  "/webform",
 ];
 
 const buildProxyRoutes = (
-  { internalDomain, publicDomain }: {
+  { internalDomain, publicDomain, pagesToProxy }: {
     internalDomain?: string;
     publicDomain?: string;
+    pagesToProxy: string[];
   },
 ) => {
   if (!internalDomain) {
@@ -43,7 +45,7 @@ const buildProxyRoutes = (
     const urlToProxy = internalDomain;
     const hostToUse = hostname;
 
-    return PATHS_TO_PROXY.map((pathTemplate) => ({
+    return [...PATHS_TO_PROXY, ...pagesToProxy].map((pathTemplate) => ({
       pathTemplate,
       handler: {
         value: {
@@ -60,16 +62,22 @@ const buildProxyRoutes = (
   }
 };
 
+export interface Props {
+  /** @description ex: /p/fale-conosco */
+  pagesToProxy?: string[];
+}
+
 /**
  * @title VNDA Proxy Routes
  */
 export default function VNDAProxy(
-  _props: unknown,
+  { pagesToProxy = [] }: Props,
   _req: Request,
   ctx: Context,
 ): Route[] {
   return buildProxyRoutes({
     internalDomain: ctx.configVNDA?.internalDomain,
     publicDomain: ctx.configVNDA?.domain,
+    pagesToProxy,
   });
 }
