@@ -287,4 +287,9 @@ export interface VNDARelatedItem {
   installments: VNDARelatedItemInstallment[];
 }
 
-export type VNDACoupon = unknown;
+export type VNDACoupon = {
+  code: string;
+  discount: number;
+  rebate_token: string | null;
+  rebate_discount: number;
+};
