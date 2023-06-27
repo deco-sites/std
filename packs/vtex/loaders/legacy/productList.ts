@@ -39,6 +39,9 @@ export interface TermProps {
   sort?: LegacySort;
   /** @description total number of items to display */
   count: number;
+
+  /**@description query, didn't use with sort, collection or term props*/
+  query?: string;
 }
 
 export interface ProductIDProps {
@@ -76,6 +79,28 @@ const fromProps = (
 
   if (isCollectionProps(props)) {
     params.set("fq", `productClusterIds:${props.collection}`);
+    params.set("_from", "0");
+    params.set("_to", `${Math.max(count - 1, 0)}`);
+
+    return params;
+  }
+
+  if (props.query) {
+    const splitted = props.query.split("&");
+    splitted.forEach((param) => {
+      if (param.includes("fq")) {
+        params.append("fq", encodeURI(param.split("=")[1]));
+      }
+
+      if (param.includes("ft")) {
+        params.append("ft", encodeURI(param.split("=")[1]));
+      }
+
+      if (param.includes("O")) {
+        params.append("O", encodeURI(param.split("=")[1]));
+      }
+    });
+
     params.set("_from", "0");
     params.set("_to", `${Math.max(count - 1, 0)}`);
 
