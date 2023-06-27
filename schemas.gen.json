@@ -68,6 +68,7 @@
               "$live/handlers/router.ts",
               "$live/handlers/routesSelection.ts",
               "$live/handlers/workflowRunner.ts",
+              "deco-sites/std/handlers/vtex/sitemap.ts",
               "$live/pages/LivePage.tsx",
               "$live/sections/Conditional_Beta.tsx",
               "$live/sections/EmptySection.tsx",
@@ -1742,7 +1743,7 @@
           }
         },
         {
-          "title": "VTEX product details page - Intelligent Search",
+          "title": "VTEX Intelligent Search - Product Details Page",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1764,7 +1765,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Product Details page",
+          "title": "VTEX Catalog - Product Details Page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1967,7 +1968,7 @@
           }
         },
         {
-          "title": "VTEX product list - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Products",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -1989,7 +1990,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Search Products",
+          "title": "VTEX Catalog - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2011,7 +2012,7 @@
           }
         },
         {
-          "title": "VTEX related products - Portal",
+          "title": "VTEX Related Products - Catalog",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2474,7 +2475,7 @@
           }
         },
         {
-          "title": "VTEX product listing page - Portal",
+          "title": "VTEX Catalog - Product Listing Page",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3262,7 +3263,7 @@
           }
         },
         {
-          "title": "VTEX search suggestions - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
             {
@@ -3322,7 +3323,7 @@
       ],
       "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
+    "L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account": {
       "type": "object",
       "properties": {},
       "required": [],
@@ -3332,7 +3333,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account"
         }
       ],
       "properties": {
@@ -3357,7 +3358,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account"
         }
       ],
       "properties": {
@@ -3382,7 +3383,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account"
         }
       ],
       "properties": {
@@ -3426,7 +3427,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account"
         }
       ],
       "properties": {
@@ -3550,6 +3551,12 @@
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
       "$ref": "#/root/loaders",
       "title": "Loader"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Account"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag": {
       "$ref": "#/root/flags",
@@ -3834,7 +3841,7 @@
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9mbGFncy9hdWRpZW5jZS50cw==@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -3870,7 +3877,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9mbGFncy9hdWRpZW5jZS50cw==@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -3878,9 +3885,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9mbGFncy9hdWRpZW5jZS50cw==@Route"
           },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
+          "title": "/Users/gimenes/Documents/code/live/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -3918,50 +3925,6 @@
               "default": "deco-sites/std/loaders/vtex/proxy.ts"
             }
           }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
-            }
-          }
         }
       ]
     },
@@ -3971,7 +3934,10 @@
         "pagesToProxy": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "description": "ex: /p/fale-conosco",
           "title": "Pages To Proxy"
@@ -7170,6 +7136,101 @@
       ],
       "title": "deco-cx/live/handlers/redirect.ts@RedirectConfig"
     },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+      "type": "object",
+      "properties": {
+        "pathTemplate": {
+          "type": "string",
+          "title": "Path Template"
+        },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
+        "handler": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "title": "Value"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "title": "Handler"
+        }
+      },
+      "required": [
+        "pathTemplate",
+        "handler"
+      ],
+      "title": "Site Route",
+      "titleBy": "pathTemplate"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+          },
+          "title": "Routes",
+          "description": "Used to configure your site routes"
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3JvdXRlci50cw==@RouterConfig": {
       "type": "object",
       "properties": {
@@ -7226,6 +7287,20 @@
         "workflow"
       ],
       "title": "deco-cx/live/handlers/workflowRunner.ts@Config"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9oYW5kbGVycy9zaXRlbWFwLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "the proxy sitemap url.",
+          "title": "Url"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "title": "deco-sites/std/packs/vtex/handlers/sitemap.ts@Props"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]": {
       "type": "array",
@@ -7503,7 +7578,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL2dpbWVuZXMvRG9jdW1lbnRzL2NvZGUvbGl2ZS9ibG9ja3MvYWNjb3VudC50cw==@Account"
         }
       ],
       "properties": {
@@ -9363,7 +9438,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX product details page - Intelligent Search",
+      "title": "VTEX Intelligent Search - Product Details Page",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9385,7 +9460,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX product list - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Products",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -9429,7 +9504,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX search suggestions - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Suggestions",
       "type": "object",
       "allOf": [
         {
@@ -9450,7 +9525,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Legacy - Product Details page",
+      "title": "VTEX Catalog - Product Details Page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9472,7 +9547,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Legacy - Search Products",
+      "title": "VTEX Catalog - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -9494,7 +9569,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX product listing page - Portal",
+      "title": "VTEX Catalog - Product Listing Page",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -9516,7 +9591,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX related products - Portal",
+      "title": "VTEX Related Products - Catalog",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9759,6 +9834,28 @@
             "$live/handlers/workflowRunner.ts"
           ],
           "default": "$live/handlers/workflowRunner.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz": {
+      "title": "Proxy Handler",
+      "description": "Proxies request to the target url.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9oYW5kbGVycy9zaXRlbWFwLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/handlers/vtex/sitemap.ts"
+          ],
+          "default": "deco-sites/std/handlers/vtex/sitemap.ts"
         }
       }
     },
@@ -10997,6 +11094,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvaGFuZGxlcnMvd29ya2Zsb3dSdW5uZXIudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz"
         }
       ]
     },
