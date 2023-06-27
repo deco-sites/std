@@ -6,6 +6,13 @@ export const paths = ({ account }: Account) => {
   const href = (path: string) => new URL(path, base).href;
 
   return {
+    "event-api": {
+      v1: {
+        account: {
+          event: href(`https://sp.vtex.com/event-api/v1/${account}/event`),
+        },
+      },
+    },
     "no-cache": {
       "Newsletter.aspx": `${href(`/no-cache/Newsletter.aspx`)}`,
       "AviseMe.aspx": `${href("/no-cache/AviseMe.aspx")}`,
