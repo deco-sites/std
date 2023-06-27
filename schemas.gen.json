@@ -68,6 +68,7 @@
               "$live/handlers/router.ts",
               "$live/handlers/routesSelection.ts",
               "$live/handlers/workflowRunner.ts",
+              "deco-sites/std/handlers/vtex/sitemap.ts",
               "$live/pages/LivePage.tsx",
               "$live/sections/Conditional_Beta.tsx",
               "$live/sections/EmptySection.tsx",
@@ -1742,7 +1743,7 @@
           }
         },
         {
-          "title": "VTEX product details page - Intelligent Search",
+          "title": "VTEX Intelligent Search - Product Details Page",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1764,7 +1765,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Product Details page",
+          "title": "VTEX Catalog - Product Details Page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1967,7 +1968,7 @@
           }
         },
         {
-          "title": "VTEX product list - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Products",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -1989,7 +1990,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Search Products",
+          "title": "VTEX Catalog - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2011,7 +2012,7 @@
           }
         },
         {
-          "title": "VTEX related products - Portal",
+          "title": "VTEX Related Products - Catalog",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2474,7 +2475,7 @@
           }
         },
         {
-          "title": "VTEX product listing page - Portal",
+          "title": "VTEX Catalog - Product Listing Page",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3262,7 +3263,7 @@
           }
         },
         {
-          "title": "VTEX search suggestions - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
             {
@@ -3971,7 +3972,10 @@
         "pagesToProxy": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "description": "ex: /p/fale-conosco",
           "title": "Pages To Proxy"
@@ -8018,7 +8022,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@63e0dc8518b7b95dcee9d0a023130ccd&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e5f5ea057347af079adef8d8317fbbe2": {
       "allOf": [
         {
           "type": "object",
@@ -8036,9 +8040,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+      "title": "Metadata&e5f5ea057347af079adef8d8317fbbe2"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e5f5ea057347af079adef8d8317fbbe2": {
       "type": "object",
       "properties": {
         "results": {
@@ -8049,7 +8053,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@63e0dc8518b7b95dcee9d0a023130ccd&Metadata",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e5f5ea057347af079adef8d8317fbbe2",
           "title": "Metadata"
         }
       },
@@ -8058,7 +8062,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+Metadata&e5f5ea057347af079adef8d8317fbbe2"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -9363,7 +9367,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX product details page - Intelligent Search",
+      "title": "VTEX Intelligent Search - Product Details Page",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9385,7 +9389,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX product list - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Products",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -9429,7 +9433,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX search suggestions - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Suggestions",
       "type": "object",
       "allOf": [
         {
@@ -9450,7 +9454,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Legacy - Product Details page",
+      "title": "VTEX Catalog - Product Details Page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9472,7 +9476,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Legacy - Search Products",
+      "title": "VTEX Catalog - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -9494,7 +9498,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX product listing page - Portal",
+      "title": "VTEX Catalog - Product Listing Page",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -9516,7 +9520,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX related products - Portal",
+      "title": "VTEX Related Products - Catalog",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9759,6 +9763,22 @@
             "$live/handlers/workflowRunner.ts"
           ],
           "default": "$live/handlers/workflowRunner.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz": {
+      "title": "Sitemap Proxy",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/handlers/vtex/sitemap.ts"
+          ],
+          "default": "deco-sites/std/handlers/vtex/sitemap.ts"
         }
       }
     },
@@ -10393,7 +10413,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e5f5ea057347af079adef8d8317fbbe2"
         }
       ],
       "required": [
@@ -10997,6 +11017,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvaGFuZGxlcnMvd29ya2Zsb3dSdW5uZXIudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz"
         }
       ]
     },

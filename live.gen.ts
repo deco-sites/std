@@ -52,6 +52,7 @@ import * as $$$13 from "./loaders/vnda/proxy.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
+import * as $$$$$$0 from "./handlers/vtex/sitemap.ts";
 import * as $$$$$$$$0 from "./sections/configYourViews.global.tsx";
 import * as $$$$$$$$1 from "./sections/configButterCMS.global.tsx";
 import * as $$$$$$$$2 from "./sections/SEO.tsx";
@@ -196,6 +197,16 @@ const manifest = {
     "./routes/live/workbench.ts": $live_workbench,
     "./routes/styles.css.ts": $$$$1,
   },
+  "handlers": {
+    "$live/handlers/devPage.ts": i1$$0,
+    "$live/handlers/fresh.ts": i1$$1,
+    "$live/handlers/proxy.ts": i1$$2,
+    "$live/handlers/redirect.ts": i1$$3,
+    "$live/handlers/router.ts": i1$$4,
+    "$live/handlers/routesSelection.ts": i1$$5,
+    "$live/handlers/workflowRunner.ts": i1$$6,
+    "deco-sites/std/handlers/vtex/sitemap.ts": $$$$$$0,
+  },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i1$$$$0,
     "$live/sections/EmptySection.tsx": i1$$$$1,
@@ -234,15 +245,6 @@ const manifest = {
     "deco-sites/std/actions/vtex/notifyme.ts": $$$$$$$$$$$0,
     "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$15,
     "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$14,
-  },
-  "handlers": {
-    "$live/handlers/devPage.ts": i1$$0,
-    "$live/handlers/fresh.ts": i1$$1,
-    "$live/handlers/proxy.ts": i1$$2,
-    "$live/handlers/redirect.ts": i1$$3,
-    "$live/handlers/router.ts": i1$$4,
-    "$live/handlers/routesSelection.ts": i1$$5,
-    "$live/handlers/workflowRunner.ts": i1$$6,
   },
   "pages": {
     "$live/pages/LivePage.tsx": i1$$$0,
