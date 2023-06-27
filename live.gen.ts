@@ -2,7 +2,6 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import config from "./deno.json" assert { type: "json" };
 import { DecoManifest } from "$live/types.ts";
 import * as $0 from "./functions/butterCMSPosts.ts";
 import * as $1 from "./functions/butterCMSPage.ts";
@@ -101,20 +100,24 @@ import * as i1$$4 from "$live/handlers/router.ts";
 import * as i1$$5 from "$live/handlers/routesSelection.ts";
 import * as i1$$6 from "$live/handlers/workflowRunner.ts";
 import * as i1$$$0 from "$live/pages/LivePage.tsx";
-import * as i1$$$$0 from "$live/sections/PageInclude.tsx";
-import * as i1$$$$1 from "$live/sections/Slot.tsx";
-import * as i1$$$$2 from "$live/sections/UseSlot.tsx";
+import * as i1$$$$0 from "$live/sections/Conditional_Beta.tsx";
+import * as i1$$$$1 from "$live/sections/EmptySection.tsx";
+import * as i1$$$$2 from "$live/sections/PageInclude.tsx";
+import * as i1$$$$3 from "$live/sections/Slot.tsx";
+import * as i1$$$$4 from "$live/sections/UseSlot.tsx";
 import * as i1$$$$$0 from "$live/matchers/MatchAlways.ts";
-import * as i1$$$$$1 from "$live/matchers/MatchDate.ts";
-import * as i1$$$$$2 from "$live/matchers/MatchDevice.ts";
-import * as i1$$$$$3 from "$live/matchers/MatchEnvironment.ts";
-import * as i1$$$$$4 from "$live/matchers/MatchHost.ts";
-import * as i1$$$$$5 from "$live/matchers/MatchMulti.ts";
-import * as i1$$$$$6 from "$live/matchers/MatchRandom.ts";
-import * as i1$$$$$7 from "$live/matchers/MatchSite.ts";
-import * as i1$$$$$8 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$$$1 from "$live/matchers/MatchCron.ts";
+import * as i1$$$$$2 from "$live/matchers/MatchDate.ts";
+import * as i1$$$$$3 from "$live/matchers/MatchDevice.ts";
+import * as i1$$$$$4 from "$live/matchers/MatchEnvironment.ts";
+import * as i1$$$$$5 from "$live/matchers/MatchHost.ts";
+import * as i1$$$$$6 from "$live/matchers/MatchMulti.ts";
+import * as i1$$$$$7 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$$$8 from "$live/matchers/MatchSite.ts";
+import * as i1$$$$$9 from "$live/matchers/MatchUserAgent.ts";
 import * as i1$$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$$1 from "$live/flags/everyone.ts";
+import * as i1$$$$$$2 from "$live/flags/flag.ts";
 import * as i1$$$$$$$0 from "$live/actions/workflows/cancel.ts";
 import * as i1$$$$$$$1 from "$live/actions/workflows/run.ts";
 import * as i1$$$$$$$2 from "$live/actions/workflows/signal.ts";
@@ -194,9 +197,11 @@ const manifest = {
     "./routes/styles.css.ts": $$$$1,
   },
   "sections": {
-    "$live/sections/PageInclude.tsx": i1$$$$0,
-    "$live/sections/Slot.tsx": i1$$$$1,
-    "$live/sections/UseSlot.tsx": i1$$$$2,
+    "$live/sections/Conditional_Beta.tsx": i1$$$$0,
+    "$live/sections/EmptySection.tsx": i1$$$$1,
+    "$live/sections/PageInclude.tsx": i1$$$$2,
+    "$live/sections/Slot.tsx": i1$$$$3,
+    "$live/sections/UseSlot.tsx": i1$$$$4,
     "deco-sites/std/sections/Analytics.tsx": $$$$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": $$$$$$$$1,
     "deco-sites/std/sections/configOCC.global.tsx": $$$$$$$$4,
@@ -244,21 +249,22 @@ const manifest = {
   },
   "matchers": {
     "$live/matchers/MatchAlways.ts": i1$$$$$0,
-    "$live/matchers/MatchDate.ts": i1$$$$$1,
-    "$live/matchers/MatchDevice.ts": i1$$$$$2,
-    "$live/matchers/MatchEnvironment.ts": i1$$$$$3,
-    "$live/matchers/MatchHost.ts": i1$$$$$4,
-    "$live/matchers/MatchMulti.ts": i1$$$$$5,
-    "$live/matchers/MatchRandom.ts": i1$$$$$6,
-    "$live/matchers/MatchSite.ts": i1$$$$$7,
-    "$live/matchers/MatchUserAgent.ts": i1$$$$$8,
+    "$live/matchers/MatchCron.ts": i1$$$$$1,
+    "$live/matchers/MatchDate.ts": i1$$$$$2,
+    "$live/matchers/MatchDevice.ts": i1$$$$$3,
+    "$live/matchers/MatchEnvironment.ts": i1$$$$$4,
+    "$live/matchers/MatchHost.ts": i1$$$$$5,
+    "$live/matchers/MatchMulti.ts": i1$$$$$6,
+    "$live/matchers/MatchRandom.ts": i1$$$$$7,
+    "$live/matchers/MatchSite.ts": i1$$$$$8,
+    "$live/matchers/MatchUserAgent.ts": i1$$$$$9,
   },
   "flags": {
     "$live/flags/audience.ts": i1$$$$$$0,
     "$live/flags/everyone.ts": i1$$$$$$1,
+    "$live/flags/flag.ts": i1$$$$$$2,
   },
   "islands": {},
-  "config": config,
   "baseUrl": import.meta.url,
 };
 
