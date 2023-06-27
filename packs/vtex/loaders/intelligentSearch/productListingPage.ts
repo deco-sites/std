@@ -261,6 +261,29 @@ const loader = async (
       { withProxyCache: true, headers: withSegmentCookie(segment) },
     ),
   ]);
+
+  /** Intelligent search API analytics. Fire and forget 🔫 */
+  const fullTextTerm = params.get("query");
+  if (fullTextTerm) {
+    fetchAPI(vtex["event-api"].v1.account.event, {
+      method: "POST",
+      body: JSON.stringify({
+        type: "search.query",
+        text: fullTextTerm,
+        misspelled: productsResult.correction?.misspelled ?? false,
+        match: productsResult.recordsFiltered,
+        operator: productsResult.operator,
+        locale: config?.defaultLocale,
+        agent: "deco-sites/std",
+        anonymous: crypto.randomUUID(),
+        session: crypto.randomUUID(),
+      }),
+      headers: {
+        "content-type": "application/json",
+      },
+    }).catch(console.error);
+  }
+
   const { products: vtexProducts, pagination, recordsFiltered } =
     productsResult;
   const facets = selectPriceFacet(facetsResult.facets, selectedFacets);
