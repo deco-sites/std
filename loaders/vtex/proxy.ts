@@ -2,8 +2,6 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { Route } from "$live/flags/audience.ts";
 
 const PATHS_TO_PROXY = [
-  "/sitemap.xml",
-  "/sitemap/*",
   "/checkout",
   "/checkout/*",
   "/files/*",
@@ -37,16 +35,34 @@ const buildProxyRoutes = ({ publicUrl }: { publicUrl?: string }) => {
     const urlToProxy = `https://${hostname}`;
     const hostToUse = hostname;
 
-    return PATHS_TO_PROXY.map((pathTemplate) => ({
-      pathTemplate,
-      handler: {
-        value: {
-          __resolveType: "$live/handlers/proxy.ts",
-          url: urlToProxy,
-          host: hostToUse,
+    return [
+      {
+        pathTemplate: "/sitemap.xml",
+        handler: {
+          value: {
+            __resolveType: "deco-sites/std/handlers/vtex/sitemap.ts",
+          },
         },
       },
-    }));
+      {
+        pathTemplate: "/sitemap/*",
+        handler: {
+          value: {
+            __resolveType: "deco-sites/std/handlers/vtex/sitemap.ts",
+          },
+        },
+      },
+      ...PATHS_TO_PROXY.map((pathTemplate) => ({
+        pathTemplate,
+        handler: {
+          value: {
+            __resolveType: "$live/handlers/proxy.ts",
+            url: urlToProxy,
+            host: hostToUse,
+          },
+        },
+      })),
+    ];
   } catch (e) {
     console.log("Error parsing publicUrl from configVTEX");
     console.error(e);
