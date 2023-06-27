@@ -26,14 +26,29 @@ export const getOptimizedMediaUrl = (
     height?: number;
     factor: number;
   },
-) =>
-  imageKit.url({
+) => {
+  const w = `${Math.trunc(factor * width)}`;
+  const h = height ? `${Math.trunc(factor * height)}` : undefined;
+
+  if (
+    originalSrc.includes(".vteximg.com.br/arquivos/ids") ||
+    originalSrc.includes(".vtexassets.com/arquivos/ids")
+  ) {
+    const url = new URL(originalSrc);
+
+    const [slash, arquivos, ids, id, ...rest] = url.pathname.split("/");
+    const [realId] = id.split("-");
+    url.pathname = [slash, arquivos, ids, `${realId}-${w}-${h ?? w}`, ...rest]
+      .join("/");
+
+    return url.href;
+  }
+
+  return imageKit.url({
     path: originalSrc,
-    transformation: [{
-      width: `${Math.trunc(factor * width)}`,
-      height: height ? `${Math.trunc(factor * height)}` : undefined,
-    }],
+    transformation: [{ width: w, height: h }],
   });
+};
 
 export const getSrcSet = (src: string, width: number, height?: number) =>
   FACTORS
