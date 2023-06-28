@@ -1,4 +1,4 @@
-import { signal } from "@preact/signals";
+import { state as storeState } from "./context.ts";
 import { Runtime } from "deco-sites/std/runtime.ts";
 import { mapCategoriesToAnalyticsCategories } from "deco-sites/std/commerce/utils/productToAnalyticsItem.ts";
 import type { AnalyticsItem } from "deco-sites/std/commerce/types.ts";
@@ -6,6 +6,8 @@ import type {
   OrderForm,
   OrderFormItem,
 } from "deco-sites/std/packs/vtex/types.ts";
+
+const { cart, loading } = storeState;
 
 const mapItemCategoriesToAnalyticsCategories = (
   item: OrderFormItem,
@@ -40,65 +42,16 @@ const mapOrderFormItemsToAnalyticsItems = (
   }));
 };
 
-const payload = signal<OrderForm | null>(null);
-const loading = signal<boolean>(true);
-
-const wrap = <T>(action: (p: T) => Promise<OrderForm>) => (p: T) =>
-  withPQueue(() =>
-    withCart(() =>
-      withLoading(async () => {
-        payload.value = await action(p);
-      })
-    )
-  );
-
-const loadCart = Runtime.create("deco-sites/std/loaders/vtex/cart.ts");
-const getCart = () =>
-  withPQueue(() =>
-    withLoading(async () => {
-      payload.value = await loadCart();
-    })
-  );
-
-type Middleware = (fn: () => Promise<void>) => Promise<void>;
-
-const withCart: Middleware = async (cb) => {
-  if (payload.value === null) {
-    throw new Error("Missing cart");
-  }
-
-  return await cb();
-};
-
-const withLoading: Middleware = async (cb) => {
-  try {
-    loading.value = true;
-    return await cb();
-  } finally {
-    loading.value = false;
-  }
-};
-
-let queue = Promise.resolve();
-const withPQueue: Middleware = (cb) => {
-  queue = queue.then(cb);
-
-  return queue;
-};
-
-// Start fetching the cart on client-side only
-if (typeof document !== "undefined") {
-  getCart();
-
-  document.addEventListener(
-    "visibilitychange",
-    () => document.visibilityState === "visible" && getCart(),
-  );
-}
+const wrap =
+  <T>(action: (p: T, init?: RequestInit | undefined) => Promise<OrderForm>) =>
+  (p: T) =>
+    storeState.enqueue(async (signal) => ({
+      cart: await action(p, { signal }),
+    }));
 
 const state = {
+  cart,
   loading,
-  cart: payload,
   updateItems: wrap(
     Runtime.create("deco-sites/std/actions/vtex/cart/updateItems.ts"),
   ),
