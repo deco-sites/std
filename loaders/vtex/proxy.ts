@@ -5,6 +5,7 @@ const PATHS_TO_PROXY = [
   "/checkout",
   "/checkout/*",
   "/files/*",
+  "/assets/*",
   "/arquivos/*",
   "/account/*",
   "/login",
@@ -14,7 +15,9 @@ const PATHS_TO_PROXY = [
   "/_secure/account",
 ];
 
-const buildProxyRoutes = ({ publicUrl }: { publicUrl?: string }) => {
+const buildProxyRoutes = (
+  { publicUrl, extraPaths }: { publicUrl?: string; extraPaths: string[] },
+) => {
   if (!publicUrl) {
     return [];
   }
@@ -35,6 +38,20 @@ const buildProxyRoutes = ({ publicUrl }: { publicUrl?: string }) => {
     const urlToProxy = `https://${hostname}`;
     const hostToUse = hostname;
 
+    const routeFromPath = (pathTemplate: string): Route => ({
+      pathTemplate,
+      handler: {
+        value: {
+          __resolveType: "$live/handlers/proxy.ts",
+          url: urlToProxy,
+          host: hostToUse,
+        },
+      },
+    });
+    const routesFromPaths = [...PATHS_TO_PROXY, ...extraPaths].map(
+      routeFromPath,
+    );
+
     return [
       {
         pathTemplate: "/sitemap.xml",
@@ -52,16 +69,7 @@ const buildProxyRoutes = ({ publicUrl }: { publicUrl?: string }) => {
           },
         },
       },
-      ...PATHS_TO_PROXY.map((pathTemplate) => ({
-        pathTemplate,
-        handler: {
-          value: {
-            __resolveType: "$live/handlers/proxy.ts",
-            url: urlToProxy,
-            host: hostToUse,
-          },
-        },
-      })),
+      ...routesFromPaths,
     ];
   } catch (e) {
     console.log("Error parsing publicUrl from configVTEX");
@@ -70,13 +78,20 @@ const buildProxyRoutes = ({ publicUrl }: { publicUrl?: string }) => {
   }
 };
 
+export interface Props {
+  extraPathsToProxy?: string[];
+}
+
 /**
  * @title VTEX Proxy Routes
  */
 export default function VTEXProxy(
-  _props: unknown,
+  { extraPathsToProxy = [] }: Props,
   _req: Request,
   ctx: Context,
 ): Route[] {
-  return buildProxyRoutes({ publicUrl: ctx.configVTEX?.publicUrl });
+  return buildProxyRoutes({
+    publicUrl: ctx.configVTEX?.publicUrl,
+    extraPaths: extraPathsToProxy,
+  });
 }
