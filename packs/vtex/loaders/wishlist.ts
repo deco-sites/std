@@ -29,30 +29,34 @@ const loader = async (
     return [];
   }
 
-  const { data } = await fetchAPI<
-    { data?: { viewList: { name?: string; data: WishlistItem[] } } }
-  >(
-    `${paths(config!).api.io._v.private.graphql.v1}`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        operationName: "GetWithlist",
-        variables: {
-          name: "Wishlist",
-          shopperId: user,
+  try {
+    const { data } = await fetchAPI<
+      { data?: { viewList: { name?: string; data: WishlistItem[] } } }
+    >(
+      `${paths(config!).api.io._v.private.graphql.v1}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          operationName: "GetWithlist",
+          variables: {
+            name: "Wishlist",
+            shopperId: user,
+          },
+          query:
+            `query GetWithlist($shopperId: String!, $name: String!, $from: Int, $to: Int) { viewList(shopperId: $shopperId, name: $name, from: $from, to: $to) @context(provider: "vtex.wish-list@1.x") { name data { id productId sku title } } }`,
+        }),
+        headers: {
+          "content-type": "application/json",
+          accept: "application/json",
+          cookie,
         },
-        query:
-          `query GetWithlist($shopperId: String!, $name: String!, $from: Int, $to: Int) { viewList(shopperId: $shopperId, name: $name, from: $from, to: $to) @context(provider: "vtex.wish-list@1.x") { name data { id productId sku title } } }`,
-      }),
-      headers: {
-        "content-type": "application/json",
-        accept: "application/json",
-        cookie,
       },
-    },
-  );
+    );
 
-  return data?.viewList.data?.slice(count * page, count * (page + 1)) ?? [];
+    return data?.viewList.data?.slice(count * page, count * (page + 1)) ?? [];
+  } catch {
+    return [];
+  }
 };
 
 export default loader;
