@@ -1,29 +1,61 @@
 import { Signal, signal } from "@preact/signals";
-import type { VNDACart } from "../types.ts";
-import { fetchAPI } from "../../../utils/fetch.ts";
+import type {
+  VNDACart,
+  VNDACoupon,
+  VNDARelatedItem,
+  VNDAShipping,
+} from "../types.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 const cart = signal<VNDACart | null>(null);
-const loading = signal<boolean>(false);
+const cartRelatedItems = signal<VNDARelatedItem[]>([]);
+const shipping = signal<VNDAShipping | null>(null);
+const coupon = signal<VNDACoupon | string | null>(null);
 
-type UseVNDACartHook = {
-  loading: Signal<boolean>;
+const loading = signal<boolean>(false);
+const shippingLoading = signal<boolean>(false);
+const couponLoading = signal<boolean>(false);
+
+export type UseVNDACartHook = {
   cart: Signal<VNDACart | null>;
+  cartRelatedItems: Signal<VNDARelatedItem[]>;
+  shipping: Signal<VNDAShipping | null>;
+  coupon: Signal<VNDACoupon | string | null>;
+  loading: Signal<boolean>;
+  shippingLoading: Signal<boolean>;
+  couponLoading: Signal<boolean>;
+  getCartQuantity(): number;
   fetchAndSetCart(): Promise<void>;
+  fetchAndSetRelatedItems(): Promise<void>;
   addItemToCart(
-    params: { itemId: string; sellerId?: string; quantity: number },
+    params: {
+      itemId: string;
+      quantity: number;
+      attributes: Record<string, string>;
+      sellerId?: string;
+    },
   ): Promise<void>;
   addCouponToCart(params: { text: string }): Promise<void>;
   updateItemQuantity(
     params: { itemId: number; quantity: number },
   ): Promise<void>;
+  addShippingAddress(
+    params: { zip: string },
+  ): Promise<void>;
 };
 
 const addItemToCart: UseVNDACartHook["addItemToCart"] = async (
-  { itemId, quantity },
+  { itemId, quantity, attributes },
 ) => {
   const fd = new FormData();
   fd.set("sku", itemId);
   fd.set("quantity", `${quantity}`);
+
+  Object.entries(attributes).forEach(
+    ([name, value]) => {
+      fd.set(`attribute-${name}`, value);
+    },
+  );
 
   const vndaCart = await fetchAPI<VNDACart>(`/carrinho/adicionar`, {
     method: "POST",
@@ -31,16 +63,21 @@ const addItemToCart: UseVNDACartHook["addItemToCart"] = async (
   });
 
   cart.value = vndaCart;
+  fetchAndSetRelatedItems();
 };
 
 const addCouponToCart: UseVNDACartHook["addCouponToCart"] = async (
   { text },
 ) => {
-  // TODO: Check returned type after we have a valid coupon
   const fd = new FormData();
   fd.set("code", text);
 
-  await fetchAPI(`/cupom/ajax`, { method: "POST", body: fd });
+  const vndaCoupon = await fetchAPI<VNDACoupon>(`/cupom/ajax`, {
+    method: "POST",
+    body: fd,
+  });
+
+  coupon.value = vndaCoupon;
 };
 
 const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
@@ -65,13 +102,50 @@ const updateItemQuantity: UseVNDACartHook["updateItemQuantity"] = async (
   }
 };
 
-const fetchAndSetCart = async () => {
-  const vndaCart = await fetchAPI<VNDACart>(`/carrinho`);
+const addShippingAddress: UseVNDACartHook["addShippingAddress"] = async (
+  { zip },
+) => {
+  const fd = new FormData();
+  fd.set("zip", zip);
 
-  cart.value = vndaCart;
+  try {
+    const vndaShipping = await fetchAPI<VNDAShipping>("/cep", {
+      method: "POST",
+      body: fd,
+    });
+
+    shipping.value = vndaShipping;
+  } catch (_e) {
+    shipping.value = null;
+  }
 };
 
-type Middleware = (fn: () => Promise<void>) => Promise<void>;
+const fetchAndSetCart = async () => {
+  const vndaCart = await fetchAPI<VNDACart>("/carrinho");
+  cart.value = vndaCart;
+  fetchAndSetRelatedItems();
+};
+
+const fetchAndSetRelatedItems = async () => {
+  const vndaRelatedItems = await fetchAPI<VNDARelatedItem[]>(
+    "/carrinho/produtos-sugeridos/relacionados-carrinho",
+    {
+      referrerPolicy: "no-referrer",
+    },
+  );
+  cartRelatedItems.value = vndaRelatedItems;
+};
+
+const getCartQuantity: UseVNDACartHook["getCartQuantity"] = () => {
+  if (!cart.value) return 0;
+
+  return cart.value.items_count;
+};
+
+type Middleware = (
+  fn: () => Promise<void>,
+  opts?: { loadingSignal: Signal<boolean> },
+) => Promise<void>;
 
 /**
  * Usually we add a withCart middleware here, but it wouldn't work
@@ -79,12 +153,15 @@ type Middleware = (fn: () => Promise<void>) => Promise<void>;
  * adding items.
  */
 
-const withLoading: Middleware = async (cb) => {
+const withLoading: Middleware = async (
+  cb,
+  opts = { loadingSignal: loading },
+) => {
   try {
-    loading.value = true;
+    opts.loadingSignal.value = true;
     return await cb();
   } finally {
-    loading.value = false;
+    opts.loadingSignal.value = false;
   }
 };
 
@@ -109,15 +186,33 @@ if (typeof document !== "undefined") {
 }
 
 const state: UseVNDACartHook = {
-  loading,
   cart,
+  shipping,
+  cartRelatedItems,
+  coupon,
+  loading,
+  shippingLoading,
+  couponLoading,
+  getCartQuantity: () => getCartQuantity(),
   fetchAndSetCart: () => withPQueue(() => withLoading(() => fetchAndSetCart())),
   addItemToCart: (opts) =>
     withPQueue(() => withLoading(() => addItemToCart(opts))),
   addCouponToCart: (opts) =>
-    withPQueue(() => withLoading(() => addCouponToCart(opts))),
+    withPQueue(() =>
+      withLoading(() => addCouponToCart(opts), {
+        loadingSignal: couponLoading,
+      })
+    ),
   updateItemQuantity: (opts) =>
     withPQueue(() => withLoading(() => updateItemQuantity(opts))),
+  addShippingAddress: (opts) =>
+    withPQueue(() =>
+      withLoading(() => addShippingAddress(opts), {
+        loadingSignal: shippingLoading,
+      })
+    ),
+  // This doesn't need `withLoading`, because it's a non-blocking element
+  fetchAndSetRelatedItems: () => withPQueue(() => fetchAndSetRelatedItems()),
 };
 
 export const useVNDACart = () => state;
