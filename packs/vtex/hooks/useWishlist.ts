@@ -1,21 +1,19 @@
-import { signal } from "@preact/signals";
+import { state as storeState } from "./context.ts";
 import { Runtime } from "deco-sites/std/runtime.ts";
 import { WishlistItem } from "deco-sites/std/packs/vtex/types.ts";
 
-const payload = signal<WishlistItem[] | null>(null);
-const loading = signal<boolean>(true);
+const { wishlist, loading } = storeState;
 
-const wrap = <T>(fn: (props?: T) => Promise<WishlistItem[] | null>) =>
-async (
-  props?: T,
-) => {
-  try {
-    loading.value = true;
-    payload.value = await fn(props);
-  } finally {
-    loading.value = false;
-  }
-};
+const wrap = <T>(
+  action: (
+    props?: T,
+    init?: RequestInit | undefined,
+  ) => Promise<WishlistItem[] | null>,
+) =>
+(props?: T) =>
+  storeState.enqueue(async (signal) => ({
+    wishlist: await action(props, { signal }),
+  }));
 
 const addItem = wrap(
   Runtime.create("deco-sites/std/actions/vtex/wishlist/addItem.ts"),
@@ -23,21 +21,12 @@ const addItem = wrap(
 const removeItem = wrap(
   Runtime.create("deco-sites/std/actions/vtex/wishlist/removeItem.ts"),
 );
-const refresh = wrap(
-  Runtime.create("deco-sites/std/loaders/vtex/wishlist.ts"),
-);
-
-// Start fetching the cart on client-side only
-if (typeof document !== "undefined") {
-  refresh();
-}
 
 const getItem = (item: Partial<WishlistItem>) =>
-  payload.value &&
-  payload.value.find((id) => id.productId == item.productId);
+  wishlist.value?.find((id) => id.productId == item.productId);
 
 const state = {
-  wishlist: payload,
+  wishlist,
   loading,
   addItem,
   getItem,
