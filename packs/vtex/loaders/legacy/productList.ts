@@ -104,8 +104,6 @@ const fromProps = (
     params.set("_from", "0");
     params.set("_to", `${Math.max(count - 1, 0)}`);
 
-    console.log(params);
-
     return params;
   }
 
