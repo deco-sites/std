@@ -38,6 +38,7 @@ export const getOptimizedMediaUrl = (
 
     const [slash, arquivos, ids, id, ...rest] = url.pathname.split("/");
     const [realId] = id.split("-");
+    url.protocol = "https:";
     url.pathname = [slash, arquivos, ids, `${realId}-${w}-${h ?? w}`, ...rest]
       .join("/");
 
