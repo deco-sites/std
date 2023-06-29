@@ -10,9 +10,9 @@ export interface Props {
    * @default %s | Deco.cx
    */
   titleTemplate?: string;
-  /** @title Page title override */
+  /** @title Page Title override */
   title?: string;
-  /** @title Meta tag description override */
+  /** @title Metatag description override */
   description?: string;
 }
 

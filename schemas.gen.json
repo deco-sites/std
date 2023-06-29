@@ -39,6 +39,7 @@
               "deco-sites/std/functions/vtexProductListingPage.ts",
               "deco-sites/std/functions/vtexSuggestions.ts",
               "deco-sites/std/functions/vtexWishlist.ts",
+              "deco-sites/std/accounts/nuvemShop.ts",
               "deco-sites/std/accounts/occ.ts",
               "deco-sites/std/accounts/shopify.ts",
               "deco-sites/std/accounts/vnda.ts",
@@ -47,6 +48,9 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
+              "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
+              "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
+              "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts",
               "deco-sites/std/loaders/vnda/proxy.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts",
@@ -77,6 +81,7 @@
               "$live/sections/UseSlot.tsx",
               "deco-sites/std/sections/Analytics.tsx",
               "deco-sites/std/sections/configButterCMS.global.tsx",
+              "deco-sites/std/sections/configNuvemShop.tsx",
               "deco-sites/std/sections/configOCC.global.tsx",
               "deco-sites/std/sections/configShopify.global.tsx",
               "deco-sites/std/sections/configVTEX.global.tsx",
@@ -1743,6 +1748,27 @@
           }
         },
         {
+          "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts"
+              ],
+              "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts"
+            }
+          }
+        },
+        {
           "title": "VTEX product details page - Intelligent Search",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
@@ -1964,6 +1990,27 @@
                 "deco-sites/std/functions/vtexProductList.ts"
               ],
               "default": "deco-sites/std/functions/vtexProductList.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts"
+              ],
+              "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts"
             }
           }
         },
@@ -2449,6 +2496,28 @@
                 "deco-sites/std/functions/vtexWishlist.ts"
               ],
               "default": "deco-sites/std/functions/vtexWishlist.ts"
+            }
+          }
+        },
+        {
+          "title": "NuvemShop - Product Listing page",
+          "description": "Useful for category, search, brand and collection pages.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts"
+              ],
+              "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts"
             }
           }
         },
@@ -3323,6 +3392,32 @@
       ],
       "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop": {
+      "type": "object",
+      "properties": {
+        "userAgent": {
+          "type": "string",
+          "description": "Header to define our app. For example, https://tiendanube.github.io/api-documentation/intro#authentication.",
+          "title": "User Agent"
+        },
+        "accessToken": {
+          "type": "string",
+          "description": "The token generated from admin panel. Read here: https://tiendanube.github.io/api-documentation/authentication.",
+          "title": "Access Token"
+        },
+        "storeId": {
+          "type": "string",
+          "description": "The id of the store in nuvemshop. Check: https://tiendanube.github.io/api-documentation/intro#languages-and-internationalization",
+          "title": "Store Id"
+        }
+      },
+      "required": [
+        "userAgent",
+        "accessToken",
+        "storeId"
+      ],
+      "title": "deco-sites/std/commerce/nuvemShop/types.ts@ConfigNuvemShop"
+    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
       "type": "object",
       "properties": {},
@@ -3831,6 +3926,124 @@
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcXVlc3RUb1BhcmFtLnRz@RequestURLParam",
+          "title": "Slug"
+        }
+      },
+      "required": [
+        "slug"
+      ],
+      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "query to use on search. if used will break sort",
+          "title": "Term"
+        },
+        "limit": {
+          "type": "number",
+          "description": "total number of items to display",
+          "title": "Limit"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "user",
+              "default": "user"
+            },
+            {
+              "type": "string",
+              "const": "price-ascending",
+              "default": "price-ascending"
+            },
+            {
+              "type": "string",
+              "const": "price-descending",
+              "default": "price-descending"
+            },
+            {
+              "type": "string",
+              "const": "alpha-ascending",
+              "default": "alpha-ascending"
+            },
+            {
+              "type": "string",
+              "const": "alpha-descending",
+              "default": "alpha-descending"
+            },
+            {
+              "type": "string",
+              "const": "created-at-ascending",
+              "default": "created-at-ascending"
+            },
+            {
+              "type": "string",
+              "const": "created-at-descending",
+              "default": "created-at-descending"
+            },
+            {
+              "type": "string",
+              "const": "best-selling",
+              "default": "best-selling"
+            }
+          ],
+          "type": "string",
+          "description": "search sort parameter",
+          "title": "Sort"
+        }
+      },
+      "required": [
+        "limit"
+      ],
+      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "term": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "overides the query term",
+          "title": "Term"
+        },
+        "limit": {
+          "type": "number",
+          "title": "Items per page",
+          "description": "number of products per page to display"
+        },
+        "minPrice": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Min Price"
+        },
+        "maxPrice": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Max Price"
+        }
+      },
+      "required": [
+        "limit"
+      ],
+      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
+    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
@@ -3868,7 +4081,7 @@
         "pathTemplate",
         "handler"
       ],
-      "title": "Route",
+      "title": "Site Route",
       "titleBy": "pathTemplate"
     },
     "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
@@ -7730,14 +7943,14 @@
             "string",
             "null"
           ],
-          "title": "Page title override"
+          "title": "Page Title override"
         },
         "description": {
           "type": [
             "string",
             "null"
           ],
-          "title": "Meta tag description override"
+          "title": "Metatag description override"
         }
       },
       "required": [
@@ -9179,6 +9392,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz": {
+      "title": "deco-sites/std/accounts/nuvemShop.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/accounts/nuvemShop.ts"
+          ],
+          "default": "deco-sites/std/accounts/nuvemShop.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvb2NjLnRz": {
       "title": "deco-sites/std/accounts/occ.ts",
       "type": "object",
@@ -9347,6 +9581,70 @@
             "$live/loaders/workflows/get.ts"
           ],
           "default": "$live/loaders/workflows/get.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz": {
+      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts"
+          ],
+          "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM=": {
+      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts"
+          ],
+          "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz": {
+      "title": "NuvemShop - Product Listing page",
+      "description": "Useful for category, search, brand and collection pages.",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts"
+          ],
+          "default": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts"
         }
       }
     },
@@ -9969,6 +10267,27 @@
             "deco-sites/std/sections/configButterCMS.global.tsx"
           ],
           "default": "deco-sites/std/sections/configButterCMS.global.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTnV2ZW1TaG9wLnRzeA==": {
+      "title": "deco-sites/std/sections/configNuvemShop.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/sections/configNuvemShop.tsx"
+          ],
+          "default": "deco-sites/std/sections/configNuvemShop.tsx"
         }
       }
     },
@@ -10935,6 +11254,9 @@
           "$ref": "#/definitions/Resolvable"
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz"
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvb2NjLnRz"
         },
         {
@@ -10965,6 +11287,15 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz"
@@ -11087,6 +11418,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnQnV0dGVyQ01TLmdsb2JhbC50c3g="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTnV2ZW1TaG9wLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnT0NDLmdsb2JhbC50c3g="
