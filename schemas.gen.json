@@ -3392,7 +3392,7 @@
       ],
       "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop": {
+    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@Account": {
       "type": "object",
       "properties": {
         "userAgent": {
@@ -3416,7 +3416,7 @@
         "accessToken",
         "storeId"
       ],
-      "title": "deco-sites/std/commerce/nuvemShop/types.ts@ConfigNuvemShop"
+      "title": "deco-sites/std/commerce/nuvemShop/types.ts@Account"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
       "type": "object",
@@ -4023,20 +4023,6 @@
           "type": "number",
           "title": "Items per page",
           "description": "number of products per page to display"
-        },
-        "minPrice": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Min Price"
-        },
-        "maxPrice": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Max Price"
         }
       },
       "required": [
@@ -9397,7 +9383,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@Account"
         }
       ],
       "required": [
@@ -10275,7 +10261,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@ConfigNuvemShop"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@Account"
         }
       ],
       "required": [
