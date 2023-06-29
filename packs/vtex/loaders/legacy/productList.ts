@@ -40,8 +40,8 @@ export interface TermProps {
   /** @description total number of items to display */
   count: number;
 
-  /**@description query, didn't use with sort, collection or term props*/
-  query?: string;
+  /** @description fq's */
+  fq?: string[];
 }
 
 export interface ProductIDProps {
@@ -67,6 +67,10 @@ const fromProps = (
   props: Props,
   params = new URLSearchParams(),
 ): URLSearchParams => {
+  if (props.sort) {
+    params.set("O", encodeURI(props.sort));
+  }
+
   if (isProductIDProps(props)) {
     props.ids.forEach((skuId) => params.append("fq", `skuId:${skuId}`));
     params.set("_from", "0");
@@ -85,20 +89,9 @@ const fromProps = (
     return params;
   }
 
-  if (props.query) {
-    const splitted = props.query.split("&");
-    splitted.forEach((param) => {
-      if (param.includes("fq=")) {
-        params.append("fq", encodeURI(param.split("=")[1]));
-      }
-
-      if (param.includes("ft=")) {
-        params.append("ft", encodeURI(param.split("=")[1]));
-      }
-
-      if (param.includes("O=")) {
-        params.append("O", encodeURI(param.split("=")[1]));
-      }
+  if (props.fq) {
+    props.fq.forEach((FQ) => {
+      params.append("fq", encodeURI(FQ));
     });
 
     params.set("_from", "0");
