@@ -18,6 +18,7 @@ export interface Props {
   sort?: NuvemShopSort;
 }
 
+/** @title NuvemShop - Search Products */
 const loader = async (
   props: Props,
   req: Request,

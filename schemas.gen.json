@@ -1994,7 +1994,7 @@
           }
         },
         {
-          "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
+          "title": "NuvemShop - Search Products",
           "type": "object",
           "allOf": [
             {
@@ -9592,7 +9592,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3QudHM=": {
-      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
+      "title": "NuvemShop - Search Products",
       "type": "object",
       "allOf": [
         {

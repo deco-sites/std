@@ -11,6 +11,7 @@ export interface Props {
   slug: RequestURLParam;
 }
 
+/** @title NuvemShop - PDP */
 const loader = async (
   props: Props,
   req: Request,
