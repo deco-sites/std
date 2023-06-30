@@ -1,4 +1,7 @@
-export interface Account {
+import type { FnContext } from "$live/types.ts";
+import type { Account as AccountBlock } from "$live/blocks/account.ts";
+
+export interface Account extends AccountBlock {
   /**
    * @description LinxImpulse apiKey. For more info, read here: https://docs.linximpulse.com/v2-search-api/reference/introdu%C3%A7%C3%A3o#via-backend
    */
@@ -7,8 +10,12 @@ export interface Account {
   /**
    * @description LinxImpulse secretKey.
    */
-  secretKey: string;
+  secretKey?: string;
 }
+
+export type Context = FnContext<{
+  configLinxImpulse?: Account;
+}>;
 
 function account(acc: Account) {
   return acc;

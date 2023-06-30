@@ -37,9 +37,11 @@ type DiscreteValue = {
   applyLink: string;
 };
 
-type Pagination = {
+export type Pagination = {
   first: string;
   last: string;
+  next: string;
+  previous: string;
 };
 
 type Category = {
@@ -55,6 +57,7 @@ type Image = {
 
 type Sku = {
   sku: string;
+  // deno-lint-ignore no-explicit-any
   specs: Record<string, any>;
   properties: {
     status: string;
@@ -63,6 +66,7 @@ type Sku = {
     url: string;
     images: Image;
   };
+  // deno-lint-ignore no-explicit-any
   customBusiness: Record<string, any>;
 };
 
@@ -79,22 +83,26 @@ type CustomBusiness = {
   };
 };
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   price: number;
   oldPrice: number;
   url: string;
   images: Image;
+  // deno-lint-ignore no-explicit-any
   installment: any[];
   status: string;
   clickUrl: string;
   categories: Category[];
+  // deno-lint-ignore no-explicit-any
   tags: any[];
+  // deno-lint-ignore no-explicit-any
   specs: Record<string, any>;
   created: string;
   brand: string;
   collectInfo: {
+    // deno-lint-ignore no-explicit-any
     skuList: any[];
     productId: string;
   };
