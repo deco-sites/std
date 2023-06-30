@@ -136,12 +136,6 @@ const fetchAndSetRelatedItems = async () => {
   cartRelatedItems.value = vndaRelatedItems;
 };
 
-const getCartQuantity: UseVNDACartHook["getCartQuantity"] = () => {
-  if (!cart.value) return 0;
-
-  return cart.value.items_count;
-};
-
 type Middleware = (
   fn: () => Promise<void>,
   opts?: { loadingSignal: Signal<boolean> },
@@ -193,7 +187,6 @@ const state: UseVNDACartHook = {
   loading,
   shippingLoading,
   couponLoading,
-  getCartQuantity: () => getCartQuantity(),
   fetchAndSetCart: () => withPQueue(() => withLoading(() => fetchAndSetCart())),
   addItemToCart: (opts) =>
     withPQueue(() => withLoading(() => addItemToCart(opts))),
