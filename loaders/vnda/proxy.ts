@@ -4,6 +4,7 @@ import { Route } from "$live/flags/audience.ts";
 const PATHS_TO_PROXY = [
   "/carrinho",
   "/carrinho/*",
+  "/cep",
   "/cep/*",
   "/checkout/*",
   "/components/*",
