@@ -39,6 +39,7 @@
               "deco-sites/std/functions/vtexProductListingPage.ts",
               "deco-sites/std/functions/vtexSuggestions.ts",
               "deco-sites/std/functions/vtexWishlist.ts",
+              "deco-sites/std/accounts/linxImpulse.ts",
               "deco-sites/std/accounts/nuvemShop.ts",
               "deco-sites/std/accounts/occ.ts",
               "deco-sites/std/accounts/shopify.ts",
@@ -48,6 +49,8 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
+              "deco-sites/std/loaders/linximpulse/pages/recommendations.ts",
+              "deco-sites/std/loaders/linximpulse/search/search.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts",
@@ -1748,7 +1751,7 @@
           }
         },
         {
-          "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
+          "title": "NuvemShop - PDP",
           "type": "object",
           "allOf": [
             {
@@ -1769,7 +1772,7 @@
           }
         },
         {
-          "title": "VTEX product details page - Intelligent Search",
+          "title": "VTEX Intelligent Search - Product Details Page",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1791,7 +1794,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Product Details page",
+          "title": "VTEX Catalog - Product Details Page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2015,7 +2018,7 @@
           }
         },
         {
-          "title": "VTEX product list - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Products",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -2037,7 +2040,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Search Products",
+          "title": "VTEX Catalog - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2059,7 +2062,7 @@
           }
         },
         {
-          "title": "VTEX related products - Portal",
+          "title": "VTEX Related Products - Catalog",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2544,7 +2547,7 @@
           }
         },
         {
-          "title": "VTEX product listing page - Portal",
+          "title": "VTEX Catalog - Product Listing Page",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3332,7 +3335,7 @@
           }
         },
         {
-          "title": "VTEX search suggestions - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
             {
@@ -3392,6 +3395,39 @@
       ],
       "title": "deco-sites/std/functions/vtexWishlist.ts@Props"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Account"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvYWNjb3VudHMvbGlueGltcHVsc2UudHM=@Account": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+        }
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "description": "LinxImpulse apiKey. For more info, read here: https://docs.linximpulse.com/v2-search-api/reference/introdu%C3%A7%C3%A3o#via-backend",
+          "title": "Api Key"
+        },
+        "secretKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "LinxImpulse secretKey.",
+          "title": "Secret Key"
+        }
+      },
+      "required": [
+        "apiKey"
+      ],
+      "title": "deco-sites/std/packs/linximpulse/accounts/linximpulse.ts@Account"
+    },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@Account": {
       "type": "object",
       "properties": {
@@ -3417,12 +3453,6 @@
         "storeId"
       ],
       "title": "deco-sites/std/commerce/nuvemShop/types.ts@Account"
-    },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account": {
-      "type": "object",
-      "properties": {},
-      "required": [],
-      "title": "Account"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2Uvb2NjL2NsaWVudC50cw==@ConfigOCC": {
       "type": "object",
@@ -3925,6 +3955,434 @@
         "id"
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvdHlwZXMudHM=@Product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "oldPrice": {
+          "type": "number",
+          "title": "Old Price"
+        },
+        "url": {
+          "type": "string",
+          "title": "Url"
+        },
+        "images": {
+          "title": "Images"
+        },
+        "installment": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Installment"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status"
+        },
+        "clickUrl": {
+          "type": "string",
+          "title": "Click Url"
+        },
+        "categories": {
+          "type": "array",
+          "items": {},
+          "title": "Categories"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Tags"
+        },
+        "specs": {
+          "title": "Specs",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        },
+        "created": {
+          "type": "string",
+          "title": "Created"
+        },
+        "brand": {
+          "type": "string",
+          "title": "Brand"
+        },
+        "collectInfo": {
+          "type": "object",
+          "properties": {
+            "skuList": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "title": "Sku List"
+            },
+            "productId": {
+              "type": "string",
+              "title": "Product Id"
+            }
+          },
+          "required": [
+            "skuList",
+            "productId"
+          ],
+          "title": "Collect Info"
+        },
+        "cId": {
+          "type": "string",
+          "title": "C Id"
+        },
+        "iId": {
+          "type": "number",
+          "title": "I Id"
+        },
+        "skus": {
+          "type": "array",
+          "items": {},
+          "title": "Skus"
+        },
+        "details": {
+          "type": "object",
+          "properties": {
+            "categoryName": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Category Name"
+            }
+          },
+          "required": [
+            "categoryName"
+          ],
+          "title": "Details"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "customBusiness": {
+          "title": "Custom Business"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "price",
+        "oldPrice",
+        "url",
+        "images",
+        "installment",
+        "status",
+        "clickUrl",
+        "categories",
+        "tags",
+        "specs",
+        "created",
+        "brand",
+        "collectInfo",
+        "cId",
+        "iId",
+        "skus",
+        "details",
+        "description",
+        "customBusiness"
+      ],
+      "title": "Product"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvdHlwZXMudHM=@Product[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvdHlwZXMudHM=@Product"
+      },
+      "title": "Product[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvdHlwZXMudHM=@Product[]|null": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvdHlwZXMudHM=@Product[]"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "title": "deco-sites/std/loaders/linximpulse/pages/recommendations.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linximpulse/pages/recommendations.ts"
+              ],
+              "default": "deco-sites/std/loaders/linximpulse/pages/recommendations.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/loaders/linximpulse/search/search.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9zZWFyY2gvc2VhcmNoLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linximpulse/search/search.ts"
+              ],
+              "default": "deco-sites/std/loaders/linximpulse/search/search.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "top",
+              "default": "top"
+            },
+            {
+              "type": "string",
+              "const": "middle",
+              "default": "middle"
+            },
+            {
+              "type": "string",
+              "const": "bottom",
+              "default": "bottom"
+            }
+          ],
+          "type": "string",
+          "title": "Position"
+        },
+        "feature": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "MostPopular",
+              "default": "MostPopular"
+            },
+            {
+              "type": "string",
+              "const": "Offers",
+              "default": "Offers"
+            },
+            {
+              "type": "string",
+              "const": "New4You",
+              "default": "New4You"
+            },
+            {
+              "type": "string",
+              "const": "Push",
+              "default": "Push"
+            },
+            {
+              "type": "string",
+              "const": "HistoryPersonalized",
+              "default": "HistoryPersonalized"
+            },
+            {
+              "type": "string",
+              "const": "SimilarItems",
+              "default": "SimilarItems"
+            }
+          ],
+          "type": "string",
+          "title": "Feature",
+          "description": "The feature \"SimilarItems\" is only available on product page."
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "home",
+              "default": "home"
+            },
+            {
+              "type": "string",
+              "const": "product",
+              "default": "product"
+            },
+            {
+              "type": "string",
+              "const": "category",
+              "default": "category"
+            },
+            {
+              "type": "string",
+              "const": "subcategory",
+              "default": "subcategory"
+            },
+            {
+              "type": "string",
+              "const": "not_found",
+              "default": "not_found"
+            },
+            {
+              "type": "string",
+              "const": "search",
+              "default": "search"
+            },
+            {
+              "type": "string",
+              "const": "landing_page",
+              "default": "landing_page"
+            },
+            {
+              "type": "string",
+              "const": "other",
+              "default": "other"
+            }
+          ],
+          "type": "string",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "position",
+        "feature",
+        "page"
+      ],
+      "title": "deco-sites/std/packs/linximpulse/loaders/pages/recommendations.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9zZWFyY2gvc2VhcmNoLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "terms": {
+          "type": "string",
+          "description": "overides the query term",
+          "title": "Terms"
+        },
+        "pids": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Product Ids"
+        },
+        "page": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Pagination number"
+        },
+        "resultsPerPage": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Items per page",
+          "description": "number of products per page to display"
+        },
+        "sortBy": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "relevance",
+              "default": "relevance"
+            },
+            {
+              "type": "string",
+              "const": "pid",
+              "default": "pid"
+            },
+            {
+              "type": "string",
+              "const": "ascPrice",
+              "default": "ascPrice"
+            },
+            {
+              "type": "string",
+              "const": "descPrice",
+              "default": "descPrice"
+            },
+            {
+              "type": "string",
+              "const": "descDate",
+              "default": "descDate"
+            },
+            {
+              "type": "string",
+              "const": "ascSold",
+              "default": "ascSold"
+            },
+            {
+              "type": "string",
+              "const": "descSold",
+              "default": "descSold"
+            },
+            {
+              "type": "string",
+              "const": "ascReview",
+              "default": "ascReview"
+            },
+            {
+              "type": "string",
+              "const": "descReview",
+              "default": "descReview"
+            },
+            {
+              "type": "string",
+              "const": "descDiscount",
+              "default": "descDiscount"
+            }
+          ],
+          "type": "string",
+          "title": "Sorting"
+        },
+        "showOnlyAvailable": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Hide Unavailable Items",
+          "description": "Do not return out of stock items"
+        }
+      },
+      "required": [
+        "terms"
+      ],
+      "title": "deco-sites/std/packs/linximpulse/loaders/search/search.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props": {
       "type": "object",
@@ -8243,7 +8701,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&d53c654012b1a9c30560229e428269fa": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e2d6f464cb69f6b6e7272997a795ae7a": {
       "allOf": [
         {
           "type": "object",
@@ -8261,9 +8719,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "Metadata&d53c654012b1a9c30560229e428269fa"
+      "title": "Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a": {
       "type": "object",
       "properties": {
         "results": {
@@ -8274,7 +8732,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&d53c654012b1a9c30560229e428269fa",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e2d6f464cb69f6b6e7272997a795ae7a",
           "title": "Metadata"
         }
       },
@@ -8283,7 +8741,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -9378,6 +9836,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbGlueEltcHVsc2UudHM=": {
+      "title": "deco-sites/std/accounts/linxImpulse.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvYWNjb3VudHMvbGlueGltcHVsc2UudHM=@Account"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/accounts/linxImpulse.ts"
+          ],
+          "default": "deco-sites/std/accounts/linxImpulse.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz": {
       "title": "deco-sites/std/accounts/nuvemShop.ts",
       "type": "object",
@@ -9570,8 +10049,50 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54aW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=": {
+      "title": "deco-sites/std/loaders/linximpulse/pages/recommendations.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linximpulse/pages/recommendations.ts"
+          ],
+          "default": "deco-sites/std/loaders/linximpulse/pages/recommendations.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54aW1wdWxzZS9zZWFyY2gvc2VhcmNoLnRz": {
+      "title": "deco-sites/std/loaders/linximpulse/search/search.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueGltcHVsc2UvbG9hZGVycy9zZWFyY2gvc2VhcmNoLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linximpulse/search/search.ts"
+          ],
+          "default": "deco-sites/std/loaders/linximpulse/search/search.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz": {
-      "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
+      "title": "NuvemShop - PDP",
       "type": "object",
       "allOf": [
         {
@@ -9673,7 +10194,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX product details page - Intelligent Search",
+      "title": "VTEX Intelligent Search - Product Details Page",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9695,7 +10216,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX product list - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Products",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -9739,7 +10260,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX search suggestions - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Suggestions",
       "type": "object",
       "allOf": [
         {
@@ -9760,7 +10281,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Legacy - Product Details page",
+      "title": "VTEX Catalog - Product Details Page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9782,7 +10303,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Legacy - Search Products",
+      "title": "VTEX Catalog - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -9804,7 +10325,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX product listing page - Portal",
+      "title": "VTEX Catalog - Product Listing Page",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -9826,7 +10347,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX related products - Portal",
+      "title": "VTEX Related Products - Catalog",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -10745,7 +11266,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
         }
       ],
       "required": [
@@ -11240,6 +11761,9 @@
           "$ref": "#/definitions/Resolvable"
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbGlueEltcHVsc2UudHM="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz"
         },
         {
@@ -11273,6 +11797,12 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54aW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54aW1wdWxzZS9zZWFyY2gvc2VhcmNoLnRz"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz"
