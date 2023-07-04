@@ -1,7 +1,8 @@
-import Metatags from "./Metatags.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
 import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
+import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
+import Metatags from "./Metatags.tsx";
 
 export interface Props {
   /**
@@ -14,6 +15,8 @@ export interface Props {
   title?: string;
   /** @title Meta tag description override */
   description?: string;
+  /** @description Recommended: 16 x 16 px */
+  favicon?: LiveImage;
   page: LoaderReturnType<ProductDetailsPage | null>;
   structuredData?: {
     useDataFromSEO?: boolean;
