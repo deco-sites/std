@@ -41,6 +41,13 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
 export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
 
+/**
+ * VTEX Intelligent Search doesn't support pagination above 50 pages.
+ *
+ * We're now showing results for the last page so the page doesn't crash
+ */
+const VTEX_MAX_PAGES = 50;
+
 const sortOptions = [
   { value: "", label: "relevance:desc" },
   { value: "price:desc", label: "price:desc" },
@@ -135,9 +142,12 @@ const searchArgsOf = (props: Props, url: URL) => {
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const currentPageoffset = props.pageOffset ?? 1;
-  const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (currentPageoffset)
-    : 0;
+  const page = Math.min(
+    url.searchParams.get("page")
+      ? Number(url.searchParams.get("page")) - (currentPageoffset)
+      : 0,
+    VTEX_MAX_PAGES - currentPageoffset,
+  );
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
     sortOptions[0].value;
