@@ -68,6 +68,36 @@ type Sku = {
   };
   // deno-lint-ignore no-explicit-any
   customBusiness: Record<string, any>;
+
+  details: {
+    measurement: {
+      multiplier: number;
+      unit: string;
+    };
+    referenceId: string;
+    skuSellers: {
+      sku: string;
+      sellerId: string;
+      sellerName: string;
+      sellerDefault: boolean;
+    };
+    ratingCount: number;
+    ratingValue: number;
+  };
+  eanCode: string;
+  images: {
+    [key: string]: string;
+  };
+  installment: {
+    count: number;
+    price: number;
+  };
+  name: string;
+  oldPrice: number;
+  price: number;
+  status: string;
+  stock: number;
+  url: string;
 };
 
 type CustomBusiness = {
@@ -90,8 +120,10 @@ export type Product = {
   oldPrice: number;
   url: string;
   images: Image;
-  // deno-lint-ignore no-explicit-any
-  installment: any[];
+  installment: {
+    count: number;
+    price: number;
+  };
   status: string;
   clickUrl: string;
   categories: Category[];
@@ -110,10 +142,10 @@ export type Product = {
   iId: number;
   skus: Sku[];
   details: {
-    categoryName: string[];
+    [key: string]: string | string[] | Record<string, string> | undefined;
   };
   description: string;
-  customBusiness: CustomBusiness;
+  customBusiness: CustomBusiness;  
 };
 
 type QuickFilter = {

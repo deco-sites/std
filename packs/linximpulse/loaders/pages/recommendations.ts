@@ -64,12 +64,12 @@ export interface Props {
 }
 
 /**
- * @title Linx Pages Recomendations'
+ * @title Linx Impulse - Pages Recomendations
  * @description Use it in Shelves
  */
 const loader = async (
   props: Props,
-  _req: Request,
+  req: Request,
 ): Promise<Product[] | null> => {
   const { position, feature, page } = props;
 
@@ -94,9 +94,13 @@ const loader = async (
 
   if (!shelfs) return null;
 
+  const options = {
+    baseUrl: req.url
+  };
+
   const products = shelfs
     .flatMap((shelf) =>
-      shelf.displays[0]?.recommendations.map((product) => toProduct(product))
+      shelf.displays[0]?.recommendations.map((product) => toProduct(product, product.skus[0], 0, options))
     );
 
   return products;

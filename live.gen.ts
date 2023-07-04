@@ -127,6 +127,7 @@ import * as i1$$$$$9 from "$live/matchers/MatchUserAgent.ts";
 import * as i1$$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$$1 from "$live/flags/everyone.ts";
 import * as i1$$$$$$2 from "$live/flags/flag.ts";
+import * as i1$$$$$$3 from "$live/flags/multivariate.ts";
 import * as i1$$$$$$$0 from "$live/actions/workflows/cancel.ts";
 import * as i1$$$$$$$1 from "$live/actions/workflows/run.ts";
 import * as i1$$$$$$$2 from "$live/actions/workflows/signal.ts";
@@ -281,6 +282,7 @@ const manifest = {
     "$live/flags/audience.ts": i1$$$$$$0,
     "$live/flags/everyone.ts": i1$$$$$$1,
     "$live/flags/flag.ts": i1$$$$$$2,
+    "$live/flags/multivariate.ts": i1$$$$$$3,
   },
   "islands": {},
   "baseUrl": import.meta.url,
