@@ -145,7 +145,7 @@ export type Product = {
     [key: string]: string | string[] | Record<string, string> | undefined;
   };
   description: string;
-  customBusiness: CustomBusiness;  
+  customBusiness: CustomBusiness;
 };
 
 type QuickFilter = {
