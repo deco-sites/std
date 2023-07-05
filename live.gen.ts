@@ -84,6 +84,7 @@ import * as $$$$$$$$$$$12 from "./actions/vtex/cart/removeItemAttachment.ts";
 import * as $$$$$$$$$$$13 from "./actions/vtex/newsletter/subscribe.ts";
 import * as $$$$$$$$$$$14 from "./actions/vtex/wishlist/removeItem.ts";
 import * as $$$$$$$$$$$15 from "./actions/vtex/wishlist/addItem.ts";
+import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -124,10 +125,10 @@ import * as i1$$$$$9 from "$live/matchers/MatchUserAgent.ts";
 import * as i1$$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$$1 from "$live/flags/everyone.ts";
 import * as i1$$$$$$2 from "$live/flags/flag.ts";
+import * as i1$$$$$$3 from "$live/flags/multivariate.ts";
 import * as i1$$$$$$$0 from "$live/actions/workflows/cancel.ts";
-import * as i1$$$$$$$1 from "$live/actions/workflows/run.ts";
-import * as i1$$$$$$$2 from "$live/actions/workflows/signal.ts";
-import * as i1$$$$$$$3 from "$live/actions/workflows/start.ts";
+import * as i1$$$$$$$1 from "$live/actions/workflows/signal.ts";
+import * as i1$$$$$$$2 from "$live/actions/workflows/start.ts";
 
 const manifest = {
   "functions": {
@@ -204,6 +205,7 @@ const manifest = {
     "./routes/live/previews/index.tsx": $live_previews_index,
     "./routes/live/release.ts": $live_release,
     "./routes/live/workbench.ts": $live_workbench,
+    "./routes/live/workflows/run.ts": $live_workflows,
     "./routes/styles.css.ts": $$$$1,
   },
   "handlers": {
@@ -236,9 +238,8 @@ const manifest = {
   },
   "actions": {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,
-    "$live/actions/workflows/run.ts": i1$$$$$$$1,
-    "$live/actions/workflows/signal.ts": i1$$$$$$$2,
-    "$live/actions/workflows/start.ts": i1$$$$$$$3,
+    "$live/actions/workflows/signal.ts": i1$$$$$$$1,
+    "$live/actions/workflows/start.ts": i1$$$$$$$2,
     "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$6,
     "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$8,
     "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$12,
@@ -275,6 +276,7 @@ const manifest = {
     "$live/flags/audience.ts": i1$$$$$$0,
     "$live/flags/everyone.ts": i1$$$$$$1,
     "$live/flags/flag.ts": i1$$$$$$2,
+    "$live/flags/multivariate.ts": i1$$$$$$3,
   },
   "islands": {},
   "baseUrl": import.meta.url,

@@ -103,8 +103,8 @@
               "$live/flags/audience.ts",
               "$live/flags/everyone.ts",
               "$live/flags/flag.ts",
+              "$live/flags/multivariate.ts",
               "$live/actions/workflows/cancel.ts",
-              "$live/actions/workflows/run.ts",
               "$live/actions/workflows/signal.ts",
               "$live/actions/workflows/start.ts",
               "deco-sites/std/actions/vtex/cart/addItems.ts",
@@ -4030,11 +4030,11 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+    "ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -4053,7 +4053,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
               "title": "Value"
             }
           },
@@ -4070,7 +4070,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -4078,9 +4078,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
           },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
+          "title": "deco-cx/deco/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -4121,50 +4121,6 @@
                 "deco-sites/std/loaders/vtex/proxy.ts"
               ],
               "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -7395,6 +7351,105 @@
       ],
       "title": "deco-cx/live/handlers/redirect.ts@RedirectConfig"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+      "$ref": "#/root/handlers",
+      "title": "Handler"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+      "type": "object",
+      "properties": {
+        "pathTemplate": {
+          "type": "string",
+          "title": "Path Template"
+        },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
+        "handler": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "title": "Value"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "title": "Handler"
+        }
+      },
+      "required": [
+        "pathTemplate",
+        "handler"
+      ],
+      "title": "Site Route",
+      "titleBy": "pathTemplate"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+          },
+          "title": "Routes",
+          "description": "Used to configure your site routes"
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3JvdXRlci50cw==@RouterConfig": {
       "type": "object",
       "properties": {
@@ -7453,11 +7508,39 @@
       "title": "deco-cx/live/handlers/workflowRunner.ts@Config"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
-      },
-      "title": "Section[]"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
+          },
+          "title": "Page Sections"
+        },
+        {
+          "title": "Variant",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@MultivariateFlag+Section[]+Section[]"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/multivariate.ts"
+              ],
+              "default": "$live/flags/multivariate.ts"
+            }
+          }
+        }
+      ]
     },
     "ZGVjby1jeC9saXZlL3BhZ2VzL0xpdmVQYWdlLnRzeA==@Props": {
       "type": "object",
@@ -8010,35 +8093,30 @@
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoRGV2aWNlLnRz@Props": {
       "type": "object",
       "properties": {
-        "devices": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "string",
-                "const": "mobile",
-                "default": "mobile"
-              },
-              {
-                "type": "string",
-                "const": "tablet",
-                "default": "tablet"
-              },
-              {
-                "type": "string",
-                "const": "desktop",
-                "default": "desktop"
-              }
-            ],
-            "type": "string"
-          },
-          "title": "Devices"
+        "mobile": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Mobile"
+        },
+        "tablet": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Tablet"
+        },
+        "desktop": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Desktop"
         }
       },
-      "required": [
-        "devices"
-      ],
-      "title": "deco-cx/live/matchers/MatchDevice.ts@Props"
+      "required": [],
+      "title": "{{#mobile}}Mobile{{/mobile}} {{#tablet}}Tablet{{/tablet}} {{#desktop}}Desktop{{/desktop}}"
     },
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoRW52aXJvbm1lbnQudHM=@Props": {
       "type": "object",
@@ -8063,7 +8141,7 @@
       "required": [
         "environment"
       ],
-      "title": "deco-cx/live/matchers/MatchEnvironment.ts@Props"
+      "title": "{{{environment}}}"
     },
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoSG9zdC50cw==@Props": {
       "type": "object",
@@ -8084,7 +8162,7 @@
         }
       },
       "required": [],
-      "title": "deco-cx/live/matchers/MatchHost.ts@Props"
+      "title": "{{{includes}}} {{{match}}}"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher[]": {
       "type": "array",
@@ -8121,7 +8199,7 @@
         "op",
         "matchers"
       ],
-      "title": "deco-cx/live/matchers/MatchMulti.ts@Props"
+      "title": "Combined options with {{{op}}}"
     },
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoUmFuZG9tLnRz@Props": {
       "type": "object",
@@ -8134,7 +8212,7 @@
       "required": [
         "traffic"
       ],
-      "title": "deco-cx/live/matchers/MatchRandom.ts@Props"
+      "title": "ABTest {{{percentage traffic}}}"
     },
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoU2l0ZS50cw==@Props": {
       "type": "object",
@@ -8147,7 +8225,7 @@
       "required": [
         "siteId"
       ],
-      "title": "deco-cx/live/matchers/MatchSite.ts@Props"
+      "title": "{{{siteId}}}"
     },
     "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoVXNlckFnZW50LnRz@Props": {
       "type": "object",
@@ -8168,7 +8246,7 @@
         }
       },
       "required": [],
-      "title": "deco-cx/live/matchers/MatchUserAgent.ts@Props"
+      "title": "{{{includes}}} {{{match}}}"
     },
     "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience": {
       "type": "object",
@@ -8233,6 +8311,47 @@
       ],
       "title": "deco-cx/live/blocks/flag.ts@FlagObj"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[]": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher",
+          "title": "Condition"
+        },
+        "value": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section[]",
+          "title": "Content"
+        }
+      },
+      "required": [
+        "rule",
+        "value"
+      ],
+      "title": "{{#beautifySchemaTitle}}{{{rule.__resolveType}}}{{/beautifySchemaTitle}} Variant",
+      "icon": "flag"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[][]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[]"
+      },
+      "title": "Variant+Section[][]"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@MultivariateFlag+Section[]+Section[]": {
+      "type": "object",
+      "properties": {
+        "variants": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[][]",
+          "minItems": 1,
+          "addBehavior": "1",
+          "title": "Variants"
+        }
+      },
+      "required": [
+        "variants"
+      ],
+      "title": "Multivariate"
+    },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL2NhbmNlbC50cw==@Props": {
       "type": "object",
       "properties": {
@@ -8252,48 +8371,6 @@
         "executionId"
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&d53c654012b1a9c30560229e428269fa": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "workflow": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@Workflow",
-              "title": "Workflow"
-            }
-          },
-          "required": [
-            "workflow"
-          ]
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
-        }
-      ],
-      "title": "Metadata&d53c654012b1a9c30560229e428269fa"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa": {
-      "type": "object",
-      "properties": {
-        "results": {
-          "title": "Results"
-        },
-        "executionId": {
-          "type": "string",
-          "title": "Execution Id"
-        },
-        "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&d53c654012b1a9c30560229e428269fa",
-          "title": "Metadata"
-        }
-      },
-      "required": [
-        "results",
-        "executionId",
-        "metadata"
-      ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -10104,7 +10181,7 @@
       }
     },
     "JGxpdmUvcGFnZXMvTGl2ZVBhZ2UudHN4": {
-      "title": "$live/pages/LivePage.tsx",
+      "title": "Page",
       "type": "object",
       "allOf": [
         {
@@ -10727,6 +10804,27 @@
         }
       }
     },
+    "JGxpdmUvZmxhZ3MvbXVsdGl2YXJpYXRlLnRz": {
+      "title": "Variant",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@MultivariateFlag+Section[]+Section[]"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "$live/flags/multivariate.ts"
+          ],
+          "default": "$live/flags/multivariate.ts"
+        }
+      }
+    },
     "JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvY2FuY2VsLnRz": {
       "title": "$live/actions/workflows/cancel.ts",
       "description": "Cancels the workflow execution, you can, optionally, add a reason of the cancellation.",
@@ -10746,28 +10844,6 @@
             "$live/actions/workflows/cancel.ts"
           ],
           "default": "$live/actions/workflows/cancel.ts"
-        }
-      }
-    },
-    "JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvcnVuLnRz": {
-      "title": "$live/actions/workflows/run.ts",
-      "description": "Proceed the workflow execution based on the current state of the workflow.",
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&d53c654012b1a9c30560229e428269fa"
-        }
-      ],
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "$live/actions/workflows/run.ts"
-          ],
-          "default": "$live/actions/workflows/run.ts"
         }
       }
     },
@@ -11496,6 +11572,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvZmxhZ3MvZmxhZy50cw=="
+        },
+        {
+          "$ref": "#/definitions/JGxpdmUvZmxhZ3MvbXVsdGl2YXJpYXRlLnRz"
         }
       ]
     },
@@ -11507,9 +11586,6 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvY2FuY2VsLnRz"
-        },
-        {
-          "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvcnVuLnRz"
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3Mvc2lnbmFsLnRz"
