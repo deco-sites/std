@@ -182,3 +182,17 @@ export const toProduct = <P extends ProductLinxImpulse>(
     },
   };
 };
+
+interface SearchTermQuery {
+  queries: {
+    query: string;
+  }[];
+}
+
+export const toSearchTerm = ({ queries }: SearchTermQuery) => {
+  return [
+    ...queries.map(({ query }) => ({
+      term: query,
+    })),
+  ];
+};

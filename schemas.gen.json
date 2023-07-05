@@ -48,7 +48,7 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
-              "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts",
+              "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts",
@@ -106,7 +106,6 @@
               "$live/flags/flag.ts",
               "$live/flags/multivariate.ts",
               "$live/actions/workflows/cancel.ts",
-              "$live/actions/workflows/run.ts",
               "$live/actions/workflows/signal.ts",
               "$live/actions/workflows/start.ts",
               "deco-sites/std/actions/vtex/cart/addItems.ts",
@@ -1996,28 +1995,6 @@
           }
         },
         {
-          "title": "Linx Impulse - Pages Recomendations",
-          "description": "Use it in Shelves",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
-              ],
-              "default": "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
-            }
-          }
-        },
-        {
           "title": "NuvemShop - Search Products",
           "type": "object",
           "allOf": [
@@ -3356,6 +3333,27 @@
           }
         },
         {
+          "title": "Linx Impulse - Suggestions",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+            }
+          }
+        },
+        {
           "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
@@ -3950,120 +3948,28 @@
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
     },
-    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props": {
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props": {
       "type": "object",
       "properties": {
-        "position": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "top",
-              "default": "top"
-            },
-            {
-              "type": "string",
-              "const": "middle",
-              "default": "middle"
-            },
-            {
-              "type": "string",
-              "const": "bottom",
-              "default": "bottom"
-            }
+        "query": {
+          "type": [
+            "string",
+            "null"
           ],
-          "type": "string",
-          "title": "Position"
+          "title": "Query"
         },
-        "feature": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "MostPopular",
-              "default": "MostPopular"
-            },
-            {
-              "type": "string",
-              "const": "Offers",
-              "default": "Offers"
-            },
-            {
-              "type": "string",
-              "const": "New4You",
-              "default": "New4You"
-            },
-            {
-              "type": "string",
-              "const": "Push",
-              "default": "Push"
-            },
-            {
-              "type": "string",
-              "const": "HistoryPersonalized",
-              "default": "HistoryPersonalized"
-            },
-            {
-              "type": "string",
-              "const": "SimilarItems",
-              "default": "SimilarItems"
-            }
+        "count": {
+          "type": [
+            "number",
+            "null"
           ],
-          "type": "string",
-          "title": "Feature",
-          "description": "The feature \"SimilarItems\" is only available on product page."
-        },
-        "page": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "home",
-              "default": "home"
-            },
-            {
-              "type": "string",
-              "const": "product",
-              "default": "product"
-            },
-            {
-              "type": "string",
-              "const": "category",
-              "default": "category"
-            },
-            {
-              "type": "string",
-              "const": "subcategory",
-              "default": "subcategory"
-            },
-            {
-              "type": "string",
-              "const": "not_found",
-              "default": "not_found"
-            },
-            {
-              "type": "string",
-              "const": "search",
-              "default": "search"
-            },
-            {
-              "type": "string",
-              "const": "landing_page",
-              "default": "landing_page"
-            },
-            {
-              "type": "string",
-              "const": "other",
-              "default": "other"
-            }
-          ],
-          "type": "string",
-          "title": "Page"
+          "description": "limit the number of searches",
+          "default": "5",
+          "title": "Count"
         }
       },
-      "required": [
-        "position",
-        "feature",
-        "page"
-      ],
-      "title": "deco-sites/std/packs/linxImpulse/loaders/pages/recommendations.ts@Props"
+      "required": [],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/autocompletes/suggestions.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props": {
       "type": "object",
@@ -8456,48 +8362,6 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@922a64c7ae05c6ecf72f25fa681e42d6&Metadata": {
-      "allOf": [
-        {
-          "type": "object",
-          "properties": {
-            "workflow": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@Workflow",
-              "title": "Workflow"
-            }
-          },
-          "required": [
-            "workflow"
-          ]
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
-        }
-      ],
-      "title": "922a64c7ae05c6ecf72f25fa681e42d6&Metadata"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+922a64c7ae05c6ecf72f25fa681e42d6&Metadata": {
-      "type": "object",
-      "properties": {
-        "results": {
-          "title": "Results"
-        },
-        "executionId": {
-          "type": "string",
-          "title": "Execution Id"
-        },
-        "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@922a64c7ae05c6ecf72f25fa681e42d6&Metadata",
-          "title": "Metadata"
-        }
-      },
-      "required": [
-        "results",
-        "executionId",
-        "metadata"
-      ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+922a64c7ae05c6ecf72f25fa681e42d6&Metadata"
-    },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
       "properties": {
@@ -9783,13 +9647,12 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=": {
-      "title": "Linx Impulse - Pages Recomendations",
-      "description": "Use it in Shelves",
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz": {
+      "title": "Linx Impulse - Suggestions",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props"
         }
       ],
       "required": [
@@ -9799,9 +9662,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+            "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
           ],
-          "default": "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+          "default": "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
         }
       }
     },
@@ -10995,28 +10858,6 @@
         }
       }
     },
-    "JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvcnVuLnRz": {
-      "title": "$live/actions/workflows/run.ts",
-      "description": "Proceed the workflow execution based on the current state of the workflow.",
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+922a64c7ae05c6ecf72f25fa681e42d6&Metadata"
-        }
-      ],
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "$live/actions/workflows/run.ts"
-          ],
-          "default": "$live/actions/workflows/run.ts"
-        }
-      }
-    },
     "JGxpdmUvYWN0aW9ucy93b3JrZmxvd3Mvc2lnbmFsLnRz": {
       "title": "$live/actions/workflows/signal.ts",
       "description": "Sends a signal to the workflow using the specified payload.",
@@ -11531,7 +11372,7 @@
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM="
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz"
@@ -11759,9 +11600,6 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvY2FuY2VsLnRz"
-        },
-        {
-          "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3MvcnVuLnRz"
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3Mvc2lnbmFsLnRz"

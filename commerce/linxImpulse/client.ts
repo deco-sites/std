@@ -1,4 +1,3 @@
-import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 const requestHeaders = {
@@ -6,16 +5,23 @@ const requestHeaders = {
   referer: `https://www.ibyte.com.br/`,
 };
 
-export interface ConfigLinxImpulse extends Account {
-  baseUrl: string;
-}
-
 export type ClientLinxImpulse = ReturnType<typeof createClient>;
 
-export const createClient = ({ baseUrl }: ConfigLinxImpulse) => {
+export const createClient = () => {
+  const recommendationsbaseUrl = "https://recs.chaordicsystems.com/v0";
+  const searchBaseUrl = "https://api.linximpulse.com/engage/search/v3";
+  const apiKey = "ibyte";
+
   const recommendations = (name: string) => {
     return fetchAPI(
-      `${baseUrl}/pages/recommendations?apiKey=ibyte&source=desktop&name=${name}&productFormat=complete`,
+      `${recommendationsbaseUrl}/pages/recommendations?apiKey=${apiKey}&source=desktop&name=${name}&productFormat=complete`,
+      { headers: requestHeaders },
+    );
+  };
+
+  const popularTerms = () => {
+    return fetchAPI(
+      `${searchBaseUrl}/autocompletes/popular?apiKey=${apiKey}&productFormat=complete`,
       { headers: requestHeaders },
     );
   };
@@ -23,6 +29,9 @@ export const createClient = ({ baseUrl }: ConfigLinxImpulse) => {
   return {
     pages: {
       recommendations,
+    },
+    autocompletes: {
+      popularTerms,
     },
   };
 };

@@ -73,11 +73,7 @@ const loader = async (
 ): Promise<Product[] | null> => {
   const { position, feature, page } = props;
 
-  const configLinxImpulse = {
-    baseUrl: "https://recs.chaordicsystems.com/v0",
-  };
-
-  const linximpulse = createClient(configLinxImpulse);
+  const linximpulse = createClient();
 
   const recommendationsResponse = await linximpulse.pages.recommendations(
     page || "other",
