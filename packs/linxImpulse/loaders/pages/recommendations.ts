@@ -1,7 +1,7 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
 import type { Product as ProductLinxImpulse } from "../../types.ts";
 
-import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts"; 
+import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
 
 export type Position = "top" | "middle" | "bottom";
