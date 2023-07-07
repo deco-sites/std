@@ -123,7 +123,8 @@ export interface Props {
   pageOffset?: number;
 }
 
-export const singleFlightKey = (
+// TODO (mcandeia) investigating bugs related to returning the same set of products but different queries.
+const _singleFlightKey = (
   props: Props,
   { request }: { request: Request },
 ) => {
