@@ -3974,20 +3974,12 @@
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props": {
       "type": "object",
       "properties": {
-        "query": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Query"
-        },
         "count": {
           "type": [
             "number",
             "null"
           ],
           "description": "limit the number of searches",
-          "default": "5",
           "title": "Count"
         }
       },

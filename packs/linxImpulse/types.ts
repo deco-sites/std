@@ -41,7 +41,7 @@ export type Sku = {
   customBusiness: Record<string, unknown>;
 };
 
-export type Product = {
+interface ProductCommon {
   id: string;
   name: string;
   description: string;
@@ -49,16 +49,36 @@ export type Product = {
   oldPrice: number;
   url: string;
   images: ImageSizes;
-  brand: string;
   installment: {
     count: number;
     price: number;
   };
   status: string;
   categories: Category[];
+  brand: string;
   details: {
     [key: string]: string | string[] | Record<string, string> | undefined;
   };
+}
+
+export type ProductLinxImpulseRecommendations = ProductCommon & {
   skus: Sku[];
   trackingUrl: string;
+};
+
+export type ProductLinxImpulse = ProductCommon & {
+  skus: {
+    sku: string;
+    specs?: Record<string, unknown>;
+    properties: Sku;
+  }[];
+  collectInfo?: {
+    productId?: string;
+    skuList?: string[];
+  };
+  clickUrl?: string;
+  cId?: string;
+  iId?: number;
+  specs?: Record<string, unknown>;
+  created?: string;
 };

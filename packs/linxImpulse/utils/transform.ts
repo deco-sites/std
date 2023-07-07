@@ -7,7 +7,11 @@ import type {
 
 import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
 
-import type { Product as ProductLinxImpulse } from "../types.ts";
+import type {
+  ProductLinxImpulse,
+  ProductLinxImpulseRecommendations,
+  Sku,
+} from "../types.ts";
 
 interface ProductOptions {
   baseUrl: string;
@@ -60,7 +64,7 @@ const toAdditionalPropertyClusters = ({ details }: ProductLinxImpulse) => {
 
 export const toProduct = <P extends ProductLinxImpulse>(
   product: P,
-  sku: ProductLinxImpulse["skus"][number],
+  sku: ProductLinxImpulse["skus"][number]["properties"],
   level = 0,
   options: ProductOptions,
 ): Product => {
@@ -133,7 +137,9 @@ export const toProduct = <P extends ProductLinxImpulse>(
     ? {
       "@type": "ProductGroup",
       productGroupID: productID,
-      hasVariant: skus.map((sku) => toProduct(product, sku, 1, options)),
+      hasVariant: skus.map((sku) =>
+        toProduct(product, sku.properties, 1, options)
+      ),
       url: getProductURL(baseUrl, product).href,
       name: name,
       additionalProperty: groupAdditionalProperty as PropertyValue[],
@@ -195,4 +201,19 @@ export const toSearchTerm = ({ queries }: SearchTermQuery) => {
       term: query,
     })),
   ];
+};
+
+export const toProductLinxImpulse = (
+  product: ProductLinxImpulseRecommendations,
+  sku: Sku,
+) => {
+  return {
+    ...product,
+    skus: [
+      {
+        sku: sku.sku,
+        properties: sku,
+      },
+    ],
+  };
 };

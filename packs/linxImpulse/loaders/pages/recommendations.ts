@@ -1,7 +1,10 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { Product as ProductLinxImpulse } from "../../types.ts";
+import type { ProductLinxImpulseRecommendations } from "../../types.ts";
 
-import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
+import {
+  toProduct,
+  toProductLinxImpulse,
+} from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
 
 export type Position = "top" | "middle" | "bottom";
@@ -11,8 +14,7 @@ export type Feature =
   | "Offers"
   | "New4You"
   | "Push"
-  | "HistoryPersonalized"
-  | "SimilarItems";
+  | "HistoryPersonalized";
 
 export type Page =
   | "home"
@@ -26,7 +28,7 @@ export type Page =
 
 interface Display {
   references: string;
-  recommendations: ProductLinxImpulse[];
+  recommendations: ProductLinxImpulseRecommendations[];
 }
 
 interface Shelf {
@@ -53,7 +55,6 @@ export interface Props {
 
   /**
    * @title Feature
-   * @description The feature "SimilarItems" is only available on product page.
    */
   feature: Feature;
 
@@ -96,9 +97,13 @@ const loader = async (
 
   const products = shelfs
     .flatMap((shelf) =>
-      shelf.displays[0]?.recommendations.map((product) =>
-        toProduct(product, product.skus[0], 0, options)
-      )
+      shelf.displays[0]?.recommendations.map((productRecommendation) => {
+        const product = toProductLinxImpulse(
+          productRecommendation,
+          productRecommendation.skus[0],
+        );
+        return toProduct(product, product.skus[0].properties, 0, options);
+      })
     );
 
   return products;
