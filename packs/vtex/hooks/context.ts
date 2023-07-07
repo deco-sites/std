@@ -48,6 +48,8 @@ const enqueue = (
   });
 
   abort = () => controller.abort();
+
+  return queue;
 };
 
 const load = (signal: AbortSignal) =>
