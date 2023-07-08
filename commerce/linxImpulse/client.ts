@@ -26,12 +26,20 @@ export const createClient = () => {
     );
   };
 
+  const autocompletesProducts = (terms: string) => {
+    return fetchAPI(
+      `${searchBaseUrl}/autocompletes/products?apiKey=${apiKey}&terms=${terms}&productFormat=complete`,
+      { headers: requestHeaders },
+    );
+  };
+
   return {
     pages: {
       recommendations,
     },
     autocompletes: {
       popularTerms,
+      autocompletesProducts,
     },
   };
 };
