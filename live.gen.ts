@@ -36,7 +36,7 @@ import * as $$2 from "./accounts/shopify.ts";
 import * as $$3 from "./accounts/vnda.ts";
 import * as $$4 from "./accounts/vtex.ts";
 import * as $$5 from "./accounts/yourViews.ts";
-import * as $$$0 from "./loaders/linxImpulse/autocompletes/products.ts";
+import * as $$$0 from "./loaders/linxImpulse/autocompletes/popular.ts";
 import * as $$$1 from "./loaders/linxImpulse/autocompletes/suggestions.ts";
 import * as $$$2 from "./loaders/linxImpulse/pages/recommendations.ts";
 import * as $$$3 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
@@ -175,7 +175,7 @@ const manifest = {
     "$live/loaders/state.ts": i1$0,
     "$live/loaders/workflows/events.ts": i1$1,
     "$live/loaders/workflows/get.ts": i1$2,
-    "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts": $$$0,
+    "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts": $$$0,
     "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts": $$$1,
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": $$$2,
     "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$3,

@@ -1,5 +1,5 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { ProductLinxImpulseRecommendations } from "../../types.ts";
+import type { ProductLinxImpulseRecommendations } from "deco-sites/std/packs/linxImpulse/types.ts";
 
 import {
   toProduct,

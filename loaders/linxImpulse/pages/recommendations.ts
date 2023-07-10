@@ -1,1 +1,1 @@
-export { default } from "../../../packs/linxImpulse/loaders/pages/recommendations.ts";
+export { default } from "deco-sites/std/packs/linxImpulse/loaders/pages/recommendations.ts";

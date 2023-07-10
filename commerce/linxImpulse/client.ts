@@ -26,9 +26,13 @@ export const createClient = () => {
     );
   };
 
-  const autocompletesProducts = (terms: string) => {
+  const suggestions = (
+    term: string,
+    countSuggestions: number,
+    countProducts: number,
+  ) => {
     return fetchAPI(
-      `${searchBaseUrl}/autocompletes/products?apiKey=${apiKey}&terms=${terms}&productFormat=complete`,
+      `${searchBaseUrl}/autocompletes?apiKey=${apiKey}&productFormat=complete&prefix=${term}&resultsQueries=${countSuggestions}&resultsProducts=${countProducts}`,
       { headers: requestHeaders },
     );
   };
@@ -39,7 +43,7 @@ export const createClient = () => {
     },
     autocompletes: {
       popularTerms,
-      autocompletesProducts,
+      suggestions,
     },
   };
 };

@@ -1,1 +1,1 @@
-export { default } from "../../../packs/linxImpulse/loaders/autocompletes/suggestions.ts";
+export { default } from "deco-sites/std/packs/linxImpulse/loaders/autocompletes/suggestions.ts";

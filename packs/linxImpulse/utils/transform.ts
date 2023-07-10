@@ -11,7 +11,7 @@ import type {
   ProductLinxImpulse,
   ProductLinxImpulseRecommendations,
   Sku,
-} from "../types.ts";
+} from "deco-sites/std/packs/linxImpulse/types.ts";
 
 interface ProductOptions {
   baseUrl: string;

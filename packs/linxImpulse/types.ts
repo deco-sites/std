@@ -82,3 +82,8 @@ export type ProductLinxImpulse = ProductCommon & {
   specs?: Record<string, unknown>;
   created?: string;
 };
+
+export type Query = {
+  query: string;
+  link: string;
+};

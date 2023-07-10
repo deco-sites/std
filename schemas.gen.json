@@ -48,7 +48,7 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
-              "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts",
+              "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts",
               "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts",
               "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
@@ -1997,27 +1997,6 @@
           }
         },
         {
-          "title": "Linx Impulse - Autocompletes Products",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3Byb2R1Y3RzLnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts"
-              ],
-              "default": "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts"
-            }
-          }
-        },
-        {
           "title": "Linx Impulse - Pages Recomendations",
           "description": "Use it in Shelves",
           "type": "object",
@@ -3382,6 +3361,27 @@
           "type": "object",
           "allOf": [
             {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+            }
+          }
+        },
+        {
+          "title": "Linx Impulse - Autocompletes Products",
+          "type": "object",
+          "allOf": [
+            {
               "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props"
             }
           ],
@@ -3993,22 +3993,7 @@
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
     },
-    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3Byb2R1Y3RzLnRz@Props": {
-      "type": "object",
-      "properties": {
-        "query": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "term to get the list of product suggestions",
-          "title": "Query"
-        }
-      },
-      "required": [],
-      "title": "deco-sites/std/packs/linxImpulse/loaders/autocompletes/products.ts@Props"
-    },
-    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props": {
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props": {
       "type": "object",
       "properties": {
         "count": {
@@ -4018,6 +4003,37 @@
           ],
           "description": "limit the number of searches",
           "title": "Count"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/autocompletes/popular.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "term to get the list of product suggestions",
+          "title": "Query"
+        },
+        "countSuggestions": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "limit the number of suggestions terms",
+          "title": "Count Suggestions"
+        },
+        "countProducts": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "limit the number of products",
+          "title": "Count Products"
         }
       },
       "required": [],
@@ -9808,12 +9824,12 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3Byb2R1Y3RzLnRz": {
-      "title": "Linx Impulse - Autocompletes Products",
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=": {
+      "title": "Linx Impulse - Autocompletes Popular Terms",
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3Byb2R1Y3RzLnRz@Props"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props"
         }
       ],
       "required": [
@@ -9823,14 +9839,14 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts"
+            "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
           ],
-          "default": "deco-sites/std/loaders/linxImpulse/autocompletes/products.ts"
+          "default": "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
         }
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "Linx Impulse - Autocompletes Popular Terms",
+      "title": "Linx Impulse - Autocompletes Products",
       "type": "object",
       "allOf": [
         {
@@ -11576,7 +11592,7 @@
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3Byb2R1Y3RzLnRz"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz"
