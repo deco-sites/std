@@ -84,6 +84,7 @@ import * as $$$$$$$$$$$12 from "./actions/vtex/cart/removeItemAttachment.ts";
 import * as $$$$$$$$$$$13 from "./actions/vtex/newsletter/subscribe.ts";
 import * as $$$$$$$$$$$14 from "./actions/vtex/wishlist/removeItem.ts";
 import * as $$$$$$$$$$$15 from "./actions/vtex/wishlist/addItem.ts";
+import * as $$$$$$$$$$$16 from "./actions/vtex/analytics/sendEvent.ts";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -240,6 +241,7 @@ const manifest = {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,
     "$live/actions/workflows/signal.ts": i1$$$$$$$1,
     "$live/actions/workflows/start.ts": i1$$$$$$$2,
+    "deco-sites/std/actions/vtex/analytics/sendEvent.ts": $$$$$$$$$$$16,
     "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$6,
     "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$8,
     "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$12,
