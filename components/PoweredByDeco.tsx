@@ -18,10 +18,10 @@ export default function PoweredByDeco({
         href="https://deco.cx/"
         target="_blank"
         aria-label="Powered by deco.cx"
-        class="flex"
+        style={{ display: "flex" }}
       >
         <svg
-          class="w-auto h-auto"
+          style={{ width: "auto", height: "auto" }}
           width="900"
           height="200"
           xmlns="http://www.w3.org/2000/svg"
