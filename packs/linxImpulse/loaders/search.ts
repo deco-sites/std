@@ -12,14 +12,11 @@ import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpu
 
 const sortOptions = [
   { value: "relevance", "label": "Relevância" },
-  { value: "pid", "label": "Id de produto" },
   { value: "ascPrice", "label": "Menor preço" },
   { value: "descPrice", "label": "Maior preço" },
   { value: "descDate", "label": "Lançamentos" },
-  { value: "ascSold", "label": "Menor venda" },
   { value: "descSold", "label": "Maior venda" },
   { value: "descReview", "label": "Maior avaliação" },
-  { value: "ascReview", "label": "Menor avaliação" },
   { value: "descDiscount", "label": "Maiores descontos" },
 ];
 
