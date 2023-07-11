@@ -6,6 +6,7 @@ export type Category = {
   id: string;
   name: string;
   parents: string[];
+  used?: boolean;
 };
 
 export type Sku = {
@@ -38,7 +39,7 @@ export type Sku = {
   url: string;
   sku: string;
   specs: Record<string, unknown>;
-  customBusiness: Record<string, unknown>;
+  customBusiness?: Record<string, unknown>;
 };
 
 interface ProductCommon {
@@ -82,3 +83,82 @@ export type ProductLinxImpulse = ProductCommon & {
   specs?: Record<string, unknown>;
   created?: string;
 };
+
+export type Sort =
+  | ""
+  | "descDiscount"
+  | "relevance"
+  | "ascPrice"
+  | "descPrice"
+  | "descDate"
+  | "descSold"
+  | "pid"
+  | "descReview"
+  | "ascReview"
+  | "ascSold";
+
+interface Suggestions {
+  query: string;
+  link: string;
+}
+
+interface FilterValue {
+  label: string;
+  size: number;
+  idO: string;
+  id: number;
+  applyLink: string;
+}
+
+interface Filter {
+  id: number;
+  attribute: string;
+  type: string;
+  fType: number;
+  values: FilterValue[];
+}
+
+interface Pagination {
+  first: string;
+  last: string;
+  next?: string;
+}
+
+interface SortOption {
+  label: string;
+  name: string;
+  type: string;
+  applyLink: string;
+}
+
+interface Queries {
+  original: string;
+  normalized: string;
+  processed: string;
+  queryType: string;
+}
+
+export interface SearchProductsResponse {
+  requestId: string;
+  searchId: string;
+  suggestions?: Suggestions[];
+  filters: Filter[];
+  size: number;
+  pagination: Pagination;
+  products: ProductLinxImpulse[];
+  sort: SortOption[];
+  queries: Queries;
+}
+
+export interface SelectedFacet {
+  key: string;
+  value: string;
+}
+
+export interface SearchParams {
+  query: string;
+  page: number;
+  count: number;
+  sort: Sort;
+  hideUnavailableItems: boolean;
+}

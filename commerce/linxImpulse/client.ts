@@ -1,5 +1,7 @@
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
+import type { Sort } from "deco-sites/std/packs/linxImpulse/types.ts";
+
 const requestHeaders = {
   origin: `https://www.ibyte.com.br`,
   referer: `https://www.ibyte.com.br/`,
@@ -33,6 +35,18 @@ export const createClient = () => {
     );
   };
 
+  const search = (
+    terms: string,
+    sort: Sort,
+    count: number,
+    hideUnavailableItems: boolean,
+  ) => {
+    return fetchAPI(
+      `${searchBaseUrl}/search?apiKey=${apiKey}&terms=${terms}&productFormat=complete&resultsPerPage=${count}&sortBy=${sort}&showOnlyAvailable=${hideUnavailableItems}`,
+      { headers: requestHeaders },
+    );
+  };
+
   return {
     pages: {
       recommendations,
@@ -41,5 +55,6 @@ export const createClient = () => {
       popularTerms,
       autocompletesProducts,
     },
+    search,
   };
 };
