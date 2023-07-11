@@ -26,23 +26,21 @@ const searchArgsOf = (props: Props, url: URL) => {
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
     sortOptions[0].value;
-  const currentPageoffset = props.page ?? 1;
-  const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - (currentPageoffset)
-    : currentPageoffset;
+  const pageParam = Number(url.searchParams.get("page"));
+  const currentPage = pageParam !== 0 ? pageParam ?? props.page ?? 1 : 1;
 
   return {
     query,
     sort,
     count,
     hideUnavailableItems,
-    page,
+    page: currentPage,
   };
 };
 
 export const withDefaultParams = ({
   query = "",
-  page = 1,
+  page = 0,
   count = 12,
   sort = "relevance",
   hideUnavailableItems,

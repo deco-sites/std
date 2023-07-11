@@ -4187,11 +4187,6 @@
           "anyOf": [
             {
               "type": "string",
-              "const": "",
-              "default": ""
-            },
-            {
-              "type": "string",
               "const": "descDiscount",
               "default": "descDiscount"
             },
@@ -4251,6 +4246,14 @@
           ],
           "title": "Hide Unavailable Items",
           "description": "Do not return out of stock items"
+        },
+        "page": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Starting page query parameter.",
+          "description": "Set the starting page. Default to 1."
         }
       },
       "required": [
