@@ -1,5 +1,9 @@
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
-import type { SearchProductsResponse, Sort } from "../types.ts";
+import type {
+  SearchParams,
+  SearchProductsResponse,
+  Sort,
+} from "deco-sites/std/packs/linxImpulse/types.ts";
 
 import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
@@ -23,15 +27,36 @@ const searchArgsOf = (props: Props, url: URL) => {
   const hideUnavailableItems = Boolean(props.hideUnavailableItems);
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
-  const sort = url.searchParams.get("sort") as Sort ?? sortOptions[0].value;
+  const sort = props.sort ?? url.searchParams.get("sort") as Sort ??
+    sortOptions[0].value;
+  const currentPageoffset = props.page ?? 1;
+  const page = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - (currentPageoffset)
+    : currentPageoffset;
 
   return {
     query,
     sort,
     count,
     hideUnavailableItems,
+    page,
   };
 };
+
+export const withDefaultParams = ({
+  query = "",
+  page = 1,
+  count = 12,
+  sort = "relevance",
+  hideUnavailableItems,
+}: Partial<SearchParams>) =>
+  new URLSearchParams({
+    terms: query,
+    page: `${page}`,
+    resultsPerPage: `${count}`,
+    sortBy: sort,
+    showOnlyAvailable: `${hideUnavailableItems}`,
+  });
 
 export interface Props {
   /**
@@ -55,6 +80,12 @@ export interface Props {
    * @description Do not return out of stock items
    */
   hideUnavailableItems?: boolean;
+
+  /**
+   * @title Starting page query parameter.
+   * @description Set the starting page. Default to 1.
+   */
+  page?: number;
 }
 
 /**
@@ -72,18 +103,27 @@ const loader = async (
   const url = new URL(baseUrl);
   const linximpulse = createClient();
 
-  const { query, sort, count, hideUnavailableItems } = searchArgsOf(props, url);
+  const { page, ...args } = searchArgsOf(props, url);
+  const params = withDefaultParams({ ...args, page });
 
-  const searchData = await linximpulse.search(
-    query,
-    sort,
-    count,
-    hideUnavailableItems,
-  ) as SearchProductsResponse;
+  const searchData = await linximpulse.search(params) as SearchProductsResponse;
 
   const products = searchData.products.map((product) =>
     toProduct(product, product.skus[0].properties, 0, { baseUrl })
   );
+
+  const hasNextPage = Boolean(searchData.pagination.next);
+  const hasPreviousPage = Boolean(searchData.pagination.prev);
+  const nextPage = new URLSearchParams(url.searchParams);
+  const previousPage = new URLSearchParams(url.searchParams);
+
+  if (hasNextPage) {
+    nextPage.set("page", (page + 1).toString());
+  }
+
+  if (hasPreviousPage) {
+    previousPage.set("page", (page - 1).toString());
+  }
 
   return {
     "@type": "ProductListingPage",
@@ -100,11 +140,11 @@ const loader = async (
     filters: [],
     products,
     pageInfo: {
-      nextPage: undefined,
-      previousPage: undefined,
-      currentPage: 0,
+      nextPage: hasNextPage ? `?${nextPage}` : undefined,
+      previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
+      currentPage: page - 1,
       records: searchData.size,
-      recordPerPage: count,
+      recordPerPage: props.count,
     },
     sortOptions,
     seo: {

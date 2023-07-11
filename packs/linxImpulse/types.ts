@@ -85,7 +85,6 @@ export type ProductLinxImpulse = ProductCommon & {
 };
 
 export type Sort =
-  | ""
   | "descDiscount"
   | "relevance"
   | "ascPrice"
@@ -122,6 +121,7 @@ interface Pagination {
   first: string;
   last: string;
   next?: string;
+  prev?: string;
 }
 
 interface SortOption {
