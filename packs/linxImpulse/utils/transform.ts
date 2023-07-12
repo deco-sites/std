@@ -256,14 +256,14 @@ export const filtersToSearchParams = (
   selectedFacets: SelectedFacet[],
   url: URL,
 ) => {
-  for (const [key] of url.searchParams.entries()) {
+  const searchParams = new URLSearchParams(url.searchParams);
+
+  for (const [key] of searchParams.entries()) {
     if (key.startsWith("filter")) {
-      url.searchParams.delete(key);
+      searchParams.delete(key);
     }
   }
-
-  const searchParams = new URLSearchParams(url.searchParams);
-  searchParams.delete("filters");
+  searchParams.delete("page");
 
   for (const { key, value } of selectedFacets) {
     searchParams.append(`filter.${key}`, value);

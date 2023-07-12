@@ -117,60 +117,64 @@ const loader = async (
 ): Promise<ProductListingPage | null> => {
   const { url: baseUrl } = req;
   const { configLinxImpulse: config } = ctx;
-
   const url = new URL(baseUrl);
   const linximpulse = createClient();
-
   const { selectedFacets, page, ...args } = searchArgsOf(props, url);
   const params = withDefaultParams({ ...args, page, selectedFacets });
 
-  const searchData = await linximpulse.search(params) as SearchProductsResponse;
+  try {
+    const searchData = await linximpulse.search(
+      params,
+    ) as SearchProductsResponse;
 
-  const products = searchData.products.map((product) =>
-    toProduct(product, product.skus[0].properties, 0, { baseUrl })
-  );
-  const filters = searchData.filters.map(toFilter(selectedFacets, url));
-  const hasNextPage = Boolean(searchData.pagination.next);
-  const hasPreviousPage = Boolean(searchData.pagination.prev);
-  const nextPage = new URLSearchParams(url.searchParams);
-  const previousPage = new URLSearchParams(url.searchParams);
+    const products = searchData.products.map((product) =>
+      toProduct(product, product.skus[0].properties, 0, { baseUrl })
+    );
+    const filters = searchData.filters.map(toFilter(selectedFacets, url));
+    const hasNextPage = Boolean(searchData.pagination.next);
+    const hasPreviousPage = Boolean(searchData.pagination.prev);
+    const nextPage = new URLSearchParams(url.searchParams);
+    const previousPage = new URLSearchParams(url.searchParams);
 
-  if (hasNextPage) {
-    nextPage.set("page", (page + 1).toString());
+    if (hasNextPage) {
+      nextPage.set("page", (page + 1).toString());
+    }
+
+    if (hasPreviousPage) {
+      previousPage.set("page", (page - 1).toString());
+    }
+
+    return {
+      "@type": "ProductListingPage",
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [{
+          "@type": "ListItem" as const,
+          name: searchData.queries.original!,
+          item: "#",
+          position: 1,
+        }],
+        numberOfItems: 1,
+      },
+      filters,
+      products,
+      pageInfo: {
+        nextPage: hasNextPage ? `?${nextPage}` : undefined,
+        previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
+        currentPage: page - 1,
+        records: searchData.size,
+        recordPerPage: props.count,
+      },
+      sortOptions,
+      seo: {
+        title: "",
+        description: "",
+        canonical: "",
+      },
+    };
+  } catch {
+    return null;
   }
-
-  if (hasPreviousPage) {
-    previousPage.set("page", (page - 1).toString());
-  }
-
-  return {
-    "@type": "ProductListingPage",
-    breadcrumb: {
-      "@type": "BreadcrumbList",
-      itemListElement: [{
-        "@type": "ListItem" as const,
-        name: searchData.queries.original!,
-        item: "#",
-        position: 1,
-      }],
-      numberOfItems: 1,
-    },
-    filters,
-    products,
-    pageInfo: {
-      nextPage: hasNextPage ? `?${nextPage}` : undefined,
-      previousPage: hasPreviousPage ? `?${previousPage}` : undefined,
-      currentPage: page - 1,
-      records: searchData.size,
-      recordPerPage: props.count,
-    },
-    sortOptions,
-    seo: {
-      title: "",
-      description: "",
-      canonical: "",
-    },
-  };
 };
 
 export default loader;
