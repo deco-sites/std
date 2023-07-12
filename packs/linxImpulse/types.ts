@@ -109,7 +109,7 @@ interface FilterValue {
   applyLink: string;
 }
 
-interface Filter {
+export interface FilterLinxImpulse {
   id: number;
   attribute: string;
   type: string;
@@ -142,7 +142,7 @@ export interface SearchProductsResponse {
   requestId: string;
   searchId: string;
   suggestions?: Suggestions[];
-  filters: Filter[];
+  filters: FilterLinxImpulse[];
   size: number;
   pagination: Pagination;
   products: ProductLinxImpulse[];
@@ -161,4 +161,44 @@ export interface SearchParams {
   count: number;
   sort: Sort;
   hideUnavailableItems: boolean;
+  selectedFacets: SelectedFacet[];
+}
+
+export interface ContinuousValueFacetLinxImpulse {
+  size: number;
+  unityId: number;
+  unN: string;
+  min: {
+    value: number;
+    unity: string;
+    minN: number;
+  };
+  max: {
+    value: number;
+    unity: string;
+    maxN: number;
+  };
+  applyLink: string;
+  selected?: boolean;
+}
+
+export interface DiscreteValueFacetLinxImpulse {
+  label: string;
+  size: number;
+  id: number;
+  applyLink: string;
+  selected?: boolean;
+}
+
+export interface FacetLinxImpulse {
+  id: number;
+  attribute: string;
+  type: string;
+  fType?: number;
+  values: (DiscreteValueFacetLinxImpulse | ContinuousValueFacetLinxImpulse)[];
+  selected?: boolean;
+}
+
+export interface ProductOptions {
+  baseUrl: string;
 }

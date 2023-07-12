@@ -1,21 +1,23 @@
 import type {
+  Filter,
+  FilterToggleValue,
   Product,
   ProductGroup,
   PropertyValue,
   UnitPriceSpecification,
 } from "deco-sites/std/commerce/types.ts";
-
-import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
-
 import type {
+  ContinuousValueFacetLinxImpulse,
+  DiscreteValueFacetLinxImpulse,
+  FacetLinxImpulse,
   ProductLinxImpulse,
   ProductLinxImpulseRecommendations,
+  ProductOptions,
+  SelectedFacet,
   Sku,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
-
-interface ProductOptions {
-  baseUrl: string;
-}
+import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
+import { formatPrice } from "deco-sites/std/packs/linxImpulse/utils/format.ts";
 
 const toProductGroupAdditionalProperties = ({ details }: ProductLinxImpulse) =>
   Object.keys(details).flatMap((property) => {
@@ -217,3 +219,100 @@ export const toProductLinxImpulse = (
     ],
   };
 };
+
+export const filtersFromURL = (url: URL) => {
+  const selectedFacets: SelectedFacet[] = [];
+
+  url.searchParams.forEach((value, name) => {
+    const [filter, key] = name.split(".");
+
+    if (filter === "filter" && typeof key === "string") {
+      selectedFacets.push({ key, value });
+    }
+  });
+
+  return selectedFacets;
+};
+
+export const mergeFacets = (
+  f1: SelectedFacet[],
+  f2: SelectedFacet[],
+): SelectedFacet[] => {
+  const facetKey = (facet: SelectedFacet) =>
+    `key:${facet.key}-value:${facet.value}`;
+  const merged = new Map<string, SelectedFacet>();
+
+  for (const f of f1) {
+    merged.set(facetKey(f), f);
+  }
+  for (const f of f2) {
+    merged.set(facetKey(f), f);
+  }
+
+  return [...merged.values()];
+};
+
+export const filtersToSearchParams = (
+  selectedFacets: SelectedFacet[],
+  url: URL,
+) => {
+  for (const [key] of url.searchParams.entries()) {
+    if (key.startsWith("filter")) {
+      url.searchParams.delete(key);
+    }
+  }
+
+  const searchParams = new URLSearchParams(url.searchParams);
+  searchParams.delete("filters");
+
+  for (const { key, value } of selectedFacets) {
+    searchParams.append(`filter.${key}`, value);
+  }
+
+  return searchParams;
+};
+
+const facetToToggle = (
+  selectedFacets: SelectedFacet[],
+  filterId: number,
+  url: URL,
+) =>
+(
+  item: ContinuousValueFacetLinxImpulse | DiscreteValueFacetLinxImpulse,
+): FilterToggleValue => {
+  const isPrice = "unityId" in item;
+  const value = isPrice
+    ? `c:${filterId}:${item.unityId}:${item.min.value}:${item.max.value}`
+    : `d:${filterId}:${item.id}`;
+  const label = isPrice
+    ? `${formatPrice(item.min.value)} - ${formatPrice(item.max.value)}`
+    : item.label;
+  const key = `${filterId}`;
+  const facet = { key, value };
+  const filters = item.selected
+    ? selectedFacets.filter((f) => f.key !== key || f.value !== value)
+    : [...selectedFacets, facet];
+
+  return {
+    value,
+    quantity: item.size,
+    selected: Boolean(item.selected),
+    url: `?${filtersToSearchParams(filters, url)}`,
+    label,
+  };
+};
+
+export const toFilter = (
+  filters: SelectedFacet[],
+  url: URL,
+) =>
+({ id, attribute, values }: FacetLinxImpulse): Filter => ({
+  "@type": "FilterToggle",
+  key: `${id}`,
+  label: attribute,
+  quantity: values.length,
+  values: values.filter((f) => f.size).map(facetToToggle(filters, id, url)),
+});
+
+export const toFiltersLinxImpulse = () => ({ value }: SelectedFacet) =>
+  `filter=${value}`;

@@ -2,12 +2,16 @@ import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type {
   SearchParams,
   SearchProductsResponse,
+  SelectedFacet,
   Sort,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
-
-import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
+import {
+  filtersFromURL,
+  mergeFacets,
+  toFilter,
+  toProduct,
+} from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
-
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 
 const sortOptions = [
@@ -28,6 +32,10 @@ const searchArgsOf = (props: Props, url: URL) => {
     sortOptions[0].value;
   const pageParam = Number(url.searchParams.get("page"));
   const currentPage = pageParam !== 0 ? pageParam ?? props.page ?? 1 : 1;
+  const selectedFacets = mergeFacets(
+    props.selectedFacets ?? [],
+    filtersFromURL(url),
+  );
 
   return {
     query,
@@ -35,6 +43,7 @@ const searchArgsOf = (props: Props, url: URL) => {
     count,
     hideUnavailableItems,
     page: currentPage,
+    selectedFacets,
   };
 };
 
@@ -44,14 +53,22 @@ export const withDefaultParams = ({
   count = 12,
   sort = "relevance",
   hideUnavailableItems,
-}: Partial<SearchParams>) =>
-  new URLSearchParams({
+  selectedFacets = [],
+}: Partial<SearchParams>) => {
+  const params = new URLSearchParams({
     terms: query,
     page: `${page}`,
     resultsPerPage: `${count}`,
     sortBy: sort,
     showOnlyAvailable: `${hideUnavailableItems}`,
   });
+
+  selectedFacets.map(({ value }) => {
+    params.append("filter", value);
+  });
+
+  return params;
+};
 
 export interface Props {
   /**
@@ -69,6 +86,12 @@ export interface Props {
    * @title Sorting
    */
   sort?: Sort;
+
+  /**
+   * @title Selected Facets
+   * @description Override selected facets from url
+   */
+  selectedFacets?: SelectedFacet[];
 
   /**
    * @title Hide Unavailable Items
@@ -98,15 +121,15 @@ const loader = async (
   const url = new URL(baseUrl);
   const linximpulse = createClient();
 
-  const { page, ...args } = searchArgsOf(props, url);
-  const params = withDefaultParams({ ...args, page });
+  const { selectedFacets, page, ...args } = searchArgsOf(props, url);
+  const params = withDefaultParams({ ...args, page, selectedFacets });
 
   const searchData = await linximpulse.search(params) as SearchProductsResponse;
 
   const products = searchData.products.map((product) =>
     toProduct(product, product.skus[0].properties, 0, { baseUrl })
   );
-
+  const filters = searchData.filters.map(toFilter(selectedFacets, url));
   const hasNextPage = Boolean(searchData.pagination.next);
   const hasPreviousPage = Boolean(searchData.pagination.prev);
   const nextPage = new URLSearchParams(url.searchParams);
@@ -132,7 +155,7 @@ const loader = async (
       }],
       numberOfItems: 1,
     },
-    filters: [],
+    filters,
     products,
     pageInfo: {
       nextPage: hasNextPage ? `?${nextPage}` : undefined,
