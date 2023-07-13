@@ -1,14 +1,31 @@
+/**
+ * INSTRUCTIONS
+ *
+ * 1. Import this component to your Footer section:
+ *    import PoweredByDeco from "deco-sites/std/components/PoweredByDeco.tsx";
+ *
+ * 2. Insert it in your code:
+ *    <PoweredByDeco />
+ *
+ *    Default color is the same of the default text, but you can choose one of this: "Black" | "Green" | "Dark green" | "White"
+ *    Ej: <PoweredByDeco color="Green" />
+ *
+ *    You can change the logo size (in px) as well. Default is w:90 h:20
+ *    Ej: <PoweredByDeco width={120} />
+ */
+
 export default function PoweredByDeco({
   color = "Auto",
   width = 90,
 }: {
-  color?: "Auto" | "Black" | "Green" | "White";
+  color?: "Auto" | "Black" | "Green" | "Dark green" | "White";
   width?: number;
 }) {
   const colorClass = {
     "Auto": "currentColor",
     "Black": "#0A2121",
     "Green": "#02F67C",
+    "Dark green": "014C26",
     "White": "#ffffff",
   };
 
