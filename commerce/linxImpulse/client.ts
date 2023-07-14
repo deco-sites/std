@@ -26,12 +26,30 @@ export const createClient = () => {
     );
   };
 
+  const getProductBySlug = (term: string) => {
+    return fetchAPI(
+      `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&terms=${term}&hide=quickFilters&hide=suggestions&hide=filters`,
+      { headers: requestHeaders },
+    );
+  };
+
+  const similarItems = (productId: string) => {
+    return fetchAPI(
+      `${recommendationsbaseUrl}/pages/recommendations?apiKey=${apiKey}&name=product&source=desktop&productId=${productId}&productFormat=complete`,
+      { headers: requestHeaders },
+    );
+  };
+
   return {
     pages: {
       recommendations,
     },
     autocompletes: {
       popularTerms,
+    },
+    product: {
+      getProductBySlug,
+      similarItems,
     },
   };
 };
