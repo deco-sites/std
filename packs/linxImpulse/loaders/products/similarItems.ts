@@ -10,12 +10,6 @@ import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
 
 export interface Props {
   /**
-   * @title Product ID
-   * @description overides the slug
-   */
-  productId?: string;
-
-  /**
    * @title Position
    */
   position: Position;
@@ -29,13 +23,12 @@ const loader = async (
   props: Props,
   req: Request,
 ): Promise<Product[] | null> => {
-  const { position, productId: productIdByLoader } = props;
+  const { position } = props;
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
 
   try {
     const linximpulse = createClient();
-
     const productSlug = url.pathname.split("/")[1].replaceAll("-", " ");
     const { products: productsBySlug } = await linximpulse.product
       .getProductBySlug(productSlug) as SearchProductsResponse;
@@ -43,11 +36,10 @@ const loader = async (
       return product.skus.some((sku) => sku.sku === skuId);
     });
 
-    const productId = product?.id ?? productIdByLoader;
-    if (!productId) return null;
+    if (!product?.id) return null;
 
     const recommendationsResponse = await linximpulse.product.similarItems(
-      productId,
+      product?.id,
     ) as PagesRecommendationsResponse;
     let shelfs;
 
