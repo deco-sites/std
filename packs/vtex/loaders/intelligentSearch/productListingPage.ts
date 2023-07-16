@@ -245,13 +245,11 @@ const loader = async (
   const segment = getSegment(req);
   const search = vtex.api.io._v.api["intelligent-search"];
   const currentPageoffset = props.pageOffset ?? 1;
-
   const {
     selectedFacets: baseSelectedFacets,
     page,
     ...args
   } = searchArgsOf(props, url);
-
   const pageTypesPromise = pageTypesFromPathname(url.pathname, ctx);
   const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)
@@ -260,7 +258,6 @@ const loader = async (
   const selected = withDefaultFacets(selectedFacets, ctx);
   const fselected = selected.filter((f) => f.key !== "price");
   const params = withDefaultParams({ ...args, page }, ctx);
-
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
     fetchAPI<ProductSearchResult>(
@@ -304,7 +301,9 @@ const loader = async (
     })
   );
 
-  const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets));
+  const filters = facets.filter((f) => !f.hidden).map(
+    toFilter(selectedFacets, args.query),
+  );
   const pageTypes = await pageTypesPromise;
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
