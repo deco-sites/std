@@ -30,14 +30,15 @@ const mapOrderFormItemsToAnalyticsItems = (
 
   return items.map((item, index) => ({
     item_id: item.productId,
-    item_name: item.skuName,
+    item_name: item.name ?? item.skuName ?? "",
     coupon,
-    discount: item.price - item.sellingPrice,
+    discount: Number(((item.price - item.sellingPrice) / 100).toFixed(2)),
     index,
     item_brand: item.additionalInfo.brandName ?? "",
-    item_variant: item.id,
-    price: item.price,
+    item_variant: item.skuName,
+    price: item.price / 100,
     quantity: item.quantity,
+    affiliation: item.seller,
     ...(mapItemCategoriesToAnalyticsCategories(item)),
   }));
 };
