@@ -30,12 +30,13 @@ import * as $23 from "./functions/shopifyProductList.ts";
 import * as $24 from "./functions/shopifyProductDetailsPage.ts";
 import * as $25 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $26 from "./functions/requestToParam.ts";
-import * as $$0 from "./accounts/vnda.ts";
-import * as $$1 from "./accounts/nuvemShop.ts";
-import * as $$2 from "./accounts/yourViews.ts";
-import * as $$3 from "./accounts/vtex.ts";
-import * as $$4 from "./accounts/shopify.ts";
-import * as $$5 from "./accounts/occ.ts";
+import * as $$0 from "./accounts/butterCMS.ts";
+import * as $$1 from "./accounts/vnda.ts";
+import * as $$2 from "./accounts/nuvemShop.ts";
+import * as $$3 from "./accounts/yourViews.ts";
+import * as $$4 from "./accounts/vtex.ts";
+import * as $$5 from "./accounts/shopify.ts";
+import * as $$6 from "./accounts/occ.ts";
 import * as $$$0 from "./loaders/vtex/legacy/productList.ts";
 import * as $$$1 from "./loaders/vtex/legacy/productDetailsPage.ts";
 import * as $$$2 from "./loaders/vtex/legacy/productListingPage.ts";
@@ -162,12 +163,13 @@ const manifest = {
     "deco-sites/std/functions/vtexWishlist.ts": $11,
   },
   "accounts": {
-    "deco-sites/std/accounts/nuvemShop.ts": $$1,
-    "deco-sites/std/accounts/occ.ts": $$5,
-    "deco-sites/std/accounts/shopify.ts": $$4,
-    "deco-sites/std/accounts/vnda.ts": $$0,
-    "deco-sites/std/accounts/vtex.ts": $$3,
-    "deco-sites/std/accounts/yourViews.ts": $$2,
+    "deco-sites/std/accounts/butterCMS.ts": $$0,
+    "deco-sites/std/accounts/nuvemShop.ts": $$2,
+    "deco-sites/std/accounts/occ.ts": $$6,
+    "deco-sites/std/accounts/shopify.ts": $$5,
+    "deco-sites/std/accounts/vnda.ts": $$1,
+    "deco-sites/std/accounts/vtex.ts": $$4,
+    "deco-sites/std/accounts/yourViews.ts": $$3,
   },
   "loaders": {
     "$live/loaders/state.ts": i1$0,
