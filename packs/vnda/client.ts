@@ -1,12 +1,16 @@
-import { SortOption } from "../types.ts";
+import { SortOption } from "../../commerce/types.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
-import { Account as ConfigVNDA } from "../../packs/vnda/accounts/vnda.ts";
+import { Account as ConfigVNDA } from "./accounts/vnda.ts";
 import {
+  Banner,
   ProductGetParams,
-  ProductGetResultVNDA,
+  ProductGetResult,
   ProductSearchParams,
-  ProductSearchResultVNDA,
+  ProductSearchResult,
+  RelatedItemTag,
+  SEO,
+  TagsSearchParams,
 } from "./types.ts";
 
 const DOMAIN_HEADER = "X-Shop-Host";
@@ -45,7 +49,7 @@ export const createClient = (params: ConfigVNDA) => {
   const getProduct = async (params: ProductGetParams) => {
     try {
       const endpoint = `products/${params.id}`;
-      return await fetcher<ProductGetResultVNDA>(endpoint);
+      return await fetcher<ProductGetResult>(endpoint);
     } catch {
       // the VNDA's API does not returns "ok" when a product is not found.
       // so this try/catch is needed to avoid crashes
@@ -63,7 +67,40 @@ export const createClient = (params: ConfigVNDA) => {
     });
 
     const endpoint = `products/search?${qs}`;
-    return fetcher<ProductSearchResultVNDA>(endpoint);
+    return fetcher<ProductSearchResult>(endpoint);
+  };
+
+  const getDefaultBanner = () =>
+    fetcher<Banner[]>(
+      `/api/v2/banners?only_valid=true&tag=listagem-banner-principal`,
+    );
+
+  const getSEO = (type: "Product" | "Page" | "Tag") =>
+  (
+    resourceId: string,
+  ) => {
+    const qs = new URLSearchParams();
+    qs.set("resource_type", type);
+    if (type !== "Tag") qs.set("resource_id", resourceId);
+    if (type === "Tag") qs.set(`code${resourceId}`, "");
+    qs.set("type", "category");
+
+    return fetcher<SEO[]>(
+      `/api/v2/seo_data?${qs.toString()}`,
+    );
+  };
+
+  const getProductSEO = getSEO("Product");
+  const getPageSEO = getSEO("Page");
+  const getTagSEO = getSEO("Tag");
+
+  const getTags = (params: TagsSearchParams) => {
+    const qs = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      qs.set(key, value);
+    });
+
+    return fetcher<RelatedItemTag[]>(`/api/v2/tags?${qs.toString()}`);
   };
 
   return {
@@ -71,5 +108,14 @@ export const createClient = (params: ConfigVNDA) => {
       search: searchProduct,
       get: getProduct,
     },
+    banners: {
+      default: getDefaultBanner,
+    },
+    seo: {
+      product: getProductSEO,
+      page: getPageSEO,
+      tag: getTagSEO,
+    },
+    tags: getTags,
   };
 };

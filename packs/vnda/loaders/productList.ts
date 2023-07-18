@@ -1,13 +1,11 @@
-import { Account as ConfigVNDA } from "../packs/vnda/accounts/vnda.ts";
-import { createClient } from "../commerce/vnda/client.ts";
-import { toProduct } from "../commerce/vnda/transform.ts";
-import type { LiveState } from "$live/types.ts";
-import type { Product } from "../commerce/types.ts";
-import type { LoaderFunction } from "$live/types.ts";
+import { Context } from "../accounts/vnda.ts";
+import { createClient } from "../client.ts";
+import { toProduct } from "../utils/transform.ts";
+import type { Product } from "deco-sites/std/commerce/types.ts";
 
 export interface Props {
   /** @description total number of items to display */
-  limit: number;
+  count: number;
 
   /** @description query to use on search */
   term?: string;
@@ -26,20 +24,23 @@ export interface Props {
  * @title VNDA - Search Products
  * @description Use it in Shelves and static Galleries.
  */
-const productListLoader: LoaderFunction<
-  Props,
-  Product[] | null,
-  LiveState<{ configVNDA: ConfigVNDA }>
-> = async (req, ctx, props) => {
+const productListLoader = async (
+  props: Props,
+  req: Request,
+  ctx: Context,
+): Promise<Product[] | null> => {
   const url = new URL(req.url);
-  const { configVNDA } = ctx.state.global;
+  const { configVNDA } = ctx;
+
+  if (!configVNDA) return null;
+
   const client = createClient(configVNDA);
 
   const search = await client.product.search({
     term: props?.term,
     wildcard: props?.wildcard,
     sort: props?.sort,
-    per_page: props?.limit,
+    per_page: props?.count,
     tags: props?.tags,
   });
 
@@ -50,9 +51,7 @@ const productListLoader: LoaderFunction<
     });
   });
 
-  return {
-    data: products,
-  };
+  return products;
 };
 
 export default productListLoader;

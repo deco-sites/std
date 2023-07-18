@@ -1,6 +1,6 @@
 import { Account as ConfigVNDA } from "../packs/vnda/accounts/vnda.ts";
-import { createClient } from "../commerce/vnda/client.ts";
-import { toProduct, useVariant } from "../commerce/vnda/transform.ts";
+import { createClient } from "../packs/vnda/client.ts";
+import { toProduct, useVariant } from "../packs/vnda/utils/transform.ts";
 import type { LiveState } from "$live/types.ts";
 import type { LoaderFunction } from "$live/types.ts";
 import type { ProductDetailsPage } from "../commerce/types.ts";

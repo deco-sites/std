@@ -70,6 +70,16 @@ interface ProductInstallments {
   total: number;
 }
 
+export interface TagsSearchParams {
+  page?: number;
+  per_page?: number;
+  type?: string;
+  types?: string[];
+  name: string;
+  names?: string[];
+  sort?: "asc" | "desc";
+}
+
 export interface ProductGetParams {
   id?: string;
 }
@@ -250,6 +260,7 @@ export interface RelatedItemVariant {
   sale_price: number;
   intl_price: number;
   installments: RelatedItemInstallment[];
+
   stock: number;
   quantity: number;
   quantity_sold: number;
@@ -261,6 +272,7 @@ export interface RelatedItemVariant {
   attribute3: string;
   properties: Record<string, Property | null>;
   inventories: Inventory[];
+
   handling_days: number;
   barcode: string;
   weight: number;
@@ -281,6 +293,7 @@ export interface RelatedItem {
   image_url: string;
   url: string;
   tags: RelatedItemTag[];
+
   price: number;
   on_sale: boolean;
   sale_price: number;
@@ -294,12 +307,39 @@ export interface RelatedItem {
   installments: RelatedItemInstallment[];
 }
 
-export type Coupon =
-  | {
-    code: string;
-    discount: number;
-    rebate_token: string | null;
-    rebate_discount: number;
-  }
-  | "Error"
-  | "Removed";
+export type Coupon = {
+  code: string;
+  discount: number;
+  rebate_token: string | null;
+  rebate_discount: number;
+};
+
+export interface Banner {
+  id: string;
+  url: string | null;
+  external: boolean;
+  updated_at: string;
+  file_uid: string;
+  file_name: string;
+  title: string;
+  description: string | null;
+  tag: string;
+  norder: number;
+  html_description: string;
+  plain_description: string | null;
+  subtitle: string | null;
+  start_at: string | null;
+  end_at: string | null;
+  small_thumb: string;
+  big_thumb: string;
+  color: string | null;
+}
+
+export interface SEO {
+  id: number;
+  title?: string;
+  description?: string | null;
+  resource_type: string;
+  resource_id: number;
+  parent_id: null | number;
+}

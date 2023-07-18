@@ -4,20 +4,37 @@ import {
   Product,
   ProductLeaf,
   PropertyValue,
+  Seo,
   UnitPriceSpecification,
-} from "../types.ts";
+} from "deco-sites/std/commerce/types.ts";
 
 import {
   ProductBaseVNDA,
   ProductGetResultVNDA,
   ProductSearchResultVNDA,
   ProductVariationVNDA,
-} from "./types.ts";
+  VNDASEO,
+} from "../types.ts";
 
 interface ProductOptions {
   url: URL;
   /** Price coded currency, e.g.: USD, BRL */
   priceCurrency: string;
+}
+
+export function getProductCategoryTag(product: ProductGetResultVNDA) {
+  return product.tags.filter(({ type }) => type === "categoria")[0];
+}
+
+export function getSEOFromTag(
+  tag: Pick<VNDASEO, "title" | "description">,
+  req: Request,
+): Seo {
+  return {
+    title: tag.title || "",
+    description: tag.description || "",
+    canonical: req.url,
+  };
 }
 
 function getProductURL(
