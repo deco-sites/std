@@ -76,7 +76,7 @@ const searchLoader = async (
   ]);
 
   const categoryTag = categoryTags
-    ? categoryTags.find((tag) => tag.name.toLowerCase() === props.slug)
+    ? categoryTags.find((tag) => tag.name.toLowerCase() === termOrSlug)
     : undefined;
   // TODO: get the tag of category to use with seo tag API.
   // const seoPromise = categoryTag ? client.seo.tag(categoryTag.name) : undefined;
