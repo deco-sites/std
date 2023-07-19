@@ -29,21 +29,16 @@ const dev = async (
       .then((mod) => mod.default)
       .catch(() => DEFAULT_OPTIONS);
 
-  console.log("config", config);
-
   const processor = postcss([
     (tailwindcss as PluginCreator)(config),
     autoprefixer(),
     cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
   ]);
 
-  const css = await Deno.readTextFile(FROM).catch((err) => {
-    console.log(err, "error when generating css");
+  const css = await Deno.readTextFile(FROM).catch((_err) => {
     return DEFAULT_TAILWIND_CSS;
   });
-  console.log("CSS", css);
   const content = await processor.process(css, { from: FROM, to: TO });
-  console.log("Content", content);
 
   await ensureFile(TO);
   await Deno.writeTextFile(TO, content.css, { create: true });

@@ -1,15 +1,11 @@
 import { deferred } from "std/async/deferred.ts";
-import { context } from "$live/live.ts";
 import type { Handlers } from "$fresh/server.ts";
 
 export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
 export const tailwindBundle = deferred();
-
-if (context.isDeploy) {
-  tailwindBundle.resolve();
-}
+tailwindBundle.resolve();
 
 export const handler: Handlers = {
   GET: async () => {
