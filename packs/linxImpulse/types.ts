@@ -42,7 +42,7 @@ export type Sku = {
   customBusiness?: Record<string, unknown>;
 };
 
-interface ProductCommon {
+export interface ProductCommon {
   id: string;
   name: string;
   description: string;
@@ -96,12 +96,12 @@ export type Sort =
   | "ascReview"
   | "ascSold";
 
-interface Suggestions {
+export interface Suggestions {
   query: string;
   link: string;
 }
 
-interface FilterValue {
+export interface FilterValue {
   label: string;
   size: number;
   idO: string;
@@ -117,21 +117,21 @@ export interface FilterLinxImpulse {
   values: FilterValue[];
 }
 
-interface Pagination {
+export interface Pagination {
   first: string;
   last: string;
   next?: string;
   prev?: string;
 }
 
-interface SortOption {
+export interface SortOption {
   label: string;
   name: string;
   type: string;
   applyLink: string;
 }
 
-interface Queries {
+export interface Queries {
   original: string;
   normalized: string;
   processed: string;
