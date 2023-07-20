@@ -1,5 +1,5 @@
 import { SortOption } from "../../commerce/types.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
 import { Account as ConfigVNDA } from "./accounts/vnda.ts";
 import {
@@ -14,6 +14,7 @@ import {
 } from "./types.ts";
 
 const DOMAIN_HEADER = "X-Shop-Host";
+const PAGINATION_HEADER = "x-pagination";
 const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
 const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
 
@@ -28,6 +29,11 @@ export const VNDA_SORT_OPTIONS: SortOption[] = [
 export const createClient = (params: ConfigVNDA) => {
   const { domain, authToken, useSandbox } = params;
   const baseUrl = useSandbox ? BASE_URL_SANDBOX : BASE_URL_PROD;
+  const defaultHeaders = {
+    [DOMAIN_HEADER]: domain,
+    accept: "application/json",
+    Authorization: `Bearer ${authToken}`,
+  };
 
   const fetcher = <T>(
     endpoint: string,
@@ -38,11 +44,7 @@ export const createClient = (params: ConfigVNDA) => {
       body: data ? JSON.stringify(data) : undefined,
       method,
       withProxyCache: method === "GET",
-      headers: {
-        [DOMAIN_HEADER]: domain,
-        accept: "application/json",
-        Authorization: `Bearer ${authToken}`,
-      },
+      headers: defaultHeaders,
     });
   };
 
@@ -57,7 +59,9 @@ export const createClient = (params: ConfigVNDA) => {
     }
   };
 
-  const searchProduct = (params: ProductSearchParams) => {
+  const searchProduct = async (
+    params: ProductSearchParams,
+  ): Promise<ProductSearchResult> => {
     const { type_tags, ...knownParams } = params;
     const typeTagsEntries = type_tags?.map((tag) => [tag.key, tag.value]) ?? [];
 
@@ -67,7 +71,25 @@ export const createClient = (params: ConfigVNDA) => {
     });
 
     const endpoint = `products/search?${qs}`;
-    return fetcher<ProductSearchResult>(endpoint);
+
+    const response = await fetchSafe(new URL(endpoint, baseUrl), {
+      withProxyCache: true,
+      headers: defaultHeaders,
+    });
+
+    const data = await response.json();
+    const pagination = response.headers.get(PAGINATION_HEADER);
+
+    return {
+      ...data,
+      pagination: pagination ? JSON.parse(pagination) : {
+        total_pages: 0,
+        total_count: 0,
+        current_page: params.page,
+        prev_page: false,
+        next_page: false,
+      },
+    };
   };
 
   const getDefaultBanner = () =>

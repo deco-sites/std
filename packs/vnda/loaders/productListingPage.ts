@@ -81,7 +81,8 @@ const searchLoader = async (
   // TODO: get the tag of category to use with seo tag API.
   // const seoPromise = categoryTag ? client.seo.tag(categoryTag.name) : undefined;
 
-  const products = search.results.map((product) => {
+  const { results: searchResults, pagination } = search;
+  const products = searchResults.map((product) => {
     return toProduct(product, {
       url,
       priceCurrency: configVNDA.defaultPriceCurrency || "USD",
@@ -89,10 +90,15 @@ const searchLoader = async (
   });
 
   const nextPage = new URLSearchParams(url.searchParams);
-  nextPage.set("page", (page + 1).toString());
-
   const previousPage = new URLSearchParams(url.searchParams);
-  previousPage.set("page", (page - 1).toString());
+
+  if (pagination.next_page) {
+    nextPage.set("page", (page + 1).toString());
+  }
+
+  if (pagination.prev_page) {
+    previousPage.set("page", (page - 1).toString());
+  }
 
   return {
     "@type": "ProductListingPage",
@@ -106,9 +112,11 @@ const searchLoader = async (
     filters: toFilters(search.aggregations, typeTags, cleanUrl),
     products: products,
     pageInfo: {
-      nextPage: `?${nextPage}`,
-      previousPage: `?${previousPage}`,
+      nextPage: pagination.next_page ? `?${nextPage}` : undefined,
+      previousPage: pagination.prev_page ? `?${previousPage}` : undefined,
       currentPage: page,
+      records: pagination.total_count,
+      recordPerPage: count,
     },
     sortOptions: VNDA_SORT_OPTIONS,
   };

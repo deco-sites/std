@@ -11,6 +11,13 @@ export interface ProductSearchResult {
       Array<{ name: string; title: string; count: number }>
     >;
   };
+  pagination: {
+    total_pages: number;
+    total_count: number;
+    current_page: number;
+    prev_page: boolean;
+    next_page: boolean;
+  };
 }
 
 export interface ProductGetResult extends ProductBase {
