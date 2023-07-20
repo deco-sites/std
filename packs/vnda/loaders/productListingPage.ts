@@ -54,7 +54,9 @@ const searchLoader = async (
   const sort = url.searchParams.get("sort") as VNDASort;
   const page = Number(url.searchParams.get("page")) || 1;
 
-  const term = props.term || props.slug || url.searchParams.get("q") ||
+  const isSearchPage = url.pathname === "/busca";
+  const qQueryString = url.searchParams.get("q");
+  const term = props.term || props.slug || qQueryString ||
     undefined;
 
   const search = await client.product.search({
@@ -64,12 +66,15 @@ const searchLoader = async (
     per_page: count,
     tags: props.tags,
     type_tags: typeTags,
+    wildcard: true,
   });
 
   const categoryTagName = props.term || url.pathname.split("/").pop() || "";
   const [seo, categoryTag] = await Promise.all([
     client.seo.tag(categoryTagName),
-    client.tag(categoryTagName),
+    isSearchPage
+      ? client.tag(categoryTagName).catch(() => undefined)
+      : undefined,
   ]);
 
   const { results: searchResults, pagination } = search;
@@ -91,7 +96,7 @@ const searchLoader = async (
     previousPage.set("page", (page - 1).toString());
   }
 
-  const hasSEO = (url.pathname !== "/busca") && (seo?.[0] || categoryTag);
+  const hasSEO = !isSearchPage && (seo?.[0] || categoryTag);
 
   return {
     "@type": "ProductListingPage",
