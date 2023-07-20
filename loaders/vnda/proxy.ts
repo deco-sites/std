@@ -6,6 +6,7 @@ const PATHS_TO_PROXY = [
   "/carrinho/*",
   "/cep",
   "/cep/*",
+  "/common/*",
   "/checkout/*",
   "/components/*",
   "/conta",
