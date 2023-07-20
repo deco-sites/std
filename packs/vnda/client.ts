@@ -104,7 +104,7 @@ export const createClient = (params: ConfigVNDA) => {
     const qs = new URLSearchParams();
     qs.set("resource_type", type);
     if (type !== "Tag") qs.set("resource_id", resourceId);
-    if (type === "Tag") qs.set(`code${resourceId}`, "");
+    if (type === "Tag") qs.set(`code`, resourceId);
     qs.set("type", "category");
 
     return fetcher<SEO[]>(
@@ -116,13 +116,15 @@ export const createClient = (params: ConfigVNDA) => {
   const getPageSEO = getSEO("Page");
   const getTagSEO = getSEO("Tag");
 
-  const getTags = (params: TagsSearchParams) => {
+  const getTags = (name: string, params?: TagsSearchParams) => {
     const qs = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries(params ?? {}).forEach(([key, value]) => {
       qs.set(key, value);
     });
 
-    return fetcher<RelatedItemTag[]>(`/api/v2/tags?${qs.toString()}`);
+    return fetcher<RelatedItemTag[]>(
+      `/api/v2/tags/${name}?${qs.toString()}`,
+    );
   };
 
   return {

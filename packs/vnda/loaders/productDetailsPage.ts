@@ -19,7 +19,8 @@ const productPageLoader = async (
 
   const client = createClient(configVNDA);
 
-  const id = url.searchParams.get("id");
+  const id = url.pathname.split("-").pop()?.trim() ||
+    url.searchParams.get("id");
 
   const [getResult, seo] = await Promise.all([
     client.product.get({
@@ -50,11 +51,11 @@ const productPageLoader = async (
       numberOfItems: 0,
     },
     product,
-    seo: seo?.[0] ? getSEOFromTag(seo[0], req) : {
+    seo: getSEOFromTag({
       title: getResult.name,
       description: product.description || "",
-      canonical: req.url,
-    },
+      ...seo?.[0],
+    }, req),
   };
 };
 

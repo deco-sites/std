@@ -54,32 +54,23 @@ const searchLoader = async (
   const sort = url.searchParams.get("sort") as VNDASort;
   const page = Number(url.searchParams.get("page")) || 1;
 
-  const termOrSlug = props.term || props.slug;
-  const term = termOrSlug || url.searchParams.get("q") ||
+  const term = props.term || props.slug || url.searchParams.get("q") ||
     undefined;
 
-  const [search, categoryTags] = await Promise.all([
-    client.product.search({
-      term,
-      sort,
-      page,
-      per_page: count,
-      tags: props.tags,
-      type_tags: typeTags,
-    }),
-    termOrSlug
-      ? await client.tags({
-        name: termOrSlug,
-        type: "categoria",
-      })
-      : undefined,
-  ]);
+  const search = await client.product.search({
+    term,
+    sort,
+    page,
+    per_page: count,
+    tags: props.tags,
+    type_tags: typeTags,
+  });
 
-  const categoryTag = categoryTags
-    ? categoryTags.find((tag) => tag.name.toLowerCase() === termOrSlug)
-    : undefined;
-  // TODO: get the tag of category to use with seo tag API.
-  // const seoPromise = categoryTag ? client.seo.tag(categoryTag.name) : undefined;
+  const categoryTagName = props.term || url.pathname.split("/").pop() || "";
+  const [seo, categoryTag] = await Promise.all([
+    client.seo.tag(categoryTagName),
+    client.tags(categoryTagName),
+  ]);
 
   const { results: searchResults, pagination } = search;
   const products = searchResults.map((product) => {
@@ -100,9 +91,13 @@ const searchLoader = async (
     previousPage.set("page", (page - 1).toString());
   }
 
+  const hasSEO = (url.pathname !== "/busca") && (seo?.[0] || categoryTag);
+
   return {
     "@type": "ProductListingPage",
-    seo: categoryTag ? getSEOFromTag(categoryTag, req) : undefined,
+    seo: hasSEO
+      ? getSEOFromTag({ ...categoryTag, ...seo?.[0] }, req)
+      : undefined,
     // TODO: Find out what's the right breadcrumb on vnda
     breadcrumb: {
       "@type": "BreadcrumbList",
