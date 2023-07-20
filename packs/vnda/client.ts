@@ -15,6 +15,8 @@ import {
 
 const DOMAIN_HEADER = "X-Shop-Host";
 const PAGINATION_HEADER = "x-pagination";
+const USER_AGENT_HEADER = "User-Agent";
+const DECO_USER_AGENT = "decocx/1.0";
 const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
 const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
 
@@ -30,6 +32,7 @@ export const createClient = (params: ConfigVNDA) => {
   const { domain, authToken, useSandbox } = params;
   const baseUrl = useSandbox ? BASE_URL_SANDBOX : BASE_URL_PROD;
   const defaultHeaders = {
+    [USER_AGENT_HEADER]: DECO_USER_AGENT,
     [DOMAIN_HEADER]: domain,
     accept: "application/json",
     Authorization: `Bearer ${authToken}`,
