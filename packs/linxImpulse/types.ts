@@ -41,7 +41,7 @@ export type Sku = {
   customBusiness: Record<string, unknown>;
 };
 
-interface ProductCommon {
+export interface ProductCommon {
   id: string;
   name: string;
   description: string;

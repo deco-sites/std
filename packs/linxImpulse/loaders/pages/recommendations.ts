@@ -5,7 +5,9 @@ import {
   toProduct,
   toProductLinxImpulse,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
+import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 export type Position = "top" | "middle" | "bottom";
 
@@ -71,14 +73,28 @@ export interface Props {
 const loader = async (
   props: Props,
   req: Request,
+  ctx: Context,
 ): Promise<Product[] | null> => {
+  const { configLinxImpulse: config } = ctx;
   const { position, feature, page } = props;
 
-  const linximpulse = createClient();
+  const linxImpulse = paths(config!);
 
-  const recommendationsResponse = await linximpulse.pages.recommendations(
-    page || "other",
-  ) as PagesRecommendationsResponse;
+  //temp while we don't have "secretKey"
+  const requestHeaders = {
+    origin: config?.url ?? "",
+    referer: config?.url ?? "",
+  };
+
+  const recommendationsResponse = await fetchAPI<PagesRecommendationsResponse>(
+    `${
+      linxImpulse.pages.recommendations.name(
+        page || "other",
+      )
+    }`,
+    { headers: requestHeaders },
+  );
+
   let shelfs;
 
   if (position) {

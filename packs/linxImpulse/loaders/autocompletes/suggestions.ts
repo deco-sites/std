@@ -8,7 +8,9 @@ import {
   toProduct,
   toSearchTerm,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
+import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 interface AutocompletesResponse {
   requestId: string;
@@ -38,34 +40,50 @@ export interface Props {
 const loaders = async (
   props: Props,
   req: Request,
+  ctx: Context,
 ): Promise<Suggestion | null> => {
+  const { configLinxImpulse: config } = ctx;
   const { query: term, countSuggestions, countProducts } = props;
 
   if (!term) return null;
 
-  const linximpulse = createClient();
-
-  const suggestionsData = await linximpulse.autocompletes
-    .suggestions(
-      term,
-      countSuggestions ?? 5,
-      countProducts ?? 5,
-    ) as AutocompletesResponse;
-
-  const options = {
-    baseUrl: req.url,
+  //temp while we don't have "secretKey"
+  const requestHeaders = {
+    origin: config?.url ?? "",
+    referer: config?.url ?? "",
   };
 
-  const products = suggestionsData.products.map((product) =>
-    toProduct(product, product.skus[0].properties, 0, options)
-  );
+  const linxImpulse = paths(config!);
 
-  const searches = toSearchTerm(suggestionsData);
+  try {
+    const suggestionsData = await fetchAPI<AutocompletesResponse>(
+      `${
+        linxImpulse.autocompletes.suggestions.term(
+          term,
+          countSuggestions ?? 5,
+          countProducts ?? 5,
+        )
+      }`,
+      { headers: requestHeaders },
+    );
 
-  return {
-    products,
-    searches,
-  };
+    const options = {
+      baseUrl: req.url,
+    };
+
+    const products = suggestionsData.products.map((product) =>
+      toProduct(product, product.skus[0].properties, 0, options)
+    );
+
+    const searches = toSearchTerm(suggestionsData);
+
+    return {
+      products,
+      searches,
+    };
+  } catch {
+    return null;
+  }
 };
 
 export default loaders;

@@ -3,7 +3,9 @@ import type { Suggestion } from "deco-sites/std/commerce/types.ts";
 import {
   toSearchTerm,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
+import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 interface AutocompletesPopularReponse {
   requestId: string;
@@ -29,13 +31,25 @@ export interface Props {
  */
 const loaders = async (
   props: Props,
+  _req: Request,
+  ctx: Context,
 ): Promise<Suggestion | null> => {
+  const { configLinxImpulse: config } = ctx;
   const { count } = props;
 
-  const linximpulse = createClient();
+  const linxImpulse = paths(config!);
 
-  const suggestions = await linximpulse.autocompletes
-    .popularTerms() as AutocompletesPopularReponse;
+  //temp while we don't have "secretKey"
+  const requestHeaders = {
+    origin: config?.url ?? "",
+    referer: config?.url ?? "",
+  };
+
+  const suggestions = await fetchAPI<AutocompletesPopularReponse>(
+    `${linxImpulse.autocompletes.popularTerms}`,
+    { headers: requestHeaders },
+  );
+
   const searches = toSearchTerm(suggestions);
 
   return {

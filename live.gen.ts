@@ -30,12 +30,13 @@ import * as $23 from "./functions/vtexProductList.ts";
 import * as $24 from "./functions/vtexProductListingPage.ts";
 import * as $25 from "./functions/vtexSuggestions.ts";
 import * as $26 from "./functions/vtexWishlist.ts";
-import * as $$0 from "./accounts/nuvemShop.ts";
-import * as $$1 from "./accounts/occ.ts";
-import * as $$2 from "./accounts/shopify.ts";
-import * as $$3 from "./accounts/vnda.ts";
-import * as $$4 from "./accounts/vtex.ts";
-import * as $$5 from "./accounts/yourViews.ts";
+import * as $$0 from "./accounts/linxImpulse.ts";
+import * as $$1 from "./accounts/nuvemShop.ts";
+import * as $$2 from "./accounts/occ.ts";
+import * as $$3 from "./accounts/shopify.ts";
+import * as $$4 from "./accounts/vnda.ts";
+import * as $$5 from "./accounts/vtex.ts";
+import * as $$6 from "./accounts/yourViews.ts";
 import * as $$$0 from "./loaders/linxImpulse/autocompletes/popular.ts";
 import * as $$$1 from "./loaders/linxImpulse/autocompletes/suggestions.ts";
 import * as $$$2 from "./loaders/linxImpulse/pages/recommendations.ts";
@@ -121,10 +122,11 @@ import * as i1$$$$$2 from "$live/matchers/MatchDate.ts";
 import * as i1$$$$$3 from "$live/matchers/MatchDevice.ts";
 import * as i1$$$$$4 from "$live/matchers/MatchEnvironment.ts";
 import * as i1$$$$$5 from "$live/matchers/MatchHost.ts";
-import * as i1$$$$$6 from "$live/matchers/MatchMulti.ts";
-import * as i1$$$$$7 from "$live/matchers/MatchRandom.ts";
-import * as i1$$$$$8 from "$live/matchers/MatchSite.ts";
-import * as i1$$$$$9 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$$$6 from "$live/matchers/MatchLocation.ts";
+import * as i1$$$$$7 from "$live/matchers/MatchMulti.ts";
+import * as i1$$$$$8 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$$$9 from "$live/matchers/MatchSite.ts";
+import * as i1$$$$$10 from "$live/matchers/MatchUserAgent.ts";
 import * as i1$$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$$1 from "$live/flags/everyone.ts";
 import * as i1$$$$$$2 from "$live/flags/flag.ts";
@@ -164,12 +166,13 @@ const manifest = {
     "deco-sites/std/functions/vtexWishlist.ts": $26,
   },
   "accounts": {
-    "deco-sites/std/accounts/nuvemShop.ts": $$0,
-    "deco-sites/std/accounts/occ.ts": $$1,
-    "deco-sites/std/accounts/shopify.ts": $$2,
-    "deco-sites/std/accounts/vnda.ts": $$3,
-    "deco-sites/std/accounts/vtex.ts": $$4,
-    "deco-sites/std/accounts/yourViews.ts": $$5,
+    "deco-sites/std/accounts/linxImpulse.ts": $$0,
+    "deco-sites/std/accounts/nuvemShop.ts": $$1,
+    "deco-sites/std/accounts/occ.ts": $$2,
+    "deco-sites/std/accounts/shopify.ts": $$3,
+    "deco-sites/std/accounts/vnda.ts": $$4,
+    "deco-sites/std/accounts/vtex.ts": $$5,
+    "deco-sites/std/accounts/yourViews.ts": $$6,
   },
   "loaders": {
     "$live/loaders/state.ts": i1$0,
@@ -274,10 +277,11 @@ const manifest = {
     "$live/matchers/MatchDevice.ts": i1$$$$$3,
     "$live/matchers/MatchEnvironment.ts": i1$$$$$4,
     "$live/matchers/MatchHost.ts": i1$$$$$5,
-    "$live/matchers/MatchMulti.ts": i1$$$$$6,
-    "$live/matchers/MatchRandom.ts": i1$$$$$7,
-    "$live/matchers/MatchSite.ts": i1$$$$$8,
-    "$live/matchers/MatchUserAgent.ts": i1$$$$$9,
+    "$live/matchers/MatchLocation.ts": i1$$$$$6,
+    "$live/matchers/MatchMulti.ts": i1$$$$$7,
+    "$live/matchers/MatchRandom.ts": i1$$$$$8,
+    "$live/matchers/MatchSite.ts": i1$$$$$9,
+    "$live/matchers/MatchUserAgent.ts": i1$$$$$10,
   },
   "flags": {
     "$live/flags/audience.ts": i1$$$$$$0,
