@@ -1,7 +1,5 @@
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
-import type { SearchParams } from "deco-sites/std/packs/linxImpulse/types.ts";
-
 const requestHeaders = {
   origin: `https://www.ibyte.com.br`,
   referer: `https://www.ibyte.com.br/`,
@@ -35,13 +33,6 @@ export const createClient = () => {
     );
   };
 
-  const search = (params: URLSearchParams) => {
-    return fetchAPI(
-      `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&${params}`,
-      { headers: requestHeaders },
-    );
-  };
-
   return {
     pages: {
       recommendations,
@@ -50,6 +41,5 @@ export const createClient = () => {
       popularTerms,
       autocompletesProducts,
     },
-    search,
   };
 };

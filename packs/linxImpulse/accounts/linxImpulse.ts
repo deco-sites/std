@@ -16,6 +16,11 @@ export interface Account extends AccountBlock {
    * @description Linx Impulse sales channel.
    */
   salesChannel: string;
+
+  /**
+   * @description Temp - origin/referer.
+   */
+  url?: string;
 }
 
 export type Context = FnContext<{

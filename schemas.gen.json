@@ -2307,6 +2307,17 @@
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductListingPage": {
       "type": "object",
       "properties": {
+        "configLinxImpulse": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Config Linx Impulse"
+        },
         "@type": {
           "type": "string",
           "const": "ProductListingPage",
@@ -2394,6 +2405,7 @@
         }
       },
       "required": [
+        "configLinxImpulse",
         "@type",
         "breadcrumb",
         "filters",
@@ -3494,6 +3506,14 @@
           "type": "string",
           "description": "Linx Impulse sales channel.",
           "title": "Sales Channel"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Temp - origin/referer.",
+          "title": "Url"
         }
       },
       "required": [
@@ -4168,6 +4188,31 @@
       ],
       "title": "deco-sites/std/packs/linxImpulse/loaders/pages/recommendations.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "SelectedFacet"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet"
+      },
+      "title": "SelectedFacet[]"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9zZWFyY2gudHM=@Props": {
       "type": "object",
       "properties": {
@@ -4239,6 +4284,11 @@
           ],
           "type": "string",
           "title": "Sorting"
+        },
+        "selectedFacets": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet[]",
+          "title": "Selected Facets",
+          "description": "Override selected facets from url"
         },
         "hideUnavailableItems": {
           "type": [

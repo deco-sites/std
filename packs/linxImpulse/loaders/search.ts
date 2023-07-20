@@ -11,8 +11,9 @@ import {
   toFilter,
   toProduct,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { createClient } from "deco-sites/std/commerce/linxImpulse/client.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 const sortOptions = [
   { value: "relevance", "label": "Relevância" },
@@ -74,13 +75,13 @@ export interface Props {
   /**
    * @description overides the query term
    */
-  query?: string;
+  query: string;
 
   /**
    * @title Items per page
    * @description number of products per page to display
    */
-  count: number;
+  count?: number;
 
   /**
    * @title Sorting
@@ -118,14 +119,21 @@ const loader = async (
   const { url: baseUrl } = req;
   const { configLinxImpulse: config } = ctx;
   const url = new URL(baseUrl);
-  const linximpulse = createClient();
+  const linxImpulse = paths(config!);
   const { selectedFacets, page, ...args } = searchArgsOf(props, url);
   const params = withDefaultParams({ ...args, page, selectedFacets });
 
+  //temp while we don't have "secretKey"
+  const requestHeaders = {
+    origin: config?.url ?? "",
+    referer: config?.url ?? "",
+  };
+
   try {
-    const searchData = await linximpulse.search(
-      params,
-    ) as SearchProductsResponse;
+    const searchData = await fetchAPI<SearchProductsResponse>(
+      `${linxImpulse.search.params(params)}`,
+      { headers: requestHeaders },
+    );
 
     const products = searchData.products.map((product) =>
       toProduct(product, product.skus[0].properties, 0, { baseUrl })
@@ -166,11 +174,7 @@ const loader = async (
         recordPerPage: props.count,
       },
       sortOptions,
-      seo: {
-        title: "",
-        description: "",
-        canonical: "",
-      },
+      seo: null,
     };
   } catch {
     return null;
