@@ -69,7 +69,7 @@ const searchLoader = async (
   const categoryTagName = props.term || url.pathname.split("/").pop() || "";
   const [seo, categoryTag] = await Promise.all([
     client.seo.tag(categoryTagName),
-    client.tags(categoryTagName),
+    client.tag(categoryTagName),
   ]);
 
   const { results: searchResults, pagination } = search;

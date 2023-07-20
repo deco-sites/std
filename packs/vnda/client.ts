@@ -1,4 +1,4 @@
-import { SortOption } from "../../commerce/types.ts";
+import { SortOption } from "deco-sites/std/commerce/types.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
 import { paramsToQueryString } from "./utils/queryBuilder.ts";
 import { Account as ConfigVNDA } from "./accounts/vnda.ts";
@@ -119,14 +119,19 @@ export const createClient = (params: ConfigVNDA) => {
   const getPageSEO = getSEO("Page");
   const getTagSEO = getSEO("Tag");
 
-  const getTags = (name: string, params?: TagsSearchParams) => {
+  const getTag = (name: string) =>
+    fetcher<RelatedItemTag>(
+      `/api/v2/tags/${name}`,
+    );
+
+  const getTags = (params?: TagsSearchParams) => {
     const qs = new URLSearchParams();
     Object.entries(params ?? {}).forEach(([key, value]) => {
       qs.set(key, value);
     });
 
     return fetcher<RelatedItemTag[]>(
-      `/api/v2/tags/${name}?${qs.toString()}`,
+      `/api/v2/tags?${qs.toString()}`,
     );
   };
 
@@ -143,6 +148,7 @@ export const createClient = (params: ConfigVNDA) => {
       page: getPageSEO,
       tag: getTagSEO,
     },
+    tag: getTag,
     tags: getTags,
   };
 };
