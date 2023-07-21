@@ -44,6 +44,7 @@ const loader = async (
       `${linxImpulse.product.getProductBySlug.term(productSlug)}`,
       { headers: requestHeaders },
     );
+
     const product = productsBySlug.find((product) => {
       return product.skus.some((sku) => sku.sku === skuId);
     });
@@ -53,7 +54,7 @@ const loader = async (
     const recommendationsResponse = await fetchAPI<
       PagesRecommendationsResponse
     >(
-      `${linxImpulse.product.similarItems.productId(productSlug)}`,
+      `${linxImpulse.product.similarItems.productId(product.id)}`,
       { headers: requestHeaders },
     );
     let shelfs;
