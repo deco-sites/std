@@ -80,8 +80,9 @@ export const toProduct = <P extends ProductLinxImpulse>(
     status,
     installment,
   } = product;
-  const { sku: skuId, eanCode, oldPrice, price, details: skuDetails, stock } =
-    sku;
+  const { eanCode, oldPrice, price, details: skuDetails, stock } = sku;
+
+  const skuId = skuDetails.skuSellers.sku;
 
   const categoriesString = categories.map((category) => category.name).join(
     DEFAULT_CATEGORY_SEPARATOR,
@@ -92,11 +93,9 @@ export const toProduct = <P extends ProductLinxImpulse>(
     product: ProductLinxImpulse,
     skuId?: string,
   ) => {
-    const linkText = product.url.split("//www.ibyte.com.br/")[1].replace(
-      "/p",
-      "",
-    );
-    const canonicalUrl = new URL(`/${linkText}/p`, origin);
+    const parsedUrl = new URL(product.url, origin);
+    const parsedPathName = parsedUrl.pathname;
+    const canonicalUrl = new URL(parsedPathName, origin);
 
     if (skuId) {
       canonicalUrl.searchParams.set("skuId", skuId);
@@ -163,7 +162,7 @@ export const toProduct = <P extends ProductLinxImpulse>(
     image: Object.values(images).map((url) => ({
       "@type": "ImageObject" as const,
       alternateName: "",
-      url: "https:" + url,
+      url: `${new URL(url, baseUrl)}`,
     })),
     offers: {
       "@type": "AggregateOffer",

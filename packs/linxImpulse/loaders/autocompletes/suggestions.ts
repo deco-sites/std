@@ -11,6 +11,7 @@ import {
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 
 interface AutocompletesResponse {
   requestId: string;
@@ -45,13 +46,12 @@ const loaders = async (
   const { configLinxImpulse: config } = ctx;
   const { query: term, countSuggestions, countProducts } = props;
 
-  if (!term) return null;
-
-  //temp while we don't have "secretKey"
-  const requestHeaders = {
-    origin: config?.url ?? "",
-    referer: config?.url ?? "",
-  };
+  const requestHeaders = !config?.secretKey
+    ? {
+      origin: config?.url ?? "",
+      referer: config?.url ?? "",
+    }
+    : undefined;
 
   const linxImpulse = paths(config!);
 
@@ -59,7 +59,7 @@ const loaders = async (
     const suggestionsData = await fetchAPI<AutocompletesResponse>(
       `${
         linxImpulse.autocompletes.suggestions.term(
-          term,
+          term ?? "",
           countSuggestions ?? 5,
           countProducts ?? 5,
         )
@@ -81,7 +81,10 @@ const loaders = async (
       products,
       searches,
     };
-  } catch {
+  } catch (err) {
+    if (err instanceof HttpError && err.status >= 500) {
+      throw err;
+    }
     return null;
   }
 };
