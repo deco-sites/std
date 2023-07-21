@@ -5,7 +5,11 @@ import type {
   SearchProductsResponse,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
 
-import { toProduct } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
+import {
+  toProduct,
+  toProductLinxImpulse,
+  toRequestHeader,
+} from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
@@ -30,12 +34,7 @@ const loader = async (
   const { position } = props;
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
-
-  //temp while we don't have "secretKey"
-  const requestHeaders = {
-    origin: config?.url ?? "",
-    referer: config?.url ?? "",
-  };
+  const requestHeaders = toRequestHeader(config!);
 
   try {
     const linxImpulse = paths(config!);
@@ -73,9 +72,13 @@ const loader = async (
 
     const products = shelfs
       .flatMap((shelf) =>
-        shelf.displays[0]?.recommendations.map((product) =>
-          toProduct(product, product.skus[0], 0, options)
-        )
+        shelf.displays[0]?.recommendations.map((productRecommendation) => {
+          const product = toProductLinxImpulse(
+            productRecommendation,
+            productRecommendation.skus[0],
+          );
+          return toProduct(product, product.skus[0].properties, 0, options);
+        })
       );
 
     return products;

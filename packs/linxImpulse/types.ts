@@ -225,7 +225,7 @@ export type Page =
 
 interface Display {
   references: string;
-  recommendations: ProductLinxImpulse[];
+  recommendations: ProductLinxImpulseRecommendations[];
 }
 
 export interface Shelf {
