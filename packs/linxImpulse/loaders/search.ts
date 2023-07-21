@@ -10,10 +10,12 @@ import {
   mergeFacets,
   toFilter,
   toProduct,
+  toRequestHeader,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 
 const sortOptions = [
   { value: "relevance", "label": "Relevância" },
@@ -120,14 +122,9 @@ const loader = async (
   const { configLinxImpulse: config } = ctx;
   const url = new URL(baseUrl);
   const linxImpulse = paths(config!);
+  const requestHeaders = toRequestHeader(config!);
   const { selectedFacets, page, ...args } = searchArgsOf(props, url);
   const params = withDefaultParams({ ...args, page, selectedFacets });
-
-  //temp while we don't have "secretKey"
-  const requestHeaders = {
-    origin: config?.url ?? "",
-    referer: config?.url ?? "",
-  };
 
   try {
     const searchData = await fetchAPI<SearchProductsResponse>(
@@ -176,7 +173,10 @@ const loader = async (
       sortOptions,
       seo: null,
     };
-  } catch {
+  } catch (err) {
+    if (err instanceof HttpError && err.status >= 500) {
+      throw err;
+    }
     return null;
   }
 };

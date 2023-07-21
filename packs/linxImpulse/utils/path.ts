@@ -8,7 +8,7 @@ export const paths = ({ apiKey, secretKey }: Account) => {
   return {
     search: {
       params: (params: URLSearchParams) =>
-        `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&${params}`,
+        `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&${params}${secretKeyParam}`,
     },
     pages: {
       recommendations: {

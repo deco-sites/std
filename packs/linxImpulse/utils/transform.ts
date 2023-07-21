@@ -17,21 +17,9 @@ import type {
   Sku,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
 import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
-// HEAD
 import { formatPrice } from "deco-sites/std/packs/linxImpulse/utils/format.ts";
-//
-import type {
-  ProductLinxImpulse,
-  ProductLinxImpulseRecommendations,
-  Sku,
-} from "deco-sites/std/packs/linxImpulse/types.ts";
-
 import { Account } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 
-interface ProductOptions {
-  baseUrl: string;
-}
-//main
 const toProductGroupAdditionalProperties = ({ details }: ProductLinxImpulse) =>
   Object.keys(details).flatMap((property) => {
     const propertyArray = details[property] as string[];
