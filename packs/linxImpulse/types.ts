@@ -6,6 +6,7 @@ export type Category = {
   id: string;
   name: string;
   parents: string[];
+  used?: boolean;
 };
 
 export type Sku = {
@@ -38,7 +39,7 @@ export type Sku = {
   url: string;
   sku: string;
   specs: Record<string, unknown>;
-  customBusiness: Record<string, unknown>;
+  customBusiness?: Record<string, unknown>;
 };
 
 export interface ProductCommon {
@@ -83,6 +84,124 @@ export type ProductLinxImpulse = ProductCommon & {
   created?: string;
 };
 
+export type Sort =
+  | "descDiscount"
+  | "relevance"
+  | "ascPrice"
+  | "descPrice"
+  | "descDate"
+  | "descSold"
+  | "pid"
+  | "descReview"
+  | "ascReview"
+  | "ascSold";
+
+export interface Suggestions {
+  query: string;
+  link: string;
+}
+
+export interface FilterValue {
+  label: string;
+  size: number;
+  idO: string;
+  id: number;
+  applyLink: string;
+}
+
+export interface FilterLinxImpulse {
+  id: number;
+  attribute: string;
+  type: string;
+  fType: number;
+  values: FilterValue[];
+}
+
+export interface Pagination {
+  first: string;
+  last: string;
+  next?: string;
+  prev?: string;
+}
+
+export interface SortOption {
+  label: string;
+  name: string;
+  type: string;
+  applyLink: string;
+}
+
+export interface Queries {
+  original: string;
+  normalized: string;
+  processed: string;
+  queryType: string;
+}
+
+export interface SearchProductsResponse {
+  requestId: string;
+  searchId: string;
+  suggestions?: Suggestions[];
+  filters: FilterLinxImpulse[];
+  size: number;
+  pagination: Pagination;
+  products: ProductLinxImpulse[];
+  sort: SortOption[];
+  queries: Queries;
+}
+
+export interface SelectedFacet {
+  key: string;
+  value: string;
+}
+
+export interface SearchParams {
+  query: string;
+  page: number;
+  count: number;
+  sort: Sort;
+  hideUnavailableItems: boolean;
+  selectedFacets: SelectedFacet[];
+}
+
+export interface ContinuousValueFacetLinxImpulse {
+  size: number;
+  unityId: number;
+  unN: string;
+  min: {
+    value: number;
+    unity: string;
+    minN: number;
+  };
+  max: {
+    value: number;
+    unity: string;
+    maxN: number;
+  };
+  applyLink: string;
+  selected?: boolean;
+}
+
+export interface DiscreteValueFacetLinxImpulse {
+  label: string;
+  size: number;
+  id: number;
+  applyLink: string;
+  selected?: boolean;
+}
+
+export interface FacetLinxImpulse {
+  id: number;
+  attribute: string;
+  type: string;
+  fType?: number;
+  values: (DiscreteValueFacetLinxImpulse | ContinuousValueFacetLinxImpulse)[];
+  selected?: boolean;
+}
+
+export interface ProductOptions {
+  baseUrl: string;
+}
 export type Query = {
   query: string;
   link: string;

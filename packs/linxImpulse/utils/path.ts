@@ -6,6 +6,10 @@ export const paths = ({ apiKey, secretKey }: Account) => {
   const secretKeyParam = secretKey ? `&secretKey=${secretKey}` : "";
 
   return {
+    search: {
+      params: (params: URLSearchParams) =>
+        `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&${params}${secretKeyParam}`,
+    },
     pages: {
       recommendations: {
         name: (name: string) =>
