@@ -202,3 +202,7 @@ export interface FacetLinxImpulse {
 export interface ProductOptions {
   baseUrl: string;
 }
+export type Query = {
+  query: string;
+  link: string;
+};

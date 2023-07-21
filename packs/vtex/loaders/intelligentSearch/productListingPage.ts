@@ -123,7 +123,8 @@ export interface Props {
   pageOffset?: number;
 }
 
-export const singleFlightKey = (
+// TODO (mcandeia) investigating bugs related to returning the same set of products but different queries.
+const _singleFlightKey = (
   props: Props,
   { request }: { request: Request },
 ) => {
@@ -244,13 +245,11 @@ const loader = async (
   const segment = getSegment(req);
   const search = vtex.api.io._v.api["intelligent-search"];
   const currentPageoffset = props.pageOffset ?? 1;
-
   const {
     selectedFacets: baseSelectedFacets,
     page,
     ...args
   } = searchArgsOf(props, url);
-
   const pageTypesPromise = pageTypesFromPathname(url.pathname, ctx);
   const selectedFacets = baseSelectedFacets.length === 0
     ? filtersFromPathname(await pageTypesPromise)
@@ -259,7 +258,6 @@ const loader = async (
   const selected = withDefaultFacets(selectedFacets, ctx);
   const fselected = selected.filter((f) => f.key !== "price");
   const params = withDefaultParams({ ...args, page }, ctx);
-
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
     fetchAPI<ProductSearchResult>(
@@ -275,23 +273,18 @@ const loader = async (
   /** Intelligent search API analytics. Fire and forget 🔫 */
   const fullTextTerm = params.get("query");
   if (fullTextTerm) {
-    fetchAPI(vtex["event-api"].v1.account.event, {
-      method: "POST",
-      body: JSON.stringify({
+    ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
+      type: "session.ping",
+    }).then(() =>
+      ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
         type: "search.query",
         text: fullTextTerm,
         misspelled: productsResult.correction?.misspelled ?? false,
         match: productsResult.recordsFiltered,
         operator: productsResult.operator,
         locale: config?.defaultLocale,
-        agent: "deco-sites/std",
-        anonymous: crypto.randomUUID(),
-        session: crypto.randomUUID(),
-      }),
-      headers: {
-        "content-type": "application/json",
-      },
-    }).catch(console.error);
+      })
+    ).catch(console.error);
   }
 
   const { products: vtexProducts, pagination, recordsFiltered } =
@@ -308,7 +301,9 @@ const loader = async (
     })
   );
 
-  const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets));
+  const filters = facets.filter((f) => !f.hidden).map(
+    toFilter(selectedFacets, args.query),
+  );
   const pageTypes = await pageTypesPromise;
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
