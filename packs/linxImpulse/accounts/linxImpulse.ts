@@ -18,7 +18,7 @@ export interface Account extends AccountBlock {
   salesChannel: string;
 
   /**
-   * @description Temp - origin/referer.
+   * @description Url to set headers request "origin" and "referer", used when no secret key is available.
    */
   url?: string;
 }

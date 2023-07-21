@@ -1,6 +1,9 @@
-import type { Sort } from "deco-sites/std/packs/vtex/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
-import type { SelectedFacet } from "deco-sites/std/packs/vtex/types.ts";
+import type { SelectedFacet, Sort } from "deco-sites/std/packs/vtex/types.ts";
+import { getCookies, setCookie } from "std/http/mod.ts";
+
+export const SESSION_COOKIE = "vtex_is_session";
+export const ANONYMOUS_COOKIE = "vtex_is_anonymous";
 
 const POLICY_KEY = "trade-policy";
 const REGION_KEY = "region-id";
@@ -65,3 +68,41 @@ export const withDefaultParams = ({
         false
     }`,
   });
+
+export const getOrSetISCookie = (req: Request, headers: Headers) => {
+  const cookies = getCookies(req.headers);
+
+  let anonymous = cookies[ANONYMOUS_COOKIE];
+  let session = cookies[SESSION_COOKIE];
+
+  if (!anonymous) {
+    anonymous = crypto.randomUUID();
+
+    setCookie(headers, {
+      value: anonymous,
+      name: ANONYMOUS_COOKIE,
+      path: "/",
+      secure: true,
+      httpOnly: true,
+      maxAge: 365 * 24 * 3600,
+    });
+  }
+
+  if (!session) {
+    session = crypto.randomUUID();
+
+    setCookie(headers, {
+      value: session,
+      name: SESSION_COOKIE,
+      path: "/",
+      secure: true,
+      httpOnly: true,
+      maxAge: 30 * 60,
+    });
+  }
+
+  return {
+    anonymous,
+    session,
+  };
+};
