@@ -56,4 +56,4 @@ To disable the scripts to work outside partytown, change the all components type
 
 <a href="https://github.com/deco-sites/std/graphs/contributors">
   <img src="https://contributors-img.web.app/image?repo=deco-sites/std" />
-</a>
+</a> 
