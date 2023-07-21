@@ -30,13 +30,14 @@ import * as $23 from "./functions/vtexProductList.ts";
 import * as $24 from "./functions/vtexProductListingPage.ts";
 import * as $25 from "./functions/vtexSuggestions.ts";
 import * as $26 from "./functions/vtexWishlist.ts";
-import * as $$0 from "./accounts/linxImpulse.ts";
-import * as $$1 from "./accounts/nuvemShop.ts";
-import * as $$2 from "./accounts/occ.ts";
-import * as $$3 from "./accounts/shopify.ts";
-import * as $$4 from "./accounts/vnda.ts";
-import * as $$5 from "./accounts/vtex.ts";
-import * as $$6 from "./accounts/yourViews.ts";
+import * as $$0 from "./accounts/butterCMS.ts";
+import * as $$1 from "./accounts/linxImpulse.ts";
+import * as $$2 from "./accounts/nuvemShop.ts";
+import * as $$3 from "./accounts/occ.ts";
+import * as $$4 from "./accounts/shopify.ts";
+import * as $$5 from "./accounts/vnda.ts";
+import * as $$6 from "./accounts/vtex.ts";
+import * as $$7 from "./accounts/yourViews.ts";
 import * as $$$0 from "./loaders/linxImpulse/autocompletes/popular.ts";
 import * as $$$1 from "./loaders/linxImpulse/autocompletes/suggestions.ts";
 import * as $$$2 from "./loaders/linxImpulse/pages/recommendations.ts";
@@ -57,6 +58,7 @@ import * as $$$16 from "./loaders/vtex/navbar.ts";
 import * as $$$17 from "./loaders/vtex/proxy.ts";
 import * as $$$18 from "./loaders/vtex/user.ts";
 import * as $$$19 from "./loaders/vtex/wishlist.ts";
+import * as $$$20 from "./loaders/x/redirectsFromCsv.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -72,22 +74,23 @@ import * as $$$$$$$$7 from "./sections/SEO.tsx";
 import * as $$$$$$$$8 from "./sections/SEOPDP.tsx";
 import * as $$$$$$$$9 from "./sections/SEOPLP.tsx";
 import * as $$$$$$$$10 from "./sections/VTEXPortalDataLayerCompatibility.tsx";
-import * as $$$$$$$$$$$0 from "./actions/vtex/cart/addItems.ts";
-import * as $$$$$$$$$$$1 from "./actions/vtex/cart/getInstallment.ts";
-import * as $$$$$$$$$$$2 from "./actions/vtex/cart/removeItemAttachment.ts";
-import * as $$$$$$$$$$$3 from "./actions/vtex/cart/removeItems.ts";
-import * as $$$$$$$$$$$4 from "./actions/vtex/cart/simulation.ts";
-import * as $$$$$$$$$$$5 from "./actions/vtex/cart/updateAttachment.ts";
-import * as $$$$$$$$$$$6 from "./actions/vtex/cart/updateCoupons.ts";
-import * as $$$$$$$$$$$7 from "./actions/vtex/cart/updateItemAttachment.ts";
-import * as $$$$$$$$$$$8 from "./actions/vtex/cart/updateItemPrice.ts";
-import * as $$$$$$$$$$$9 from "./actions/vtex/cart/updateItems.ts";
-import * as $$$$$$$$$$$10 from "./actions/vtex/cart/updateProfile.ts";
-import * as $$$$$$$$$$$11 from "./actions/vtex/cart/updateUser.ts";
-import * as $$$$$$$$$$$12 from "./actions/vtex/newsletter/subscribe.ts";
-import * as $$$$$$$$$$$13 from "./actions/vtex/notifyme.ts";
-import * as $$$$$$$$$$$14 from "./actions/vtex/wishlist/addItem.ts";
-import * as $$$$$$$$$$$15 from "./actions/vtex/wishlist/removeItem.ts";
+import * as $$$$$$$$$$$0 from "./actions/vtex/analytics/sendEvent.ts";
+import * as $$$$$$$$$$$1 from "./actions/vtex/cart/addItems.ts";
+import * as $$$$$$$$$$$2 from "./actions/vtex/cart/getInstallment.ts";
+import * as $$$$$$$$$$$3 from "./actions/vtex/cart/removeItemAttachment.ts";
+import * as $$$$$$$$$$$4 from "./actions/vtex/cart/removeItems.ts";
+import * as $$$$$$$$$$$5 from "./actions/vtex/cart/simulation.ts";
+import * as $$$$$$$$$$$6 from "./actions/vtex/cart/updateAttachment.ts";
+import * as $$$$$$$$$$$7 from "./actions/vtex/cart/updateCoupons.ts";
+import * as $$$$$$$$$$$8 from "./actions/vtex/cart/updateItemAttachment.ts";
+import * as $$$$$$$$$$$9 from "./actions/vtex/cart/updateItemPrice.ts";
+import * as $$$$$$$$$$$10 from "./actions/vtex/cart/updateItems.ts";
+import * as $$$$$$$$$$$11 from "./actions/vtex/cart/updateProfile.ts";
+import * as $$$$$$$$$$$12 from "./actions/vtex/cart/updateUser.ts";
+import * as $$$$$$$$$$$13 from "./actions/vtex/newsletter/subscribe.ts";
+import * as $$$$$$$$$$$14 from "./actions/vtex/notifyme.ts";
+import * as $$$$$$$$$$$15 from "./actions/vtex/wishlist/addItem.ts";
+import * as $$$$$$$$$$$16 from "./actions/vtex/wishlist/removeItem.ts";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -166,13 +169,14 @@ const manifest = {
     "deco-sites/std/functions/vtexWishlist.ts": $26,
   },
   "accounts": {
-    "deco-sites/std/accounts/linxImpulse.ts": $$0,
-    "deco-sites/std/accounts/nuvemShop.ts": $$1,
-    "deco-sites/std/accounts/occ.ts": $$2,
-    "deco-sites/std/accounts/shopify.ts": $$3,
-    "deco-sites/std/accounts/vnda.ts": $$4,
-    "deco-sites/std/accounts/vtex.ts": $$5,
-    "deco-sites/std/accounts/yourViews.ts": $$6,
+    "deco-sites/std/accounts/butterCMS.ts": $$0,
+    "deco-sites/std/accounts/linxImpulse.ts": $$1,
+    "deco-sites/std/accounts/nuvemShop.ts": $$2,
+    "deco-sites/std/accounts/occ.ts": $$3,
+    "deco-sites/std/accounts/shopify.ts": $$4,
+    "deco-sites/std/accounts/vnda.ts": $$5,
+    "deco-sites/std/accounts/vtex.ts": $$6,
+    "deco-sites/std/accounts/yourViews.ts": $$7,
   },
   "loaders": {
     "$live/loaders/state.ts": i1$0,
@@ -199,6 +203,7 @@ const manifest = {
     "deco-sites/std/loaders/vtex/proxy.ts": $$$17,
     "deco-sites/std/loaders/vtex/user.ts": $$$18,
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$19,
+    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$20,
   },
   "routes": {
     "./routes/_app.tsx": $$$$2,
@@ -250,22 +255,23 @@ const manifest = {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,
     "$live/actions/workflows/signal.ts": i1$$$$$$$1,
     "$live/actions/workflows/start.ts": i1$$$$$$$2,
-    "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$0,
-    "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$1,
-    "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$2,
-    "deco-sites/std/actions/vtex/cart/removeItems.ts": $$$$$$$$$$$3,
-    "deco-sites/std/actions/vtex/cart/simulation.ts": $$$$$$$$$$$4,
-    "deco-sites/std/actions/vtex/cart/updateAttachment.ts": $$$$$$$$$$$5,
-    "deco-sites/std/actions/vtex/cart/updateCoupons.ts": $$$$$$$$$$$6,
-    "deco-sites/std/actions/vtex/cart/updateItemAttachment.ts": $$$$$$$$$$$7,
-    "deco-sites/std/actions/vtex/cart/updateItemPrice.ts": $$$$$$$$$$$8,
-    "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$9,
-    "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$10,
-    "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$11,
-    "deco-sites/std/actions/vtex/newsletter/subscribe.ts": $$$$$$$$$$$12,
-    "deco-sites/std/actions/vtex/notifyme.ts": $$$$$$$$$$$13,
-    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$14,
-    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$15,
+    "deco-sites/std/actions/vtex/analytics/sendEvent.ts": $$$$$$$$$$$0,
+    "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$1,
+    "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$2,
+    "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$3,
+    "deco-sites/std/actions/vtex/cart/removeItems.ts": $$$$$$$$$$$4,
+    "deco-sites/std/actions/vtex/cart/simulation.ts": $$$$$$$$$$$5,
+    "deco-sites/std/actions/vtex/cart/updateAttachment.ts": $$$$$$$$$$$6,
+    "deco-sites/std/actions/vtex/cart/updateCoupons.ts": $$$$$$$$$$$7,
+    "deco-sites/std/actions/vtex/cart/updateItemAttachment.ts": $$$$$$$$$$$8,
+    "deco-sites/std/actions/vtex/cart/updateItemPrice.ts": $$$$$$$$$$$9,
+    "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$10,
+    "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$11,
+    "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$12,
+    "deco-sites/std/actions/vtex/newsletter/subscribe.ts": $$$$$$$$$$$13,
+    "deco-sites/std/actions/vtex/notifyme.ts": $$$$$$$$$$$14,
+    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$15,
+    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$16,
   },
   "pages": {
     "$live/pages/LivePage.tsx": i1$$$0,
