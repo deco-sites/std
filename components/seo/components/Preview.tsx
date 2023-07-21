@@ -57,10 +57,14 @@ function PreviewHandler(props: Props) {
   return (
     <>
       <Head>
-        <script src="https://cdn.tailwindcss.com" />
+        <script id="cdn.tailwindcss.com" src="https://cdn.tailwindcss.com" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `tailwind.config = ${JSON.stringify(tailwind)}`,
+            __html:
+              `document.getElementById("cdn.tailwindcss.com").addEventListener('load', () => { tailwind.config = ${
+                JSON.stringify(tailwind)
+              }})
+            `,
           }}
         />
       </Head>

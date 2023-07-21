@@ -69,6 +69,7 @@
               "deco-sites/std/loaders/vtex/proxy.ts",
               "deco-sites/std/loaders/vtex/user.ts",
               "deco-sites/std/loaders/vtex/wishlist.ts",
+              "deco-sites/std/loaders/x/redirectsFromCsv.ts",
               "$live/handlers/devPage.ts",
               "$live/handlers/fresh.ts",
               "$live/handlers/proxy.ts",
@@ -112,6 +113,7 @@
               "$live/actions/workflows/cancel.ts",
               "$live/actions/workflows/signal.ts",
               "$live/actions/workflows/start.ts",
+              "deco-sites/std/actions/vtex/analytics/sendEvent.ts",
               "deco-sites/std/actions/vtex/cart/addItems.ts",
               "deco-sites/std/actions/vtex/cart/getInstallment.ts",
               "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts",
@@ -4744,11 +4746,11 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+    "ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -4767,7 +4769,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
               "title": "Value"
             }
           },
@@ -4784,7 +4786,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -4792,9 +4794,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
           },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
+          "title": "deco-cx/deco/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -4814,71 +4816,6 @@
                 "deco-sites/std/loaders/vnda/proxy.ts"
               ],
               "default": "deco-sites/std/loaders/vnda/proxy.ts"
-            }
-          }
-        },
-        {
-          "title": "VTEX Proxy Routes",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/vtex/proxy.ts"
-              ],
-              "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -7882,6 +7819,146 @@
       "required": [],
       "title": "deco-sites/std/packs/vtex/loaders/navbar.ts@Props"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+      "$ref": "#/root/handlers",
+      "title": "Handler"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+      "type": "object",
+      "properties": {
+        "pathTemplate": {
+          "type": "string",
+          "title": "Path Template"
+        },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
+        "handler": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "title": "Value"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "title": "Handler"
+        }
+      },
+      "required": [
+        "pathTemplate",
+        "handler"
+      ],
+      "title": "Site Route",
+      "titleBy": "pathTemplate"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+          },
+          "title": "deco-cx/live/flags/audience.ts@Route[]"
+        },
+        {
+          "title": "VTEX Proxy Routes",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/proxy.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtex/proxy.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirects"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+              ],
+              "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -8023,6 +8100,68 @@
         "count"
       ],
       "title": "deco-sites/std/packs/vtex/loaders/wishlist.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirect": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "title": "From"
+        },
+        "to": {
+          "type": "string",
+          "title": "To"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "temporary",
+              "default": "temporary"
+            },
+            {
+              "type": "string",
+              "const": "permanent",
+              "default": "permanent"
+            }
+          ],
+          "type": "string",
+          "title": "Type"
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ],
+      "title": "Redirect",
+      "titleBy": "from"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirect[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirect"
+      },
+      "title": "Redirect[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirects": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "The file url or path"
+        },
+        "redirects": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirect[]",
+          "title": "Redirects"
+        }
+      },
+      "required": [
+        "redirects"
+      ],
+      "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts@Redirects"
     },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
@@ -8421,6 +8560,18 @@
           "description": "google tag manager container id. For more info: https://developers.google.com/tag-platform/tag-manager/web#standard_web_page_installation .",
           "title": "Tracking Ids"
         },
+        "googleAnalyticsIds": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": "GA Measurement Ids",
+          "label": "measurement id",
+          "description": "the google analytics property measurement id. For more info: https://support.google.com/analytics/answer/9539598"
+        },
         "src": {
           "type": [
             "string",
@@ -8440,65 +8591,6 @@
       },
       "required": [],
       "title": "deco-sites/std/components/Analytics.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale": {
-      "type": "object",
-      "properties": {
-        "label": {
-          "type": "string",
-          "title": "Locale"
-        },
-        "authToken": {
-          "type": "string",
-          "title": "Auth Token"
-        }
-      },
-      "required": [
-        "label",
-        "authToken"
-      ],
-      "title": "Locale"
-    },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale[]": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale"
-      },
-      "title": "Locale[]"
-    },
-    "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@ConfigButterCMS": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
-        }
-      ],
-      "properties": {
-        "locales": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvYnV0dGVyQ01TL2NsaWVudC50cw==@Locale[]",
-          "title": "Locales"
-        },
-        "defaultLocale": {
-          "type": "string",
-          "description": "Default value: en-us",
-          "default": "en-us",
-          "title": "Default Locale"
-        },
-        "apiVersion": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "Default value: v2",
-          "default": "v2",
-          "title": "Api Version"
-        }
-      },
-      "required": [
-        "locales",
-        "defaultLocale"
-      ],
-      "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy90eXBlcy50cw==@Image": {
       "type": "string",
@@ -10859,6 +10951,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=": {
+      "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirects"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+          ],
+          "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+        }
+      }
+    },
     "JGxpdmUvaGFuZGxlcnMvZGV2UGFnZS50cw==": {
       "title": "Private Fresh Page",
       "description": "Useful for pages under development.",
@@ -11758,6 +11871,23 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2FuYWx5dGljcy9zZW5kRXZlbnQudHM=": {
+      "title": "deco-sites/std/actions/vtex/analytics/sendEvent.ts",
+      "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vtex/analytics/sendEvent.ts"
+          ],
+          "default": "deco-sites/std/actions/vtex/analytics/sendEvent.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvYWRkSXRlbXMudHM=": {
       "title": "deco-sites/std/actions/vtex/cart/addItems.ts",
       "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items",
@@ -12289,6 +12419,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3dpc2hsaXN0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM="
         }
       ]
     },
@@ -12474,6 +12607,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3Mvc3RhcnQudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2FuYWx5dGljcy9zZW5kRXZlbnQudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2NhcnQvYWRkSXRlbXMudHM="

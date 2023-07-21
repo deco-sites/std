@@ -1,5 +1,6 @@
 import { context } from "$live/live.ts";
 import GoogleTagManager from "partytown/integrations/GTM.tsx";
+import GoogleTagScript from "partytown/integrations/GTAG.tsx";
 import Script from "partytown/Script.tsx";
 import { sendAnalyticsEvent } from "../commerce/sdk/sendAnalyticsEvent.ts";
 
@@ -8,6 +9,12 @@ export interface Props {
    * @description google tag manager container id. For more info: https://developers.google.com/tag-platform/tag-manager/web#standard_web_page_installation .
    */
   trackingIds?: string[];
+  /**
+   * @title GA Measurement Ids
+   * @label measurement id
+   * @description the google analytics property measurement id. For more info: https://support.google.com/analytics/answer/9539598
+   */
+  googleAnalyticsIds?: string[];
   /**
    * @description custom url for serving google tag manager. Set either this url or the tracking id
    */
@@ -19,13 +26,14 @@ export interface Props {
 }
 
 export default function Analtyics(
-  { trackingIds, src, dangerouslyRunOnMainThread }: Props,
+  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds }: Props,
 ) {
+  const isDeploy = !!context.isDeploy;
   return (
     <>
       {/* TODO: Add debug from query string @author Igor Brasileiro */}
       {/* Add Tag Manager script during production only. To test it locally remove the condition */}
-      {!!context.deploymentId && trackingIds && (
+      {isDeploy && trackingIds && (
         trackingIds.map((trackingId) => (
           <GoogleTagManager
             trackingId={trackingId.trim()}
@@ -33,7 +41,15 @@ export default function Analtyics(
           />
         ))
       )}
-      {!!context.deploymentId && src && (
+      {isDeploy && googleAnalyticsIds && (
+        googleAnalyticsIds.map((trackingId) => (
+          <GoogleTagScript
+            trackingId={trackingId.trim()}
+            dangerouslyRunOnMainThread={dangerouslyRunOnMainThread}
+          />
+        ))
+      )}
+      {isDeploy && src && (
         <GoogleTagManager
           src={src}
           dangerouslyRunOnMainThread={dangerouslyRunOnMainThread}

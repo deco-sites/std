@@ -556,7 +556,7 @@ const isValueRange = (
   Boolean((facet as any).range);
 
 const facetToToggle =
-  (selectedFacets: SelectedFacet[], key: string) =>
+  (selectedFacets: SelectedFacet[], key: string, query?: string) =>
   (item: FacetValueRange | FacetValueBoolean): FilterToggleValue => {
     const { quantity, selected } = item;
     const isRange = isValueRange(item);
@@ -575,19 +575,19 @@ const facetToToggle =
       value,
       quantity,
       selected,
-      url: `?${filtersToSearchParams(filters)}`,
+      url: `?${filtersToSearchParams(filters)}${query ? "&q=" + query : ""}`,
       label,
     };
   };
 
 export const toFilter =
-  (selectedFacets: SelectedFacet[]) =>
+  (selectedFacets: SelectedFacet[], query?: string) =>
   ({ key, name, quantity, values }: FacetVTEX): Filter => ({
     "@type": "FilterToggle",
     key,
     label: name,
     quantity: quantity,
-    values: values.map(facetToToggle(selectedFacets, key)),
+    values: values.map(facetToToggle(selectedFacets, key, query)),
   });
 
 function nodeToNavbar(node: Category): Navbar {
