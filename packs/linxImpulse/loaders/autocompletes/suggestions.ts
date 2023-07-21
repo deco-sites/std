@@ -6,6 +6,7 @@ import type {
 
 import {
   toProduct,
+  toRequestHeader,
   toSearchTerm,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
@@ -46,14 +47,8 @@ const loaders = async (
   const { configLinxImpulse: config } = ctx;
   const { query: term, countSuggestions, countProducts } = props;
 
-  const requestHeaders = !config?.secretKey
-    ? {
-      origin: config?.url ?? "",
-      referer: config?.url ?? "",
-    }
-    : undefined;
-
   const linxImpulse = paths(config!);
+  const requestHeaders = toRequestHeader(config!);
 
   try {
     const suggestionsData = await fetchAPI<AutocompletesResponse>(

@@ -4,6 +4,7 @@ import type { ProductLinxImpulseRecommendations } from "deco-sites/std/packs/lin
 import {
   toProduct,
   toProductLinxImpulse,
+  toRequestHeader,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
@@ -79,12 +80,7 @@ const loader = async (
   const { position, feature, page } = props;
 
   const linxImpulse = paths(config!);
-
-  //temp while we don't have "secretKey"
-  const requestHeaders = {
-    origin: config?.url ?? "",
-    referer: config?.url ?? "",
-  };
+  const requestHeaders = toRequestHeader(config!);
 
   const recommendationsResponse = await fetchAPI<PagesRecommendationsResponse>(
     `${

@@ -1,6 +1,7 @@
 import type { Suggestion } from "deco-sites/std/commerce/types.ts";
 
 import {
+  toRequestHeader,
   toSearchTerm,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
@@ -38,12 +39,7 @@ const loaders = async (
   const { count } = props;
 
   const linxImpulse = paths(config!);
-
-  //temp while we don't have "secretKey"
-  const requestHeaders = {
-    origin: config?.url ?? "",
-    referer: config?.url ?? "",
-  };
+  const requestHeaders = toRequestHeader(config!);
 
   const suggestions = await fetchAPI<AutocompletesPopularReponse>(
     `${linxImpulse.autocompletes.popularTerms}`,

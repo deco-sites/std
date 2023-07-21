@@ -9,12 +9,12 @@ export const paths = ({ apiKey, secretKey }: Account) => {
     pages: {
       recommendations: {
         name: (name: string) =>
-          `${recommendationsbaseUrl}/pages/recommendations?apiKey=${apiKey}&source=desktop&name=${name}&productFormat=complete`,
+          `${recommendationsbaseUrl}/pages/recommendations?apiKey=${apiKey}&source=desktop&name=${name}&productFormat=complete${secretKeyParam}`,
       },
     },
     autocompletes: {
       popularTerms:
-        `${searchBaseUrl}/autocompletes/popular?apiKey=${apiKey}&productFormat=complete`,
+        `${searchBaseUrl}/autocompletes/popular?apiKey=${apiKey}&productFormat=complete${secretKeyParam}`,
       suggestions: {
         term: (term: string, countSuggestions: number, countProducts: number) =>
           `${searchBaseUrl}/autocompletes?apiKey=${apiKey}&productFormat=complete&prefix=${term}&resultsQueries=${countSuggestions}&resultsProducts=${countProducts}${secretKeyParam}`,

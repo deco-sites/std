@@ -13,6 +13,8 @@ import type {
   Sku,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
 
+import { Account } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+
 interface ProductOptions {
   baseUrl: string;
 }
@@ -216,3 +218,11 @@ export const toProductLinxImpulse = (
     ],
   };
 };
+
+export const toRequestHeader = ({ url }: Account) =>
+  url
+    ? {
+      origin: url,
+      referer: url,
+    }
+    : undefined;

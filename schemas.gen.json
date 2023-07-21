@@ -3498,7 +3498,7 @@
             "string",
             "null"
           ],
-          "description": "Temp - origin/referer.",
+          "description": "Url to set headers request \"origin\" and \"referer\", used when no secret key is available.",
           "title": "Url"
         }
       },
