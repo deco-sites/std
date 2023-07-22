@@ -1,5 +1,10 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { ProductLinxImpulseRecommendations } from "deco-sites/std/packs/linxImpulse/types.ts";
+import type {
+  Feature,
+  Page,
+  PagesRecommendationsResponse,
+  Position,
+} from "deco-sites/std/packs/linxImpulse/types.ts";
 
 import {
   toProduct,
@@ -9,46 +14,6 @@ import {
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-
-export type Position = "top" | "middle" | "bottom";
-
-export type Feature =
-  | "MostPopular"
-  | "Offers"
-  | "New4You"
-  | "Push"
-  | "HistoryPersonalized";
-
-export type Page =
-  | "home"
-  | "product"
-  | "category"
-  | "subcategory"
-  | "not_found"
-  | "search"
-  | "landing_page"
-  | "other";
-
-interface Display {
-  references: string;
-  recommendations: ProductLinxImpulseRecommendations[];
-}
-
-interface Shelf {
-  id: string;
-  title: string;
-  name: string;
-  feature: Feature;
-  impressionUrl: string;
-  displays: Display[];
-  context: string;
-}
-
-interface PagesRecommendationsResponse {
-  top: Shelf[];
-  middle: Shelf[];
-  bottom: Shelf[];
-}
 
 export interface Props {
   /**

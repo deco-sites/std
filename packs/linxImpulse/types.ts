@@ -202,6 +202,48 @@ export interface FacetLinxImpulse {
 export interface ProductOptions {
   baseUrl: string;
 }
+
+export type Position = "top" | "middle" | "bottom";
+
+export type Feature =
+  | "MostPopular"
+  | "Offers"
+  | "New4You"
+  | "Push"
+  | "HistoryPersonalized"
+  | "SimilarItems";
+
+export type Page =
+  | "home"
+  | "product"
+  | "category"
+  | "subcategory"
+  | "not_found"
+  | "search"
+  | "landing_page"
+  | "other";
+
+interface Display {
+  references: string;
+  recommendations: ProductLinxImpulseRecommendations[];
+}
+
+export interface Shelf {
+  id: string;
+  title: string;
+  name: string;
+  feature: Feature;
+  impressionUrl: string;
+  displays: Display[];
+  context: string;
+}
+
+export interface PagesRecommendationsResponse {
+  top: Shelf[];
+  middle: Shelf[];
+  bottom: Shelf[];
+}
+
 export type Query = {
   query: string;
   link: string;

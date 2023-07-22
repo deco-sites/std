@@ -24,5 +24,15 @@ export const paths = ({ apiKey, secretKey }: Account) => {
           `${searchBaseUrl}/autocompletes?apiKey=${apiKey}&productFormat=complete&prefix=${term}&resultsQueries=${countSuggestions}&resultsProducts=${countProducts}${secretKeyParam}`,
       },
     },
+    product: {
+      getProductBySlug: {
+        term: (term: string) =>
+          `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&terms=${term}&hide=quickFilters&hide=suggestions&hide=filters`,
+      },
+      similarItems: {
+        productId: (productId: string) =>
+          `${recommendationsbaseUrl}/pages/recommendations?apiKey=${apiKey}&name=product&source=desktop&productId=${productId}&productFormat=complete`,
+      },
+    },
   };
 };
