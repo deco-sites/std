@@ -14,6 +14,7 @@ import {
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 
 export interface Props {
   slug: RequestURLParam;
@@ -92,7 +93,10 @@ const loader = async (
       );
 
     return products;
-  } catch {
+  } catch (err) {
+    if (err instanceof HttpError && err.status >= 500) {
+      throw err;
+    }
     return null;
   }
 };
