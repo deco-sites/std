@@ -1,4 +1,5 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import type {
   PagesRecommendationsResponse,
   Position,
@@ -15,10 +16,17 @@ import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpu
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 export interface Props {
+  slug: RequestURLParam;
+
   /**
    * @title Position
    */
   position: Position;
+
+  /**
+   * @title Feature
+   */
+  feature: "SimilarItems" | "FrequentlyBoughtTogether";
 }
 
 /**
@@ -31,14 +39,14 @@ const loader = async (
   ctx: Context,
 ): Promise<Product[] | null> => {
   const { configLinxImpulse: config } = ctx;
-  const { position } = props;
+  const { slug, position, feature } = props;
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
   const requestHeaders = toRequestHeader(config!);
 
   try {
     const linxImpulse = paths(config!);
-    const productSlug = url.pathname.split("/")[1].replaceAll("-", " ");
+    const productSlug = slug.replaceAll("-", " ");
     const { products: productsBySlug } = await fetchAPI<SearchProductsResponse>(
       `${linxImpulse.product.getProductBySlug.term(productSlug)}`,
       { headers: requestHeaders },
@@ -62,7 +70,9 @@ const loader = async (
       shelfs = recommendationsResponse[position];
     }
 
-    shelfs = shelfs?.filter((shelf) => shelf.feature === "SimilarItems");
+    if (feature) {
+      shelfs = shelfs?.filter((shelf) => shelf.feature === feature);
+    }
 
     if (!shelfs) return null;
 
