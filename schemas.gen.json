@@ -40,6 +40,7 @@
               "deco-sites/std/functions/vtexSuggestions.ts",
               "deco-sites/std/functions/vtexWishlist.ts",
               "deco-sites/std/accounts/butterCMS.ts",
+              "deco-sites/std/accounts/linxImpulse.ts",
               "deco-sites/std/accounts/nuvemShop.ts",
               "deco-sites/std/accounts/occ.ts",
               "deco-sites/std/accounts/shopify.ts",
@@ -49,6 +50,11 @@
               "$live/loaders/state.ts",
               "$live/loaders/workflows/events.ts",
               "$live/loaders/workflows/get.ts",
+              "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts",
+              "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts",
+              "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts",
+              "deco-sites/std/loaders/linxImpulse/products/similarItems.ts",
+              "deco-sites/std/loaders/linxImpulse/search.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts",
@@ -83,6 +89,7 @@
               "$live/sections/UseSlot.tsx",
               "deco-sites/std/sections/Analytics.tsx",
               "deco-sites/std/sections/configButterCMS.global.tsx",
+              "deco-sites/std/sections/configLinxImpulse.global.tsx",
               "deco-sites/std/sections/configNuvemShop.tsx",
               "deco-sites/std/sections/configOCC.global.tsx",
               "deco-sites/std/sections/configShopify.global.tsx",
@@ -98,6 +105,7 @@
               "$live/matchers/MatchDevice.ts",
               "$live/matchers/MatchEnvironment.ts",
               "$live/matchers/MatchHost.ts",
+              "$live/matchers/MatchLocation.ts",
               "$live/matchers/MatchMulti.ts",
               "$live/matchers/MatchRandom.ts",
               "$live/matchers/MatchSite.ts",
@@ -1772,7 +1780,7 @@
           }
         },
         {
-          "title": "VTEX product details page - Intelligent Search",
+          "title": "VTEX Intelligent Search - Product Details Page",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1794,7 +1802,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Product Details page",
+          "title": "VTEX Catalog - Product Details Page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1997,6 +2005,50 @@
           }
         },
         {
+          "title": "Linx Impulse - Pages Recomendations",
+          "description": "Use it in Shelves",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+            }
+          }
+        },
+        {
+          "title": "Linx Impulse - Product SimilarItems",
+          "description": "Use it in Shelves on Product Page",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/products/similarItems.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/products/similarItems.ts"
+            }
+          }
+        },
+        {
           "title": "NuvemShop - Search Products",
           "type": "object",
           "allOf": [
@@ -2018,7 +2070,7 @@
           }
         },
         {
-          "title": "VTEX product list - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Products",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -2040,7 +2092,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Search Products",
+          "title": "VTEX Catalog - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2062,7 +2114,7 @@
           }
         },
         {
-          "title": "VTEX related products - Portal",
+          "title": "VTEX Related Products - Catalog",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2503,6 +2555,28 @@
           }
         },
         {
+          "title": "Linx Impulse - Product Listing page",
+          "description": "Returns data ready for search pages like category, brand pages",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9zZWFyY2gudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/search.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/search.ts"
+            }
+          }
+        },
+        {
           "title": "NuvemShop - Product Listing page",
           "description": "Useful for category, search, brand and collection pages.",
           "type": "object",
@@ -2547,7 +2621,7 @@
           }
         },
         {
-          "title": "VTEX product listing page - Portal",
+          "title": "VTEX Catalog - Product Listing Page",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3335,7 +3409,49 @@
           }
         },
         {
-          "title": "VTEX search suggestions - Intelligent Search",
+          "title": "Linx Impulse - Autocompletes Popular Terms",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+            }
+          }
+        },
+        {
+          "title": "Linx Impulse - Autocompletes Products",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+              ],
+              "default": "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+            }
+          }
+        },
+        {
+          "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
             {
@@ -3459,6 +3575,47 @@
         "defaultLocale"
       ],
       "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+        }
+      ],
+      "properties": {
+        "apiKey": {
+          "type": "string",
+          "description": "Linx Impulse apiKey. For more info, read here: https://docs.linximpulse.com/v2-search-api/reference/introdu%C3%A7%C3%A3o#via-backend",
+          "title": "Api Key"
+        },
+        "secretKey": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Linx Impulse secretKey.",
+          "title": "Secret Key"
+        },
+        "salesChannel": {
+          "type": "string",
+          "description": "Linx Impulse sales channel.",
+          "title": "Sales Channel"
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Url to set headers request \"origin\" and \"referer\", used when no secret key is available.",
+          "title": "Url"
+        }
+      },
+      "required": [
+        "apiKey",
+        "salesChannel"
+      ],
+      "title": "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts@Account"
     },
     "ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvbnV2ZW1TaG9wL3R5cGVzLnRz@Account": {
       "type": "object",
@@ -3783,56 +3940,480 @@
       ],
       "title": "deco-cx/live/loaders/state.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event": {
       "type": "object",
-      "properties": {},
-      "required": [],
-      "title": "Metadata"
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type"
+        },
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "timestamp": {
+          "title": "Timestamp"
+        },
+        "seq": {
+          "type": "number",
+          "title": "Seq"
+        },
+        "visibleAt": {
+          "title": "Visible At"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "timestamp",
+        "seq"
+      ],
+      "title": "Event"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@NoOpEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "no_op",
+          "default": "no_op",
+          "title": "Type"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "NoOpEvent"
     },
     "ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg": {
       "title": "Arg"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecution": {
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowStartedEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "workflow_started",
+          "default": "workflow_started",
+          "title": "Type"
+        },
+        "input": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
+          "title": "Input"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "WorkflowStartedEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowFinishedEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "workflow_finished",
+          "default": "workflow_finished",
+          "title": "Type"
+        },
+        "result": {
+          "title": "Result"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "WorkflowFinishedEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowCanceledEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "workflow_canceled",
+          "default": "workflow_canceled",
+          "title": "Type"
+        },
+        "reason": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "WorkflowCanceledEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityStartedEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
+          "title": "Input"
+        },
+        "type": {
+          "type": "string",
+          "const": "activity_started",
+          "default": "activity_started",
+          "title": "Type"
+        },
+        "activityName": {
+          "type": "string",
+          "title": "Activity Name"
+        }
+      },
+      "required": [
+        "type",
+        "activityName"
+      ],
+      "title": "ActivityStartedEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "result": {
+          "title": "Result"
+        },
+        "exception": {
+          "title": "Exception"
+        },
+        "activityName": {
+          "type": "string",
+          "title": "Activity Name"
+        },
+        "type": {
+          "type": "string",
+          "const": "activity_completed",
+          "default": "activity_completed",
+          "title": "Type"
+        }
+      },
+      "required": [
+        "activityName",
+        "type"
+      ],
+      "title": "ActivityCompletedEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerScheduledEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "timer_scheduled",
+          "default": "timer_scheduled",
+          "title": "Type"
+        },
+        "until": {
+          "title": "Until"
+        },
+        "timerId": {
+          "type": "string",
+          "title": "Timer Id"
+        }
+      },
+      "required": [
+        "type",
+        "until",
+        "timerId"
+      ],
+      "title": "TimerScheduledEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerFiredEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "timer_fired",
+          "default": "timer_fired",
+          "title": "Type"
+        },
+        "timerId": {
+          "type": "string",
+          "title": "Timer Id"
+        }
+      },
+      "required": [
+        "type",
+        "timerId"
+      ],
+      "title": "TimerFiredEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WaitingSignalEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "signal": {
+          "type": "string",
+          "title": "Signal"
+        },
+        "type": {
+          "type": "string",
+          "const": "waiting_signal",
+          "default": "waiting_signal",
+          "title": "Type"
+        }
+      },
+      "required": [
+        "signal",
+        "type"
+      ],
+      "title": "WaitingSignalEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@SignalReceivedEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "signal_received",
+          "default": "signal_received",
+          "title": "Type"
+        },
+        "signal": {
+          "type": "string",
+          "title": "Signal"
+        },
+        "payload": {
+          "title": "Payload"
+        }
+      },
+      "required": [
+        "type",
+        "signal"
+      ],
+      "title": "SignalReceivedEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@LocalActivityCalledEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "local_activity_called",
+          "default": "local_activity_called",
+          "title": "Type"
+        },
+        "result": {
+          "title": "Result"
+        },
+        "activityName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Activity Name"
+        },
+        "activityParams": {
+          "title": "Activity Params"
+        }
+      },
+      "required": [
+        "type",
+        "result"
+      ],
+      "title": "LocalActivityCalledEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@InvokeHttpResponseEvent": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
+        }
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "invoke_http_response",
+          "default": "invoke_http_response",
+          "title": "Type"
+        },
+        "body": {
+          "title": "Body"
+        },
+        "headers": {
+          "title": "Headers",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "url": {
+          "type": "string",
+          "title": "Url"
+        },
+        "status": {
+          "type": "number",
+          "title": "Status"
+        },
+        "responseFormat": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "complete",
+              "default": "complete"
+            },
+            {
+              "type": "string",
+              "const": "body-only",
+              "default": "body-only"
+            }
+          ],
+          "type": "string",
+          "title": "Response Format"
+        }
+      },
+      "required": [
+        "type",
+        "headers",
+        "url",
+        "status"
+      ],
+      "title": "InvokeHttpResponseEvent"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@NoOpEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowStartedEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowFinishedEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowCanceledEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityStartedEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerScheduledEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerFiredEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WaitingSignalEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@SignalReceivedEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@LocalActivityCalledEvent"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@InvokeHttpResponseEvent"
+        },
+        {},
+        {}
+      ],
+      "title": "ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
+      },
+      "title": "ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "number",
+          "title": "Page"
+        },
+        "pageSize": {
+          "type": "number",
+          "title": "Page Size"
+        },
+        "items": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]",
+          "title": "Items"
+        }
+      },
+      "required": [
+        "page",
+        "pageSize",
+        "items"
+      ],
+      "title": "Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "title": "Id"
-            },
-            "alias": {
-              "type": "string",
-              "title": "Alias"
-            },
-            "completedAt": {
-              "title": "Completed At"
-            },
-            "status": {
-              "title": "Status"
-            },
-            "metadata": {
-              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata",
-              "title": "Metadata"
-            },
-            "input": {
-              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
-              "title": "Input"
-            },
-            "output": {
-              "title": "Output"
-            }
-          },
-          "required": [
-            "id",
-            "alias",
-            "status"
-          ],
-          "title": "deco-cx/durable/backends/backend.ts@WorkflowExecution"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
         },
+        {},
         {
           "title": "$live/loaders/workflows/events.ts",
           "description": "Get the workflow execution events.",
@@ -3857,8 +4438,33 @@
         }
       ]
     },
+    "ZGVjby1jeC9saXZlL3V0aWxzL2ludm9rZS50cw==@StreamProps": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "stream": {
+          "type": "boolean",
+          "const": true,
+          "default": true,
+          "title": "Stream"
+        }
+      },
+      "required": [
+        "id",
+        "stream"
+      ],
+      "title": "StreamProps"
+    },
     "ZGVjby1jeC9saXZlL2xvYWRlcnMvd29ya2Zsb3dzL2V2ZW50cy50cw==@Props": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL3V0aWxzL2ludm9rZS50cw==@StreamProps"
+        }
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -3988,6 +4594,320 @@
       ],
       "title": "deco-cx/live/loaders/workflows/get.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "limit the number of searches",
+          "title": "Count"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/autocompletes/popular.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "term to get the list of product suggestions",
+          "title": "Query"
+        },
+        "countSuggestions": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "limit the number of suggestions terms",
+          "title": "Count Suggestions"
+        },
+        "countProducts": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "limit the number of products",
+          "title": "Count Products"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/autocompletes/suggestions.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "top",
+              "default": "top"
+            },
+            {
+              "type": "string",
+              "const": "middle",
+              "default": "middle"
+            },
+            {
+              "type": "string",
+              "const": "bottom",
+              "default": "bottom"
+            }
+          ],
+          "type": "string",
+          "title": "Position"
+        },
+        "feature": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "MostPopular",
+              "default": "MostPopular"
+            },
+            {
+              "type": "string",
+              "const": "Offers",
+              "default": "Offers"
+            },
+            {
+              "type": "string",
+              "const": "New4You",
+              "default": "New4You"
+            },
+            {
+              "type": "string",
+              "const": "Push",
+              "default": "Push"
+            },
+            {
+              "type": "string",
+              "const": "HistoryPersonalized",
+              "default": "HistoryPersonalized"
+            },
+            {
+              "type": "string",
+              "const": "SimilarItems",
+              "default": "SimilarItems"
+            }
+          ],
+          "type": "string",
+          "title": "Feature"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "home",
+              "default": "home"
+            },
+            {
+              "type": "string",
+              "const": "product",
+              "default": "product"
+            },
+            {
+              "type": "string",
+              "const": "category",
+              "default": "category"
+            },
+            {
+              "type": "string",
+              "const": "subcategory",
+              "default": "subcategory"
+            },
+            {
+              "type": "string",
+              "const": "not_found",
+              "default": "not_found"
+            },
+            {
+              "type": "string",
+              "const": "search",
+              "default": "search"
+            },
+            {
+              "type": "string",
+              "const": "landing_page",
+              "default": "landing_page"
+            },
+            {
+              "type": "string",
+              "const": "other",
+              "default": "other"
+            }
+          ],
+          "type": "string",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "position",
+        "feature",
+        "page"
+      ],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/pages/recommendations.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "top",
+              "default": "top"
+            },
+            {
+              "type": "string",
+              "const": "middle",
+              "default": "middle"
+            },
+            {
+              "type": "string",
+              "const": "bottom",
+              "default": "bottom"
+            }
+          ],
+          "type": "string",
+          "title": "Position"
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/products/similarItems.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "SelectedFacet"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet"
+      },
+      "title": "SelectedFacet[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9zZWFyY2gudHM=@Props": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "overides the query term",
+          "title": "Query"
+        },
+        "count": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Items per page",
+          "description": "number of products per page to display"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "descDiscount",
+              "default": "descDiscount"
+            },
+            {
+              "type": "string",
+              "const": "relevance",
+              "default": "relevance"
+            },
+            {
+              "type": "string",
+              "const": "ascPrice",
+              "default": "ascPrice"
+            },
+            {
+              "type": "string",
+              "const": "descPrice",
+              "default": "descPrice"
+            },
+            {
+              "type": "string",
+              "const": "descDate",
+              "default": "descDate"
+            },
+            {
+              "type": "string",
+              "const": "descSold",
+              "default": "descSold"
+            },
+            {
+              "type": "string",
+              "const": "pid",
+              "default": "pid"
+            },
+            {
+              "type": "string",
+              "const": "descReview",
+              "default": "descReview"
+            },
+            {
+              "type": "string",
+              "const": "ascReview",
+              "default": "ascReview"
+            },
+            {
+              "type": "string",
+              "const": "ascSold",
+              "default": "ascSold"
+            }
+          ],
+          "type": "string",
+          "title": "Sorting"
+        },
+        "selectedFacets": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvdHlwZXMudHM=@SelectedFacet[]",
+          "title": "Selected Facets",
+          "description": "Override selected facets from url"
+        },
+        "hideUnavailableItems": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Hide Unavailable Items",
+          "description": "Do not return out of stock items"
+        },
+        "page": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Starting page query parameter.",
+          "description": "Set the starting page. Default to 1."
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "title": "deco-sites/std/packs/linxImpulse/loaders/search.ts@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz@Props": {
       "type": "object",
       "properties": {
@@ -4092,11 +5012,11 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -4115,7 +5035,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
               "title": "Value"
             }
           },
@@ -4132,7 +5052,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -4140,9 +5060,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9kZWNvL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
           },
-          "title": "deco-cx/deco/flags/audience.ts@Route[]"
+          "title": "deco-cx/live/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -4162,6 +5082,92 @@
                 "deco-sites/std/loaders/vnda/proxy.ts"
               ],
               "default": "deco-sites/std/loaders/vnda/proxy.ts"
+            }
+          }
+        },
+        {
+          "title": "VTEX Proxy Routes",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/proxy.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtex/proxy.ts"
+            }
+          }
+        },
+        {
+          "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirects"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+              ],
+              "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -7165,146 +8171,6 @@
       "required": [],
       "title": "deco-sites/std/packs/vtex/loaders/navbar.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
-      "$ref": "#/root/handlers",
-      "title": "Handler"
-    },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
-      "type": "object",
-      "properties": {
-        "pathTemplate": {
-          "type": "string",
-          "title": "Path Template"
-        },
-        "isHref": {
-          "type": [
-            "boolean",
-            "null"
-          ],
-          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
-          "title": "Is Href"
-        },
-        "handler": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
-              "title": "Value"
-            }
-          },
-          "required": [
-            "value"
-          ],
-          "title": "Handler"
-        }
-      },
-      "required": [
-        "pathTemplate",
-        "handler"
-      ],
-      "title": "Site Route",
-      "titleBy": "pathTemplate"
-    },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/Resolvable"
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
-          },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
-        },
-        {
-          "title": "VTEX Proxy Routes",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/vtex/proxy.ts"
-              ],
-              "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
-          "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=@Redirects"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/x/redirectsFromCsv.ts"
-              ],
-              "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
-            }
-          }
-        }
-      ]
-    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -8261,6 +9127,56 @@
       "required": [],
       "title": "{{{includes}}} {{{match}}}"
     },
+    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "City"
+        },
+        "regionCode": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Region Code"
+        },
+        "country": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Country"
+        }
+      },
+      "required": [],
+      "title": "{{{city}}} {{{regionCode}}} {{{country}}}"
+    },
+    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location"
+      },
+      "title": "Location[]"
+    },
+    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Props": {
+      "type": "object",
+      "properties": {
+        "includeLocations": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]",
+          "title": "Include Locations"
+        },
+        "excludeLocations": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]",
+          "title": "Exclude Locations"
+        }
+      },
+      "required": [],
+      "title": "deco-cx/live/matchers/MatchLocation.ts@Props"
+    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher[]": {
       "type": "array",
       "items": {
@@ -8497,6 +9413,12 @@
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowProps": {
       "title": "WorkflowProps"
     },
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Metadata"
+    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata": {
       "type": "object",
       "allOf": [
@@ -8516,6 +9438,48 @@
       "required": [],
       "title": "WorkflowMetadata"
     },
+    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters": {
+      "type": "object",
+      "properties": {
+        "http": {
+          "type": "object",
+          "properties": {
+            "defaultHeaders": {
+              "title": "Default Headers",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "defaultHeaders"
+          ],
+          "title": "Http"
+        },
+        "websocket": {
+          "type": "object",
+          "properties": {
+            "defaultQueryParams": {
+              "title": "Default Query Params",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "defaultQueryParams"
+          ],
+          "title": "Websocket"
+        }
+      },
+      "required": [
+        "http",
+        "websocket"
+      ],
+      "title": "RuntimeParameters"
+    },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@CommonProps": {
       "type": "object",
       "properties": {
@@ -8529,6 +9493,10 @@
         "metadata": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata",
           "title": "Metadata"
+        },
+        "runtimeParameters": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters",
+          "title": "Runtime Parameters"
         }
       },
       "required": [],
@@ -9583,6 +10551,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbGlueEltcHVsc2UudHM=": {
+      "title": "deco-sites/std/accounts/linxImpulse.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/accounts/linxImpulse.ts"
+          ],
+          "default": "deco-sites/std/accounts/linxImpulse.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz": {
       "title": "deco-sites/std/accounts/nuvemShop.ts",
       "type": "object",
@@ -9775,6 +10764,114 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=": {
+      "title": "Linx Impulse - Autocompletes Popular Terms",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+          ],
+          "default": "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz": {
+      "title": "Linx Impulse - Autocompletes Products",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+          ],
+          "default": "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=": {
+      "title": "Linx Impulse - Pages Recomendations",
+      "description": "Use it in Shelves",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+          ],
+          "default": "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=": {
+      "title": "Linx Impulse - Product SimilarItems",
+      "description": "Use it in Shelves on Product Page",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linxImpulse/products/similarItems.ts"
+          ],
+          "default": "deco-sites/std/loaders/linxImpulse/products/similarItems.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9zZWFyY2gudHM=": {
+      "title": "Linx Impulse - Product Listing page",
+      "description": "Returns data ready for search pages like category, brand pages",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9zZWFyY2gudHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/linxImpulse/search.ts"
+          ],
+          "default": "deco-sites/std/loaders/linxImpulse/search.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz": {
       "title": "NuvemShop - PDP",
       "type": "object",
@@ -9878,7 +10975,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX product details page - Intelligent Search",
+      "title": "VTEX Intelligent Search - Product Details Page",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9900,7 +10997,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX product list - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Products",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -9944,7 +11041,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX search suggestions - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Suggestions",
       "type": "object",
       "allOf": [
         {
@@ -9965,7 +11062,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Legacy - Product Details page",
+      "title": "VTEX Catalog - Product Details Page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -9987,7 +11084,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Legacy - Search Products",
+      "title": "VTEX Catalog - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -10009,7 +11106,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX product listing page - Portal",
+      "title": "VTEX Catalog - Product Listing Page",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -10031,7 +11128,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX related products - Portal",
+      "title": "VTEX Related Products - Catalog",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -10482,6 +11579,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTGlueEltcHVsc2UuZ2xvYmFsLnRzeA==": {
+      "title": "deco-sites/std/sections/configLinxImpulse.global.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/sections/configLinxImpulse.global.tsx"
+          ],
+          "default": "deco-sites/std/sections/configLinxImpulse.global.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTnV2ZW1TaG9wLnRzeA==": {
       "title": "deco-sites/std/sections/configNuvemShop.tsx",
       "type": "object",
@@ -10791,6 +11909,27 @@
             "$live/matchers/MatchHost.ts"
           ],
           "default": "$live/matchers/MatchHost.ts"
+        }
+      }
+    },
+    "JGxpdmUvbWF0Y2hlcnMvTWF0Y2hMb2NhdGlvbi50cw==": {
+      "title": "Location Matcher",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "$live/matchers/MatchLocation.ts"
+          ],
+          "default": "$live/matchers/MatchLocation.ts"
         }
       }
     },
@@ -11485,6 +12624,9 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvYnV0dGVyQ01TLnRz"
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbGlueEltcHVsc2UudHM="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWNjb3VudHMvbnV2ZW1TaG9wLnRz"
         },
         {
@@ -11518,6 +12660,21 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbG9hZGVycy93b3JrZmxvd3MvZ2V0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3BvcHVsYXIudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9hdXRvY29tcGxldGVzL3N1Z2dlc3Rpb25zLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wYWdlcy9yZWNvbW1lbmRhdGlvbnMudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9saW54SW1wdWxzZS9zZWFyY2gudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdERldGFpbHNQYWdlLnRz"
@@ -11654,6 +12811,9 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnQnV0dGVyQ01TLmdsb2JhbC50c3g="
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTGlueEltcHVsc2UuZ2xvYmFsLnRzeA=="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvc2VjdGlvbnMvY29uZmlnTnV2ZW1TaG9wLnRzeA=="
         },
         {
@@ -11705,6 +12865,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hIb3N0LnRz"
+        },
+        {
+          "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hMb2NhdGlvbi50cw=="
         },
         {
           "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hNdWx0aS50cw=="
