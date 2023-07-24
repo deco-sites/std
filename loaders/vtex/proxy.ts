@@ -14,6 +14,7 @@ const PATHS_TO_PROXY = [
   "/api/*",
   "/logout",
   "/_secure/account",
+  "/XMLData/*",
   "/_v/*",
 ];
 
