@@ -1,5 +1,6 @@
 import type { FnContext } from "$live/types.ts";
 import type { Account as AccountBlock } from "$live/blocks/account.ts";
+import type { Manifest } from "deco-sites/std/live.gen.ts";
 
 export interface Account extends AccountBlock {
   /**
@@ -29,7 +30,7 @@ export interface Account extends AccountBlock {
 
 export type Context = FnContext<{
   configVNDA?: Account;
-}>;
+}, Manifest>;
 
 function account(acc: Account) {
   return acc;

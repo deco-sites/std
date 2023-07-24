@@ -57,10 +57,11 @@ import * as $$$15 from "./loaders/vtex/intelligentSearch/suggestions.ts";
 import * as $$$16 from "./loaders/vtex/cart.ts";
 import * as $$$17 from "./loaders/vtex/user.ts";
 import * as $$$18 from "./loaders/vnda/proxy.ts";
-import * as $$$19 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
-import * as $$$20 from "./loaders/nuvemShop/nuvemShopProductList.ts";
-import * as $$$21 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
-import * as $$$22 from "./loaders/x/redirectsFromCsv.ts";
+import * as $$$19 from "./loaders/vnda/cart.ts";
+import * as $$$20 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
+import * as $$$21 from "./loaders/nuvemShop/nuvemShopProductList.ts";
+import * as $$$22 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
+import * as $$$23 from "./loaders/x/redirectsFromCsv.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -95,6 +96,10 @@ import * as $$$$$$$$$$$13 from "./actions/vtex/newsletter/subscribe.ts";
 import * as $$$$$$$$$$$14 from "./actions/vtex/wishlist/removeItem.ts";
 import * as $$$$$$$$$$$15 from "./actions/vtex/wishlist/addItem.ts";
 import * as $$$$$$$$$$$16 from "./actions/vtex/analytics/sendEvent.ts";
+import * as $$$$$$$$$$$17 from "./actions/vnda/cart/updateItem.ts";
+import * as $$$$$$$$$$$18 from "./actions/vnda/cart/setShippingAddress.ts";
+import * as $$$$$$$$$$$19 from "./actions/vnda/cart/addItem.ts";
+import * as $$$$$$$$$$$20 from "./actions/vnda/cart/updateCoupon.ts";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -191,9 +196,10 @@ const manifest = {
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": $$$4,
     "deco-sites/std/loaders/linxImpulse/products/similarItems.ts": $$$0,
     "deco-sites/std/loaders/linxImpulse/search.ts": $$$1,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$19,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$20,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$21,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$20,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$21,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$22,
+    "deco-sites/std/loaders/vnda/cart.ts": $$$19,
     "deco-sites/std/loaders/vnda/proxy.ts": $$$18,
     "deco-sites/std/loaders/vtex/cart.ts": $$$16,
     "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts":
@@ -210,7 +216,7 @@ const manifest = {
     "deco-sites/std/loaders/vtex/proxy.ts": $$$11,
     "deco-sites/std/loaders/vtex/user.ts": $$$17,
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$9,
-    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$22,
+    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$23,
   },
   "routes": {
     "./routes/_app.tsx": $$$$2,
@@ -264,6 +270,10 @@ const manifest = {
     "$live/actions/workflows/cancel.ts": i1$$$$$$$0,
     "$live/actions/workflows/signal.ts": i1$$$$$$$1,
     "$live/actions/workflows/start.ts": i1$$$$$$$2,
+    "deco-sites/std/actions/vnda/cart/addItem.ts": $$$$$$$$$$$19,
+    "deco-sites/std/actions/vnda/cart/setShippingAddress.ts": $$$$$$$$$$$18,
+    "deco-sites/std/actions/vnda/cart/updateCoupon.ts": $$$$$$$$$$$20,
+    "deco-sites/std/actions/vnda/cart/updateItem.ts": $$$$$$$$$$$17,
     "deco-sites/std/actions/vtex/analytics/sendEvent.ts": $$$$$$$$$$$16,
     "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$6,
     "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$8,

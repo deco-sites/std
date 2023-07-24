@@ -58,6 +58,7 @@
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts",
               "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts",
+              "deco-sites/std/loaders/vnda/cart.ts",
               "deco-sites/std/loaders/vnda/proxy.ts",
               "deco-sites/std/loaders/vtex/cart.ts",
               "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts",
@@ -118,6 +119,10 @@
               "$live/actions/workflows/cancel.ts",
               "$live/actions/workflows/signal.ts",
               "$live/actions/workflows/start.ts",
+              "deco-sites/std/actions/vnda/cart/addItem.ts",
+              "deco-sites/std/actions/vnda/cart/setShippingAddress.ts",
+              "deco-sites/std/actions/vnda/cart/updateCoupon.ts",
+              "deco-sites/std/actions/vnda/cart/updateItem.ts",
               "deco-sites/std/actions/vtex/analytics/sendEvent.ts",
               "deco-sites/std/actions/vtex/cart/addItems.ts",
               "deco-sites/std/actions/vtex/cart/getInstallment.ts",
@@ -1781,7 +1786,7 @@
           }
         },
         {
-          "title": "VTEX product details page - Intelligent Search",
+          "title": "VTEX Intelligent Search - Product Details Page",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1803,7 +1808,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Product Details page",
+          "title": "VTEX Catalog - Product Details Page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2071,7 +2076,7 @@
           }
         },
         {
-          "title": "VTEX product list - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Products",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -2093,7 +2098,7 @@
           }
         },
         {
-          "title": "VTEX Legacy - Search Products",
+          "title": "VTEX Catalog - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2115,7 +2120,7 @@
           }
         },
         {
-          "title": "VTEX related products - Portal",
+          "title": "VTEX Related Products - Catalog",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2622,7 +2627,7 @@
           }
         },
         {
-          "title": "VTEX product listing page - Portal",
+          "title": "VTEX Catalog - Product Listing Page",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3452,7 +3457,7 @@
           }
         },
         {
-          "title": "VTEX search suggestions - Intelligent Search",
+          "title": "VTEX Intelligent Search - Search Suggestions",
           "type": "object",
           "allOf": [
             {
@@ -3577,17 +3582,11 @@
       ],
       "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
     },
-    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account": {
-      "type": "object",
-      "properties": {},
-      "required": [],
-      "title": "Account"
-    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account": {
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account"
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
         }
       ],
       "properties": {
@@ -3700,7 +3699,7 @@
       ],
       "title": "deco-sites/std/commerce/shopify/client.ts@ConfigShopify"
     },
-    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS92bmRhQWNjb3VudC50cw==@Account": {
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY2NvdW50cy92bmRhLnRz@Account": {
       "type": "object",
       "allOf": [
         {
@@ -3742,7 +3741,7 @@
         "useSandbox",
         "defaultPriceCurrency"
       ],
-      "title": "deco-sites/std/packs/vnda/vndaAccount.ts@Account"
+      "title": "deco-sites/std/packs/vnda/accounts/vnda.ts@Account"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY2NvdW50cy92dGV4LnRz@Account": {
       "type": "object",
@@ -5136,11 +5135,1314 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler": {
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        },
+        "defining": {
+          "type": "boolean",
+          "title": "Defining"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "defining"
+      ],
+      "title": "Property"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@VariantProperties": {
+      "type": "object",
+      "properties": {
+        "property1": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property",
+          "title": "Property1"
+        },
+        "property2": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property",
+          "title": "Property2"
+        }
+      },
+      "required": [
+        "property1",
+        "property2"
+      ],
+      "title": "VariantProperties"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Item": {
+      "type": "object",
+      "properties": {
+        "delivery_days": {
+          "type": "number",
+          "title": "Delivery_days"
+        },
+        "extra": {
+          "title": "Extra",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "number",
+          "title": "Id"
+        },
+        "place_id": {
+          "type": "null",
+          "title": "Place_id"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "product_id": {
+          "type": "number",
+          "title": "Product_id"
+        },
+        "product_name": {
+          "type": "string",
+          "title": "Product_name"
+        },
+        "product_reference": {
+          "type": "string",
+          "title": "Product_reference"
+        },
+        "product_url": {
+          "type": "string",
+          "title": "Product_url"
+        },
+        "product_type": {
+          "type": "string",
+          "title": "Product_type"
+        },
+        "quantity": {
+          "type": "number",
+          "title": "Quantity"
+        },
+        "subtotal": {
+          "type": "number",
+          "title": "Subtotal"
+        },
+        "total": {
+          "type": "number",
+          "title": "Total"
+        },
+        "updated_at": {
+          "title": "Updated_at"
+        },
+        "has_customizations": {
+          "type": "boolean",
+          "title": "Has_customizations"
+        },
+        "available_quantity": {
+          "type": "number",
+          "title": "Available_quantity"
+        },
+        "image_url": {
+          "type": "string",
+          "title": "Image_url"
+        },
+        "variant_attributes": {
+          "title": "Variant_attributes",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "variant_min_quantity": {
+          "type": "number",
+          "title": "Variant_min_quantity"
+        },
+        "variant_name": {
+          "type": "string",
+          "title": "Variant_name"
+        },
+        "variant_price": {
+          "type": "number",
+          "title": "Variant_price"
+        },
+        "variant_intl_price": {
+          "type": "number",
+          "title": "Variant_intl_price"
+        },
+        "variant_properties": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@VariantProperties",
+          "title": "Variant_properties"
+        },
+        "variant_sku": {
+          "type": "string",
+          "title": "Variant_sku"
+        },
+        "seller": {
+          "type": "null",
+          "title": "Seller"
+        },
+        "seller_name": {
+          "type": "null",
+          "title": "Seller_name"
+        }
+      },
+      "required": [
+        "delivery_days",
+        "extra",
+        "id",
+        "place_id",
+        "price",
+        "product_id",
+        "product_name",
+        "product_reference",
+        "product_url",
+        "product_type",
+        "quantity",
+        "subtotal",
+        "total",
+        "updated_at",
+        "has_customizations",
+        "available_quantity",
+        "image_url",
+        "variant_attributes",
+        "variant_min_quantity",
+        "variant_name",
+        "variant_price",
+        "variant_intl_price",
+        "variant_properties",
+        "variant_sku",
+        "seller",
+        "seller_name"
+      ],
+      "title": "Item"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Item[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Item"
+      },
+      "title": "Item[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@OrderForm": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "type": "null",
+          "title": "Agent"
+        },
+        "billing_address_id": {
+          "type": "null",
+          "title": "Billing_address_id"
+        },
+        "channel": {
+          "type": "string",
+          "title": "Channel"
+        },
+        "client_id": {
+          "type": "null",
+          "title": "Client_id"
+        },
+        "code": {
+          "type": "string",
+          "title": "Code"
+        },
+        "coupon_code": {
+          "type": "null",
+          "title": "Coupon_code"
+        },
+        "discount": {
+          "type": "null",
+          "title": "Discount"
+        },
+        "discount_price": {
+          "type": "number",
+          "title": "Discount_price"
+        },
+        "extra": {
+          "title": "Extra",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "number",
+          "title": "Id"
+        },
+        "installments": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "title": "Installments"
+        },
+        "items": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Item[]",
+          "title": "Items"
+        },
+        "items_count": {
+          "type": "number",
+          "title": "Items_count"
+        },
+        "shipping_address_id": {
+          "type": "null",
+          "title": "Shipping_address_id"
+        },
+        "shipping_method": {
+          "type": "null",
+          "title": "Shipping_method"
+        },
+        "shipping_methods": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "title": "Shipping_methods"
+        },
+        "shipping_price": {
+          "type": "number",
+          "title": "Shipping_price"
+        },
+        "subtotal": {
+          "type": "number",
+          "title": "Subtotal"
+        },
+        "subtotal_discount": {
+          "type": "number",
+          "title": "Subtotal_discount"
+        },
+        "token": {
+          "type": "string",
+          "title": "Token"
+        },
+        "total": {
+          "type": "number",
+          "title": "Total"
+        },
+        "total_discount": {
+          "type": "number",
+          "title": "Total_discount"
+        },
+        "total_for_deposit": {
+          "type": "number",
+          "title": "Total_for_deposit"
+        },
+        "total_for_slip": {
+          "type": "number",
+          "title": "Total_for_slip"
+        },
+        "total_for_pix": {
+          "type": "number",
+          "title": "Total_for_pix"
+        },
+        "updated_at": {
+          "title": "Updated_at"
+        },
+        "rebate_token": {
+          "type": "null",
+          "title": "Rebate_token"
+        },
+        "rebate_discount": {
+          "type": "number",
+          "title": "Rebate_discount"
+        },
+        "user_id": {
+          "type": "null",
+          "title": "User_id"
+        },
+        "handling_days": {
+          "type": "number",
+          "title": "Handling_days"
+        }
+      },
+      "required": [
+        "agent",
+        "billing_address_id",
+        "channel",
+        "client_id",
+        "code",
+        "coupon_code",
+        "discount",
+        "discount_price",
+        "extra",
+        "id",
+        "installments",
+        "items",
+        "items_count",
+        "shipping_address_id",
+        "shipping_method",
+        "shipping_methods",
+        "shipping_price",
+        "subtotal",
+        "subtotal_discount",
+        "token",
+        "total",
+        "total_discount",
+        "total_for_deposit",
+        "total_for_slip",
+        "total_for_pix",
+        "updated_at",
+        "rebate_token",
+        "rebate_discount",
+        "user_id",
+        "handling_days"
+      ],
+      "title": "OrderForm"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemTag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "title": {
+          "type": "string",
+          "title": "Title"
+        },
+        "subtitle": {
+          "type": "string",
+          "title": "Subtitle"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Description"
+        },
+        "importance": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Importance"
+        },
+        "type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Type"
+        },
+        "image_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Image_url"
+        }
+      },
+      "required": [
+        "name",
+        "title",
+        "subtitle",
+        "description",
+        "importance",
+        "type",
+        "image_url"
+      ],
+      "title": "RelatedItemTag"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemTag[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemTag"
+      },
+      "title": "RelatedItemTag[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemAttribute": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "mandatory": {
+          "type": "boolean",
+          "title": "Mandatory"
+        },
+        "values": {
+          "type": "array",
+          "items": {},
+          "title": "Values"
+        }
+      },
+      "required": [
+        "name",
+        "mandatory",
+        "values"
+      ],
+      "title": "RelatedItemAttribute"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemAttribute@record": {
+      "title": "Unknown record",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemAttribute"
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemInstallment": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number",
+          "title": "Number"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "interest": {
+          "type": "boolean",
+          "title": "Interest"
+        },
+        "interest_rate": {
+          "type": "number",
+          "title": "Interest_rate"
+        },
+        "total": {
+          "type": "number",
+          "title": "Total"
+        }
+      },
+      "required": [
+        "number",
+        "price",
+        "interest",
+        "interest_rate",
+        "total"
+      ],
+      "title": "RelatedItemInstallment"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemInstallment[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemInstallment"
+      },
+      "title": "RelatedItemInstallment[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property|null": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Property|null"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property|null@record": {
+      "title": "Unknown record",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property|null"
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Inventory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Name"
+        },
+        "slug": {
+          "type": "string",
+          "title": "Slug"
+        },
+        "available": {
+          "type": "boolean",
+          "title": "Available"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "sale_price": {
+          "type": "number",
+          "title": "Sale_price"
+        },
+        "quantity": {
+          "type": "number",
+          "title": "Quantity"
+        },
+        "quantity_sold": {
+          "type": "number",
+          "title": "Quantity_sold"
+        },
+        "place": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "title": "Id"
+            },
+            "name": {
+              "type": "string",
+              "title": "Name"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "title": "Place"
+        }
+      },
+      "required": [
+        "name",
+        "slug",
+        "available",
+        "price",
+        "sale_price",
+        "quantity",
+        "quantity_sold",
+        "place"
+      ],
+      "title": "Inventory"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Inventory[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Inventory"
+      },
+      "title": "Inventory[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemVariant": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "title": "Id"
+        },
+        "sku": {
+          "type": "string",
+          "title": "Sku"
+        },
+        "sku_lowercase": {
+          "type": "string",
+          "title": "Sku_lowercase"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "full_name": {
+          "type": "string",
+          "title": "Full_name"
+        },
+        "main": {
+          "type": "boolean",
+          "title": "Main"
+        },
+        "available": {
+          "type": "boolean",
+          "title": "Available"
+        },
+        "image_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Image_url"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "sale_price": {
+          "type": "number",
+          "title": "Sale_price"
+        },
+        "intl_price": {
+          "type": "number",
+          "title": "Intl_price"
+        },
+        "installments": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemInstallment[]",
+          "title": "Installments"
+        },
+        "stock": {
+          "type": "number",
+          "title": "Stock"
+        },
+        "quantity": {
+          "type": "number",
+          "title": "Quantity"
+        },
+        "quantity_sold": {
+          "type": "number",
+          "title": "Quantity_sold"
+        },
+        "min_quantity": {
+          "type": "number",
+          "title": "Min_quantity"
+        },
+        "available_quantity": {
+          "type": "number",
+          "title": "Available_quantity"
+        },
+        "custom_attributes": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Custom_attributes"
+        },
+        "attribute1": {
+          "type": "string",
+          "title": "Attribute1"
+        },
+        "attribute2": {
+          "type": "string",
+          "title": "Attribute2"
+        },
+        "attribute3": {
+          "type": "string",
+          "title": "Attribute3"
+        },
+        "properties": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Property|null@record",
+          "title": "Properties"
+        },
+        "inventories": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Inventory[]",
+          "title": "Inventories"
+        },
+        "handling_days": {
+          "type": "number",
+          "title": "Handling_days"
+        },
+        "barcode": {
+          "type": "string",
+          "title": "Barcode"
+        },
+        "weight": {
+          "type": "number",
+          "title": "Weight"
+        },
+        "width": {
+          "type": "number",
+          "title": "Width"
+        },
+        "height": {
+          "type": "number",
+          "title": "Height"
+        },
+        "length": {
+          "type": "number",
+          "title": "Length"
+        }
+      },
+      "required": [
+        "id",
+        "sku",
+        "sku_lowercase",
+        "name",
+        "full_name",
+        "main",
+        "available",
+        "image_url",
+        "price",
+        "sale_price",
+        "intl_price",
+        "installments",
+        "stock",
+        "quantity",
+        "quantity_sold",
+        "min_quantity",
+        "available_quantity",
+        "custom_attributes",
+        "attribute1",
+        "attribute2",
+        "attribute3",
+        "properties",
+        "inventories",
+        "handling_days",
+        "barcode",
+        "weight",
+        "width",
+        "height",
+        "length"
+      ],
+      "title": "RelatedItemVariant"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemVariant[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemVariant"
+      },
+      "title": "RelatedItemVariant[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "title": "Id"
+        },
+        "active": {
+          "type": "boolean",
+          "title": "Active"
+        },
+        "available": {
+          "type": "boolean",
+          "title": "Available"
+        },
+        "subscription": {
+          "type": "boolean",
+          "title": "Subscription"
+        },
+        "slug": {
+          "type": "string",
+          "title": "Slug"
+        },
+        "reference": {
+          "type": "string",
+          "title": "Reference"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "image_url": {
+          "type": "string",
+          "title": "Image_url"
+        },
+        "url": {
+          "type": "string",
+          "title": "Url"
+        },
+        "tags": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemTag[]",
+          "title": "Tags"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "on_sale": {
+          "type": "boolean",
+          "title": "On_sale"
+        },
+        "sale_price": {
+          "type": "number",
+          "title": "Sale_price"
+        },
+        "intl_price": {
+          "type": "number",
+          "title": "Intl_price"
+        },
+        "discount_id": {
+          "type": "number",
+          "title": "Discount_id"
+        },
+        "discount_rule": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Discount_rule"
+        },
+        "discount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Discount"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sku": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Sku"
+              },
+              "url": {
+                "type": "string",
+                "title": "Url"
+              }
+            },
+            "required": [
+              "sku",
+              "url"
+            ]
+          },
+          "title": "Images"
+        },
+        "attribute": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemAttribute@record",
+          "title": "Attribute"
+        },
+        "variants": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemVariant[]",
+          "title": "Variants"
+        },
+        "installments": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItemInstallment[]",
+          "title": "Installments"
+        }
+      },
+      "required": [
+        "id",
+        "active",
+        "available",
+        "subscription",
+        "slug",
+        "reference",
+        "name",
+        "description",
+        "image_url",
+        "url",
+        "tags",
+        "price",
+        "on_sale",
+        "sale_price",
+        "intl_price",
+        "discount_id",
+        "discount_rule",
+        "discount",
+        "images",
+        "attribute",
+        "variants",
+        "installments"
+      ],
+      "title": "RelatedItem"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItem[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItem"
+      },
+      "title": "RelatedItem[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Address": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string",
+          "title": "City"
+        },
+        "client_address_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Client_address_id"
+        },
+        "company_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Company_name"
+        },
+        "complement": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Complement"
+        },
+        "email": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Email"
+        },
+        "first_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First_name"
+        },
+        "first_phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First_phone"
+        },
+        "first_phone_area": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "First_phone_area"
+        },
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "last_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last_name"
+        },
+        "neighborhood": {
+          "type": "string",
+          "title": "Neighborhood"
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reference"
+        },
+        "second_phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Second_phone"
+        },
+        "second_phone_area": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Second_phone_area"
+        },
+        "state": {
+          "type": "string",
+          "title": "State"
+        },
+        "street_name": {
+          "type": "string",
+          "title": "Street_name"
+        },
+        "street_number": {
+          "type": "string",
+          "title": "Street_number"
+        },
+        "zip": {
+          "type": "string",
+          "title": "Zip"
+        }
+      },
+      "required": [
+        "city",
+        "client_address_id",
+        "company_name",
+        "complement",
+        "email",
+        "first_name",
+        "first_phone",
+        "first_phone_area",
+        "id",
+        "last_name",
+        "neighborhood",
+        "reference",
+        "second_phone",
+        "second_phone_area",
+        "state",
+        "street_name",
+        "street_number",
+        "zip"
+      ],
+      "title": "Address"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@ShippingMethod": {
+      "type": "object",
+      "properties": {
+        "delivery_days": {
+          "type": "number",
+          "title": "Delivery_days"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "price": {
+          "type": "number",
+          "title": "Price"
+        },
+        "shipping_method_id": {
+          "type": "number",
+          "title": "Shipping_method_id"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        },
+        "countries": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Countries"
+        },
+        "fulfillment_company": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Fulfillment_company"
+        },
+        "value_needed_to_discount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value_needed_to_discount"
+        }
+      },
+      "required": [
+        "delivery_days",
+        "description",
+        "name",
+        "price",
+        "shipping_method_id",
+        "value",
+        "countries",
+        "fulfillment_company",
+        "value_needed_to_discount"
+      ],
+      "title": "ShippingMethod"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@ShippingMethod[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@ShippingMethod"
+      },
+      "title": "ShippingMethod[]"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Shipping": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Address",
+          "title": "Address"
+        },
+        "methods": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@ShippingMethod[]",
+          "title": "Methods"
+        }
+      },
+      "required": [
+        "address",
+        "methods"
+      ],
+      "title": "Shipping"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Cart": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "orderForm": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@OrderForm",
+              "title": "Order Form"
+            },
+            "relatedItems": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@RelatedItem[]",
+              "title": "Related Items"
+            },
+            "shipping": {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS90eXBlcy50cw==@Shipping",
+              "title": "Shipping"
+            },
+            "coupon": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "title": "Code"
+                    },
+                    "discount": {
+                      "type": "number",
+                      "title": "Discount"
+                    },
+                    "rebate_token": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ],
+                      "title": "Rebate_token"
+                    },
+                    "rebate_discount": {
+                      "type": "number",
+                      "title": "Rebate_discount"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "discount",
+                    "rebate_token",
+                    "rebate_discount"
+                  ]
+                },
+                {
+                  "type": "string",
+                  "const": "Error",
+                  "default": "Error"
+                },
+                {
+                  "type": "string",
+                  "const": "Removed",
+                  "default": "Removed"
+                }
+              ],
+              "title": "Coupon"
+            }
+          },
+          "required": [],
+          "title": "deco-sites/std/packs/vnda/types.ts@Cart"
+        },
+        {
+          "title": "deco-sites/std/loaders/vnda/cart.ts",
+          "type": "object",
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vnda/cart.ts"
+              ],
+              "default": "deco-sites/std/loaders/vnda/cart.ts"
+            }
+          }
+        }
+      ]
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route": {
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -5159,7 +6461,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler",
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
               "title": "Value"
             }
           },
@@ -5176,7 +6478,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route[]": {
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -5184,9 +6486,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route"
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
           },
-          "title": "/Users/marcoscandeia/workspace/deco/flags/audience.ts@Route[]"
+          "title": "deco-cx/live/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -5210,6 +6512,27 @@
           }
         },
         {
+          "title": "VTEX Proxy Routes",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/proxy.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtex/proxy.ts"
+            }
+          }
+        },
+        {
           "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
           "type": "object",
           "allOf": [
@@ -5227,6 +6550,50 @@
                 "deco-sites/std/loaders/x/redirectsFromCsv.ts"
               ],
               "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -8230,125 +9597,6 @@
       "required": [],
       "title": "deco-sites/std/packs/vtex/loaders/navbar.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
-      "$ref": "#/root/handlers",
-      "title": "Handler"
-    },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
-      "type": "object",
-      "properties": {
-        "pathTemplate": {
-          "type": "string",
-          "title": "Path Template"
-        },
-        "isHref": {
-          "type": [
-            "boolean",
-            "null"
-          ],
-          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
-          "title": "Is Href"
-        },
-        "handler": {
-          "type": "object",
-          "properties": {
-            "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
-              "title": "Value"
-            }
-          },
-          "required": [
-            "value"
-          ],
-          "title": "Handler"
-        }
-      },
-      "required": [
-        "pathTemplate",
-        "handler"
-      ],
-      "title": "Site Route",
-      "titleBy": "pathTemplate"
-    },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/Resolvable"
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
-          },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
-        },
-        {
-          "title": "VTEX Proxy Routes",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/vtex/proxy.ts"
-              ],
-              "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
-            }
-          }
-        }
-      ]
-    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -9725,6 +10973,76 @@
       ],
       "title": "deco-cx/live/actions/workflows/start.ts@AnyWorkflow|WorkflowProps"
     },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvYWRkSXRlbS50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "title": "Item Id"
+        },
+        "quantity": {
+          "type": "number",
+          "title": "Quantity"
+        },
+        "attributes": {
+          "title": "Attributes",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "itemId",
+        "quantity",
+        "attributes"
+      ],
+      "title": "deco-sites/std/packs/vnda/actions/cart/addItem.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvc2V0U2hpcHBpbmdBZGRyZXNzLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "zip": {
+          "type": "string",
+          "title": "Zip"
+        }
+      },
+      "required": [
+        "zip"
+      ],
+      "title": "deco-sites/std/packs/vnda/actions/cart/setShippingAddress.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvdXBkYXRlQ291cG9uLnRz@Props": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "title": "Code"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "title": "deco-sites/std/packs/vnda/actions/cart/updateCoupon.ts@Props"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvdXBkYXRlSXRlbS50cw==@Props": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "number",
+          "title": "Item Id"
+        },
+        "quantity": {
+          "type": "number",
+          "title": "Quantity"
+        }
+      },
+      "required": [
+        "itemId",
+        "quantity"
+      ],
+      "title": "deco-sites/std/packs/vnda/actions/cart/updateItem.ts@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9hY3Rpb25zL2NhcnQvYWRkSXRlbXMudHM=@Item": {
       "type": "object",
       "properties": {
@@ -10815,7 +12133,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS92bmRhQWNjb3VudC50cw==@Account"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY2NvdW50cy92bmRhLnRz@Account"
         }
       ],
       "required": [
@@ -11111,6 +12429,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL2NhcnQudHM=": {
+      "title": "deco-sites/std/loaders/vnda/cart.ts",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/vnda/cart.ts"
+          ],
+          "default": "deco-sites/std/loaders/vnda/cart.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz": {
       "title": "VNDA Proxy Routes",
       "type": "object",
@@ -11150,7 +12484,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX product details page - Intelligent Search",
+      "title": "VTEX Intelligent Search - Product Details Page",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11172,7 +12506,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX product list - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Products",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -11216,7 +12550,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX search suggestions - Intelligent Search",
+      "title": "VTEX Intelligent Search - Search Suggestions",
       "type": "object",
       "allOf": [
         {
@@ -11237,7 +12571,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Legacy - Product Details page",
+      "title": "VTEX Catalog - Product Details Page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11259,7 +12593,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Legacy - Search Products",
+      "title": "VTEX Catalog - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -11281,7 +12615,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX product listing page - Portal",
+      "title": "VTEX Catalog - Product Listing Page",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -11303,7 +12637,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX related products - Portal",
+      "title": "VTEX Related Products - Catalog",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -12360,6 +13694,90 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvYWRkSXRlbS50cw==": {
+      "title": "deco-sites/std/actions/vnda/cart/addItem.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvYWRkSXRlbS50cw==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vnda/cart/addItem.ts"
+          ],
+          "default": "deco-sites/std/actions/vnda/cart/addItem.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvc2V0U2hpcHBpbmdBZGRyZXNzLnRz": {
+      "title": "deco-sites/std/actions/vnda/cart/setShippingAddress.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvc2V0U2hpcHBpbmdBZGRyZXNzLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vnda/cart/setShippingAddress.ts"
+          ],
+          "default": "deco-sites/std/actions/vnda/cart/setShippingAddress.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvdXBkYXRlQ291cG9uLnRz": {
+      "title": "deco-sites/std/actions/vnda/cart/updateCoupon.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvdXBkYXRlQ291cG9uLnRz@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vnda/cart/updateCoupon.ts"
+          ],
+          "default": "deco-sites/std/actions/vnda/cart/updateCoupon.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvdXBkYXRlSXRlbS50cw==": {
+      "title": "deco-sites/std/actions/vnda/cart/updateItem.ts",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3Mvdm5kYS9hY3Rpb25zL2NhcnQvdXBkYXRlSXRlbS50cw==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/actions/vnda/cart/updateItem.ts"
+          ],
+          "default": "deco-sites/std/actions/vnda/cart/updateItem.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2FuYWx5dGljcy9zZW5kRXZlbnQudHM=": {
       "title": "deco-sites/std/actions/vtex/analytics/sendEvent.ts",
       "docs": "https://developers.vtex.com/docs/api-reference/checkout-api#post-/api/checkout/pub/orderForm/-orderFormId-/items",
@@ -12877,6 +14295,9 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy9udXZlbVNob3AvbnV2ZW1TaG9wUHJvZHVjdExpc3RpbmdQYWdlLnRz"
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL2NhcnQudHM="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz"
         },
         {
@@ -13111,6 +14532,18 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvYWN0aW9ucy93b3JrZmxvd3Mvc3RhcnQudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvYWRkSXRlbS50cw=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvc2V0U2hpcHBpbmdBZGRyZXNzLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvdXBkYXRlQ291cG9uLnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92bmRhL2NhcnQvdXBkYXRlSXRlbS50cw=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvYWN0aW9ucy92dGV4L2FuYWx5dGljcy9zZW5kRXZlbnQudHM="
