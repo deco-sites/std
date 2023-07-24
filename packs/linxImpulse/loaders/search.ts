@@ -77,16 +77,17 @@ export interface Props {
   /**
    * @description overides the query term
    */
-  query: string;
+  query?: string;
 
   /**
    * @title Items per page
    * @description number of products per page to display
    */
-  count?: number;
+  count: number;
 
   /**
    * @title Sorting
+   * @default relevance
    */
   sort?: Sort;
 
