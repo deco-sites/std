@@ -80,6 +80,7 @@
               "$live/handlers/router.ts",
               "$live/handlers/routesSelection.ts",
               "$live/handlers/workflowRunner.ts",
+              "deco-sites/std/handlers/sitemap.ts",
               "deco-sites/std/handlers/vtex/sitemap.ts",
               "$live/pages/LivePage.tsx",
               "$live/sections/Conditional_Beta.tsx",
@@ -1780,7 +1781,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Product Details Page",
+          "title": "VTEX product details page - Intelligent Search",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1802,7 +1803,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Product Details Page",
+          "title": "VTEX Legacy - Product Details page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2070,7 +2071,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Search Products",
+          "title": "VTEX product list - Intelligent Search",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -2092,7 +2093,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Search Products",
+          "title": "VTEX Legacy - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2114,7 +2115,7 @@
           }
         },
         {
-          "title": "VTEX Related Products - Catalog",
+          "title": "VTEX related products - Portal",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2621,7 +2622,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Product Listing Page",
+          "title": "VTEX product listing page - Portal",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3451,7 +3452,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Search Suggestions",
+          "title": "VTEX search suggestions - Intelligent Search",
           "type": "object",
           "allOf": [
             {
@@ -3576,11 +3577,17 @@
       ],
       "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
     },
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Account"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account": {
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account"
         }
       ],
       "properties": {
@@ -4040,6 +4047,9 @@
         },
         "result": {
           "title": "Result"
+        },
+        "exception": {
+          "title": "Exception"
         }
       },
       "required": [
@@ -4490,8 +4500,97 @@
       ],
       "title": "deco-cx/live/loaders/workflows/events.ts@Props"
     },
+    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters": {
+      "type": "object",
+      "properties": {
+        "http": {
+          "type": "object",
+          "properties": {
+            "defaultHeaders": {
+              "title": "Default Headers",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "defaultHeaders"
+          ],
+          "title": "Http"
+        },
+        "websocket": {
+          "type": "object",
+          "properties": {
+            "defaultQueryParams": {
+              "title": "Default Query Params",
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "defaultQueryParams"
+          ],
+          "title": "Websocket"
+        }
+      },
+      "required": [
+        "http",
+        "websocket"
+      ],
+      "title": "RuntimeParameters"
+    },
+    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecutionBase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Id"
+        },
+        "namespace": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Namespace"
+        },
+        "workflow": {
+          "title": "Workflow"
+        },
+        "completedAt": {
+          "title": "Completed At"
+        },
+        "metadata": {
+          "title": "Metadata"
+        },
+        "runtimeParameters": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters",
+          "title": "Runtime Parameters"
+        },
+        "input": {
+          "title": "Input"
+        },
+        "output": {
+          "title": "Output"
+        }
+      },
+      "required": [
+        "workflow"
+      ],
+      "title": "WorkflowExecutionBase"
+    },
     "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessstatusWorkflowExecution+Arg": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecutionBase"
+        }
+      ],
       "properties": {
         "status": {
           "title": "Status"
@@ -4502,60 +4601,63 @@
       ],
       "title": "indexedAccessstatusWorkflowExecution+Arg"
     },
-    "ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@Arg": {
-      "title": "Arg"
-    },
     "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessinputWorkflowExecution+Arg": {
       "type": "object",
-      "properties": {
-        "input": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@Arg",
-          "title": "Input"
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecutionBase"
         }
-      },
+      ],
+      "properties": {},
       "required": [],
       "title": "indexedAccessinputWorkflowExecution+Arg"
     },
     "ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@WorkflowExecution": {
+      "type": "object",
+      "properties": {
+        "completedAt": {
+          "title": "Completed At"
+        },
+        "id": {
+          "type": "string",
+          "title": "Id"
+        },
+        "status": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessstatusWorkflowExecution+Arg",
+          "title": "Status"
+        },
+        "workflow": {
+          "type": "string",
+          "title": "Workflow"
+        },
+        "input": {
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessinputWorkflowExecution+Arg",
+          "title": "Input"
+        },
+        "output": {
+          "title": "Output"
+        },
+        "props": {
+          "title": "Props"
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "workflow"
+      ],
+      "title": "WorkflowExecution"
+    },
+    "ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@WorkflowExecution|null": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "type": "object",
-          "properties": {
-            "completedAt": {
-              "title": "Completed At"
-            },
-            "id": {
-              "type": "string",
-              "title": "Id"
-            },
-            "status": {
-              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessstatusWorkflowExecution+Arg",
-              "title": "Status"
-            },
-            "workflow": {
-              "type": "string",
-              "title": "Workflow"
-            },
-            "input": {
-              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@indexedAccessinputWorkflowExecution+Arg",
-              "title": "Input"
-            },
-            "output": {
-              "title": "Output"
-            },
-            "props": {
-              "title": "Props"
-            }
-          },
-          "required": [
-            "id",
-            "status",
-            "workflow"
-          ],
-          "title": "deco-cx/live/commons/workflows/types.ts@WorkflowExecution"
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@WorkflowExecution"
+        },
+        {
+          "type": "null"
         },
         {
           "title": "$live/loaders/workflows/get.ts",
@@ -4757,6 +4859,10 @@
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=@Props": {
       "type": "object",
       "properties": {
+        "slug": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcXVlc3RUb1BhcmFtLnRz@RequestURLParam",
+          "title": "Slug"
+        },
         "position": {
           "anyOf": [
             {
@@ -4777,10 +4883,28 @@
           ],
           "type": "string",
           "title": "Position"
+        },
+        "feature": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "SimilarItems",
+              "default": "SimilarItems"
+            },
+            {
+              "type": "string",
+              "const": "FrequentlyBoughtTogether",
+              "default": "FrequentlyBoughtTogether"
+            }
+          ],
+          "type": "string",
+          "title": "Feature"
         }
       },
       "required": [
-        "position"
+        "slug",
+        "position",
+        "feature"
       ],
       "title": "deco-sites/std/packs/linxImpulse/loaders/products/similarItems.ts@Props"
     },
@@ -5012,11 +5136,11 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -5035,7 +5159,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler",
               "title": "Value"
             }
           },
@@ -5052,7 +5176,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -5060,9 +5184,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route"
           },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
+          "title": "/Users/marcoscandeia/workspace/deco/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -5086,27 +5210,6 @@
           }
         },
         {
-          "title": "VTEX Proxy Routes",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/vtex/proxy.ts"
-              ],
-              "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
           "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
           "type": "object",
           "allOf": [
@@ -5124,50 +5227,6 @@
                 "deco-sites/std/loaders/x/redirectsFromCsv.ts"
               ],
               "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -8171,6 +8230,125 @@
       "required": [],
       "title": "deco-sites/std/packs/vtex/loaders/navbar.ts@Props"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+      "$ref": "#/root/handlers",
+      "title": "Handler"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+      "type": "object",
+      "properties": {
+        "pathTemplate": {
+          "type": "string",
+          "title": "Path Template"
+        },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
+        "handler": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "title": "Value"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "title": "Handler"
+        }
+      },
+      "required": [
+        "pathTemplate",
+        "handler"
+      ],
+      "title": "Site Route",
+      "titleBy": "pathTemplate"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+          },
+          "title": "deco-cx/live/flags/audience.ts@Route[]"
+        },
+        {
+          "title": "VTEX Proxy Routes",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/proxy.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtex/proxy.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -8183,6 +8361,23 @@
             ]
           },
           "title": "Extra Paths To Proxy"
+        },
+        "includeSiteMap": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": "Other site maps to include"
+        },
+        "generateDecoSiteMap": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "If deco site map should be exposed at /deco-sitemap.xml"
         }
       },
       "required": [],
@@ -9419,7 +9614,7 @@
       "required": [],
       "title": "Metadata"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata": {
+    "ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@WorkflowMetadata": {
       "type": "object",
       "allOf": [
         {
@@ -9427,58 +9622,38 @@
         }
       ],
       "properties": {
-        "defaultInvokeHeaders": {
-          "title": "Default Invoke Headers",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [],
-      "title": "WorkflowMetadata"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters": {
-      "type": "object",
-      "properties": {
-        "http": {
-          "type": "object",
-          "properties": {
-            "defaultHeaders": {
-              "title": "Default Headers",
+        "workflow": {
+          "allOf": [
+            {
               "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
+              "properties": {
+                "__resolveType": {
+                  "type": "string",
+                  "title": "__resolve Type"
+                }
+              },
+              "required": [
+                "__resolveType"
+              ]
+            },
+            {
+              "type": "object"
             }
-          },
-          "required": [
-            "defaultHeaders"
           ],
-          "title": "Http"
+          "title": "Workflow"
         },
-        "websocket": {
-          "type": "object",
-          "properties": {
-            "defaultQueryParams": {
-              "title": "Default Query Params",
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "defaultQueryParams"
-          ],
-          "title": "Websocket"
+        "__resolveType": {
+          "type": "string",
+          "const": "resolvable",
+          "default": "resolvable",
+          "title": "__resolve Type"
         }
       },
       "required": [
-        "http",
-        "websocket"
+        "workflow",
+        "__resolveType"
       ],
-      "title": "RuntimeParameters"
+      "title": "WorkflowMetadata"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@CommonProps": {
       "type": "object",
@@ -9491,7 +9666,7 @@
           "title": "Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2NvbW1vbnMvd29ya2Zsb3dzL3R5cGVzLnRz@WorkflowMetadata",
           "title": "Metadata"
         },
         "runtimeParameters": {
@@ -10975,7 +11150,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX Intelligent Search - Product Details Page",
+      "title": "VTEX product details page - Intelligent Search",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -10997,7 +11172,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX Intelligent Search - Search Products",
+      "title": "VTEX product list - Intelligent Search",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -11041,7 +11216,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX Intelligent Search - Search Suggestions",
+      "title": "VTEX search suggestions - Intelligent Search",
       "type": "object",
       "allOf": [
         {
@@ -11062,7 +11237,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Catalog - Product Details Page",
+      "title": "VTEX Legacy - Product Details page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11084,7 +11259,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Catalog - Search Products",
+      "title": "VTEX Legacy - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -11106,7 +11281,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX Catalog - Product Listing Page",
+      "title": "VTEX product listing page - Portal",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -11128,7 +11303,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX Related Products - Catalog",
+      "title": "VTEX related products - Portal",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11397,6 +11572,22 @@
             "$live/handlers/workflowRunner.ts"
           ],
           "default": "$live/handlers/workflowRunner.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvc2l0ZW1hcC50cw==": {
+      "title": "SiteMap",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/handlers/sitemap.ts"
+          ],
+          "default": "deco-sites/std/handlers/sitemap.ts"
         }
       }
     },
@@ -12766,6 +12957,9 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvaGFuZGxlcnMvd29ya2Zsb3dSdW5uZXIudHM="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvc2l0ZW1hcC50cw=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz"

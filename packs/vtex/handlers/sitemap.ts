@@ -1,12 +1,39 @@
-import Proxy from "$live/handlers/proxy.ts";
-import { ConnInfo } from "std/http/server.ts";
 import { isFreshCtx } from "$live/handlers/fresh.ts";
+import Proxy from "$live/handlers/proxy.ts";
 import type { Account } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import { ConnInfo } from "std/http/server.ts";
 
+const xmlHeader =
+  '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+const includeSiteMaps = (
+  currentXML: string,
+  origin: string,
+  includes?: string[],
+) => {
+  const siteMapIncludeTags = [];
+
+  for (const include of (includes ?? [])) {
+    siteMapIncludeTags.push(`
+  <sitemap>
+    <loc>${include.startsWith("/") ? `${origin}${include}` : include}</loc>
+    <lastmod>${new Date().toISOString().substring(0, 10)}</lastmod>
+  </sitemap>`);
+  }
+  return siteMapIncludeTags.length > 0
+    ? currentXML.replace(
+      xmlHeader,
+      `${xmlHeader}\n${siteMapIncludeTags.join("\n")}`,
+    )
+    : currentXML;
+};
+
+export interface Props {
+  include?: string[];
+}
 /**
  * @title Sitemap Proxy
  */
-export default function Sitemap(_: unknown) {
+export default function Sitemap({ include }: Props) {
   return async (
     req: Request,
     ctx: ConnInfo,
@@ -31,9 +58,16 @@ export default function Sitemap(_: unknown) {
     const reqUrl = new URL(req.url);
     const text = await response.text();
 
-    return new Response(text.replaceAll(publicUrl, `${reqUrl.origin}/`), {
-      headers: response.headers,
-      status: response.status,
-    });
+    return new Response(
+      includeSiteMaps(
+        text.replaceAll(publicUrl, `${reqUrl.origin}/`),
+        reqUrl.origin,
+        include,
+      ),
+      {
+        headers: response.headers,
+        status: response.status,
+      },
+    );
   };
 }
