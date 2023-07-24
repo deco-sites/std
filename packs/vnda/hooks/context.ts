@@ -26,7 +26,9 @@ const enqueue = (
     try {
       const { cart } = await cb(controller.signal);
 
-      controller.signal.throwIfAborted();
+      if (controller.signal.aborted) {
+        throw { name: "AbortError" };
+      }
 
       context.cart.value = { ...context.cart.value, ...cart };
 
