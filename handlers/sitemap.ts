@@ -24,11 +24,12 @@ const buildSiteMap = (urls: string[]) => {
   return entries.join("\n");
 };
 
+const sanitize = (url: string) => url.startsWith("/") ? url : `/${url}`;
 const siteMapFromRoutes = (publicUrl: string, routes: Route[]): string => {
   const urls: string[] = [];
   for (const route of routes) {
     if (isAbsolute(route.pathTemplate) && isPage(route.handler.value)) {
-      urls.push(`${publicUrl}${route.pathTemplate}`);
+      urls.push(`${publicUrl}${sanitize(route.pathTemplate)}`);
     }
   }
   return buildSiteMap(urls);
