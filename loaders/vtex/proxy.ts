@@ -16,7 +16,7 @@ const PATHS_TO_PROXY = [
   "/_secure/account",
   "/_v/*",
 ];
-const decoSiteMapUrl = "/deco-sitemap.xml";
+const decoSiteMapUrl = "/sitemap/deco.xml";
 
 const buildProxyRoutes = (
   { publicUrl, extraPaths, includeSiteMap, generateDecoSiteMap }: {
