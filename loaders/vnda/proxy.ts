@@ -1,4 +1,4 @@
-import type { Context } from "deco-sites/std/packs/vnda/vndaAccount.ts";
+import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 import { Route } from "$live/flags/audience.ts";
 
 const PATHS_TO_PROXY = [
