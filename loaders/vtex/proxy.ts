@@ -1,5 +1,5 @@
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { Route } from "$live/flags/audience.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 const PATHS_TO_PROXY = [
   "/account",
@@ -16,9 +16,15 @@ const PATHS_TO_PROXY = [
   "/_secure/account",
   "/_v/*",
 ];
+const decoSiteMapUrl = "/deco-sitemap.xml";
 
 const buildProxyRoutes = (
-  { publicUrl, extraPaths }: { publicUrl?: string; extraPaths: string[] },
+  { publicUrl, extraPaths, includeSiteMap, generateDecoSiteMap }: {
+    publicUrl?: string;
+    extraPaths: string[];
+    includeSiteMap?: string[];
+    generateDecoSiteMap?: boolean;
+  },
 ) => {
   if (!publicUrl) {
     return [];
@@ -54,11 +60,23 @@ const buildProxyRoutes = (
       routeFromPath,
     );
 
+    const [include, routes] = generateDecoSiteMap
+      ? [[...(includeSiteMap ?? []), decoSiteMapUrl], [{
+        pathTemplate: decoSiteMapUrl,
+        handler: {
+          value: {
+            __resolveType: "deco-sites/std/handlers/sitemap.ts",
+          },
+        },
+      }]]
+      : [includeSiteMap, []];
     return [
+      ...routes,
       {
         pathTemplate: "/sitemap.xml",
         handler: {
           value: {
+            include,
             __resolveType: "deco-sites/std/handlers/vtex/sitemap.ts",
           },
         },
@@ -82,17 +100,28 @@ const buildProxyRoutes = (
 
 export interface Props {
   extraPathsToProxy?: string[];
+  /**
+   * @title Other site maps to include
+   */
+  includeSiteMap?: string[];
+  /**
+   * @title If deco site map should be exposed at /deco-sitemap.xml
+   */
+  generateDecoSiteMap?: boolean;
 }
 
 /**
  * @title VTEX Proxy Routes
  */
 export default function VTEXProxy(
-  { extraPathsToProxy = [] }: Props,
+  { extraPathsToProxy = [], includeSiteMap = [], generateDecoSiteMap = true }:
+    Props,
   _req: Request,
   ctx: Context,
 ): Route[] {
   return buildProxyRoutes({
+    generateDecoSiteMap,
+    includeSiteMap,
     publicUrl: ctx.configVTEX?.publicUrl,
     extraPaths: extraPathsToProxy,
   });

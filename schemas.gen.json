@@ -80,6 +80,7 @@
               "$live/handlers/router.ts",
               "$live/handlers/routesSelection.ts",
               "$live/handlers/workflowRunner.ts",
+              "deco-sites/std/handlers/sitemap.ts",
               "deco-sites/std/handlers/vtex/sitemap.ts",
               "$live/pages/LivePage.tsx",
               "$live/sections/Conditional_Beta.tsx",
@@ -105,7 +106,6 @@
               "$live/matchers/MatchDevice.ts",
               "$live/matchers/MatchEnvironment.ts",
               "$live/matchers/MatchHost.ts",
-              "$live/matchers/MatchLocation.ts",
               "$live/matchers/MatchMulti.ts",
               "$live/matchers/MatchRandom.ts",
               "$live/matchers/MatchSite.ts",
@@ -1780,7 +1780,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Product Details Page",
+          "title": "VTEX product details page - Intelligent Search",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -1802,7 +1802,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Product Details Page",
+          "title": "VTEX Legacy - Product Details page",
           "description": "For routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2070,7 +2070,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Search Products",
+          "title": "VTEX product list - Intelligent Search",
           "description": "Useful for shelves and galleries.",
           "type": "object",
           "allOf": [
@@ -2092,7 +2092,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Search Products",
+          "title": "VTEX Legacy - Search Products",
           "description": "Use it in Shelves and static Galleries.",
           "type": "object",
           "allOf": [
@@ -2114,7 +2114,7 @@
           }
         },
         {
-          "title": "VTEX Related Products - Catalog",
+          "title": "VTEX related products - Portal",
           "description": "Works on routes of type /:slug/p",
           "type": "object",
           "allOf": [
@@ -2621,7 +2621,7 @@
           }
         },
         {
-          "title": "VTEX Catalog - Product Listing Page",
+          "title": "VTEX product listing page - Portal",
           "description": "Returns data ready for search pages like category,brand pages",
           "type": "object",
           "allOf": [
@@ -3451,7 +3451,7 @@
           }
         },
         {
-          "title": "VTEX Intelligent Search - Search Suggestions",
+          "title": "VTEX search suggestions - Intelligent Search",
           "type": "object",
           "allOf": [
             {
@@ -3576,11 +3576,17 @@
       ],
       "title": "deco-sites/std/commerce/butterCMS/client.ts@ConfigButterCMS"
     },
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "title": "Account"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvYWNjb3VudHMvbGlueEltcHVsc2UudHM=@Account": {
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2FjY291bnQudHM=@Account"
         }
       ],
       "properties": {
@@ -3940,480 +3946,56 @@
       ],
       "title": "deco-cx/live/loaders/state.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata": {
       "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "title": "Type"
-        },
-        "id": {
-          "type": "string",
-          "title": "Id"
-        },
-        "timestamp": {
-          "title": "Timestamp"
-        },
-        "seq": {
-          "type": "number",
-          "title": "Seq"
-        },
-        "visibleAt": {
-          "title": "Visible At"
-        }
-      },
-      "required": [
-        "type",
-        "id",
-        "timestamp",
-        "seq"
-      ],
-      "title": "Event"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@NoOpEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "no_op",
-          "default": "no_op",
-          "title": "Type"
-        },
-        "reason": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Reason"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "NoOpEvent"
+      "properties": {},
+      "required": [],
+      "title": "Metadata"
     },
     "ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg": {
       "title": "Arg"
     },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowStartedEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "workflow_started",
-          "default": "workflow_started",
-          "title": "Type"
-        },
-        "input": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
-          "title": "Input"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "WorkflowStartedEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowFinishedEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "workflow_finished",
-          "default": "workflow_finished",
-          "title": "Type"
-        },
-        "result": {
-          "title": "Result"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "WorkflowFinishedEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowCanceledEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "workflow_canceled",
-          "default": "workflow_canceled",
-          "title": "Type"
-        },
-        "reason": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Reason"
-        }
-      },
-      "required": [
-        "type"
-      ],
-      "title": "WorkflowCanceledEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityStartedEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "input": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
-          "title": "Input"
-        },
-        "type": {
-          "type": "string",
-          "const": "activity_started",
-          "default": "activity_started",
-          "title": "Type"
-        },
-        "activityName": {
-          "type": "string",
-          "title": "Activity Name"
-        }
-      },
-      "required": [
-        "type",
-        "activityName"
-      ],
-      "title": "ActivityStartedEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "result": {
-          "title": "Result"
-        },
-        "exception": {
-          "title": "Exception"
-        },
-        "activityName": {
-          "type": "string",
-          "title": "Activity Name"
-        },
-        "type": {
-          "type": "string",
-          "const": "activity_completed",
-          "default": "activity_completed",
-          "title": "Type"
-        }
-      },
-      "required": [
-        "activityName",
-        "type"
-      ],
-      "title": "ActivityCompletedEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerScheduledEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "timer_scheduled",
-          "default": "timer_scheduled",
-          "title": "Type"
-        },
-        "until": {
-          "title": "Until"
-        },
-        "timerId": {
-          "type": "string",
-          "title": "Timer Id"
-        }
-      },
-      "required": [
-        "type",
-        "until",
-        "timerId"
-      ],
-      "title": "TimerScheduledEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerFiredEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "timer_fired",
-          "default": "timer_fired",
-          "title": "Type"
-        },
-        "timerId": {
-          "type": "string",
-          "title": "Timer Id"
-        }
-      },
-      "required": [
-        "type",
-        "timerId"
-      ],
-      "title": "TimerFiredEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WaitingSignalEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "signal": {
-          "type": "string",
-          "title": "Signal"
-        },
-        "type": {
-          "type": "string",
-          "const": "waiting_signal",
-          "default": "waiting_signal",
-          "title": "Type"
-        }
-      },
-      "required": [
-        "signal",
-        "type"
-      ],
-      "title": "WaitingSignalEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@SignalReceivedEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "signal_received",
-          "default": "signal_received",
-          "title": "Type"
-        },
-        "signal": {
-          "type": "string",
-          "title": "Signal"
-        },
-        "payload": {
-          "title": "Payload"
-        }
-      },
-      "required": [
-        "type",
-        "signal"
-      ],
-      "title": "SignalReceivedEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@LocalActivityCalledEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "local_activity_called",
-          "default": "local_activity_called",
-          "title": "Type"
-        },
-        "result": {
-          "title": "Result"
-        },
-        "activityName": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Activity Name"
-        },
-        "activityParams": {
-          "title": "Activity Params"
-        }
-      },
-      "required": [
-        "type",
-        "result"
-      ],
-      "title": "LocalActivityCalledEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@InvokeHttpResponseEvent": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@Event"
-        }
-      ],
-      "properties": {
-        "type": {
-          "type": "string",
-          "const": "invoke_http_response",
-          "default": "invoke_http_response",
-          "title": "Type"
-        },
-        "body": {
-          "title": "Body"
-        },
-        "headers": {
-          "title": "Headers",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-        "url": {
-          "type": "string",
-          "title": "Url"
-        },
-        "status": {
-          "type": "number",
-          "title": "Status"
-        },
-        "responseFormat": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "complete",
-              "default": "complete"
-            },
-            {
-              "type": "string",
-              "const": "body-only",
-              "default": "body-only"
-            }
-          ],
-          "type": "string",
-          "title": "Response Format"
-        }
-      },
-      "required": [
-        "type",
-        "headers",
-        "url",
-        "status"
-      ],
-      "title": "InvokeHttpResponseEvent"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@NoOpEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowStartedEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowFinishedEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WorkflowCanceledEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityStartedEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerScheduledEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@TimerFiredEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@WaitingSignalEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@SignalReceivedEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@LocalActivityCalledEvent"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@InvokeHttpResponseEvent"
-        },
-        {},
-        {}
-      ],
-      "title": "ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
-      },
-      "title": "ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
-      "type": "object",
-      "properties": {
-        "page": {
-          "type": "number",
-          "title": "Page"
-        },
-        "pageSize": {
-          "type": "number",
-          "title": "Page Size"
-        },
-        "items": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3J1bnRpbWUvY29yZS9ldmVudHMudHM=@ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b[]",
-          "title": "Items"
-        }
-      },
-      "required": [
-        "page",
-        "pageSize",
-        "items"
-      ],
-      "title": "Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
-    },
-    "ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b": {
+    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@WorkflowExecution": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
         },
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2FwaS9zZXJ2aWNlLnRz@Pagination+ActivityCompletedEvent|ActivityStartedEvent|InvokeHttpResponseEvent|LocalActivityCalledEvent|NoOpEvent|SignalReceivedEvent|TimerFiredEvent|TimerScheduledEvent|WaitingSignalEvent|WorkflowCanceledEvent|WorkflowFinishedEvent|WorkflowStartedEvent|bfe3d4666feaf8f69ce8c4ce6d8b117b|bfe3d4666feaf8f69ce8c4ce6d8b117b"
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "alias": {
+              "type": "string",
+              "title": "Alias"
+            },
+            "completedAt": {
+              "title": "Completed At"
+            },
+            "status": {
+              "title": "Status"
+            },
+            "metadata": {
+              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata",
+              "title": "Metadata"
+            },
+            "input": {
+              "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL3R5cGVzLnRz@Arg",
+              "title": "Input"
+            },
+            "output": {
+              "title": "Output"
+            }
+          },
+          "required": [
+            "id",
+            "alias",
+            "status"
+          ],
+          "title": "deco-cx/durable/backends/backend.ts@WorkflowExecution"
         },
-        {},
         {
           "title": "$live/loaders/workflows/events.ts",
           "description": "Get the workflow execution events.",
@@ -4438,33 +4020,8 @@
         }
       ]
     },
-    "ZGVjby1jeC9saXZlL3V0aWxzL2ludm9rZS50cw==@StreamProps": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Id"
-        },
-        "stream": {
-          "type": "boolean",
-          "const": true,
-          "default": true,
-          "title": "Stream"
-        }
-      },
-      "required": [
-        "id",
-        "stream"
-      ],
-      "title": "StreamProps"
-    },
     "ZGVjby1jeC9saXZlL2xvYWRlcnMvd29ya2Zsb3dzL2V2ZW50cy50cw==@Props": {
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL3V0aWxzL2ludm9rZS50cw==@StreamProps"
-        }
-      ],
       "properties": {
         "id": {
           "type": "string",
@@ -4757,6 +4314,10 @@
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvbGlueEltcHVsc2UvbG9hZGVycy9wcm9kdWN0cy9zaW1pbGFySXRlbXMudHM=@Props": {
       "type": "object",
       "properties": {
+        "slug": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvZnVuY3Rpb25zL3JlcXVlc3RUb1BhcmFtLnRz@RequestURLParam",
+          "title": "Slug"
+        },
         "position": {
           "anyOf": [
             {
@@ -4777,10 +4338,28 @@
           ],
           "type": "string",
           "title": "Position"
+        },
+        "feature": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "SimilarItems",
+              "default": "SimilarItems"
+            },
+            {
+              "type": "string",
+              "const": "FrequentlyBoughtTogether",
+              "default": "FrequentlyBoughtTogether"
+            }
+          ],
+          "type": "string",
+          "title": "Feature"
         }
       },
       "required": [
-        "position"
+        "slug",
+        "position",
+        "feature"
       ],
       "title": "deco-sites/std/packs/linxImpulse/loaders/products/similarItems.ts@Props"
     },
@@ -5012,11 +4591,11 @@
       ],
       "title": "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts@Props"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler": {
       "$ref": "#/root/handlers",
       "title": "Handler"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route": {
       "type": "object",
       "properties": {
         "pathTemplate": {
@@ -5035,7 +4614,7 @@
           "type": "object",
           "properties": {
             "value": {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vYmxvY2tzL2hhbmRsZXIudHM=@Handler",
               "title": "Value"
             }
           },
@@ -5052,7 +4631,7 @@
       "title": "Site Route",
       "titleBy": "pathTemplate"
     },
-    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+    "L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route[]": {
       "anyOf": [
         {
           "$ref": "#/definitions/Resolvable"
@@ -5060,9 +4639,9 @@
         {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+            "$ref": "#/definitions/L1VzZXJzL21hcmNvc2NhbmRlaWEvd29ya3NwYWNlL2RlY28vZmxhZ3MvYXVkaWVuY2UudHM=@Route"
           },
-          "title": "deco-cx/live/flags/audience.ts@Route[]"
+          "title": "/Users/marcoscandeia/workspace/deco/flags/audience.ts@Route[]"
         },
         {
           "title": "VNDA Proxy Routes",
@@ -5086,27 +4665,6 @@
           }
         },
         {
-          "title": "VTEX Proxy Routes",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "deco-sites/std/loaders/vtex/proxy.ts"
-              ],
-              "default": "deco-sites/std/loaders/vtex/proxy.ts"
-            }
-          }
-        },
-        {
           "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
           "type": "object",
           "allOf": [
@@ -5124,50 +4682,6 @@
                 "deco-sites/std/loaders/x/redirectsFromCsv.ts"
               ],
               "default": "deco-sites/std/loaders/x/redirectsFromCsv.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience",
-          "description": "Select routes based on the matched audience.",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/audience.ts"
-              ],
-              "default": "$live/flags/audience.ts"
-            }
-          }
-        },
-        {
-          "title": "Audience Everyone",
-          "description": "Always match regardless of the current user",
-          "type": "object",
-          "allOf": [
-            {
-              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
-            }
-          ],
-          "required": [
-            "__resolveType"
-          ],
-          "properties": {
-            "__resolveType": {
-              "type": "string",
-              "enum": [
-                "$live/flags/everyone.ts"
-              ],
-              "default": "$live/flags/everyone.ts"
             }
           }
         }
@@ -8171,6 +7685,125 @@
       "required": [],
       "title": "deco-sites/std/packs/vtex/loaders/navbar.ts@Props"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler": {
+      "$ref": "#/root/handlers",
+      "title": "Handler"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route": {
+      "type": "object",
+      "properties": {
+        "pathTemplate": {
+          "type": "string",
+          "title": "Path Template"
+        },
+        "isHref": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "if true so the path will be checked agaisnt the coming from request instead of using urlpattern.",
+          "title": "Is Href"
+        },
+        "handler": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9oYW5kbGVyLnRz@Handler",
+              "title": "Value"
+            }
+          },
+          "required": [
+            "value"
+          ],
+          "title": "Handler"
+        }
+      },
+      "required": [
+        "pathTemplate",
+        "handler"
+      ],
+      "title": "Site Route",
+      "titleBy": "pathTemplate"
+    },
+    "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Resolvable"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route"
+          },
+          "title": "deco-cx/live/flags/audience.ts@Route[]"
+        },
+        {
+          "title": "VTEX Proxy Routes",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "deco-sites/std/loaders/vtex/proxy.ts"
+              ],
+              "default": "deco-sites/std/loaders/vtex/proxy.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience",
+          "description": "Select routes based on the matched audience.",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Audience"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/audience.ts"
+              ],
+              "default": "$live/flags/audience.ts"
+            }
+          }
+        },
+        {
+          "title": "Audience Everyone",
+          "description": "Always match regardless of the current user",
+          "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2V2ZXJ5b25lLnRz@EveryoneConfig"
+            }
+          ],
+          "required": [
+            "__resolveType"
+          ],
+          "properties": {
+            "__resolveType": {
+              "type": "string",
+              "enum": [
+                "$live/flags/everyone.ts"
+              ],
+              "default": "$live/flags/everyone.ts"
+            }
+          }
+        }
+      ]
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -8183,6 +7816,23 @@
             ]
           },
           "title": "Extra Paths To Proxy"
+        },
+        "includeSiteMap": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": "Other site maps to include"
+        },
+        "generateDecoSiteMap": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "If deco site map should be exposed at /deco-sitemap.xml"
         }
       },
       "required": [],
@@ -9127,56 +8777,6 @@
       "required": [],
       "title": "{{{includes}}} {{{match}}}"
     },
-    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location": {
-      "type": "object",
-      "properties": {
-        "city": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "City"
-        },
-        "regionCode": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Region Code"
-        },
-        "country": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Country"
-        }
-      },
-      "required": [],
-      "title": "{{{city}}} {{{regionCode}}} {{{country}}}"
-    },
-    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location"
-      },
-      "title": "Location[]"
-    },
-    "ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Props": {
-      "type": "object",
-      "properties": {
-        "includeLocations": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]",
-          "title": "Include Locations"
-        },
-        "excludeLocations": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Location[]",
-          "title": "Exclude Locations"
-        }
-      },
-      "required": [],
-      "title": "deco-cx/live/matchers/MatchLocation.ts@Props"
-    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher[]": {
       "type": "array",
       "items": {
@@ -9413,12 +9013,6 @@
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowProps": {
       "title": "WorkflowProps"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata": {
-      "type": "object",
-      "properties": {},
-      "required": [],
-      "title": "Metadata"
-    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata": {
       "type": "object",
       "allOf": [
@@ -9438,48 +9032,6 @@
       "required": [],
       "title": "WorkflowMetadata"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters": {
-      "type": "object",
-      "properties": {
-        "http": {
-          "type": "object",
-          "properties": {
-            "defaultHeaders": {
-              "title": "Default Headers",
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "defaultHeaders"
-          ],
-          "title": "Http"
-        },
-        "websocket": {
-          "type": "object",
-          "properties": {
-            "defaultQueryParams": {
-              "title": "Default Query Params",
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          },
-          "required": [
-            "defaultQueryParams"
-          ],
-          "title": "Websocket"
-        }
-      },
-      "required": [
-        "http",
-        "websocket"
-      ],
-      "title": "RuntimeParameters"
-    },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@CommonProps": {
       "type": "object",
       "properties": {
@@ -9493,10 +9045,6 @@
         "metadata": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy93b3JrZmxvdy50cw==@WorkflowMetadata",
           "title": "Metadata"
-        },
-        "runtimeParameters": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2JhY2tlbmRzL2JhY2tlbmQudHM=@RuntimeParameters",
-          "title": "Runtime Parameters"
         }
       },
       "required": [],
@@ -10975,7 +10523,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3REZXRhaWxzUGFnZS50cw==": {
-      "title": "VTEX Intelligent Search - Product Details Page",
+      "title": "VTEX product details page - Intelligent Search",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -10997,7 +10545,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3Byb2R1Y3RMaXN0LnRz": {
-      "title": "VTEX Intelligent Search - Search Products",
+      "title": "VTEX product list - Intelligent Search",
       "description": "Useful for shelves and galleries.",
       "type": "object",
       "allOf": [
@@ -11041,7 +10589,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2ludGVsbGlnZW50U2VhcmNoL3N1Z2dlc3Rpb25zLnRz": {
-      "title": "VTEX Intelligent Search - Search Suggestions",
+      "title": "VTEX search suggestions - Intelligent Search",
       "type": "object",
       "allOf": [
         {
@@ -11062,7 +10610,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0RGV0YWlsc1BhZ2UudHM=": {
-      "title": "VTEX Catalog - Product Details Page",
+      "title": "VTEX Legacy - Product Details page",
       "description": "For routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11084,7 +10632,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==": {
-      "title": "VTEX Catalog - Search Products",
+      "title": "VTEX Legacy - Search Products",
       "description": "Use it in Shelves and static Galleries.",
       "type": "object",
       "allOf": [
@@ -11106,7 +10654,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9wcm9kdWN0TGlzdGluZ1BhZ2UudHM=": {
-      "title": "VTEX Catalog - Product Listing Page",
+      "title": "VTEX product listing page - Portal",
       "description": "Returns data ready for search pages like category,brand pages",
       "type": "object",
       "allOf": [
@@ -11128,7 +10676,7 @@
       }
     },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=": {
-      "title": "VTEX Related Products - Catalog",
+      "title": "VTEX related products - Portal",
       "description": "Works on routes of type /:slug/p",
       "type": "object",
       "allOf": [
@@ -11397,6 +10945,22 @@
             "$live/handlers/workflowRunner.ts"
           ],
           "default": "$live/handlers/workflowRunner.ts"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvc2l0ZW1hcC50cw==": {
+      "title": "SiteMap",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/handlers/sitemap.ts"
+          ],
+          "default": "deco-sites/std/handlers/sitemap.ts"
         }
       }
     },
@@ -11909,27 +11473,6 @@
             "$live/matchers/MatchHost.ts"
           ],
           "default": "$live/matchers/MatchHost.ts"
-        }
-      }
-    },
-    "JGxpdmUvbWF0Y2hlcnMvTWF0Y2hMb2NhdGlvbi50cw==": {
-      "title": "Location Matcher",
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL21hdGNoZXJzL01hdGNoTG9jYXRpb24udHM=@Props"
-        }
-      ],
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "$live/matchers/MatchLocation.ts"
-          ],
-          "default": "$live/matchers/MatchLocation.ts"
         }
       }
     },
@@ -12768,6 +12311,9 @@
           "$ref": "#/definitions/JGxpdmUvaGFuZGxlcnMvd29ya2Zsb3dSdW5uZXIudHM="
         },
         {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvc2l0ZW1hcC50cw=="
+        },
+        {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvaGFuZGxlcnMvdnRleC9zaXRlbWFwLnRz"
         }
       ]
@@ -12865,9 +12411,6 @@
         },
         {
           "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hIb3N0LnRz"
-        },
-        {
-          "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hMb2NhdGlvbi50cw=="
         },
         {
           "$ref": "#/definitions/JGxpdmUvbWF0Y2hlcnMvTWF0Y2hNdWx0aS50cw=="
