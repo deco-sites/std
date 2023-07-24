@@ -32,7 +32,9 @@ const enqueue = (
     try {
       const { cart, user, wishlist } = await cb(controller.signal);
 
-      controller.signal.throwIfAborted();
+      if (controller.signal.aborted) {
+        throw { name: "AbortError" };
+      }
 
       context.cart.value = cart || context.cart.value;
       context.user.value = user || context.user.value;
