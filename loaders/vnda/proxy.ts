@@ -20,6 +20,7 @@ const PATHS_TO_PROXY = [
   "/stylesheets/*",
   "/v/s",
   "/webform",
+  "/loja/configuracoes",
 ];
 
 const buildProxyRoutes = (
