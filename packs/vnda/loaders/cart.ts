@@ -3,6 +3,7 @@ import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import type { Context } from "../accounts/vnda.ts";
 import type { Cart, OrderForm, RelatedItem } from "../types.ts";
 import { paths } from "../utils/paths.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../contants.ts";
 
 const loader = async (
   _props: unknown,
@@ -17,6 +18,7 @@ const loader = async (
     headers: {
       cookie: req.headers.get("cookie") ?? "",
       accept: "application/json",
+      [USER_AGENT_HEADER]: DECO_USER_AGENT,
     },
   });
 
@@ -25,6 +27,7 @@ const loader = async (
     {
       headers: {
         cookie: req.headers.get("cookie") ?? "",
+        [USER_AGENT_HEADER]: DECO_USER_AGENT,
       },
     },
   ).catch((error) => {
