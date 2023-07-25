@@ -2,27 +2,34 @@ import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 import { Route } from "$live/flags/audience.ts";
 
 const PATHS_TO_PROXY = [
+  "/admin",
+  "/admin/*",
+  "/api/*",
+  "/api/*",
   "/carrinho",
   "/carrinho/*",
+  "/cdn-cgi/*",
   "/cep",
   "/cep/*",
-  "/common/*",
   "/checkout/*",
+  "/common/*",
   "/components/*",
-  "/api/*",
-  "/pedido/*",
   "/conta",
   "/conta/*",
   "/cupom/ajax",
   "/entrar",
   "/images/*",
   "/javascripts/*",
+  "/loja/configuracoes",
+  "/pedido/*",
+  "/pedido/*",
+  "/recaptcha",
+  "/recuperar_senha",
   "/sair",
   "/sitemap.xml",
   "/stylesheets/*",
   "/v/s",
   "/webform",
-  "/loja/configuracoes",
 ];
 
 const buildProxyRoutes = (
