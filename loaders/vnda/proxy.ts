@@ -1,10 +1,9 @@
 import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 import { Route } from "$live/flags/audience.ts";
 
-const PATHS_TO_PROXY = [
+const PAGE_PATHS = [
   "/admin",
   "/admin/*",
-  "/api/*",
   "/carrinho",
   "/carrinho/*",
   "/cdn-cgi/*",
@@ -30,6 +29,10 @@ const PATHS_TO_PROXY = [
   "/webform",
 ];
 
+const API_PATHS = [
+  "/api/*",
+];
+
 export interface Props {
   /** @description ex: /p/fale-conosco */
   pagesToProxy?: string[];
@@ -43,40 +46,55 @@ export default function VNDAProxy(
   _req: Request,
   ctx: Context,
 ): Route[] {
-  const internalDomain = ctx.configVNDA?.internalDomain;
-  const publicDomain = ctx.configVNDA?.domain;
+  const { internalDomain, domain } = ctx.configVNDA ?? {};
 
-  if (!internalDomain) {
+  if (!internalDomain || !domain) {
+    console.warn("Missing VNDA config");
+
     return [];
   }
 
+  const url = new URL(
+    domain?.startsWith("http") ? domain : `https://${domain}`,
+  );
+
+  if (!url.hostname || url.hostname.split(".").length <= 2) {
+    throw new Error(`Invalid hostname from '${internalDomain}'`);
+  }
+
   try {
-    const hostname = (new URL(
-      publicDomain?.startsWith("http")
-        ? publicDomain
-        : `https://${publicDomain}`,
-    )).hostname;
-
-    if (!hostname || hostname.split(".").length <= 2) {
-      throw new Error(`Invalid hostname from '${internalDomain}'`);
-    }
-
-    const urlToProxy = internalDomain;
-    const hostToUse = hostname;
-
-    return [...PATHS_TO_PROXY, ...pagesToProxy].map((pathTemplate) => ({
+    const internalDomainPaths = [
+      ...PAGE_PATHS,
+      ...pagesToProxy,
+    ].map((
+      pathTemplate,
+    ) => ({
       pathTemplate,
       handler: {
         value: {
           __resolveType: "$live/handlers/proxy.ts",
-          url: urlToProxy,
-          host: hostToUse,
-          customHeaders: [{ key: "x-shop-key", value: req }],
+          url: internalDomain,
+          host: url.hostname,
+          customHeaders: [{ key: "x-shop-key", value: url.hostname }],
         },
       },
     }));
+
+    const apiDomainPaths = API_PATHS.map((pathTemplate) => ({
+      pathTemplate,
+      handler: {
+        value: {
+          __resolveType: "$live/handlers/proxy.ts",
+          url: `https://api.vnda.com.br/`,
+          host: url.hostname,
+          customHeaders: [{ key: "x-shop-key", value: url.hostname }],
+        },
+      },
+    }));
+
+    return [...internalDomainPaths, ...apiDomainPaths];
   } catch (e) {
-    console.log("Error parsing internalDomain from configVTEX");
+    console.log("Error parsing internalDomain from configVNDA");
     console.error(e);
     return [];
   }
