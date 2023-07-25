@@ -22,6 +22,7 @@ export interface ProductSearchResult {
 
 export interface ProductGetResult extends ProductBase {
   variants: Record<string, ProductVariation>[] | ProductVariation[];
+  tags: RelatedItemTag[];
 }
 
 export interface Cart {

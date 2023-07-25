@@ -9,11 +9,11 @@ import {
 } from "deco-sites/std/commerce/types.ts";
 
 import {
-  ProductBaseVNDA,
-  ProductGetResultVNDA,
-  ProductSearchResultVNDA,
-  ProductVariationVNDA,
-  VNDASEO,
+  ProductBase,
+  ProductGetResult,
+  ProductSearchResult,
+  ProductVariation,
+  SEO,
 } from "../types.ts";
 
 interface ProductOptions {
@@ -22,12 +22,12 @@ interface ProductOptions {
   priceCurrency: string;
 }
 
-export function getProductCategoryTag(product: ProductGetResultVNDA) {
+export function getProductCategoryTag(product: ProductGetResult) {
   return product.tags.filter(({ type }) => type === "categoria")[0];
 }
 
 export function getSEOFromTag(
-  tag: Pick<VNDASEO, "title" | "description">,
+  tag: Pick<SEO, "title" | "description">,
   req: Request,
 ): Seo {
   return {
@@ -39,7 +39,7 @@ export function getSEOFromTag(
 
 function getProductURL(
   url: URL,
-  product: ProductBaseVNDA,
+  product: ProductBase,
   skuId?: string,
   parentUrlData?: { slug: string; productId: string },
 ) {
@@ -57,12 +57,12 @@ function getProductURL(
 }
 
 function isProductGetResultVNDA(
-  product: ProductBaseVNDA,
-): product is ProductGetResultVNDA {
+  product: ProductBase,
+): product is ProductGetResult {
   return "variants" in product;
 }
 
-function getVariants(product: ProductGetResultVNDA, options: ProductOptions) {
+function getVariants(product: ProductGetResult, options: ProductOptions) {
   return product.variants.map((variant) => {
     const normalizedVariant = normalizeProductVariationVNDA(variant);
     const { id, slug } = product;
@@ -71,7 +71,7 @@ function getVariants(product: ProductGetResultVNDA, options: ProductOptions) {
   });
 }
 
-function getSku(product: ProductGetResultVNDA | ProductVariationVNDA) {
+function getSku(product: ProductGetResult | ProductVariation) {
   if (isProductGetResultVNDA(product)) {
     const firstVariant = product.variants[0];
     if (!firstVariant) return product.id.toString();
@@ -83,7 +83,7 @@ function getSku(product: ProductGetResultVNDA | ProductVariationVNDA) {
   return product.sku;
 }
 
-function getProperties(product: ProductGetResultVNDA | ProductVariationVNDA) {
+function getProperties(product: ProductGetResult | ProductVariation) {
   if (isProductGetResultVNDA(product)) {
     return toPropertyValue(product);
   }
@@ -91,7 +91,7 @@ function getProperties(product: ProductGetResultVNDA | ProductVariationVNDA) {
   return toLeafPropertyValue(product);
 }
 
-function toOffer(product: ProductBaseVNDA): Offer {
+function toOffer(product: ProductBase): Offer {
   const numberInstallments = product.installments as number[];
   const sumNumbers = () => numberInstallments.reduce((acc, i) => (acc + i), 0);
   const isInstallmentNumbersOnly = typeof product.installments === "number";
@@ -149,12 +149,12 @@ function toOffer(product: ProductBaseVNDA): Offer {
   };
 }
 
-function toPropertyValue(product: ProductGetResultVNDA): PropertyValue[] {
+function toPropertyValue(product: ProductGetResult): PropertyValue[] {
   return product.variants.flatMap(toLeafPropertyValue);
 }
 
 function toLeafPropertyValue(
-  maybeProduct: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
+  maybeProduct: Record<string, ProductVariation> | ProductVariation,
 ): PropertyValue[] {
   const product = normalizeProductVariationVNDA(maybeProduct);
   const keys = Object.keys(product.properties);
@@ -169,15 +169,15 @@ function toLeafPropertyValue(
 }
 
 function isProductVariationVNDA(
-  variation: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
-): variation is ProductVariationVNDA {
+  variation: Record<string, ProductVariation> | ProductVariation,
+): variation is ProductVariation {
   const variationKeys = Object.keys(variation);
   return variationKeys.length > 1;
 }
 
 function normalizeProductVariationVNDA(
-  variation: Record<string, ProductVariationVNDA> | ProductVariationVNDA,
-): ProductVariationVNDA {
+  variation: Record<string, ProductVariation> | ProductVariation,
+): ProductVariation {
   if (!isProductVariationVNDA(variation)) {
     const variationKeys = Object.keys(variation);
     return variation[variationKeys[0]];
@@ -187,7 +187,7 @@ function normalizeProductVariationVNDA(
 }
 
 export function toProduct(
-  product: ProductGetResultVNDA | ProductVariationVNDA,
+  product: ProductGetResult | ProductVariation,
   options: ProductOptions,
   parentUrlData?: { slug: string; productId: string },
 ): Product {
@@ -281,7 +281,7 @@ function removeFilter(
 }
 
 export function toFilters(
-  aggregations: ProductSearchResultVNDA["aggregations"],
+  aggregations: ProductSearchResult["aggregations"],
   typeTagsInUse: { key: string; value: string }[],
   cleanUrl: URL,
 ): Filter[] {

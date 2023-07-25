@@ -1,54 +1,15 @@
-import { Account as ConfigVNDA } from "../packs/vnda/accounts/vnda.ts";
-import { createClient } from "../packs/vnda/client.ts";
-import { toProduct, useVariant } from "../packs/vnda/utils/transform.ts";
-import type { LiveState } from "$live/types.ts";
+import productDetailsPageLoader from "deco-sites/std/packs/vnda/loaders/productDetailsPage.ts";
 import type { LoaderFunction } from "$live/types.ts";
-import type { ProductDetailsPage } from "../commerce/types.ts";
+import { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import { StateVNDA } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 
-/**
- * @title VTEX Product Page Loader
- * @description Works on routes of type /:slug/p
- */
-const productPageLoader: LoaderFunction<
+const productDetailsPage: LoaderFunction<
   null,
   ProductDetailsPage | null,
-  LiveState<{ configVNDA: ConfigVNDA }>
+  StateVNDA
 > = async (req, ctx) => {
-  const url = new URL(req.url);
-  const { configVNDA } = ctx.state.global;
-  const client = createClient(configVNDA);
-
-  const getResult = await client.product.get({
-    id: url.searchParams.get("id")!,
-  });
-
-  if (!getResult) {
-    return {
-      data: null,
-      status: 404,
-    };
-  }
-
-  const product = useVariant(
-    toProduct(getResult, {
-      url,
-      priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-    }),
-    url.searchParams.get("skuId"),
-  );
-
-  return {
-    data: {
-      "@type": "ProductDetailsPage",
-      // TODO: Find out what's the right breadcrumb on vnda
-      breadcrumbList: {
-        "@type": "BreadcrumbList",
-        itemListElement: [],
-        numberOfItems: 0,
-      },
-      product,
-    },
-  };
+  const data = await productDetailsPageLoader(null, req, ctx.state);
+  return { data };
 };
 
-export default productPageLoader;
+export default productDetailsPage;

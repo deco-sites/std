@@ -1,7 +1,6 @@
 import { createClient } from "../client.ts";
 import { VNDA_SORT_OPTIONS } from "../client.ts";
-import { Context } from "../vndaAccount.ts";
-import { VNDASort } from "../types.ts";
+import { Sort } from "../types.ts";
 import {
   getSEOFromTag,
   toFilters,
@@ -10,6 +9,7 @@ import {
 } from "../utils/transform.ts";
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
+import { Context } from "../accounts/vnda.ts";
 
 export interface Props {
   /**
@@ -51,7 +51,7 @@ const searchLoader = async (
 
   const count = props.count ?? 12;
   const { cleanUrl, typeTags } = typeTagExtractor(url);
-  const sort = url.searchParams.get("sort") as VNDASort;
+  const sort = url.searchParams.get("sort") as Sort;
   const page = Number(url.searchParams.get("page")) || 1;
 
   const isSearchPage = url.pathname === "/busca";

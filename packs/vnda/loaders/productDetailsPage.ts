@@ -1,7 +1,7 @@
 import { createClient } from "../client.ts";
 import { getSEOFromTag, toProduct, useVariant } from "../utils/transform.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
-import { Context } from "../vndaAccount.ts";
+import { Context } from "../accounts/vnda.ts";
 
 /**
  * @title VNDA Product Page Loader

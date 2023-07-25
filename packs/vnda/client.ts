@@ -12,13 +12,14 @@ import {
   SEO,
   TagsSearchParams,
 } from "./types.ts";
-
-const DOMAIN_HEADER = "X-Shop-Host";
-const PAGINATION_HEADER = "x-pagination";
-const USER_AGENT_HEADER = "User-Agent";
-const DECO_USER_AGENT = "decocx/1.0";
-const BASE_URL_PROD = "https://api.vnda.com.br/api/v2/";
-const BASE_URL_SANDBOX = "https://api.sandbox.vnda.com.br/api/v2/";
+import {
+  BASE_URL_PROD,
+  BASE_URL_SANDBOX,
+  DECO_USER_AGENT,
+  DOMAIN_HEADER,
+  PAGINATION_HEADER,
+  USER_AGENT_HEADER,
+} from "./constants.ts";
 
 export const VNDA_SORT_OPTIONS: SortOption[] = [
   { value: "", label: "Relevância" },
