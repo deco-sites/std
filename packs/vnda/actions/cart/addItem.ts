@@ -4,7 +4,7 @@ import { getSetCookies, setCookie } from "std/http/mod.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import type { Cart, RelatedItem } from "../../types.ts";
 import { paths } from "../../utils/paths.ts";
-import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../contants.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";
 
 export interface Props {
   itemId: string;

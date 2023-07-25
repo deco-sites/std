@@ -3,7 +3,7 @@ import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import type { Context } from "../accounts/vnda.ts";
 import type { Cart, OrderForm, RelatedItem } from "../types.ts";
 import { paths } from "../utils/paths.ts";
-import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../contants.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../constants.ts";
 
 const loader = async (
   _props: unknown,

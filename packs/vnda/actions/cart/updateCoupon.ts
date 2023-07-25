@@ -2,7 +2,7 @@ import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import type { Cart, Coupon } from "../../types.ts";
 import { paths } from "../../utils/paths.ts";
-import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../contants.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";
 
 export interface Props {
   code: string;
