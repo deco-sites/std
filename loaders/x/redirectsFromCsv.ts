@@ -63,7 +63,7 @@ const getRedirectFromFile = async (from: string) => {
 };
 
 export const removeTrailingSlash = (path: string) =>
-  path.endsWith("/") ? path.slice(0, path.length - 1) : path;
+  path.endsWith("/") && path.length > 1 ? path.slice(0, path.length - 1) : path;
 
 export default async function redirect(
   { redirects, from }: Redirects,
