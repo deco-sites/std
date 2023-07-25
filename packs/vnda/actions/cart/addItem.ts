@@ -4,6 +4,7 @@ import { getSetCookies, setCookie } from "std/http/mod.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import type { Cart, RelatedItem } from "../../types.ts";
 import { paths } from "../../utils/paths.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";
 
 export interface Props {
   itemId: string;
@@ -35,6 +36,7 @@ const action = async (
     headers: {
       cookie: reqCookies,
       accept: "application/json",
+      [USER_AGENT_HEADER]: DECO_USER_AGENT,
     },
   });
 
@@ -57,6 +59,7 @@ const action = async (
     {
       headers: {
         cookie: allCookies,
+        [USER_AGENT_HEADER]: DECO_USER_AGENT,
       },
     },
   ).catch((error) => {

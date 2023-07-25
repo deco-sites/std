@@ -2,6 +2,7 @@ import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import type { Cart, Shipping } from "../../types.ts";
 import { paths } from "../../utils/paths.ts";
+import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";
 
 export interface Props {
   zip: string;
@@ -24,6 +25,7 @@ const action = async (
     body: form,
     headers: {
       cookie: req.headers.get("cookie") ?? "",
+      [USER_AGENT_HEADER]: DECO_USER_AGENT,
     },
   });
 
