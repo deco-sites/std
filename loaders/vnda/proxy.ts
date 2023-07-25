@@ -30,13 +30,22 @@ const PATHS_TO_PROXY = [
   "/webform",
 ];
 
-const buildProxyRoutes = (
-  { internalDomain, publicDomain, pagesToProxy }: {
-    internalDomain?: string;
-    publicDomain?: string;
-    pagesToProxy: string[];
-  },
-) => {
+export interface Props {
+  /** @description ex: /p/fale-conosco */
+  pagesToProxy?: string[];
+}
+
+/**
+ * @title VNDA Proxy Routes
+ */
+export default function VNDAProxy(
+  { pagesToProxy = [] }: Props,
+  _req: Request,
+  ctx: Context,
+): Route[] {
+  const internalDomain = ctx.configVNDA?.internalDomain;
+  const publicDomain = ctx.configVNDA?.domain;
+
   if (!internalDomain) {
     return [];
   }
@@ -62,6 +71,7 @@ const buildProxyRoutes = (
           __resolveType: "$live/handlers/proxy.ts",
           url: urlToProxy,
           host: hostToUse,
+          customHeaders: [{ key: "x-shop-key", value: req }],
         },
       },
     }));
@@ -70,24 +80,4 @@ const buildProxyRoutes = (
     console.error(e);
     return [];
   }
-};
-
-export interface Props {
-  /** @description ex: /p/fale-conosco */
-  pagesToProxy?: string[];
-}
-
-/**
- * @title VNDA Proxy Routes
- */
-export default function VNDAProxy(
-  { pagesToProxy = [] }: Props,
-  _req: Request,
-  ctx: Context,
-): Route[] {
-  return buildProxyRoutes({
-    internalDomain: ctx.configVNDA?.internalDomain,
-    publicDomain: ctx.configVNDA?.domain,
-    pagesToProxy,
-  });
 }
