@@ -10,7 +10,7 @@ const PATHS_TO_PROXY = [
   "/checkout/*",
   "/components/*",
   "/api/*",
-  "/pedidos/*",
+  "/pedido/*",
   "/conta",
   "/conta/*",
   "/cupom/ajax",
