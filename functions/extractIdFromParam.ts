@@ -20,7 +20,8 @@ const extractIdFromParam: LoaderFunction<
   FunctionContext
 > = (_req, ctx) => {
   const param = ctx.params[ctx.state.$live.param || "slug"];
-  return { data: param.split("-")[param.length - 1] };
+  const paramArr = param.split("-");
+  return { data: paramArr[paramArr.length - 1] };
 };
 
 export default extractIdFromParam;

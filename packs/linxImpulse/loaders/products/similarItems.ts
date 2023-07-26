@@ -46,6 +46,7 @@ const loader = async (
   const requestHeaders = toRequestHeader(config!);
   const linxImpulse = paths(config!);
 
+  console.log({ props });
   try {
     const { products: productsBySlug } = await fetchAPI<SearchProductsResponse>(
       `${linxImpulse.product.getProductBySlug.term(id)}`,
