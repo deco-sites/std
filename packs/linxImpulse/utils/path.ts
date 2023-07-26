@@ -27,7 +27,7 @@ export const paths = ({ apiKey, secretKey }: Account) => {
     product: {
       getProductBySlug: {
         term: (term: string) =>
-          `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&terms=${term}&hide=quickFilters&hide=suggestions&hide=filters`,
+          `${searchBaseUrl}/search?apiKey=${apiKey}&productFormat=complete&terms=${term}&hide=quickFilters&hide=suggestions&hide=filters&resultsPerPage=1`,
       },
       similarItems: {
         productId: (productId: string) =>
