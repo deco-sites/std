@@ -1,4 +1,5 @@
 {
+  "lock": false,
   "tasks": {
     "start": "deno run -A --watch=sections/,functions/ dev.ts",
     "component": "deno eval 'import \"$live/scripts/component.ts\"'",
