@@ -57,12 +57,15 @@ import * as $$$14 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
 import * as $$$15 from "./loaders/vtex/intelligentSearch/suggestions.ts";
 import * as $$$16 from "./loaders/vtex/cart.ts";
 import * as $$$17 from "./loaders/vtex/user.ts";
-import * as $$$18 from "./loaders/vnda/proxy.ts";
-import * as $$$19 from "./loaders/vnda/cart.ts";
-import * as $$$20 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
-import * as $$$21 from "./loaders/nuvemShop/nuvemShopProductList.ts";
-import * as $$$22 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
-import * as $$$23 from "./loaders/x/redirectsFromCsv.ts";
+import * as $$$18 from "./loaders/vnda/productList.ts";
+import * as $$$19 from "./loaders/vnda/productDetailsPage.ts";
+import * as $$$20 from "./loaders/vnda/productListingPage.ts";
+import * as $$$21 from "./loaders/vnda/proxy.ts";
+import * as $$$22 from "./loaders/vnda/cart.ts";
+import * as $$$23 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
+import * as $$$24 from "./loaders/nuvemShop/nuvemShopProductList.ts";
+import * as $$$25 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
+import * as $$$26 from "./loaders/x/redirectsFromCsv.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -198,11 +201,14 @@ const manifest = {
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": $$$4,
     "deco-sites/std/loaders/linxImpulse/products/similarItems.ts": $$$0,
     "deco-sites/std/loaders/linxImpulse/search.ts": $$$1,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$20,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$21,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$22,
-    "deco-sites/std/loaders/vnda/cart.ts": $$$19,
-    "deco-sites/std/loaders/vnda/proxy.ts": $$$18,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$23,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$24,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$25,
+    "deco-sites/std/loaders/vnda/cart.ts": $$$22,
+    "deco-sites/std/loaders/vnda/productDetailsPage.ts": $$$19,
+    "deco-sites/std/loaders/vnda/productList.ts": $$$18,
+    "deco-sites/std/loaders/vnda/productListingPage.ts": $$$20,
+    "deco-sites/std/loaders/vnda/proxy.ts": $$$21,
     "deco-sites/std/loaders/vtex/cart.ts": $$$16,
     "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts":
       $$$13,
@@ -218,7 +224,7 @@ const manifest = {
     "deco-sites/std/loaders/vtex/proxy.ts": $$$11,
     "deco-sites/std/loaders/vtex/user.ts": $$$17,
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$9,
-    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$23,
+    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$26,
   },
   "routes": {
     "./routes/_app.tsx": $$$$2,

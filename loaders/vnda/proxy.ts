@@ -1,5 +1,5 @@
-import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 import { Route } from "$live/flags/audience.ts";
+import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 
 const PAGE_PATHS = [
   "/admin",
@@ -33,6 +33,7 @@ const API_PATHS = [
   "/api/*",
 ];
 
+const VNDA_HOST_HEADER = "X-Shop-Host";
 export interface Props {
   /** @description ex: /p/fale-conosco */
   pagesToProxy?: string[];
@@ -62,6 +63,8 @@ export default function VNDAProxy(
     throw new Error(`Invalid hostname from '${internalDomain}'`);
   }
 
+  const customHeaders = [{ key: VNDA_HOST_HEADER, value: url.hostname }];
+
   try {
     const internalDomainPaths = [
       ...PAGE_PATHS,
@@ -75,7 +78,7 @@ export default function VNDAProxy(
           __resolveType: "$live/handlers/proxy.ts",
           url: internalDomain,
           host: url.hostname,
-          customHeaders: [{ key: "x-shop-key", value: url.hostname }],
+          customHeaders,
         },
       },
     }));
@@ -87,7 +90,7 @@ export default function VNDAProxy(
           __resolveType: "$live/handlers/proxy.ts",
           url: `https://api.vnda.com.br/`,
           host: url.hostname,
-          customHeaders: [{ key: "x-shop-key", value: url.hostname }],
+          customHeaders,
         },
       },
     }));
