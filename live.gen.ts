@@ -29,7 +29,8 @@ import * as $22 from "./functions/butterCMSCategories.ts";
 import * as $23 from "./functions/shopifyProductList.ts";
 import * as $24 from "./functions/shopifyProductDetailsPage.ts";
 import * as $25 from "./functions/vtexLegacyRelatedProductsLoader.ts";
-import * as $26 from "./functions/requestToParam.ts";
+import * as $26 from "./functions/extractIdFromParam.ts";
+import * as $27 from "./functions/requestToParam.ts";
 import * as $$0 from "./accounts/butterCMS.ts";
 import * as $$1 from "./accounts/linxImpulse.ts";
 import * as $$2 from "./accounts/vnda.ts";
@@ -158,8 +159,9 @@ const manifest = {
     "deco-sites/std/functions/butterCMSPostDetail.ts": $5,
     "deco-sites/std/functions/butterCMSPosts.ts": $0,
     "deco-sites/std/functions/butterCMSRelatedPosts.ts": $18,
+    "deco-sites/std/functions/extractIdFromParam.ts": $26,
     "deco-sites/std/functions/occProductDetailsPage.ts": $15,
-    "deco-sites/std/functions/requestToParam.ts": $26,
+    "deco-sites/std/functions/requestToParam.ts": $27,
     "deco-sites/std/functions/shopifyProductDetailsPage.ts": $24,
     "deco-sites/std/functions/shopifyProductList.ts": $23,
     "deco-sites/std/functions/shopifyProductListingPage.ts": $12,

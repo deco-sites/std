@@ -1,21 +1,24 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { ExtractIDFromParam } from "deco-sites/std/functions/extractIdFromParam.ts";
 import type {
   PagesRecommendationsResponse,
   Position,
   SearchProductsResponse,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
 
-import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
-import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import {
   toProduct,
   toProductLinxImpulse,
   toRequestHeader,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { HttpError } from "deco-sites/std/utils/HttpError.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
+import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 
 export interface Props {
+  id: ExtractIDFromParam;
+
   /**
    * @title Position
    */
@@ -37,23 +40,15 @@ const loader = async (
   ctx: Context,
 ): Promise<Product[] | null> => {
   const { configLinxImpulse: config } = ctx;
-  const { position, feature } = props;
+  const { id, position, feature } = props;
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
   const requestHeaders = toRequestHeader(config!);
-
-  /**
-   * As the Linx APIs do not support slug searches, we need to get the product reference that every product has on URL
-   */
-  const regex = /-(\d+)\/p/;
-  const match = url.pathname.match(regex);
-
-  if (!match) return null;
+  const linxImpulse = paths(config!);
 
   try {
-    const linxImpulse = paths(config!);
     const { products: productsBySlug } = await fetchAPI<SearchProductsResponse>(
-      `${linxImpulse.product.getProductBySlug.term(match[1])}`,
+      `${linxImpulse.product.getProductBySlug.term(id)}`,
       { headers: requestHeaders },
     );
 
