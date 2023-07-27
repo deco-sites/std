@@ -1,19 +1,38 @@
-import { deferred } from "std/async/deferred.ts";
-import { context } from "$live/live.ts";
 import type { Handlers } from "$fresh/server.ts";
+import { context } from "$live/live.ts";
+import { createWorker } from "../utils/worker.ts";
 
 export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
-export const tailwindBundle = deferred();
+const generate = async () => {
+  /**
+   * Here be capybaras! 🐁🐁🐁
+   *
+   * Tailwind uses a dependency called picocolors. Somehow, this line breaks when running on deno
+   * https://github.com/alexeyraspopov/picocolors/blob/6b43e8e83bcfe69ad1391a2bb07239bf11a13bc4/picocolors.js#L4
+   *
+   * Setting this envvar makes this line not to be run, and thus, solves the issue.
+   *
+   * TODO: Remove this env var once this issue is fixed
+   */
+  Deno.env.set("NO_COLOR", "true");
 
-if (context.isDeploy) {
-  tailwindBundle.resolve();
-}
+  const worker = await createWorker(
+    new URL("../tailwindv3.ts", import.meta.url),
+    {
+      type: "module",
+    },
+  );
+
+  await worker.bundle({ to: TO, from: FROM });
+};
+
+export const bundle = context.isDeploy ? Promise.resolve() : generate();
 
 export const handler: Handlers = {
   GET: async () => {
-    await tailwindBundle;
+    await bundle;
 
     try {
       const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
