@@ -12,24 +12,24 @@ import * as $5 from "./functions/butterCMSPostDetail.ts";
 import * as $6 from "./functions/vndaProductDetailsPage.ts";
 import * as $7 from "./functions/vtexLegacyProductDetailsPage.ts";
 import * as $8 from "./functions/vtexSuggestions.ts";
-import * as $9 from "./functions/vtexNavbar.ts";
-import * as $10 from "./functions/butterCMSPlaces.ts";
-import * as $11 from "./functions/vtexWishlist.ts";
-import * as $12 from "./functions/shopifyProductListingPage.ts";
-import * as $13 from "./functions/vtexProductList.ts";
-import * as $14 from "./functions/butterCMSFeaturedPosts.ts";
-import * as $15 from "./functions/occProductDetailsPage.ts";
-import * as $16 from "./functions/butterCMSBrands.ts";
-import * as $17 from "./functions/vndaProductListingPage.ts";
-import * as $18 from "./functions/butterCMSRelatedPosts.ts";
-import * as $19 from "./functions/vtexLegacyProductListingPage.ts";
-import * as $20 from "./functions/vtexProductDetailsPage.ts";
-import * as $21 from "./functions/vtexLegacyProductList.ts";
-import * as $22 from "./functions/butterCMSCategories.ts";
-import * as $23 from "./functions/shopifyProductList.ts";
-import * as $24 from "./functions/shopifyProductDetailsPage.ts";
-import * as $25 from "./functions/vtexLegacyRelatedProductsLoader.ts";
-import * as $26 from "./functions/extractIdFromParam.ts";
+import * as $9 from "./functions/productIdFromVTEXSlug.ts";
+import * as $10 from "./functions/vtexNavbar.ts";
+import * as $11 from "./functions/butterCMSPlaces.ts";
+import * as $12 from "./functions/vtexWishlist.ts";
+import * as $13 from "./functions/shopifyProductListingPage.ts";
+import * as $14 from "./functions/vtexProductList.ts";
+import * as $15 from "./functions/butterCMSFeaturedPosts.ts";
+import * as $16 from "./functions/occProductDetailsPage.ts";
+import * as $17 from "./functions/butterCMSBrands.ts";
+import * as $18 from "./functions/vndaProductListingPage.ts";
+import * as $19 from "./functions/butterCMSRelatedPosts.ts";
+import * as $20 from "./functions/vtexLegacyProductListingPage.ts";
+import * as $21 from "./functions/vtexProductDetailsPage.ts";
+import * as $22 from "./functions/vtexLegacyProductList.ts";
+import * as $23 from "./functions/butterCMSCategories.ts";
+import * as $24 from "./functions/shopifyProductList.ts";
+import * as $25 from "./functions/shopifyProductDetailsPage.ts";
+import * as $26 from "./functions/vtexLegacyRelatedProductsLoader.ts";
 import * as $27 from "./functions/requestToParam.ts";
 import * as $$0 from "./accounts/butterCMS.ts";
 import * as $$1 from "./accounts/linxImpulse.ts";
@@ -154,33 +154,33 @@ import * as i1$$$$$$$2 from "$live/actions/workflows/start.ts";
 const manifest = {
   "functions": {
     "deco-sites/std/functions/butterCMSAds.ts": $4,
-    "deco-sites/std/functions/butterCMSBrands.ts": $16,
-    "deco-sites/std/functions/butterCMSCategories.ts": $22,
-    "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $14,
+    "deco-sites/std/functions/butterCMSBrands.ts": $17,
+    "deco-sites/std/functions/butterCMSCategories.ts": $23,
+    "deco-sites/std/functions/butterCMSFeaturedPosts.ts": $15,
     "deco-sites/std/functions/butterCMSPage.ts": $1,
-    "deco-sites/std/functions/butterCMSPlaces.ts": $10,
+    "deco-sites/std/functions/butterCMSPlaces.ts": $11,
     "deco-sites/std/functions/butterCMSPostDetail.ts": $5,
     "deco-sites/std/functions/butterCMSPosts.ts": $0,
-    "deco-sites/std/functions/butterCMSRelatedPosts.ts": $18,
-    "deco-sites/std/functions/extractIdFromParam.ts": $26,
-    "deco-sites/std/functions/occProductDetailsPage.ts": $15,
+    "deco-sites/std/functions/butterCMSRelatedPosts.ts": $19,
+    "deco-sites/std/functions/occProductDetailsPage.ts": $16,
+    "deco-sites/std/functions/productIdFromVTEXSlug.ts": $9,
     "deco-sites/std/functions/requestToParam.ts": $27,
-    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $24,
-    "deco-sites/std/functions/shopifyProductList.ts": $23,
-    "deco-sites/std/functions/shopifyProductListingPage.ts": $12,
+    "deco-sites/std/functions/shopifyProductDetailsPage.ts": $25,
+    "deco-sites/std/functions/shopifyProductList.ts": $24,
+    "deco-sites/std/functions/shopifyProductListingPage.ts": $13,
     "deco-sites/std/functions/vndaProductDetailsPage.ts": $6,
     "deco-sites/std/functions/vndaProductList.ts": $3,
-    "deco-sites/std/functions/vndaProductListingPage.ts": $17,
+    "deco-sites/std/functions/vndaProductListingPage.ts": $18,
     "deco-sites/std/functions/vtexLegacyProductDetailsPage.ts": $7,
-    "deco-sites/std/functions/vtexLegacyProductList.ts": $21,
-    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $19,
-    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $25,
-    "deco-sites/std/functions/vtexNavbar.ts": $9,
-    "deco-sites/std/functions/vtexProductDetailsPage.ts": $20,
-    "deco-sites/std/functions/vtexProductList.ts": $13,
+    "deco-sites/std/functions/vtexLegacyProductList.ts": $22,
+    "deco-sites/std/functions/vtexLegacyProductListingPage.ts": $20,
+    "deco-sites/std/functions/vtexLegacyRelatedProductsLoader.ts": $26,
+    "deco-sites/std/functions/vtexNavbar.ts": $10,
+    "deco-sites/std/functions/vtexProductDetailsPage.ts": $21,
+    "deco-sites/std/functions/vtexProductList.ts": $14,
     "deco-sites/std/functions/vtexProductListingPage.ts": $2,
     "deco-sites/std/functions/vtexSuggestions.ts": $8,
-    "deco-sites/std/functions/vtexWishlist.ts": $11,
+    "deco-sites/std/functions/vtexWishlist.ts": $12,
   },
   "accounts": {
     "deco-sites/std/accounts/butterCMS.ts": $$0,

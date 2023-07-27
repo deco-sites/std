@@ -1,5 +1,5 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { ExtractIDFromParam } from "deco-sites/std/functions/extractIdFromParam.ts";
+import type { ProductID } from "deco-sites/std/functions/productIdFromVTEXSlug.ts";
 import type {
   PagesRecommendationsResponse,
   SearchProductsResponse,
@@ -17,7 +17,7 @@ import { HttpError } from "deco-sites/std/utils/HttpError.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 export interface Props {
-  id: ExtractIDFromParam;
+  id: ProductID;
   feature: "SimilarItems" | "FrequentlyBoughtTogether";
 }
 
