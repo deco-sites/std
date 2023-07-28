@@ -1,55 +1,29 @@
 import type { Handlers } from "$fresh/server.ts";
-import { context } from "$live/live.ts";
-import { createWorker } from "../utils/worker.ts";
+import { yellow } from "std/fmt/colors.ts";
+import { handler as tailwindHandler } from "../plugins/tailwind/mod.ts";
 
-export const TO = "./static/tailwind.css";
-export const FROM = "./tailwind.css";
+const msg = `
+${yellow("WARNING!")}
+Tailwind setup has changed and we now offer it via a Fresh Plugin! This file will be removed in future releases. To migrate
 
-const generate = async () => {
-  /**
-   * Here be capybaras! 🐁🐁🐁
-   *
-   * Tailwind uses a dependency called picocolors. Somehow, this line breaks when running on deno
-   * https://github.com/alexeyraspopov/picocolors/blob/6b43e8e83bcfe69ad1391a2bb07239bf11a13bc4/picocolors.js#L4
-   *
-   * Setting this envvar makes this line not to be run, and thus, solves the issue.
-   *
-   * TODO: Remove this env var once this issue is fixed
-   */
-  Deno.env.set("NO_COLOR", "true");
+1. Remove routes/styles.css.ts from your routes folder
+2. Change main.ts to:
 
-  const worker = await createWorker(
-    new URL("../tailwindv3.ts", import.meta.url),
-    {
-      type: "module",
-    },
-  );
+  import tailwindPlugin from "deco-sites/std/plugins/tailwind/mod.ts";
 
-  await worker.bundle({ to: TO, from: FROM });
-};
+  await start($live(manifest, site), {
+    plugins: [
+      tailwindPlugin,
+    ],
+  });
 
-export const bundle = context.isDeploy ? Promise.resolve() : generate();
+That's it! Thanks for migrating 🎉
+`;
 
 export const handler: Handlers = {
-  GET: async () => {
-    await bundle;
+  GET: (req, ctx) => {
+    console.warn(msg);
 
-    try {
-      const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
-
-      return new Response(file.readable, {
-        headers: {
-          "Cache-Control": "public, max-age=31536000, immutable",
-          "Content-Type": "text/css; charset=utf-8",
-          "Content-Length": `${stats.size}`,
-        },
-      });
-    } catch (error) {
-      if (error instanceof Deno.errors.NotFound) {
-        return new Response(null, { status: 404 });
-      }
-
-      return new Response(null, { status: 500 });
-    }
+    return tailwindHandler.GET!(req, ctx);
   },
 };

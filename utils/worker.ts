@@ -139,7 +139,7 @@ if (IS_WORKER) {
         } catch (error) {
           self.postMessage({
             type: "invoke:reject",
-            payload: { id, reason: `${error}` },
+            payload: { id, reason: Deno.inspect(error) },
           });
         }
 
@@ -156,7 +156,7 @@ if (IS_WORKER) {
         } catch (error) {
           self.postMessage({
             type: "setup:reject",
-            payload: `${error}`,
+            payload: Deno.inspect(error),
           });
         }
 
