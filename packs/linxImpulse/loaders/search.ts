@@ -134,7 +134,7 @@ const loader = async (
     );
 
     const products = searchData.products.map((product) =>
-      toProduct(product, product.skus[0].properties, 0, { baseUrl })
+      toProduct(product, product.skus[0], 0, { baseUrl })
     );
     const filters = searchData.filters.map(toFilter(selectedFacets, url));
     const hasNextPage = Boolean(searchData.pagination.next);

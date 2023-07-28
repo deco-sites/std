@@ -88,7 +88,7 @@ const loader = async (
             productRecommendation,
             productRecommendation.skus[0],
           );
-          return toProduct(product, product.skus[0].properties, 0, options);
+          return toProduct(product, product.skus[0], 0, options);
         })
       );
 
