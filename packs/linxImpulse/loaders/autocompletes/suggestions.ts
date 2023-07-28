@@ -67,7 +67,7 @@ const loaders = async (
     };
 
     const products = suggestionsData.products.map((product) =>
-      toProduct(product, product.skus[0].properties, 0, options)
+      toProduct(product, product.skus[0], 0, options)
     );
 
     const searches = toSearchTerm(suggestionsData);

@@ -67,7 +67,7 @@ const toAdditionalPropertyClusters = ({ details }: ProductLinxImpulse) => {
 
 export const toProduct = <P extends ProductLinxImpulse>(
   product: P,
-  sku: ProductLinxImpulse["skus"][number]["properties"],
+  sku: ProductLinxImpulse["skus"][number],
   level = 0,
   options: ProductOptions,
 ): Product => {
@@ -83,9 +83,8 @@ export const toProduct = <P extends ProductLinxImpulse>(
     status,
     installment,
   } = product;
-  const { eanCode, oldPrice, price, details: skuDetails, stock } = sku;
-
-  const skuId = skuDetails.skuSellers.sku;
+  const { sku: skuId, properties } = sku;
+  const { eanCode, oldPrice, price, details: skuDetails, stock } = properties;
 
   const categoriesString = categories.map((category) => category.name).join(
     DEFAULT_CATEGORY_SEPARATOR,
@@ -125,6 +124,14 @@ export const toProduct = <P extends ProductLinxImpulse>(
     }));
   };
 
+  const getProductImageURL = (
+    url: string,
+  ) => {
+    const protocol = url.startsWith("http") ? "" : "https://";
+    const imageUrl = new URL(`${protocol}${url}`);
+    return imageUrl;
+  };
+
   const groupAdditionalProperty = toProductGroupAdditionalProperties(product)
     .filter((property) => property);
 
@@ -139,9 +146,7 @@ export const toProduct = <P extends ProductLinxImpulse>(
     ? {
       "@type": "ProductGroup",
       productGroupID: productID,
-      hasVariant: skus.map((sku) =>
-        toProduct(product, sku.properties, 1, options)
-      ),
+      hasVariant: skus.map((sku) => toProduct(product, sku, 1, options)),
       url: getProductURL(baseUrl, product).href,
       name: name,
       additionalProperty: groupAdditionalProperty as PropertyValue[],
@@ -165,7 +170,7 @@ export const toProduct = <P extends ProductLinxImpulse>(
     image: Object.values(images).map((url) => ({
       "@type": "ImageObject" as const,
       alternateName: "",
-      url: `${new URL(url, baseUrl)}`,
+      url: getProductImageURL(url).href,
     })),
     offers: {
       "@type": "AggregateOffer",
@@ -176,7 +181,7 @@ export const toProduct = <P extends ProductLinxImpulse>(
         {
           "@type": "Offer",
           price,
-          seller: skuDetails.skuSellers.sellerId,
+          seller: skuDetails.skuSellers?.sellerId,
           inventoryLevel: {
             value: stock,
           },
