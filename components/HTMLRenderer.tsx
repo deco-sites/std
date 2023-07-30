@@ -9,10 +9,18 @@ export interface Props {
   class?: string;
 }
 
-export default function HTMLRenderer({ as = "div", html }: Props) {
+export default function HTMLRenderer(
+  { as = "div", class: _class, html }: Props,
+) {
   const Component = as as ComponentType<{
+    class?: string;
     dangerouslySetInnerHTML: { __html: string };
   }>;
 
-  return <Component dangerouslySetInnerHTML={{ __html: html }} />;
+  return (
+    <Component
+      class={_class}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
 }
