@@ -42,9 +42,8 @@ const loader = async (props: Props, req: Request) => {
   );
 
   return {
-    ...props,
     fonts: filteredFonts,
-    fontsSheet: fontsSheet.filter(Boolean),
+    fontsSheet: fontsSheet.filter(Boolean) as string[],
   };
 };
 
