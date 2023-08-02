@@ -1,5 +1,7 @@
 import { fetchSafe } from "deco-sites/std/utils/fetch.ts";
 
+const ALLOWED_ORIGINS = new Set(["https://fonts.gstatic.com"]);
+
 const copyHeader = (headerName: string, to: Headers, from: Headers) => {
   const hdrVal = from.get(headerName);
   if (hdrVal) {
@@ -16,8 +18,14 @@ interface Props {
 
 const loader = async (props: Props) => {
   const fontSrc = props.src;
-
   const fontUrl = new URL(fontSrc);
+
+  if (!ALLOWED_ORIGINS.has(fontUrl.origin)) {
+    return new Response(null, {
+      status: 400,
+    });
+  }
+
   const fontResponse = await fetchSafe(fontUrl.href, {
     withProxyCache: true,
   });
