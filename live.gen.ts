@@ -65,6 +65,7 @@ import * as $$$23 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
 import * as $$$24 from "./loaders/nuvemShop/nuvemShopProductList.ts";
 import * as $$$25 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
 import * as $$$26 from "./loaders/x/redirectsFromCsv.ts";
+import * as $$$27 from "./loaders/x/font.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -222,6 +223,7 @@ const manifest = {
     "deco-sites/std/loaders/vtex/proxy.ts": $$$11,
     "deco-sites/std/loaders/vtex/user.ts": $$$17,
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$9,
+    "deco-sites/std/loaders/x/font.ts": $$$27,
     "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$26,
   },
   "routes": {

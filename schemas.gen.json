@@ -76,6 +76,7 @@
               "deco-sites/std/loaders/vtex/proxy.ts",
               "deco-sites/std/loaders/vtex/user.ts",
               "deco-sites/std/loaders/vtex/wishlist.ts",
+              "deco-sites/std/loaders/x/font.ts",
               "deco-sites/std/loaders/x/redirectsFromCsv.ts",
               "$live/handlers/devPage.ts",
               "$live/handlers/fresh.ts",
@@ -3933,9 +3934,9 @@
         }
       ]
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
-      "$ref": "#/root/loaders",
-      "title": "Loader"
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts": {
+      "$ref": "#/root/accounts",
+      "title": "Accounts"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag": {
       "$ref": "#/root/flags",
@@ -3943,22 +3944,21 @@
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section": {
       "$ref": "#/root/sections",
+      "widget": "none",
       "title": "Section"
+    },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
+      "$ref": "#/root/loaders",
+      "title": "Loader"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page": {
       "$ref": "#/root/pages",
       "title": "Page"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section": {
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts|Flag|Loader|Page|Section": {
       "anyOf": [
         {
-          "$ref": "#/definitions/Resolvable"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts"
         },
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag"
@@ -3967,10 +3967,13 @@
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
         },
         {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader"
+        },
+        {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page"
         }
       ],
-      "title": "4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section"
+      "title": "Accounts|Flag|Loader|Page|Section"
     },
     "ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp": {
       "type": "object",
@@ -3980,7 +3983,7 @@
           "title": "Key"
         },
         "value": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts|Flag|Loader|Page|Section",
           "title": "Value"
         }
       },
@@ -9900,6 +9903,31 @@
       ],
       "title": "deco-cx/live/handlers/fresh.ts@FreshConfig"
     },
+    "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "{{{key}}} - {{{value}}}"
+    },
+    "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header"
+      },
+      "title": "Header[]"
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -9923,6 +9951,11 @@
           ],
           "description": "Host that should be used when proxying the request",
           "title": "Host"
+        },
+        "customHeaders": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header[]",
+          "description": "custom headers",
+          "title": "Custom Headers"
         }
       },
       "required": [
@@ -10026,10 +10059,13 @@
           "items": {
             "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
           },
-          "title": "Page Sections"
+          "title": "Sections",
+          "label": "hidden",
+          "changeable": "true"
         },
         {
           "title": "Variant",
+          "label": "hidden",
           "type": "object",
           "allOf": [
             {
@@ -10075,7 +10111,8 @@
         "sections"
       ],
       "title": "deco-cx/live/pages/LivePage.tsx@Props",
-      "titleBy": "name"
+      "titleBy": "name",
+      "label": "rootHidden"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher": {
       "$ref": "#/root/matchers",
@@ -10840,6 +10877,7 @@
         "value"
       ],
       "title": "{{#beautifySchemaTitle}}{{{rule.__resolveType}}}{{/beautifySchemaTitle}} Variant",
+      "label": "hidden",
       "icon": "flag"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[][]": {
@@ -12851,6 +12889,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L2ZvbnQudHM=": {
+      "title": "deco-sites/std/loaders/x/font.ts",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/x/font.ts"
+          ],
+          "default": "deco-sites/std/loaders/x/font.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=": {
       "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
       "type": "object",
@@ -13723,6 +13777,7 @@
     },
     "JGxpdmUvZmxhZ3MvbXVsdGl2YXJpYXRlLnRz": {
       "title": "Variant",
+      "label": "hidden",
       "type": "object",
       "allOf": [
         {
@@ -14461,6 +14516,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3dpc2hsaXN0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L2ZvbnQudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM="
