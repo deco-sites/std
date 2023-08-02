@@ -25,7 +25,11 @@ const loader = async (props: Props) => {
   copyHeader("content-length", headers, fontResponse.headers);
   copyHeader("content-type", headers, fontResponse.headers);
   copyHeader("content-disposition", headers, fontResponse.headers);
-  copyHeader("cache-control", headers, fontResponse.headers);
+  headers.set("x-cache", "MISS");
+  headers.set(
+    "cache-control",
+    "public, s-maxage=15552000, max-age=15552000, immutable",
+  );
 
   return new Response(fontResponse.body, { headers });
 };
