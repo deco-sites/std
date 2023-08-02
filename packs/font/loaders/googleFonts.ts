@@ -20,7 +20,7 @@ export const singleFlightKey = (props: Props, req: Request) => {
 };
 
 export interface Props {
-  fonts: Font[];
+  fonts?: Font[];
 }
 
 const loader = async (props: Props, req: Request) => {
