@@ -14,7 +14,7 @@ interface Props {
   src: string;
 }
 
-const handler = async (props: Props) => {
+const loader = async (props: Props) => {
   const fontSrc = props.src;
 
   const fontUrl = new URL(fontSrc);
@@ -30,4 +30,4 @@ const handler = async (props: Props) => {
   return new Response(fontResponse.body, { headers });
 };
 
-export default handler;
+export default loader;
