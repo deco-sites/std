@@ -1,4 +1,4 @@
-import type { Handlers } from "$fresh/server.ts";
+import type { Handlers, Plugin } from "$fresh/server.ts";
 import { context } from "$live/live.ts";
 import { createWorker } from "../../utils/worker.ts";
 
@@ -23,6 +23,8 @@ const generate = async () => {
   });
 
   await worker.bundle({ to: TO, from: FROM });
+
+  worker.dispose();
 };
 
 const bundle = context.isDeploy ? Promise.resolve() : generate();
@@ -51,7 +53,7 @@ export const handler: Handlers = {
   },
 };
 
-export const plugin = {
+export const plugin: Plugin = {
   name: "tailwind",
   routes: [
     {

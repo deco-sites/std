@@ -1,6 +1,6 @@
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
-import postcss, { PluginCreator } from "npm:postcss@8.4.27";
+import postcss from "npm:postcss@8.4.27";
 import tailwindcss from "npm:tailwindcss@3.3.3";
 import { cyan } from "std/fmt/colors.ts";
 import { ensureFile } from "std/fs/mod.ts";
@@ -28,7 +28,8 @@ export const bundle = async ({ to, from }: { to: string; from: string }) => {
     .catch(() => DEFAULT_OPTIONS);
 
   const processor = postcss([
-    (tailwindcss as PluginCreator)(config),
+    // deno-lint-ignore no-explicit-any
+    (tailwindcss as any)(config),
     autoprefixer(),
     cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
   ]);

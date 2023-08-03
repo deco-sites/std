@@ -9530,6 +9530,17 @@
           "type": "number",
           "description": "total number of items to display",
           "title": "Count"
+        },
+        "fq": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "fq's",
+          "title": "Fq"
         }
       },
       "required": [],
