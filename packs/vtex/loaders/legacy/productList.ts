@@ -39,6 +39,9 @@ export interface TermProps {
   sort?: LegacySort;
   /** @description total number of items to display */
   count: number;
+
+  /** @description fq's */
+  fq?: string[];
 }
 
 export interface ProductIDProps {
@@ -64,6 +67,10 @@ const fromProps = (
   props: Props,
   params = new URLSearchParams(),
 ): URLSearchParams => {
+  if (props.sort) {
+    params.set("O", encodeURI(props.sort));
+  }
+
   if (isProductIDProps(props)) {
     props.ids.forEach((skuId) => params.append("fq", `skuId:${skuId}`));
     params.set("_from", "0");
@@ -76,6 +83,17 @@ const fromProps = (
 
   if (isCollectionProps(props)) {
     params.set("fq", `productClusterIds:${props.collection}`);
+    params.set("_from", "0");
+    params.set("_to", `${Math.max(count - 1, 0)}`);
+
+    return params;
+  }
+
+  if (props.fq) {
+    props.fq.forEach((FQ) => {
+      params.append("fq", encodeURI(FQ));
+    });
+
     params.set("_from", "0");
     params.set("_to", `${Math.max(count - 1, 0)}`);
 
