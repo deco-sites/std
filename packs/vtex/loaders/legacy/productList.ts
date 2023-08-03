@@ -39,9 +39,19 @@ export interface TermProps {
   sort?: LegacySort;
   /** @description total number of items to display */
   count: number;
+}
 
+export interface FQProps {
   /** @description fq's */
-  fq?: string[];
+  fq: string[];
+
+  /**
+   * @description search sort parameter
+   */
+  sort?: LegacySort;
+
+  /** @description total number of items to display */
+  count: number;
 }
 
 export interface ProductIDProps {
@@ -54,22 +64,26 @@ export interface ProductIDProps {
 export type Props =
   & Partial<CollectionProps>
   & Partial<TermProps>
-  & Partial<ProductIDProps>;
+  & Partial<ProductIDProps>
+  & Partial<FQProps>;
 
 // deno-lint-ignore no-explicit-any
 const isCollectionProps = (p: any): p is CollectionProps =>
   typeof p.collection === "string" && typeof p.count === "number";
+
 // deno-lint-ignore no-explicit-any
 const isProductIDProps = (p: any): p is ProductIDProps =>
   Array.isArray(p.ids) && p.ids.length > 0;
+
+// deno-lint-ignore no-explicit-any
+const isFQProps = (p: any): p is FQProps =>
+  Array.isArray(p.fq) && p.fq.length > 0;
 
 const fromProps = (
   props: Props,
   params = new URLSearchParams(),
 ): URLSearchParams => {
-  if (props.sort) {
-    params.set("O", encodeURI(props.sort));
-  }
+  props.sort && params.set("O", props.sort);
 
   if (isProductIDProps(props)) {
     props.ids.forEach((skuId) => params.append("fq", `skuId:${skuId}`));
@@ -80,29 +94,22 @@ const fromProps = (
   }
 
   const count = props.count ?? 12;
+  params.set("_from", "0");
+  params.set("_to", `${Math.max(count - 1, 0)}`);
 
   if (isCollectionProps(props)) {
     params.set("fq", `productClusterIds:${props.collection}`);
-    params.set("_from", "0");
-    params.set("_to", `${Math.max(count - 1, 0)}`);
 
     return params;
   }
 
-  if (props.fq) {
-    props.fq.forEach((FQ) => {
-      params.append("fq", encodeURI(FQ));
-    });
-
-    params.set("_from", "0");
-    params.set("_to", `${Math.max(count - 1, 0)}`);
+  if (isFQProps(props)) {
+    props.fq.forEach((fq) => params.append("fq", fq));
 
     return params;
   }
 
-  props.term && params.set("ft", encodeURIComponent(props.term));
-  params.set("_from", "0");
-  params.set("_to", `${Math.max(count - 1, 0)}`);
+  props.term && params.set("ft", props.term);
 
   return params;
 };
