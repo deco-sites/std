@@ -1,1 +1,1 @@
-export { default } from "deco-sites/std/packs/vnda/vndaAccount.ts";
+export { default } from "deco-sites/std/packs/vnda/accounts/vnda.ts";

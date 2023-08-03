@@ -1,58 +1,17 @@
-import { Account as ConfigVNDA } from "../packs/vnda/vndaAccount.ts";
-import { createClient } from "../commerce/vnda/client.ts";
-import { toProduct } from "../commerce/vnda/transform.ts";
-import type { LiveState } from "$live/types.ts";
-import type { Product } from "../commerce/types.ts";
+import productListLoader, {
+  Props,
+} from "deco-sites/std/packs/vnda/loaders/productList.ts";
 import type { LoaderFunction } from "$live/types.ts";
+import { Product } from "deco-sites/std/commerce/types.ts";
+import { StateVNDA } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 
-export interface Props {
-  /** @description total number of items to display */
-  limit: number;
-
-  /** @description query to use on search */
-  term?: string;
-
-  /** @description search for term anywhere */
-  wildcard?: boolean;
-
-  /** @description search sort parameter */
-  sort?: "newest" | "oldest" | "lowest_price" | "highest_price";
-
-  /** @description search for products that have certain tag */
-  tags?: string[];
-}
-
-/**
- * @title VNDA - Search Products
- * @description Use it in Shelves and static Galleries.
- */
-const productListLoader: LoaderFunction<
+const productList: LoaderFunction<
   Props,
   Product[] | null,
-  LiveState<{ configVNDA: ConfigVNDA }>
+  StateVNDA
 > = async (req, ctx, props) => {
-  const url = new URL(req.url);
-  const { configVNDA } = ctx.state.global;
-  const client = createClient(configVNDA);
-
-  const search = await client.product.search({
-    term: props?.term,
-    wildcard: props?.wildcard,
-    sort: props?.sort,
-    per_page: props?.limit,
-    tags: props?.tags,
-  });
-
-  const products = search.results.map((product) => {
-    return toProduct(product, {
-      url,
-      priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-    });
-  });
-
-  return {
-    data: products,
-  };
+  const data = await productListLoader(props, req, ctx.state);
+  return { data };
 };
 
-export default productListLoader;
+export default productList;

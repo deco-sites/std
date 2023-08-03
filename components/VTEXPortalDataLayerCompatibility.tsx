@@ -29,7 +29,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   performance.mark("end-sd");
 
   // deno-lint-ignore no-explicit-any
-  const getPageType = (hasStructuredData: undefined | Record<string, any>) => {
+  const getPageType = (structuredData: undefined | Record<string, any>) => {
     if (url.pathname === "/") return "homeView";
 
     const isProductPage = structuredDatas.some((s) => s["@type"] === "Product");
@@ -38,13 +38,11 @@ function addVTEXPortalDataSnippet(accountName: string) {
     const isSearchPage = url.pathname === "/s";
     if (isSearchPage) return "internalSiteSearchView";
 
-    const pathNames = url.pathname.split("/").filter(Boolean);
-
-    if (pathNames.length === 1 && hasStructuredData) {
+    if (structuredData?.itemList?.length === 1) {
       return "departmentView";
     }
 
-    if (pathNames.length >= 2 && hasStructuredData) {
+    if (structuredData?.itemList?.length >= 2) {
       return "categoryView";
     }
 
@@ -93,6 +91,11 @@ function addVTEXPortalDataSnippet(accountName: string) {
     props.siteSearchTerm = url.searchParams.get("q");
   }
 
+  if (pageType === "otherView") {
+    const pathNames = url.pathname.split("/").filter(Boolean);
+    props.pageCategory = pathNames.pop() || null;
+  }
+
   props.shelfProductIds = window.shelfProductIds || [];
 
   window.dataLayer = window.dataLayer || [];
@@ -130,12 +133,14 @@ export function AddVTEXPortalData(
   );
 }
 
-interface ProductDetailsProps {
+interface ProductDetailsTemplateProps {
   product: Product;
 }
 
 export function ProductDetailsTemplate(
-  { product, ...props }: ProductDetailsProps,
+  { product, ...props }:
+    & ScriptProps
+    & ProductDetailsTemplateProps,
 ) {
   const departament = product.additionalProperty?.find((p) =>
     p.name === "category"
@@ -186,10 +191,11 @@ export function ProductDetailsTemplate(
 
 interface ProductInfoProps {
   product: Product;
-  type?: string;
 }
 
-export function ProductInfo({ product, ...props }: ProductInfoProps) {
+export function ProductInfo(
+  { product, ...props }: ScriptProps & ProductInfoProps,
+) {
   if (!product.isVariantOf?.productGroupID) return null;
   return (
     <Script

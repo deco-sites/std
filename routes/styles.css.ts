@@ -1,36 +1,29 @@
-import { deferred } from "std/async/deferred.ts";
-import { context } from "$live/live.ts";
 import type { Handlers } from "$fresh/server.ts";
+import { yellow } from "std/fmt/colors.ts";
+import { handler as tailwindHandler } from "../plugins/tailwind/mod.ts";
 
-export const TO = "./static/tailwind.css";
-export const FROM = "./tailwind.css";
+const msg = `
+${yellow("WARNING!")}
+Tailwind setup has changed and we now offer it via a Fresh Plugin! This file will be removed in future releases. To migrate
 
-export const tailwindBundle = deferred();
+1. Remove routes/styles.css.ts from your routes folder
+2. Change main.ts to:
 
-if (context.isDeploy) {
-  tailwindBundle.resolve();
-}
+  import tailwindPlugin from "deco-sites/std/plugins/tailwind/mod.ts";
+
+  await start($live(manifest, site), {
+    plugins: [
+      tailwindPlugin,
+    ],
+  });
+
+That's it! Thanks for migrating 🎉
+`;
 
 export const handler: Handlers = {
-  GET: async () => {
-    await tailwindBundle;
+  GET: (req, ctx) => {
+    console.warn(msg);
 
-    try {
-      const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
-
-      return new Response(file.readable, {
-        headers: {
-          "Cache-Control": "public, max-age=31536000, immutable",
-          "Content-Type": "text/css; charset=utf-8",
-          "Content-Length": `${stats.size}`,
-        },
-      });
-    } catch (error) {
-      if (error instanceof Deno.errors.NotFound) {
-        return new Response(null, { status: 404 });
-      }
-
-      return new Response(null, { status: 500 });
-    }
+    return tailwindHandler.GET!(req, ctx);
   },
 };
