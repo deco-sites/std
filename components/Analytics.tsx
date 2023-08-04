@@ -65,6 +65,7 @@ export default function Analtyics(
         forward={["debugGlobals"]}
       />
       <script
+        type="module"
         id="analytics-script"
         dangerouslySetInnerHTML={{
           __html:
