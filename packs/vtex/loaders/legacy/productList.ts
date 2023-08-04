@@ -109,7 +109,7 @@ const fromProps = (
     return params;
   }
 
-  props.term && params.set("ft", props.term);
+  props.term && params.set("ft", encodeURIComponent(props.term));
 
   return params;
 };
