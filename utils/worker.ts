@@ -38,6 +38,7 @@ type MasterEvent = {
   type: "invoke:fulfill";
   payload: {
     id: string;
+    return: unknown;
   };
 } | {
   type: "invoke:reject";
@@ -53,7 +54,7 @@ export const createWorker = (
 ): Promise<any> => {
   const setup = deferred();
   const worker = new Worker(new URL(import.meta.url), options);
-  const invokes = new Map<string, Deferred<void>>([]);
+  const invokes = new Map<string, Deferred<unknown>>([]);
 
   worker.postMessage({ type: "setup", payload: url.href });
 
@@ -84,6 +85,9 @@ export const createWorker = (
           return acc;
         }, {} as Record<string, any>);
 
+        // Use using/Symbol.dispose once Deno accepts TypeScript 5.2
+        mod.dispose = () => worker.terminate();
+
         setup.resolve(mod);
 
         return;
@@ -94,9 +98,9 @@ export const createWorker = (
         return;
       }
       case "invoke:fulfill": {
-        const { id } = payload;
+        const { id, return: response } = payload;
 
-        invokes.get(id)?.resolve();
+        invokes.get(id)?.resolve(response);
         invokes.delete(id);
 
         return;
@@ -130,11 +134,11 @@ if (IS_WORKER) {
         }
 
         try {
-          await mod[fn](...args);
+          const response = await mod[fn](...args);
 
           self.postMessage({
             type: "invoke:fulfill",
-            payload: { id },
+            payload: { id, return: response },
           });
         } catch (error) {
           self.postMessage({
