@@ -1,32 +1,23 @@
 import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
+import type { ProductID } from "deco-sites/std/functions/productIdFromVTEXSlug.ts";
 import type {
   PagesRecommendationsResponse,
-  Position,
   SearchProductsResponse,
+  Shelf,
 } from "deco-sites/std/packs/linxImpulse/types.ts";
 
+import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
+import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import {
   toProduct,
   toProductLinxImpulse,
   toRequestHeader,
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
-import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
-import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { HttpError } from "deco-sites/std/utils/HttpError.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 
 export interface Props {
-  slug: RequestURLParam;
-
-  /**
-   * @title Position
-   */
-  position: Position;
-
-  /**
-   * @title Feature
-   */
+  id: ProductID;
   feature: "SimilarItems" | "FrequentlyBoughtTogether";
 }
 
@@ -40,16 +31,15 @@ const loader = async (
   ctx: Context,
 ): Promise<Product[] | null> => {
   const { configLinxImpulse: config } = ctx;
-  const { slug, position, feature } = props;
+  const { id, feature } = props;
   const url = new URL(req.url);
   const skuId = url.searchParams.get("skuId");
   const requestHeaders = toRequestHeader(config!);
+  const linxImpulse = paths(config!);
 
   try {
-    const linxImpulse = paths(config!);
-    const productSlug = slug.replaceAll("-", " ");
     const { products: productsBySlug } = await fetchAPI<SearchProductsResponse>(
-      `${linxImpulse.product.getProductBySlug.term(productSlug)}`,
+      `${linxImpulse.product.getProductBySlug.term(id)}`,
       { headers: requestHeaders },
     );
 
@@ -65,17 +55,14 @@ const loader = async (
       `${linxImpulse.product.similarItems.productId(product.id)}`,
       { headers: requestHeaders },
     );
-    let shelfs;
 
-    if (position) {
-      shelfs = recommendationsResponse[position];
-    }
+    const checkFeature = (shelf: Shelf) => shelf.feature === feature;
+    const topShelfs = recommendationsResponse.top.filter(checkFeature);
+    const middleShelfs = recommendationsResponse.middle.filter(checkFeature);
+    const bottomShelfs = recommendationsResponse.bottom.filter(checkFeature);
+    const shelfs = [...topShelfs, ...middleShelfs, ...bottomShelfs];
 
-    if (feature) {
-      shelfs = shelfs?.filter((shelf) => shelf.feature === feature);
-    }
-
-    if (!shelfs) return null;
+    if (!shelfs.length) return null;
 
     const options = {
       baseUrl: req.url,
