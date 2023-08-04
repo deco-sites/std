@@ -10,9 +10,12 @@ import { getOptimizedMediaUrl, getSrcSet } from "./Image.tsx";
 type Props =
   & Omit<JSX.IntrinsicElements["video"], "width" | "height" | "preload">
   & {
-    width: number;
-    height: number;
     src: string;
+    /** @description Improves Web Vitals (CLS|LCP) */
+    width: number;
+    /** @description Improves Web Vitals (CLS|LCP) */
+    height: number;
+    /** @description Force video through the optimization engine */
     forceOptimizedSrc?: boolean;
   };
 

@@ -1,15 +1,19 @@
 import { Head } from "$fresh/runtime.ts";
 import type { JSX } from "preact";
 import { forwardRef } from "preact/compat";
-import { PATH } from "../constants.ts";
+import { KEY } from "../constants.ts";
 
 type Props =
   & Omit<JSX.IntrinsicElements["img"], "width" | "height" | "preload">
   & {
-    width: number;
-    height?: number;
     src: string;
+    /** @description Improves Web Vitals (CLS|LCP) */
+    width: number;
+    /** @description Improves Web Vitals (CLS|LCP) */
+    height?: number;
+    /** @description Web Vitals (LCP). Adds a link[rel="preload"] tag in head. Use one preload per page for better performance */
     preload?: boolean;
+    /** @description Improves Web Vitals (LCP). Use high for LCP image. Auto for other images */
     fetchPriority?: "high" | "low" | "auto";
   };
 
@@ -23,14 +27,14 @@ export const getOptimizedMediaUrl = (
     factor: number;
   },
 ) => {
-  const url = new URL(PATH, "http://example.com");
+  const params = new URLSearchParams();
 
-  url.searchParams.set("src", originalSrc);
-  url.searchParams.set("width", `${Math.trunc(factor * width)}`);
-  height && url.searchParams.set("height", `${Math.trunc(factor * height)}`);
-  url.searchParams.set("fit", "contain");
+  params.set("src", originalSrc);
+  params.set("fit", "contain");
+  params.set("width", `${Math.trunc(factor * width)}`);
+  height && params.set("height", `${Math.trunc(factor * height)}`);
 
-  return `${url.pathname}${url.search}`;
+  return `${KEY}?${params}`;
 };
 
 export const getSrcSet = (src: string, width: number, height?: number) =>

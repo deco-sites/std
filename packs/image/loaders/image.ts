@@ -1,7 +1,7 @@
 import { HttpError } from "../../../utils/HttpError.ts";
-import { PATH } from "../constants.ts";
+import { KEY } from "../constants.ts";
 import { Params as Props } from "../engine.ts";
-import { engine as identity } from "../engines/identity/engine.ts";
+import { engine as passThrough } from "../engines/passThrough/engine.ts";
 import { engine as deco } from "../engines/deco/engine.ts";
 import { engine as cloudflare } from "../engines/cloudflare/engine.ts";
 import { engine as wasm } from "../engines/wasm/engine.ts";
@@ -12,7 +12,7 @@ const ENGINES = [
   cloudflare,
   imgkit,
   deco,
-  identity,
+  passThrough,
 ];
 
 function assert(expr: unknown, msg = ""): asserts expr {
@@ -55,7 +55,7 @@ const handler = async (
   try {
     const preferredMediaType = acceptMediaType(req);
     const params = parseParams(props);
-    const engine = ENGINES.find((e) => e.accepts(params.src)) ?? identity;
+    const engine = ENGINES.find((e) => e.accepts(params.src)) ?? passThrough;
 
     const response = await engine.resolve(params, preferredMediaType, req);
 
@@ -81,9 +81,7 @@ const handler = async (
   }
 };
 
-const cachePromise = typeof caches !== "undefined"
-  ? caches.delete(PATH).then(() => caches.open(PATH))
-  : null;
+const cachePromise = typeof caches !== "undefined" ? caches.open(KEY) : null;
 
 const loader: typeof handler = async (props, req) => {
   const cache = await cachePromise;

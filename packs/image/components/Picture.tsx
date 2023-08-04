@@ -17,9 +17,13 @@ type SourceProps =
   & Omit<JSX.IntrinsicElements["source"], "width" | "height" | "preload">
   & {
     src: string;
+    /** @description Improves Web Vitals (CLS|LCP) */
     width: number;
+    /** @description Improves Web Vitals (CLS|LCP) */
     height?: number;
+    /** @description Web Vitals (LCP). Adds a link[rel="preload"] tag in head. Use one preload per page for better performance */
     preload?: boolean;
+    /** @description Improves Web Vitals (LCP). Use high for LCP image. Auto for other images */
     fetchPriority?: "high" | "low" | "auto";
   };
 

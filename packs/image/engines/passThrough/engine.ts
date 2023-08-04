@@ -1,7 +1,7 @@
 import { createEngine as createRemoteEngine } from "../remote/engine.ts";
 
 export const engine = createRemoteEngine({
-  name: "identity",
+  name: "pass-through",
   accepts: () => true,
   urlFromParams: ({ src }) => new URL(src),
 });

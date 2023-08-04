@@ -2144,7 +2144,7 @@
           "type": "object",
           "allOf": [
             {
-              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialProductIDProps&partialTermProps"
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialFQProps&partialProductIDProps&partialTermProps"
             }
           ],
           "required": [
@@ -9530,17 +9530,6 @@
           "type": "number",
           "description": "total number of items to display",
           "title": "Count"
-        },
-        "fq": {
-          "type": "array",
-          "items": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "description": "fq's",
-          "title": "Fq"
         }
       },
       "required": [],
@@ -9558,7 +9547,84 @@
       "required": [],
       "title": "partialProductIDProps"
     },
-    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialProductIDProps&partialTermProps": {
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialFQProps": {
+      "type": "object",
+      "properties": {
+        "fq": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "fq's",
+          "title": "Fq"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "type": "string",
+              "const": "OrderByPriceDESC",
+              "default": "OrderByPriceDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByPriceASC",
+              "default": "OrderByPriceASC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByTopSaleDESC",
+              "default": "OrderByTopSaleDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByReviewRateDESC",
+              "default": "OrderByReviewRateDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByNameASC",
+              "default": "OrderByNameASC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByNameDESC",
+              "default": "OrderByNameDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByReleaseDateDESC",
+              "default": "OrderByReleaseDateDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByBestDiscountDESC",
+              "default": "OrderByBestDiscountDESC"
+            },
+            {
+              "type": "string",
+              "const": "OrderByScoreDESC",
+              "default": "OrderByScoreDESC"
+            },
+            {
+              "type": "string",
+              "const": "",
+              "default": ""
+            }
+          ],
+          "type": "string",
+          "description": "search sort parameter",
+          "title": "Sort"
+        },
+        "count": {
+          "type": "number",
+          "description": "total number of items to display",
+          "title": "Count"
+        }
+      },
+      "required": [],
+      "title": "partialFQProps"
+    },
+    "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialFQProps&partialProductIDProps&partialTermProps": {
       "allOf": [
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps"
@@ -9568,9 +9634,12 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialProductIDProps"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialFQProps"
         }
       ],
-      "title": "deco-sites/std/packs/vtex/loaders/legacy/productList.ts@partialCollectionProps&partialProductIDProps&partialTermProps"
+      "title": "deco-sites/std/packs/vtex/loaders/legacy/productList.ts@partialCollectionProps&partialFQProps&partialProductIDProps&partialTermProps"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9yZWxhdGVkUHJvZHVjdHNMb2FkZXIudHM=@Props": {
       "type": "object",
@@ -12761,7 +12830,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialProductIDProps&partialTermProps"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC9sb2FkZXJzL2xlZ2FjeS9wcm9kdWN0TGlzdC50cw==@partialCollectionProps&partialFQProps&partialProductIDProps&partialTermProps"
         }
       ],
       "required": [
