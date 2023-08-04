@@ -59,7 +59,7 @@ const handler = async (
 
     const response = await engine.resolve(params, preferredMediaType, req);
 
-    response.headers.set("x-engine", engine.name);
+    response.headers.set("x-img-engine", engine.name);
     response.headers.set("x-cache", "MISS");
     response.headers.set("vary", "Accept");
     response.headers.set(
