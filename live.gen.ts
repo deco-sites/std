@@ -2,7 +2,6 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import { DecoManifest } from "$live/types.ts";
 import * as $0 from "./functions/butterCMSPosts.ts";
 import * as $1 from "./functions/butterCMSPage.ts";
 import * as $2 from "./functions/vtexProductListingPage.ts";
@@ -105,6 +104,7 @@ import * as $$$$$$$$$$$17 from "./actions/vnda/cart/updateItem.ts";
 import * as $$$$$$$$$$$18 from "./actions/vnda/cart/setShippingAddress.ts";
 import * as $$$$$$$$$$$19 from "./actions/vnda/cart/addItem.ts";
 import * as $$$$$$$$$$$20 from "./actions/vnda/cart/updateCoupon.ts";
+import { DecoManifest } from "$live/types.ts";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -117,9 +117,10 @@ import * as $live_meta from "$live/routes/live/_meta.ts";
 import * as $live_previews_block from "$live/routes/live/previews/[...block].tsx";
 import * as $live_previews_index from "$live/routes/live/previews/index.tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
-import * as i1$0 from "$live/loaders/state.ts";
-import * as i1$1 from "$live/loaders/workflows/events.ts";
-import * as i1$2 from "$live/loaders/workflows/get.ts";
+import * as i1$0 from "$live/loaders/manifest.ts";
+import * as i1$1 from "$live/loaders/state.ts";
+import * as i1$2 from "$live/loaders/workflows/events.ts";
+import * as i1$3 from "$live/loaders/workflows/get.ts";
 import * as i1$$0 from "$live/handlers/devPage.ts";
 import * as i1$$1 from "$live/handlers/fresh.ts";
 import * as i1$$2 from "$live/handlers/proxy.ts";
@@ -193,9 +194,10 @@ const manifest = {
     "deco-sites/std/accounts/yourViews.ts": $$4,
   },
   "loaders": {
-    "$live/loaders/state.ts": i1$0,
-    "$live/loaders/workflows/events.ts": i1$1,
-    "$live/loaders/workflows/get.ts": i1$2,
+    "$live/loaders/manifest.ts": i1$0,
+    "$live/loaders/state.ts": i1$1,
+    "$live/loaders/workflows/events.ts": i1$2,
+    "$live/loaders/workflows/get.ts": i1$3,
     "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts": $$$2,
     "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts": $$$3,
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": $$$4,
