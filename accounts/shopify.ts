@@ -1,7 +1,2 @@
-import type { ConfigShopify } from "../commerce/shopify/client.ts";
-
-function ShopifyAccount(acc: ConfigShopify) {
-  return acc;
-}
-
-export default ShopifyAccount;
+export type { Context } from "deco-sites/std/packs/shopify/accounts/shopify.ts";
+export { default } from "deco-sites/std/packs/shopify/accounts/shopify.ts";

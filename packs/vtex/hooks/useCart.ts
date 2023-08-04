@@ -90,4 +90,4 @@ const state = {
   mapItemsToAnalyticsItems: mapOrderFormItemsToAnalyticsItems,
 };
 
-export const useCart = () => state;
+export const useCartVTEX = () => state;
