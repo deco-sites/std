@@ -1,8 +1,10 @@
+import { getCookies, getSetCookies, setCookie } from "std/http/mod.ts";
+
 import type { Cart } from "../types.ts";
 import type { Context } from "../accounts/shopify.ts";
-import { getCookies, getSetCookies, setCookie } from "std/http/mod.ts";
 import { getShopifyClient } from "../client.ts";
 import { gql } from "../utils/gql.ts";
+import { SHOPIFY_COOKIE_NAME } from "../constants.ts";
 
 const createCartMutation = gql`
   mutation createCart {
@@ -42,16 +44,15 @@ type CartQueryPayload = {
   };
 };
 
-const SHOPIFY_COOKIE_NAME = "shopify_cart_id";
-
 const loader = async (
   _props: unknown,
   req: Request,
   ctx: Context,
 ): Promise<Cart> => {
   const { configShopify: config } = ctx;
+  const client = getShopifyClient(config);
+
   try {
-    const client = getShopifyClient(config);
     const r = await client<CreateCartPayload>(createCartMutation);
 
     const reqCookies = getCookies(req.headers);
