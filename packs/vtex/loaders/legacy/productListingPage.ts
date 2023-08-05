@@ -22,7 +22,7 @@ import {
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
-import type { LegacyFacets, LegacyProduct } from "../../types.ts";
+import type { LegacyFacet, LegacyFacets, LegacyProduct } from "../../types.ts";
 
 const MAX_ALLOWED_PAGES = 500;
 
@@ -172,8 +172,35 @@ const loader = async (
       priceCurrency: config!.defaultPriceCurrency,
     })
   );
+
+  const terms = term.split("/");
+
+  const getCategoryFacets = (CategoriesTrees: LegacyFacet[]) => {
+    const category = CategoriesTrees.find((category) => {
+      if (category.Link.toLowerCase().includes(term.toLowerCase())) {
+        return category;
+      } else if (
+        map.includes("specificationFilter") &&
+        category.Link.toLowerCase().indexOf(
+          terms[terms.length - 2].toLowerCase(),
+        )
+      ) {
+        return category;
+      } else if (category.Children.length) {
+        getCategoryFacets(category.Children);
+      }
+    });
+
+    if (category) {
+      return category.Children;
+    } else {
+      return [];
+    }
+  };
+
   const filters = Object.entries({
     Departments: vtexFacets.Departments,
+    Categories: getCategoryFacets(vtexFacets.CategoriesTrees),
     Brands: vtexFacets.Brands,
     ...vtexFacets.SpecificationFilters,
   }).map(([name, facets]) =>

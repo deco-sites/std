@@ -448,9 +448,9 @@ export const legacyFacetToFilter = (
 
   const getLink = (facet: LegacyFacet, selected: boolean) => {
     // Do not allow removing root facet to avoid going back to home page
-    if (mapSegments.length === 1) {
-      return `${url.pathname}${url.search}`;
-    }
+    // if (mapSegments.length === 1) {
+    //   return `${url.pathname}${url.search}`;
+    // }
 
     const index = pathSegments.findIndex((s) => s === facet.Value);
     const newMap = selected

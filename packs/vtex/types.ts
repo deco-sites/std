@@ -661,6 +661,7 @@ export type LegacyProduct = IProduct & {
 
 export type LegacyFacets = {
   Departments: LegacyFacet[];
+  CategoriesTrees: LegacyFacet[];
   Brands: LegacyFacet[];
   SpecificationFilters: Record<string, LegacyFacet[]>;
 };
