@@ -5,12 +5,10 @@ import { engine as passThrough } from "../engines/passThrough/engine.ts";
 import { engine as deco } from "../engines/deco/engine.ts";
 import { engine as cloudflare } from "../engines/cloudflare/engine.ts";
 import { engine as wasm } from "../engines/wasm/engine.ts";
-import { engine as imgkit } from "../engines/imagekit/engine.ts";
 
 const ENGINES = [
   wasm,
   cloudflare,
-  imgkit,
   deco,
   passThrough,
 ];
