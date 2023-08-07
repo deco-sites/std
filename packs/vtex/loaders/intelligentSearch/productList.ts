@@ -1,23 +1,24 @@
-import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
+import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import type {
+  ProductID,
+  ProductSearchResult,
+  Sort,
+} from "deco-sites/std/packs/vtex/types.ts";
+import {
+  toPath,
+  withDefaultFacets,
+  withDefaultParams,
+} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
 import {
   getSegment,
   setSegment,
   withSegmentCookie,
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
+import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-import {
-  toPath,
-  withDefaultFacets,
-  withDefaultParams,
-} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
-import type {
-  ProductID,
-  ProductSearchResult,
-} from "deco-sites/std/packs/vtex/types.ts";
-import type { Product } from "deco-sites/std/commerce/types.ts";
-import type { Sort } from "deco-sites/std/packs/vtex/types.ts";
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 export interface CollectionProps extends CommonProps {
   // TODO: pattern property isn't being handled by RJSF
@@ -58,6 +59,10 @@ export interface CommonProps {
    * @description Do not return out of stock items
    */
   hideUnavailableItems?: boolean;
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 // TODO: Change & to |. Somehow RJS bugs when using |
@@ -151,7 +156,15 @@ const loader = async (
 
   setSegment(segment, ctx.response.headers);
 
-  return products;
+  return Promise.all(
+    products.map((product) =>
+      props.similars
+        ? withIsSimilarTo(ctx, product, {
+          hideUnavailableItems: props.hideUnavailableItems,
+        })
+        : product
+    ),
+  );
 };
 
 export default loader;

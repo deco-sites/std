@@ -1,7 +1,12 @@
+import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import {
-  pickSku,
-  toProductPage,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
+  toPath,
+  withDefaultFacets,
+  withDefaultParams,
+} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
+import { pageTypesToSeo } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
 import {
   getSegment,
@@ -9,23 +14,23 @@ import {
   withSegmentCookie,
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import {
-  toPath,
-  withDefaultFacets,
-  withDefaultParams,
-} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
+  pickSku,
+  toProductPage,
+} from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import type {
   PageType,
-  Product,
+  Product as VTEXProduct,
   ProductSearchResult,
-} from "deco-sites/std/packs/vtex/types.ts";
-import { pageTypesToSeo } from "deco-sites/std/packs/vtex/utils/legacy.ts";
-import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
-import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+} from "../../types.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 export interface Props {
   slug: RequestURLParam;
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 /**
@@ -98,7 +103,7 @@ const loader = async (
 
   const sku = pickSku(product, skuId?.toString());
 
-  let kitItems: Product[] = [];
+  let kitItems: VTEXProduct[] = [];
   if (sku.isKit && sku.kitItems) {
     const params = withDefaultParams({
       query: `sku:${sku.kitItems.join(";")}`,
@@ -120,11 +125,16 @@ const loader = async (
 
   setSegment(segment, ctx.response.headers);
 
+  const page = toProductPage(product, sku, kitItems, {
+    baseUrl,
+    priceCurrency: config!.defaultPriceCurrency,
+  });
+
   return {
-    ...toProductPage(product, sku, kitItems, {
-      baseUrl,
-      priceCurrency: config!.defaultPriceCurrency,
-    }),
+    ...page,
+    product: props.similars
+      ? await withIsSimilarTo(ctx, page.product)
+      : page.product,
     seo: pageType.pageType === "Product"
       ? pageTypesToSeo([pageType], req)
       : null,
