@@ -27,7 +27,6 @@ import type { LegacyFacet, LegacyFacets, LegacyProduct } from "../../types.ts";
 
 import { withIsSimilarTo } from "../../utils/similars.ts";
 
-
 const MAX_ALLOWED_PAGES = 500;
 
 export interface Props {
@@ -189,26 +188,22 @@ const loader = async (
 
   // Get categories of the current department/category
   const getCategoryFacets = (CategoriesTrees: LegacyFacet[]) => {
-    // Verifies if the page is a department or category page
-    if (!pageType) {
+    const isDepartmentOrCategoryPage = !pageType;
+    if (isDepartmentOrCategoryPage) {
       return [];
     }
 
     const category = CategoriesTrees.find((category) => {
-      // Verifies if the category Id is the same of the atual page category Id
-      // If true return the category
-      // Else, verifies if category has a children and calls the function to verify the next level of the category
-      if (category.Id == Number(pageType.id)) {
+      const isCurrentCategory = category.Id == Number(pageType.id);
+      if (isCurrentCategory) {
         return category;
       } else if (category.Children.length) {
         getCategoryFacets(category.Children);
       }
 
-      // if does not match with any category, return null
       return null;
     });
 
-    // return the children of the current department/category
     return category?.Children || [];
   };
 
