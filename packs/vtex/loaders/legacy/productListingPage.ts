@@ -130,6 +130,7 @@ const loader = async (
   const _to = `${(page + 1) * count - 1}`;
 
   const pageTypes = await pageTypesFromPathname(maybeTerm, ctx);
+  const pageType = pageTypes.at(-1) || pageTypes[0];
 
   if (pageTypes.length === 0 && !ft && !fq) {
     return null;
@@ -173,29 +174,29 @@ const loader = async (
     })
   );
 
-  const terms = term.split("/");
-
+  // Get categories of the current department/category
   const getCategoryFacets = (CategoriesTrees: LegacyFacet[]) => {
+    // Verifies if the page is a department or category page
+    if (!pageType) {
+      return [];
+    }
+
     const category = CategoriesTrees.find((category) => {
-      if (category.Link.toLowerCase().includes(term.toLowerCase())) {
-        return category;
-      } else if (
-        map.includes("specificationFilter") &&
-        category.Link.toLowerCase().indexOf(
-          terms[terms.length - 2].toLowerCase(),
-        )
-      ) {
+      // Verifies if the category Id is the same of the atual page category Id
+      // If true return the category
+      // Else, verifies if category has a children and calls the function to verify the next level of the category
+      if (category.Id == Number(pageType.id)) {
         return category;
       } else if (category.Children.length) {
         getCategoryFacets(category.Children);
       }
+
+      // if does not match with any category, return null
+      return null;
     });
 
-    if (category) {
-      return category.Children;
-    } else {
-      return [];
-    }
+    // return the children of the current department/category
+    return category?.Children || [];
   };
 
   const filters = Object.entries({

@@ -696,6 +696,7 @@ export interface Category {
 }
 
 export interface LegacyFacet {
+  Id: number;
   Quantity: number;
   Name: string;
   Link: string;
