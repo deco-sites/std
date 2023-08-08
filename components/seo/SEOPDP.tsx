@@ -43,6 +43,7 @@ const SeoPDP = (props: Props) => {
       ...props.page,
       product: {
         ...product,
+        url: product.isVariantOf?.url,
         category: lastCategory,
         ...(props.structuredData?.useDataFromSEO && {
           name: removeHTMLTags(props.page?.seo?.title),

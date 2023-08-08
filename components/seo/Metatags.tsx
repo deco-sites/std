@@ -49,7 +49,13 @@ function Metatags(props: Props) {
       </Head>
       {context?.["@type"] === "ProductDetailsPage" && (
         <>
-          <ScriptLDJson {...{ ...context.product, isVariantOf: [] }} />
+          <ScriptLDJson
+            {...{
+              ...context.product,
+              url: context.product.isVariantOf?.url,
+              isVariantOf: [],
+            }}
+          />
           <ScriptLDJson {...context.breadcrumbList} />
         </>
       )}
