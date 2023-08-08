@@ -14,6 +14,7 @@ import {
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { ProductSearchResult } from "deco-sites/std/packs/vtex/types.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 export interface Props {
   query?: string;
@@ -22,6 +23,11 @@ export interface Props {
    * @default 4
    */
   count?: number;
+
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 /**
@@ -83,8 +89,12 @@ const loaders = async (
 
   return {
     searches: count ? searches.slice(0, count) : searches,
-    products: products
-      .map((p) => toProduct(p, p.items[0], 0, options)),
+    products: await Promise.all(
+      products
+        .map((p) => toProduct(p, p.items[0], 0, options)).map((p) =>
+          withIsSimilarTo(ctx, p)
+        ),
+    ),
   };
 };
 

@@ -14,6 +14,7 @@ import {
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import { toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 export interface CollectionProps {
   // TODO: pattern property isn't being handled by RJSF
@@ -61,7 +62,15 @@ export interface ProductIDProps {
   ids: ProductID[];
 }
 
+export interface CommonProps {
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
+}
+
 export type Props =
+  & CommonProps
   & Partial<CollectionProps>
   & Partial<TermProps>
   & Partial<ProductIDProps>
@@ -149,7 +158,11 @@ const loader = async (
 
   setSegment(segment, ctx.response.headers);
 
-  return products;
+  return Promise.all(
+    products.map((product) =>
+      props.similars ? withIsSimilarTo(ctx, product) : product
+    ),
+  );
 };
 
 export default loader;

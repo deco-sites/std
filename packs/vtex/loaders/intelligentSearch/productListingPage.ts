@@ -1,42 +1,41 @@
-import {
-  filtersFromURL,
-  mergeFacets,
-  toFilter,
-  toProduct,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import {
-  getSegment,
-  setSegment,
-  withSegmentCookie,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
+import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type {
+  Facet,
   FacetSearchResult,
+  Fuzzy,
   PageType,
   ProductSearchResult,
+  RangeFacet,
   SelectedFacet,
+  Sort,
 } from "deco-sites/std/packs/vtex/types.ts";
 import {
   toPath,
   withDefaultFacets,
   withDefaultParams,
 } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
 import {
   pageTypesFromPathname,
   pageTypesToBreadcrumbList,
   pageTypesToSeo,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
+import {
+  getSegment,
+  setSegment,
+  withSegmentCookie,
+} from "deco-sites/std/packs/vtex/utils/segment.ts";
+import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
+import {
+  filtersFromURL,
+  mergeFacets,
+  toFilter,
+  toProduct,
+} from "deco-sites/std/packs/vtex/utils/transform.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { parseRange } from "deco-sites/std/utils/filters.ts";
-import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
-import type {
-  Facet,
-  Fuzzy,
-  RangeFacet,
-  Sort,
-} from "deco-sites/std/packs/vtex/types.ts";
-import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 /** this type is more friendly user to fuzzy type that is 0, 1 or auto. */
 export type LabelledFuzzy = "automatic" | "disabled" | "enabled";
@@ -121,6 +120,11 @@ export interface Props {
    * @description Set the starting page offset. Default to 1.
    */
   pageOffset?: number;
+
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 // TODO (mcandeia) investigating bugs related to returning the same set of products but different queries.
@@ -294,11 +298,19 @@ const loader = async (
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
-  const products = vtexProducts.map((p) =>
-    toProduct(p, p.items[0], 0, {
-      baseUrl: baseUrl,
-      priceCurrency: config!.defaultPriceCurrency,
-    })
+  const products = await Promise.all(
+    vtexProducts.map((p) =>
+      toProduct(p, p.items[0], 0, {
+        baseUrl: baseUrl,
+        priceCurrency: config!.defaultPriceCurrency,
+      })
+    ).map((product) =>
+      props.similars
+        ? withIsSimilarTo(ctx, product, {
+          hideUnavailableItems: props.hideUnavailableItems,
+        })
+        : product
+    ),
   );
 
   const filters = facets.filter((f) => !f.hidden).map(

@@ -14,9 +14,15 @@ import {
   toProductPage,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetchVTEX.ts";
+import { withIsSimilarTo } from "../../utils/similars.ts";
 
 export interface Props {
   slug: RequestURLParam;
+
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 /**
@@ -66,11 +72,16 @@ async function loader(
 
   setSegment(segment, ctx.response.headers);
 
+  const page = toProductPage(product, sku, kitItems, {
+    baseUrl,
+    priceCurrency: config!.defaultPriceCurrency,
+  });
+
   return {
-    ...toProductPage(product, sku, kitItems, {
-      baseUrl,
-      priceCurrency: config!.defaultPriceCurrency,
-    }),
+    ...page,
+    product: props.similars
+      ? await withIsSimilarTo(ctx, page.product)
+      : page.product,
     seo: {
       title: product.productTitle,
       description: product.metaTagDescription,

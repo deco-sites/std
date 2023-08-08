@@ -22,7 +22,11 @@ import {
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
+
 import type { LegacyFacet, LegacyFacets, LegacyProduct } from "../../types.ts";
+
+import { withIsSimilarTo } from "../../utils/similars.ts";
+
 
 const MAX_ALLOWED_PAGES = 500;
 
@@ -65,6 +69,11 @@ export interface Props {
    * @description Set the starting page offset. Default to 1.
    */
   pageOffset?: number;
+
+  /**
+   * @description Include similar products
+   */
+  similars?: boolean;
 }
 
 export const sortOptions = [
@@ -167,11 +176,15 @@ const loader = async (
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
-  const products = vtexProducts.map((p) =>
-    toProduct(p, p.items[0], 0, {
-      baseUrl,
-      priceCurrency: config!.defaultPriceCurrency,
-    })
+  const products = await Promise.all(
+    vtexProducts.map((p) =>
+      toProduct(p, p.items[0], 0, {
+        baseUrl,
+        priceCurrency: config!.defaultPriceCurrency,
+      })
+    ).map((product) =>
+      props.similars ? withIsSimilarTo(ctx, product) : product
+    ),
   );
 
   // Get categories of the current department/category

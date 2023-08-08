@@ -49,7 +49,11 @@ export const getSrcSet = (src: string, width: number, height?: number) =>
 const Image = forwardRef<HTMLImageElement, Props>((props, ref) => {
   const { preload, loading = "lazy" } = props;
 
-  if (!props.height) console.warn(`Missing height on image: ${props.src}`);
+  if (!props.height) {
+    console.warn(
+      `Missing height. This image will NOT be optimized: ${props.src}`,
+    );
+  }
 
   const srcSet = getSrcSet(props.src, props.width, props.height);
   const linkProps = {
