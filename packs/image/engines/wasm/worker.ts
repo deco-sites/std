@@ -15,7 +15,7 @@ export interface TransformOptions {
 
 export const transform = async (
   { data, mediaType: input }: Image,
-  { width, height, fit = "cover", quality, mediaType: output }:
+  { width, height, fit = "cover", quality = 80, mediaType: output }:
     TransformOptions,
 ): Promise<Image> => {
   const codecs = await getCodecs();
@@ -27,15 +27,18 @@ export const transform = async (
   const decode = codecs[input as keyof typeof codecs]?.decode;
   const encode = codecs[output as keyof typeof codecs]?.encode;
 
-  const fitMethod: "stretch" | "contain" = fit === "cover"
-    ? "stretch"
-    : "contain";
-
   const pipeline = [
     (buffer: ArrayBuffer) => decode(buffer),
-    (data: ImageData) => transforms.resize(data, { width, height, fitMethod }),
+    (data: ImageData) =>
+      transforms.resize(data, {
+        width,
+        height,
+        fitMethod: fit === "cover" ? "stretch" : "contain",
+        linearRGB: false,
+        premultiply: false,
+      }),
     // @ts-expect-error options will just be ignored if encoder is png
-    (data: ImageData) => encode(data, { quality }),
+    (data: ImageData) => encode(data, { quality, speed: 100 }),
   ] as const;
 
   const transformed = await pipeline.reduce(
