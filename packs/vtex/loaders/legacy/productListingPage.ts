@@ -193,18 +193,27 @@ const loader = async (
       return [];
     }
 
-    const category = CategoriesTrees.find((category) => {
-      const isCurrentCategory = category.Id == Number(pageType.id);
-      if (isCurrentCategory) {
-        return category;
-      } else if (category.Children.length) {
-        getCategoryFacets(category.Children);
+    const stack = [...CategoriesTrees];
+
+    while (stack.length > 0) {
+      const currentCategory = stack.pop();
+
+      if (currentCategory) {
+        const isCurrentCategory = currentCategory.Id == Number(pageType.id);
+        if (isCurrentCategory) {
+          return currentCategory.Children || [];
+        }
+
+        const hasChildren = currentCategory.Children.length;
+
+        if (hasChildren) {
+          const addChildrenToVerification = [...currentCategory.Children];
+          stack.push(...addChildrenToVerification);
+        }
       }
+    }
 
-      return null;
-    });
-
-    return category?.Children || [];
+    return [];
   };
 
   const filters = Object.entries({
