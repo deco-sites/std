@@ -187,28 +187,21 @@ const loader = async (
   );
 
   // Get categories of the current department/category
-  const getCategoryFacets = (CategoriesTrees: LegacyFacet[]) => {
+  const getCategoryFacets = (CategoriesTrees: LegacyFacet[]): LegacyFacet[] => {
     const isDepartmentOrCategoryPage = !pageType;
     if (isDepartmentOrCategoryPage) {
       return [];
     }
 
-    const stack = [...CategoriesTrees];
-
-    while (stack.length > 0) {
-      const currentCategory = stack.pop();
-
-      if (currentCategory) {
-        const isCurrentCategory = currentCategory.Id == Number(pageType.id);
-        if (isCurrentCategory) {
-          return currentCategory.Children || [];
-        }
-
-        const hasChildren = currentCategory.Children.length;
-
-        if (hasChildren) {
-          const addChildrenToVerification = [...currentCategory.Children];
-          stack.push(...addChildrenToVerification);
+    for (const category of CategoriesTrees) {
+      const isCurrentCategory = category.Id == Number(pageType.id);
+      if (isCurrentCategory) {
+        return category.Children || [];
+      } else if (category.Children.length) {
+        const childFacets = getCategoryFacets(category.Children);
+        const hasChildFacets = childFacets.length;
+        if (hasChildFacets) {
+          return childFacets;
         }
       }
     }
