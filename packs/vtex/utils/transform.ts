@@ -218,6 +218,8 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const { baseUrl, priceCurrency } = options;
   const {
     brand,
+    brandId,
+    brandImageUrl,
     productId,
     productReference,
     description,
@@ -268,7 +270,12 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     url: getProductURL(baseUrl, product, sku.itemId).href,
     name,
     description,
-    brand,
+    brand: {
+      "@type": "Brand",
+      "@id": brandId?.toString(),
+      name: brand,
+      logo: brandImageUrl,
+    },
     sku: skuId,
     gtin: ean,
     releaseDate,

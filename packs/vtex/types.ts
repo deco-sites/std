@@ -627,6 +627,7 @@ export interface IProduct {
   productName: string;
   brand: string;
   brandId: number;
+  brandImageUrl?: string;
   cacheId?: string;
   linkText: string;
   productReference: string;

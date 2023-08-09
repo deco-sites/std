@@ -239,6 +239,12 @@ export interface ProductGroup extends Omit<Thing, "@type"> {
   model?: string;
 }
 
+export interface Brand extends Omit<Thing, "@type"> {
+  "@type": "Brand";
+  /** Brand's image url */
+  logo?: string;
+}
+
 export interface Product extends Omit<Thing, "@type"> {
   "@type": "Product";
   /**
@@ -252,7 +258,7 @@ export interface Product extends Omit<Thing, "@type"> {
   /** An award won by or for this item. */
   award?: string;
   /** The brand(s) associated with a product or service, or the brand(s) maintained by an organization or business person. */
-  brand?: string;
+  brand?: string | Brand;
   /** A category for the item. Greater signs or slashes can be used to informally indicate a category hierarchy. */
   category?: string;
   /** A Global Trade Item Number ({@link https://www.gs1.org/standards/id-keys/gtin GTIN}). GTINs identify trade items, including products and services, using numeric identification codes. The {@link https://schema.org/gtin gtin} property generalizes the earlier {@link https://schema.org/gtin8 gtin8}, {@link https://schema.org/gtin12 gtin12}, {@link https://schema.org/gtin13 gtin13}, and {@link https://schema.org/gtin14 gtin14} properties. The GS1 {@link https://www.gs1.org/standards/Digital-Link/ digital link specifications} express GTINs as URLs. A correct {@link https://schema.org/gtin gtin} value should be a valid GTIN, which means that it should be an all-numeric string of either 8, 12, 13 or 14 digits, or a "GS1 Digital Link" URL based on such a string. The numeric component should also have a {@link https://www.gs1.org/services/check-digit-calculator valid GS1 check digit} and meet the other rules for valid GTINs. See also {@link http://www.gs1.org/barcodes/technical/idkeys/gtin GS1's GTIN Summary} and {@link https://en.wikipedia.org/wiki/Global_Trade_Item_Number Wikipedia} for more details. Left-padding of the gtin values is not required or encouraged. */
