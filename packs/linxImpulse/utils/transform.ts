@@ -161,7 +161,10 @@ export const toProduct = <P extends ProductLinxImpulse>(
     url: getProductURL(baseUrl, product, skuId).href,
     name,
     description: description ?? "",
-    brand: details?.brand as string ?? "",
+    brand: {
+      "@type": "Brand",
+      name: typeof details?.brand === "string" ? details.brand : "",
+    },
     sku: skuId,
     gtin: eanCode,
     releaseDate: "",
