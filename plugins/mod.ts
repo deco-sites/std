@@ -1,7 +1,8 @@
 import type { Plugin } from "$fresh/server.ts";
-import decoPlugin from "$live/plugins/deco.ts";
-import { plugin as tailwindPlugin } from "./tailwind/mod.ts";
+import { AppManifest } from "$live/mod.ts";
+import decoPlugin, { Options } from "$live/plugins/deco.ts";
 import * as colors from "std/fmt/colors.ts";
+import { plugin as tailwindPlugin } from "./tailwind/mod.ts";
 
 export const plugin = (): Plugin => {
   console.warn(
@@ -23,8 +24,10 @@ export const plugin = (): Plugin => {
   });
 };
 
-const plugins = (): Plugin[] => {
-  return [tailwindPlugin, decoPlugin()];
+const plugins = <TManifest extends AppManifest = AppManifest>(
+  opts?: Options<TManifest>,
+): Plugin[] => {
+  return [tailwindPlugin, decoPlugin(opts)];
 };
 
 export default plugins;
