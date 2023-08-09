@@ -232,8 +232,11 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
+
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
-  const offers = (sku.sellers ?? []).map(toOffer).sort(bestOfferFirst);
+  const offers = (sku.sellers ?? []).map(
+    isLegacyProduct(product) ? toOfferLegacy : toOffer,
+  ).sort(bestOfferFirst);
   const highPriceIndex = getHighPriceIndex(offers);
   const lowPriceIndex = 0;
 
@@ -430,6 +433,36 @@ const toOffer = ({
   availability: offer.AvailableQuantity > 0
     ? "https://schema.org/InStock"
     : "https://schema.org/OutOfStock",
+});
+
+const toOfferLegacy = (
+  seller: SellerVTEX,
+): Offer => ({
+  ...toOffer(seller),
+  teasers: (seller.commertialOffer.Teasers ?? []).map((teaser) => ({
+    name: teaser["<Name>k__BackingField"],
+    generalValues: teaser["<GeneralValues>k__BackingField"],
+    conditions: {
+      name: teaser["<Conditions>k__BackingField"][
+        "<MinimumQuantity>k__BackingField"
+      ],
+      parameters:
+        teaser["<Conditions>k__BackingField"]["<Parameters>k__BackingField"]
+          .map((parameter) => ({
+            name: parameter["<Name>k__BackingField"],
+            value: parameter["<Value>k__BackingField"],
+          })),
+    },
+    effects: {
+      parameters:
+        teaser["<Effects>k__BackingField"]["<Parameters>k__BackingField"].map(
+          (parameter) => ({
+            name: parameter["<Name>k__BackingField"],
+            value: parameter["<Value>k__BackingField"],
+          }),
+        ),
+    },
+  })),
 });
 
 export const legacyFacetToFilter = (

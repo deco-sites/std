@@ -756,6 +756,27 @@ export interface Item {
   }>;
 }
 
+export interface TeasersParameters {
+  "<Name>k__BackingField": string;
+  "<Value>k__BackingField": string;
+}
+
+export interface TeasersConditions {
+  "<MinimumQuantity>k__BackingField": number;
+  "<Parameters>k__BackingField": TeasersParameters[];
+}
+
+export interface TeasersEffect {
+  "<Parameters>k__BackingField": TeasersParameters[];
+}
+
+export interface Teasers {
+  "<Name>k__BackingField": string;
+  "<GeneralValues>k__BackingField": unknown;
+  "<Conditions>k__BackingField": TeasersConditions;
+  "<Effects>k__BackingField": TeasersEffect;
+}
+
 export interface CommertialOffer {
   DeliverySlaSamplesPerRegion: Record<
     string,
@@ -764,7 +785,7 @@ export interface CommertialOffer {
   Installments: Installment[];
   DiscountHighLight: unknown[];
   GiftSkuIds: string[];
-  Teasers: Array<Record<string, unknown>>;
+  Teasers: Teasers[];
   teasers?: Array<Record<string, unknown>>;
   BuyTogether: unknown[];
   ItemMetadataAttachment: unknown[];
