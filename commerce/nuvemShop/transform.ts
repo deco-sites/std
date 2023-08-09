@@ -73,7 +73,7 @@ function productVariantToProduct(
       url: image.src,
     })),
     category: getPreferredLanguage(categories[0]?.name || ""), // Assuming there's only one category
-    brand: brand,
+    brand: { "@type": "Brand", name: brand },
     offers: {
       "@type": "AggregateOffer" as const,
       priceCurrency: "BRL",

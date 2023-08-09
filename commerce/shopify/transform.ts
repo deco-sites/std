@@ -125,7 +125,7 @@ export const toProduct = (
     description,
     sku: productID,
     gtin: barcode,
-    brand: vendor,
+    brand: { "@type": "Brand", name: vendor },
     releaseDate: createdAt,
     additionalProperty,
     isVariantOf: {
