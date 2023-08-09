@@ -443,7 +443,7 @@ const toOfferLegacy = (
     name: teaser["<Name>k__BackingField"],
     generalValues: teaser["<GeneralValues>k__BackingField"],
     conditions: {
-      name: teaser["<Conditions>k__BackingField"][
+      minimumQuantity: teaser["<Conditions>k__BackingField"][
         "<MinimumQuantity>k__BackingField"
       ],
       parameters:
