@@ -33,7 +33,7 @@ export const transform = async (
       transforms.resize(data, {
         width,
         height,
-        fitMethod: fit === "cover" ? "stretch" : "contain",
+        fitMethod: fit === "cover" ? "contain" : "stretch",
         linearRGB: false,
         premultiply: false,
       }),
