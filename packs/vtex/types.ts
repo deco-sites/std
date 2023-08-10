@@ -757,25 +757,46 @@ export interface Item {
   }>;
 }
 
-export interface TeasersParameters {
+export interface TeasersParametersLegacy {
   "<Name>k__BackingField": string;
   "<Value>k__BackingField": string;
 }
 
-export interface TeasersConditions {
+export interface TeasersConditionsLegacy {
   "<MinimumQuantity>k__BackingField": number;
-  "<Parameters>k__BackingField": TeasersParameters[];
+  "<Parameters>k__BackingField": TeasersParametersLegacy[];
+}
+
+export interface TeasersEffectLegacy {
+  "<Parameters>k__BackingField": TeasersParametersLegacy[];
+}
+
+export interface TeasersLegacy {
+  "<Name>k__BackingField": string;
+  "<GeneralValues>k__BackingField": unknown;
+  "<Conditions>k__BackingField": TeasersConditionsLegacy;
+  "<Effects>k__BackingField": TeasersEffectLegacy;
+}
+
+export interface TeasersParameters {
+  name: string;
+  value: string;
+}
+
+export interface TeasersConditions {
+  minimumQuantity: number;
+  parameters: TeasersParameters[];
 }
 
 export interface TeasersEffect {
-  "<Parameters>k__BackingField": TeasersParameters[];
+  parameters: TeasersParameters[];
 }
 
 export interface Teasers {
-  "<Name>k__BackingField": string;
-  "<GeneralValues>k__BackingField": unknown;
-  "<Conditions>k__BackingField": TeasersConditions;
-  "<Effects>k__BackingField": TeasersEffect;
+  name: string;
+  generalValues?: unknown;
+  conditions: TeasersConditions;
+  effects: TeasersEffect;
 }
 
 export interface CommertialOffer {
@@ -786,8 +807,8 @@ export interface CommertialOffer {
   Installments: Installment[];
   DiscountHighLight: unknown[];
   GiftSkuIds: string[];
-  Teasers: Teasers[];
-  teasers?: Array<Record<string, unknown>>;
+  Teasers: TeasersLegacy[];
+  teasers?: Teasers[];
   BuyTogether: unknown[];
   ItemMetadataAttachment: unknown[];
   Price: number;

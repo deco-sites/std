@@ -414,7 +414,7 @@ const toOffer = ({
   seller: sellerId,
   priceValidUntil: offer.PriceValidUntil,
   inventoryLevel: { value: offer.AvailableQuantity },
-  teasers: offer.teasers,
+  teasers: offer.teasers ?? [],
   priceSpecification: [
     {
       "@type": "UnitPriceSpecification",
