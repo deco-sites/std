@@ -30,7 +30,7 @@ export const getOptimizedMediaUrl = (
   const params = new URLSearchParams();
 
   params.set("src", originalSrc);
-  params.set("fit", "contain");
+  params.set("fit", "cover");
   params.set("width", `${Math.trunc(factor * width)}`);
   height && params.set("height", `${Math.trunc(factor * height)}`);
 
