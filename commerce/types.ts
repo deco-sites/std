@@ -142,6 +142,27 @@ export interface UnitPriceSpecification
   billingIncrement?: number;
 }
 
+export interface TeasersParameters {
+  name: string;
+  value: string;
+}
+
+export interface TeasersConditions {
+  minimumQuantity: number;
+  parameters: TeasersParameters[];
+}
+
+export interface TeasersEffect {
+  parameters: TeasersParameters[];
+}
+
+export interface Teasers {
+  name: string;
+  generalValues?: unknown;
+  conditions: TeasersConditions;
+  effects: TeasersEffect;
+}
+
 export interface Offer extends Omit<Thing, "@type"> {
   "@type": "Offer";
   /** The availability of this item—for example In stock, Out of stock, Pre-order, etc. */
@@ -171,7 +192,7 @@ export interface Offer extends Omit<Thing, "@type"> {
   /** The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers. */
   sku?: string;
   /** Used by some ecommerce providers (e.g: VTEX) to describe special promotions that depend on some conditions */
-  teasers?: Array<Record<string, unknown>>;
+  teasers?: Teasers[];
 }
 
 export interface AggregateOffer {
