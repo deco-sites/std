@@ -228,7 +228,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   } = product;
   const { name, ean, itemId: skuId, referenceId } = sku;
 
-  const referenceIdValue = referenceId?.[0]?.Value
+  const referenceIdValue = referenceId?.[0]?.Value;
 
   const groupAdditionalProperty = isLegacyProduct(product)
     ? legacyToProductGroupAdditionalProperties(product)
