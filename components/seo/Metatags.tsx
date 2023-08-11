@@ -8,7 +8,14 @@ import ScriptLDJson from "./ScriptLDJson.tsx";
 import Preview from "./components/Preview.tsx";
 import type { Props } from "./types.ts";
 
-function Metatags(props: Props) {
+export const loader = (
+  props: Props,
+  req: Request,
+): Props & { url: string } => {
+  return { ...props, url: req.url };
+};
+
+function Metatags(props: Props & { url: string }) {
   const { titleTemplate = "", context, type, themeColor, favicon } = props;
   const twitterCard = type === "website" ? "summary" : "summary_large_image";
 
@@ -19,6 +26,7 @@ function Metatags(props: Props) {
     : null;
 
   const { title, description, image, canonical } = handleSEO(props, tags);
+  const url = new URL(props.url);
 
   return (
     <>
@@ -47,6 +55,13 @@ function Metatags(props: Props) {
           <meta name="robots" content="noindex, nofollow" />
         )}
       </Head>
+      <img
+        width={0}
+        data-fresh-disable-lock
+        src={`/live/invoke/deco-sites/std/loaders/x/event.gif${
+          url.pathname + url.search
+        }`}
+      />
       {context?.["@type"] === "ProductDetailsPage" && (
         <>
           <ScriptLDJson {...{ ...context.product, isVariantOf: [] }} />

@@ -18,7 +18,15 @@ export interface Props {
   /** @description Recommended: 16 x 16 px */
   favicon?: LiveImage;
 }
+export const loader = (
+  props: Props,
+  req: Request,
+): Props & { url: string } => {
+  return { ...props, url: req.url };
+};
 
-const SeoPLP = (props: Props) => <Metatags {...props} context={props.page} />;
+const SeoPLP = (props: Props & { url: string }) => (
+  <Metatags {...props} context={props.page} />
+);
 
 export default SeoPLP;
