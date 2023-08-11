@@ -228,6 +228,8 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   } = product;
   const { name, ean, itemId: skuId, referenceId } = sku;
 
+  const referenceIdValue = referenceId?.[0]?.Value
+
   const groupAdditionalProperty = isLegacyProduct(product)
     ? legacyToProductGroupAdditionalProperties(product)
     : toProductGroupAdditionalProperties(product);
@@ -284,7 +286,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     releaseDate,
     additionalProperty,
     isVariantOf,
-    referenceId,
+    referenceId: referenceIdValue,
     image: images.map(({ imageUrl, imageText }) => ({
       "@type": "ImageObject" as const,
       alternateName: imageText ?? "",
