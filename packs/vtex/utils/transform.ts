@@ -477,6 +477,7 @@ export const legacyFacetToFilter = (
   facets: LegacyFacet[],
   url: URL,
   map: string,
+  fq: string,
   behavior: "dynamic" | "static",
 ): Filter | null => {
   const mapSegments = map.split(",");
@@ -487,10 +488,63 @@ export const legacyFacetToFilter = (
   const mapSet = new Set(mapSegments);
   const pathSet = new Set(pathSegments);
 
+  const isPriceRangeSelected = (facet: LegacyFacet) => {
+    const isCurrentPriceRange = /^P:\[(\d+(\.\d+)?)\+TO\+(\d+(\.\d+)?)\]$/.test(
+      fq,
+    );
+    const isPriceRangeFacet = name == "PriceRanges";
+
+    const [currentMin, currentMax] = isCurrentPriceRange
+      ? getMinAndMaxPrices(fq)
+      : [0, 0];
+    const [facetMin, facetMax] = isPriceRangeFacet
+      ? getMinAndMaxPrices(facet.Slug)
+      : [0, 0];
+
+    const isSelectedPrice = isCurrentPriceRange && (currentMin == facetMin) &&
+      (currentMax == facetMax);
+
+    return isSelectedPrice;
+  };
+
+  const getMinAndMaxPrices = (param: string) => {
+    const regexPattern1 = /^P:\[(\d+(\.\d+)?)\+TO\+(\d+(\.\d+)?)\]$/; // Ex: P:[100+TO+199.99]
+    const regexPattern2 = /^de-(\d+(\.\d+)?)-a-(\d+(\.\d+)?)$/; // Ex: de-100-a-199.99
+
+    const matchPattern1 = param.match(regexPattern1);
+    const matchPattern2 = param.match(regexPattern2);
+
+    if (matchPattern1) {
+      const min = parseFloat(matchPattern1[1]);
+      const max = parseFloat(matchPattern1[3]);
+      return [min, max];
+    }
+    if (matchPattern2) {
+      const min = parseFloat(matchPattern2[1]);
+      const max = parseFloat(matchPattern2[3]);
+      return [min, max];
+    }
+
+    return [0, 0];
+  };
+
   const getLink = (facet: LegacyFacet, selected: boolean) => {
     // Do not allow removing root facet to avoid going back to home page
     if (mapSegments.length === 1) {
       return `${url.pathname}${url.search}`;
+    }
+
+    if (name == "PriceRanges") {
+      const link = new URL(`/${pathSegments.join("/")}`, url);
+      link.searchParams.set("map", mapSegments.join(","));
+
+      const [min, max] = getMinAndMaxPrices(facet.Slug);
+
+      if (min && max && !selected) {
+        link.searchParams.set("fq", `P:[${min}+TO+${max}]`);
+      }
+
+      return `${link.pathname}${link.search}`;
     }
 
     const index = pathSegments.findIndex((s) => s === facet.Value);
@@ -507,6 +561,10 @@ export const legacyFacetToFilter = (
       link.searchParams.set("fmap", url.searchParams.get("fmap") || map);
     }
 
+    if (fq) {
+      link.searchParams.set("fq", fq);
+    }
+
     return `${link.pathname}${link.search}`;
   };
 
@@ -516,7 +574,8 @@ export const legacyFacetToFilter = (
     label: name,
     key: name,
     values: facets.map((facet) => {
-      const selected = mapSet.has(facet.Map) && pathSet.has(facet.Value);
+      const selected = (mapSet.has(facet.Map) && pathSet.has(facet.Value)) ||
+        isPriceRangeSelected(facet);
 
       return ({
         value: facet.Value,
@@ -643,3 +702,9 @@ function nodeToNavbar(node: Category): Navbar {
 
 export const categoryTreeToNavbar = (tree: Category[]): Navbar[] =>
   tree.map(nodeToNavbar);
+
+export const normalizeFq = (fq: string) => {
+  const decodedFq = decodeURI(fq);
+  const fqWithoutSpaces = decodedFq.replace(/[\s+]/g, "%20");
+  return fqWithoutSpaces;
+};
