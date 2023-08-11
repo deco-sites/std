@@ -22,7 +22,6 @@ import {
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
-
 import type { LegacyFacet, LegacyFacets, LegacyProduct } from "../../types.ts";
 
 import { withIsSimilarTo } from "../../utils/similars.ts";
