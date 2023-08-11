@@ -307,8 +307,15 @@ export interface Product extends Omit<Thing, "@type"> {
   review?: Review;
   /** The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers. */
   sku: string;
+  /** Reference code ID. */
+  referenceId?: ReferenceIdValue[];
   /** A pointer to another product (or multiple products) for which this product is an accessory or spare part. */
   isAccessoryOrSparePartFor?: ProductLeaf[];
+}
+
+export interface ReferenceIdValue {
+  Key: string;
+  Value: string;
 }
 
 export interface ListItem<T = string> extends Omit<Thing, "@type"> {
@@ -457,9 +464,7 @@ interface AnalyticsItemWithoutIdentifier {
   quantity: number;
 }
 
-export type AnalyticsItem =
-  & AnalyticsItemWithoutIdentifier
-  & ItemIdentifier;
+export type AnalyticsItem = AnalyticsItemWithoutIdentifier & ItemIdentifier;
 
 export interface AddShippingInfoParams {
   currency?: Currency;
