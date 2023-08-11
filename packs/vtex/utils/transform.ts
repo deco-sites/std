@@ -489,9 +489,8 @@ export const legacyFacetToFilter = (
   const pathSet = new Set(pathSegments);
 
   const isPriceRangeSelected = (facet: LegacyFacet) => {
-    const isCurrentPriceRange = /^P:\[(\d+(\.\d+)?)\+TO\+(\d+(\.\d+)?)\]$/.test(
-      fq,
-    );
+    const isCurrentPriceRange = fq.startsWith("P:[") && fq.includes("+TO+");
+
     const isPriceRangeFacet = name == "PriceRanges";
 
     const [currentMin, currentMax] = isCurrentPriceRange
@@ -508,21 +507,41 @@ export const legacyFacetToFilter = (
   };
 
   const getMinAndMaxPrices = (param: string) => {
-    const regexPattern1 = /^P:\[(\d+(\.\d+)?)\+TO\+(\d+(\.\d+)?)\]$/; // Ex: P:[100+TO+199.99]
-    const regexPattern2 = /^de-(\d+(\.\d+)?)-a-(\d+(\.\d+)?)$/; // Ex: de-100-a-199.99
+    const separator1 = "P:[";
+    const separator2 = "+TO+";
+    const separator3 = "]";
 
-    const matchPattern1 = param.match(regexPattern1);
-    const matchPattern2 = param.match(regexPattern2);
+    const separator4 = "de-";
+    const separator5 = "-a-";
 
-    if (matchPattern1) {
-      const min = parseFloat(matchPattern1[1]);
-      const max = parseFloat(matchPattern1[3]);
-      return [min, max];
+    if (param.startsWith(separator1) && param.endsWith(separator3)) {
+      const values = param.substring(
+        separator1.length,
+        param.length - separator3.length,
+      ).split(separator2);
+
+      if (values.length === 2) {
+        const min = parseFloat(values[0]);
+        const max = parseFloat(values[1]);
+
+        const isValidNumbers = !isNaN(min) && !isNaN(max);
+        if (isValidNumbers) {
+          return [min, max];
+        }
+      }
     }
-    if (matchPattern2) {
-      const min = parseFloat(matchPattern2[1]);
-      const max = parseFloat(matchPattern2[3]);
-      return [min, max];
+
+    if (param.startsWith(separator4) && param.includes(separator5)) {
+      const values = param.substring(separator4.length).split(separator5);
+      if (values.length === 2) {
+        const min = parseFloat(values[0]);
+        const max = parseFloat(values[1]);
+
+        const isValidNumbers = !isNaN(min) && !isNaN(max);
+        if (isValidNumbers) {
+          return [min, max];
+        }
+      }
     }
 
     return [0, 0];
@@ -705,6 +724,6 @@ export const categoryTreeToNavbar = (tree: Category[]): Navbar[] =>
 
 export const normalizeFq = (fq: string) => {
   const decodedFq = decodeURI(fq);
-  const fqWithoutSpaces = decodedFq.replace(/[\s+]/g, "%20");
+  const fqWithoutSpaces = decodedFq.split("+").join("%20");
   return fqWithoutSpaces;
 };
