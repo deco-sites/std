@@ -209,6 +209,17 @@ const toAdditionalPropertyClusters = <
   }));
 };
 
+const toAdditionalPropertyReferenceId = (
+  referenceId: Array<{ Key: string; Value: string }>,
+): Product["additionalProperty"] => {
+  return referenceId.map(({ Key, Value }) => ({
+    "@type": "PropertyValue" as const,
+    name: Key,
+    value: Value,
+    valueReference: "ReferenceID"
+  }));
+};
+
 export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   product: P,
   sku: P["items"][number],
@@ -228,15 +239,15 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   } = product;
   const { name, ean, itemId: skuId, referenceId } = sku;
 
-  const referenceIdValue = referenceId?.[0]?.Value;
-
   const groupAdditionalProperty = isLegacyProduct(product)
     ? legacyToProductGroupAdditionalProperties(product)
     : toProductGroupAdditionalProperties(product);
   const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
-
+  const referenceIdAdditionalProperty = toAdditionalPropertyReferenceId(
+    referenceId,
+  );
   const images = nonEmptyArray(sku.images) ?? [DEFAULT_IMAGE];
   const offers = (sku.sellers ?? []).map(
     isLegacyProduct(product) ? toOfferLegacy : toOffer,
@@ -266,7 +277,9 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
 
   const additionalProperty = specificationsAdditionalProperty.concat(
     categoryAdditionalProperties ?? [],
-  ).concat(clusterAdditionalProperties ?? []);
+  ).concat(clusterAdditionalProperties ?? []).concat(
+    referenceIdAdditionalProperty ?? [],
+  );
 
   return {
     "@type": "Product",
@@ -286,7 +299,6 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
     releaseDate,
     additionalProperty,
     isVariantOf,
-    referenceId: referenceIdValue,
     image: images.map(({ imageUrl, imageText }) => ({
       "@type": "ImageObject" as const,
       alternateName: imageText ?? "",
