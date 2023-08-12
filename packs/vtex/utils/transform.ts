@@ -216,7 +216,7 @@ const toAdditionalPropertyReferenceId = (
     "@type": "PropertyValue" as const,
     name: Key,
     value: Value,
-    valueReference: "ReferenceID"
+    valueReference: "ReferenceID",
   }));
 };
 
