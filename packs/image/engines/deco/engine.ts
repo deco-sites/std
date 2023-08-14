@@ -1,7 +1,6 @@
 import { createEngine } from "../remote/engine.ts";
 
-const endpoint = Deno.env.get("DECO_IMAGE_ENDPOINT") ??
-  "https://deco-images.deco-cx.workers.dev";
+const ikid = Deno.env.get("DECO_IK_ID") ?? "decocx";
 
 export const engine = createEngine({
   name: "deco",
@@ -9,12 +8,14 @@ export const engine = createEngine({
   accepts: () => true,
 
   urlFromParams: (params) => {
-    const url = new URL(endpoint);
+    const { src, width, height, quality } = params;
 
-    for (const [key, value] of Object.entries(params)) {
-      url.searchParams.set(key, value);
-    }
+    const tr = [
+      width && `w-${width}`,
+      height && `h-${height}`,
+      quality && `q-${quality}`,
+    ].filter(Boolean).join(",");
 
-    return url;
+    return new URL(`https://ik.imagekit.io/${ikid}/tr:${tr}/${src}`);
   },
 });
