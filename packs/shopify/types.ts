@@ -121,9 +121,50 @@ type CartBuyerIdentity = {
   customer: Customer;
 };
 
-export type Cart = {
+export type OldCart = {
   attribute?: Attribute;
   attributes?: Attribute[];
   buyerIdentity?: CartBuyerIdentity;
   id: string;
 };
+
+export interface Money {
+  amount: number;
+  currencyCode: string;
+}
+
+export interface Image {
+  url: string;
+  width: number;
+  height: number;
+  altText: string;
+}
+
+export interface CartData {
+  id: string;
+  lines?: {
+    nodes: {
+      id: string;
+      quantity: number;
+      merchandise: {
+        product: {
+          title: string;
+        };
+        title: string;
+        image: Image;
+        id: string;
+      };
+      estimatedCost: {
+        totalAmount: Money;
+      };
+    }[];
+  };
+  checkoutUrl?: string;
+  estimatedCost?: {
+    totalAmount: Money;
+  };
+}
+
+export interface Cart {
+  cart: CartData;
+}

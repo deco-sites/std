@@ -14,8 +14,11 @@ const wrap =
 const state = {
   cart,
   loading,
-  addItem: wrap(
-    Runtime.create("deco-sites/std/actions/shopify/cart/addItem.ts"),
+  addItems: wrap(
+    Runtime.create("deco-sites/std/actions/shopify/cart/addItems.ts"),
+  ),
+  updateItems: wrap(
+    Runtime.create("deco-sites/std/actions/shopify/cart/updateItems.ts"),
   ),
 };
 

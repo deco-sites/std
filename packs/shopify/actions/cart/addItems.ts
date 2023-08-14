@@ -1,23 +1,21 @@
 import { getCookies } from "std/http/mod.ts";
-
 import type { Cart } from "../../types.ts";
 import type { Context } from "../../accounts/shopify.ts";
-import { gql } from "../../utils/gql.ts";
 import { getShopifyClient } from "../../client.ts";
-
 import { SHOPIFY_COOKIE_NAME } from "../../constants.ts";
+import { CART_QUERY } from "../../utils/cartQuery.ts";
 
-const cartAddLineMutation = gql`
-  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
-    payload: cartLinesAdd(cartId: $cartId, lines: $lines) {
-      cart {
-        id
-      }
-    }
+const addToCartQuery = `mutation add($cartId: ID!, $lines: [CartLineInput!]!) {
+  cartLinesAdd(cartId: $cartId, lines: $lines) {
+    cart ${CART_QUERY}
   }
-`;
+}`;
 
-type CartAddLineProps = {
+export interface addToCartQueryProps {
+  cartLinesAdd: Cart;
+}
+
+type UpdateLineProps = {
   lines: {
     merchandiseId: string;
     attributes?: Array<{ key: string; value: string }>;
@@ -27,7 +25,7 @@ type CartAddLineProps = {
 };
 
 const action = async (
-  props: CartAddLineProps,
+  props: UpdateLineProps,
   req: Request,
   ctx: Context,
 ): Promise<Cart> => {
@@ -36,16 +34,18 @@ const action = async (
 
   const reqCookies = getCookies(req.headers);
   const cartId = reqCookies[SHOPIFY_COOKIE_NAME];
+  const response: addToCartQueryProps | undefined = await client(
+    addToCartQuery,
+    [],
+    {
+      cartId: cartId,
+      lines: [props.lines],
+    },
+  );
 
-  const response = await client(cartAddLineMutation, [], {
-    id: cartId,
-    lines: props.lines,
-  });
+  const cartResponse: Cart | undefined = response?.cartLinesAdd;
 
-  console.log(response);
-
-  const updated = await ctx.invoke("deco-sites/std/loaders/shopify/cart.ts");
-  return { ...updated };
+  return cartResponse || { cart: { id: cartId } };
 };
 
 export default action;

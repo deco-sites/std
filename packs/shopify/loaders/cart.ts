@@ -6,6 +6,8 @@ import { getShopifyClient } from "../client.ts";
 import { gql } from "../utils/gql.ts";
 import { SHOPIFY_COOKIE_NAME } from "../constants.ts";
 
+import { CART_QUERY } from "../utils/cartQuery.ts";
+
 const createCartMutation = gql`
   mutation createCart {
     payload: cartCreate {
@@ -16,31 +18,13 @@ const createCartMutation = gql`
   }
 `;
 
-const CartFragment = gql`
-  fragment CartFragment on Cart {
-    id
-  }
-`;
-
-const cartQuery = gql`
-  query cart($id: ID!) {
-    cart(id: $id) {
-      ...CartFragment
-    }
-  }
-`;
+const cartQuery = `query($id: ID!) { cart(id: $id) ${CART_QUERY} }`;
 
 type CreateCartPayload = {
   payload: {
     cart: {
       id: string;
     };
-  };
-};
-
-type CartQueryPayload = {
-  payload: {
-    cart: Cart;
   };
 };
 
@@ -58,25 +42,22 @@ const loader = async (
     const reqCookies = getCookies(req.headers);
     const cartIdCookie = reqCookies[SHOPIFY_COOKIE_NAME];
     if (cartIdCookie) {
-      const queryResponse = await client<CartQueryPayload>(
+      const queryResponse = await client<Cart>(
         cartQuery,
-        [CartFragment],
+        [],
         {
           id: cartIdCookie,
         },
       );
-
-      if (!queryResponse?.payload.cart) {
+      if (!queryResponse?.cart?.id) {
         throw new Error("unable to create a cart");
       }
-
-      return queryResponse?.payload.cart;
+      return queryResponse;
     }
 
-    if (!r?.payload.cart.id) {
+    if (!r?.payload?.cart.id) {
       throw new Error("unable to create a cart");
     }
-
     const { cart } = r.payload;
 
     const cookies = getSetCookies(ctx.response.headers);
@@ -89,7 +70,7 @@ const loader = async (
       });
     }
 
-    return { id: cart.id };
+    return { cart: { id: cart.id } };
   } catch (error) {
     console.error(error);
     throw error;
