@@ -1,11 +1,14 @@
 export const CART_QUERY = `{
     id
+    checkoutUrl
+    totalQuantity
     lines(first: 100) {
       nodes {
         id
         quantity
         merchandise {
           ...on ProductVariant {
+            id
             title
             image {
               url
@@ -14,23 +17,33 @@ export const CART_QUERY = `{
             product {
               title
             }
-            id
+            price {
+              amount
+              currencyCode
+            }
           }
         }
-        estimatedCost {
+        cost {
           totalAmount {
             amount
             currencyCode
           }
-          subtotalAmount {
+          subtotalAmount{
+            amount
+            currencyCode
+          }
+          amountPerQuantity {
+            amount
+            currencyCode
+          }
+          compareAtAmountPerQuantity {
             amount
             currencyCode
           }
         }
       }
     }
-    checkoutUrl
-    estimatedCost {
+    cost {
       subtotalAmount {
         amount
         currencyCode

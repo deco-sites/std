@@ -147,23 +147,27 @@ export interface CartData {
       id: string;
       quantity: number;
       merchandise: {
+        id: string;
+        title: string;
         product: {
           title: string;
         };
-        title: string;
         image: Image;
-        id: string;
+        price: Money;
       };
-      estimatedCost: {
+      cost: {
         totalAmount: Money;
         subtotalAmount: Money;
+        amountPerQuantity: Money;
+        compareAtAmountPerQuantity: Money
       };
     }[];
   };
   checkoutUrl?: string;
-  estimatedCost?: {
+  cost?: {
     subtotalAmount: Money;
     totalAmount: Money;
+    checkoutChargeAmount: Money;
   };
   discountCodes?: {
     code: string;
