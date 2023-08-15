@@ -22,12 +22,34 @@ export const CART_QUERY = `{
             amount
             currencyCode
           }
+          subtotalAmount {
+            amount
+            currencyCode
+          }
         }
       }
     }
     checkoutUrl
     estimatedCost {
+      subtotalAmount {
+        amount
+        currencyCode
+      }
       totalAmount {
+        amount
+        currencyCode
+      }
+      checkoutChargeAmount{
+        amount
+        currencyCode
+      }
+    }
+    discountCodes {
+      code
+      applicable
+    }
+    discountAllocations{
+      discountedAmount {
         amount
         currencyCode
       }

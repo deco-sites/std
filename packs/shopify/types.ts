@@ -156,12 +156,21 @@ export interface CartData {
       };
       estimatedCost: {
         totalAmount: Money;
+        subtotalAmount: Money;
       };
     }[];
   };
   checkoutUrl?: string;
   estimatedCost?: {
+    subtotalAmount: Money;
     totalAmount: Money;
+  };
+  discountCodes?: {
+    code: string;
+    applicable: boolean;
+  }[];
+  discountAllocations?: {
+    discountedAmount: Money;
   };
 }
 

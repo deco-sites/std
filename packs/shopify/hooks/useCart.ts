@@ -20,6 +20,9 @@ const state = {
   updateItems: wrap(
     Runtime.create("deco-sites/std/actions/shopify/cart/updateItems.ts"),
   ),
+  addCouponsToCart: wrap(
+    Runtime.create("deco-sites/std/actions/shopify/cart/updateCoupons.ts"),
+  ),
 };
 
 export const useCart = () => state;

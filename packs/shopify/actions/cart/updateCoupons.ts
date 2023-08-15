@@ -5,26 +5,27 @@ import { getShopifyClient } from "../../client.ts";
 import { SHOPIFY_COOKIE_NAME } from "../../constants.ts";
 import { CART_QUERY } from "../../utils/cartQuery.ts";
 
-const updateCartQuery =
-  `mutation update($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
-    cartLinesUpdate(cartId: $cartId, lines: $lines) {
+const addCouponQuery =
+  `mutation addCoupon($cartId: ID!, $discountCodes: [String!]!) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
     cart ${CART_QUERY}
+    userErrors {
+        field
+        message
+    }
   }
 }`;
 
-export interface updateCartQueryProps {
-  cartLinesUpdate: Cart;
+export interface addCouponQueryProps {
+  cartDiscountCodesUpdate: Cart;
 }
 
-type UpdateLineProps = {
-  lines: {
-    id: string;
-    quantity?: number;
-  };
+type AddCouponProps = {
+  discountCodes: string[];
 };
 
 const action = async (
-  props: UpdateLineProps,
+  props: AddCouponProps,
   req: Request,
   ctx: Context,
 ): Promise<Cart> => {
@@ -33,15 +34,15 @@ const action = async (
 
   const reqCookies = getCookies(req.headers);
   const cartId = reqCookies[SHOPIFY_COOKIE_NAME];
-  const response: updateCartQueryProps | undefined = await client(
-    updateCartQuery,
+  const response: addCouponQueryProps | undefined = await client(
+    addCouponQuery,
     [],
     {
       cartId: cartId,
-      lines: [props.lines],
+      discountCodes: [...props.discountCodes],
     },
   );
-  const cartResponse: Cart | undefined = response?.cartLinesUpdate;
+  const cartResponse: Cart | undefined = response?.cartDiscountCodesUpdate;
 
   return cartResponse || { cart: { id: cartId } };
 };

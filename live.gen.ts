@@ -85,28 +85,29 @@ import * as $$$$$$$$9 from "./sections/SEOPDP.tsx";
 import * as $$$$$$$$10 from "./sections/SEOPLP.tsx";
 import * as $$$$$$$$11 from "./sections/VTEXPortalDataLayerCompatibility.tsx";
 import * as $$$$$$$$$$$0 from "./actions/shopify/cart/addItems.ts";
-import * as $$$$$$$$$$$1 from "./actions/shopify/cart/updateItems.ts";
-import * as $$$$$$$$$$$2 from "./actions/vnda/cart/addItem.ts";
-import * as $$$$$$$$$$$3 from "./actions/vnda/cart/setShippingAddress.ts";
-import * as $$$$$$$$$$$4 from "./actions/vnda/cart/updateCoupon.ts";
-import * as $$$$$$$$$$$5 from "./actions/vnda/cart/updateItem.ts";
-import * as $$$$$$$$$$$6 from "./actions/vtex/analytics/sendEvent.ts";
-import * as $$$$$$$$$$$7 from "./actions/vtex/cart/addItems.ts";
-import * as $$$$$$$$$$$8 from "./actions/vtex/cart/getInstallment.ts";
-import * as $$$$$$$$$$$9 from "./actions/vtex/cart/removeItemAttachment.ts";
-import * as $$$$$$$$$$$10 from "./actions/vtex/cart/removeItems.ts";
-import * as $$$$$$$$$$$11 from "./actions/vtex/cart/simulation.ts";
-import * as $$$$$$$$$$$12 from "./actions/vtex/cart/updateAttachment.ts";
-import * as $$$$$$$$$$$13 from "./actions/vtex/cart/updateCoupons.ts";
-import * as $$$$$$$$$$$14 from "./actions/vtex/cart/updateItemAttachment.ts";
-import * as $$$$$$$$$$$15 from "./actions/vtex/cart/updateItemPrice.ts";
-import * as $$$$$$$$$$$16 from "./actions/vtex/cart/updateItems.ts";
-import * as $$$$$$$$$$$17 from "./actions/vtex/cart/updateProfile.ts";
-import * as $$$$$$$$$$$18 from "./actions/vtex/cart/updateUser.ts";
-import * as $$$$$$$$$$$19 from "./actions/vtex/newsletter/subscribe.ts";
-import * as $$$$$$$$$$$20 from "./actions/vtex/notifyme.ts";
-import * as $$$$$$$$$$$21 from "./actions/vtex/wishlist/addItem.ts";
-import * as $$$$$$$$$$$22 from "./actions/vtex/wishlist/removeItem.ts";
+import * as $$$$$$$$$$$1 from "./actions/shopify/cart/updateCoupons.ts";
+import * as $$$$$$$$$$$2 from "./actions/shopify/cart/updateItems.ts";
+import * as $$$$$$$$$$$3 from "./actions/vnda/cart/addItem.ts";
+import * as $$$$$$$$$$$4 from "./actions/vnda/cart/setShippingAddress.ts";
+import * as $$$$$$$$$$$5 from "./actions/vnda/cart/updateCoupon.ts";
+import * as $$$$$$$$$$$6 from "./actions/vnda/cart/updateItem.ts";
+import * as $$$$$$$$$$$7 from "./actions/vtex/analytics/sendEvent.ts";
+import * as $$$$$$$$$$$8 from "./actions/vtex/cart/addItems.ts";
+import * as $$$$$$$$$$$9 from "./actions/vtex/cart/getInstallment.ts";
+import * as $$$$$$$$$$$10 from "./actions/vtex/cart/removeItemAttachment.ts";
+import * as $$$$$$$$$$$11 from "./actions/vtex/cart/removeItems.ts";
+import * as $$$$$$$$$$$12 from "./actions/vtex/cart/simulation.ts";
+import * as $$$$$$$$$$$13 from "./actions/vtex/cart/updateAttachment.ts";
+import * as $$$$$$$$$$$14 from "./actions/vtex/cart/updateCoupons.ts";
+import * as $$$$$$$$$$$15 from "./actions/vtex/cart/updateItemAttachment.ts";
+import * as $$$$$$$$$$$16 from "./actions/vtex/cart/updateItemPrice.ts";
+import * as $$$$$$$$$$$17 from "./actions/vtex/cart/updateItems.ts";
+import * as $$$$$$$$$$$18 from "./actions/vtex/cart/updateProfile.ts";
+import * as $$$$$$$$$$$19 from "./actions/vtex/cart/updateUser.ts";
+import * as $$$$$$$$$$$20 from "./actions/vtex/newsletter/subscribe.ts";
+import * as $$$$$$$$$$$21 from "./actions/vtex/notifyme.ts";
+import * as $$$$$$$$$$$22 from "./actions/vtex/wishlist/addItem.ts";
+import * as $$$$$$$$$$$23 from "./actions/vtex/wishlist/removeItem.ts";
 import { DecoManifest } from "$live/types.ts";
 import * as i1$0 from "$live/loaders/secret.ts";
 import * as i1$1 from "$live/loaders/state.ts";
@@ -264,28 +265,29 @@ const manifest = {
     "$live/actions/workflows/signal.ts": i1$$$$$$$2,
     "$live/actions/workflows/start.ts": i1$$$$$$$3,
     "deco-sites/std/actions/shopify/cart/addItems.ts": $$$$$$$$$$$0,
-    "deco-sites/std/actions/shopify/cart/updateItems.ts": $$$$$$$$$$$1,
-    "deco-sites/std/actions/vnda/cart/addItem.ts": $$$$$$$$$$$2,
-    "deco-sites/std/actions/vnda/cart/setShippingAddress.ts": $$$$$$$$$$$3,
-    "deco-sites/std/actions/vnda/cart/updateCoupon.ts": $$$$$$$$$$$4,
-    "deco-sites/std/actions/vnda/cart/updateItem.ts": $$$$$$$$$$$5,
-    "deco-sites/std/actions/vtex/analytics/sendEvent.ts": $$$$$$$$$$$6,
-    "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$7,
-    "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$8,
-    "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$9,
-    "deco-sites/std/actions/vtex/cart/removeItems.ts": $$$$$$$$$$$10,
-    "deco-sites/std/actions/vtex/cart/simulation.ts": $$$$$$$$$$$11,
-    "deco-sites/std/actions/vtex/cart/updateAttachment.ts": $$$$$$$$$$$12,
-    "deco-sites/std/actions/vtex/cart/updateCoupons.ts": $$$$$$$$$$$13,
-    "deco-sites/std/actions/vtex/cart/updateItemAttachment.ts": $$$$$$$$$$$14,
-    "deco-sites/std/actions/vtex/cart/updateItemPrice.ts": $$$$$$$$$$$15,
-    "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$16,
-    "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$17,
-    "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$18,
-    "deco-sites/std/actions/vtex/newsletter/subscribe.ts": $$$$$$$$$$$19,
-    "deco-sites/std/actions/vtex/notifyme.ts": $$$$$$$$$$$20,
-    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$21,
-    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$22,
+    "deco-sites/std/actions/shopify/cart/updateCoupons.ts": $$$$$$$$$$$1,
+    "deco-sites/std/actions/shopify/cart/updateItems.ts": $$$$$$$$$$$2,
+    "deco-sites/std/actions/vnda/cart/addItem.ts": $$$$$$$$$$$3,
+    "deco-sites/std/actions/vnda/cart/setShippingAddress.ts": $$$$$$$$$$$4,
+    "deco-sites/std/actions/vnda/cart/updateCoupon.ts": $$$$$$$$$$$5,
+    "deco-sites/std/actions/vnda/cart/updateItem.ts": $$$$$$$$$$$6,
+    "deco-sites/std/actions/vtex/analytics/sendEvent.ts": $$$$$$$$$$$7,
+    "deco-sites/std/actions/vtex/cart/addItems.ts": $$$$$$$$$$$8,
+    "deco-sites/std/actions/vtex/cart/getInstallment.ts": $$$$$$$$$$$9,
+    "deco-sites/std/actions/vtex/cart/removeItemAttachment.ts": $$$$$$$$$$$10,
+    "deco-sites/std/actions/vtex/cart/removeItems.ts": $$$$$$$$$$$11,
+    "deco-sites/std/actions/vtex/cart/simulation.ts": $$$$$$$$$$$12,
+    "deco-sites/std/actions/vtex/cart/updateAttachment.ts": $$$$$$$$$$$13,
+    "deco-sites/std/actions/vtex/cart/updateCoupons.ts": $$$$$$$$$$$14,
+    "deco-sites/std/actions/vtex/cart/updateItemAttachment.ts": $$$$$$$$$$$15,
+    "deco-sites/std/actions/vtex/cart/updateItemPrice.ts": $$$$$$$$$$$16,
+    "deco-sites/std/actions/vtex/cart/updateItems.ts": $$$$$$$$$$$17,
+    "deco-sites/std/actions/vtex/cart/updateProfile.ts": $$$$$$$$$$$18,
+    "deco-sites/std/actions/vtex/cart/updateUser.ts": $$$$$$$$$$$19,
+    "deco-sites/std/actions/vtex/newsletter/subscribe.ts": $$$$$$$$$$$20,
+    "deco-sites/std/actions/vtex/notifyme.ts": $$$$$$$$$$$21,
+    "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$22,
+    "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$23,
   },
   "pages": {
     "$live/pages/LivePage.tsx": i1$$$0,
