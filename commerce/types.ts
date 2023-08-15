@@ -457,9 +457,7 @@ interface AnalyticsItemWithoutIdentifier {
   quantity: number;
 }
 
-export type AnalyticsItem =
-  & AnalyticsItemWithoutIdentifier
-  & ItemIdentifier;
+export type AnalyticsItem = AnalyticsItemWithoutIdentifier & ItemIdentifier;
 
 export interface AddShippingInfoParams {
   currency?: Currency;
