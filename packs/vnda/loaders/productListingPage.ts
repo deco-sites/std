@@ -78,12 +78,12 @@ const searchLoader = async (
   ]);
 
   const { results: searchResults, pagination } = search;
-  const products = searchResults.map((product) => {
-    return toProduct(product, {
+  const products = searchResults.map((product) =>
+    toProduct(product, null, {
       url,
       priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-    });
-  });
+    })
+  );
 
   const nextPage = new URLSearchParams(url.searchParams);
   const previousPage = new URLSearchParams(url.searchParams);

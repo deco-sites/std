@@ -119,7 +119,7 @@ export const toProduct = <P extends ProductLinxImpulse>(
       name: "Installment",
       description: number === 1 ? "à vista" : `${number} vezes sem juros`,
       billingDuration: number,
-      billingIncrement: Number((price / (number)).toFixed(3).slice(0, -1)),
+      billingIncrement: Number((price / number).toFixed(3).slice(0, -1)),
       price,
     }));
   };

@@ -46,17 +46,12 @@ const enqueue = (
   return queue;
 };
 
-const load = async (signal: AbortSignal) => {
-  const { cart } = await Runtime.invoke({
+const load = (signal: AbortSignal) =>
+  Runtime.invoke({
     cart: {
       key: "deco-sites/std/loaders/vnda/cart.ts",
     },
   }, { signal });
-
-  return {
-    cart,
-  };
-};
 
 if (IS_BROWSER) {
   enqueue(load);

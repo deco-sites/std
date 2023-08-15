@@ -1,7 +1,7 @@
+import type { Product } from "deco-sites/std/commerce/types.ts";
 import { Context } from "../accounts/vnda.ts";
 import { createClient } from "../client.ts";
 import { toProduct } from "../utils/transform.ts";
-import type { Product } from "deco-sites/std/commerce/types.ts";
 
 export interface Props {
   /** @description total number of items to display */
@@ -44,14 +44,12 @@ const productListLoader = async (
     tags: props?.tags,
   });
 
-  const products = search.results.map((product) => {
-    return toProduct(product, {
+  return search.results.map((product) =>
+    toProduct(product, null, {
       url,
       priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-    });
-  });
-
-  return products;
+    })
+  );
 };
 
 export default productListLoader;

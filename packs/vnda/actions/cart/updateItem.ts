@@ -5,7 +5,7 @@ import { paths } from "../../utils/paths.ts";
 import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";
 
 export interface Props {
-  itemId: number;
+  itemId: number | string;
   quantity: number;
 }
 
