@@ -43,6 +43,23 @@ const mapOrderFormItemsToAnalyticsItems = (
   }));
 };
 
+export const itemToAnalyticsItem = (
+  item: OrderForm["items"][number] & { coupon?: string },
+  index: number,
+) => ({
+  item_id: item.productId,
+  item_name: item.name ?? item.skuName ?? "",
+  coupon: item.coupon,
+  discount: Number(((item.price - item.sellingPrice) / 100).toFixed(2)),
+  index,
+  item_brand: item.additionalInfo.brandName ?? "",
+  item_variant: item.skuName,
+  price: item.price / 100,
+  quantity: item.quantity,
+  affiliation: item.seller,
+  ...(mapItemCategoriesToAnalyticsCategories(item)),
+});
+
 const wrap =
   <T>(action: (p: T, init?: RequestInit | undefined) => Promise<OrderForm>) =>
   (p: T) =>

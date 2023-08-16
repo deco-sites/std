@@ -1,46 +1,46 @@
-import { createClient } from "../client.ts";
-import { getSEOFromTag, toProduct, useVariant } from "../utils/transform.ts";
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
+import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import { Context } from "../accounts/vnda.ts";
+import { createClient } from "../client.ts";
+import { getSEOFromTag, parseSlug, toProduct } from "../utils/transform.ts";
+
+export interface Props {
+  slug: RequestURLParam;
+}
 
 /**
- * @title VNDA Product Page Loader
+ * @title VNDA - PDP
  * @description Works on routes of type /produto/:slug
  */
-const productPageLoader = async (
-  _: null,
+async function loader(
+  props: Props,
   req: Request,
   ctx: Context,
-): Promise<ProductDetailsPage | null> => {
+): Promise<ProductDetailsPage | null> {
   const url = new URL(req.url);
   const { configVNDA } = ctx;
+  const { slug } = props;
 
-  if (!configVNDA) return null;
+  if (!configVNDA || !slug) return null;
 
+  const variantId = url.searchParams.get("skuId") || null;
   const client = createClient(configVNDA);
+  const { id } = parseSlug(slug);
 
-  const id = url.pathname.split("-").pop()?.trim() ||
-    url.searchParams.get("id");
-
-  const [getResult, seo] = await Promise.all([
-    client.product.get({
-      id: id!,
-    }),
-    client.seo.product(id!),
+  const [maybeProduct, seo] = await Promise.all([
+    client.product.get(id),
+    client.seo.product(id),
   ]);
 
-  if (!getResult) {
-    // fix: 404 afunctions
+  // 404: product not found
+  if (!maybeProduct) {
     return null;
   }
 
-  const product = useVariant(
-    toProduct(getResult, {
-      url,
-      priceCurrency: configVNDA.defaultPriceCurrency || "USD",
-    }),
-    url.searchParams.get("skuId"),
-  );
+  const product = toProduct(maybeProduct, variantId, {
+    url,
+    priceCurrency: configVNDA.defaultPriceCurrency || "USD",
+  });
 
   return {
     "@type": "ProductDetailsPage",
@@ -52,11 +52,11 @@ const productPageLoader = async (
     },
     product,
     seo: getSEOFromTag({
-      title: getResult.name,
+      title: product.name,
       description: product.description || "",
       ...seo?.[0],
     }, req),
   };
-};
+}
 
-export default productPageLoader;
+export default loader;

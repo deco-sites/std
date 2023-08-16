@@ -1,7 +1,7 @@
 export type Sort = "newest" | "oldest" | "lowest_price" | "highest_price";
 
 export interface ProductSearchResult {
-  results: ProductGetResult[];
+  results: ProductGroup[];
   aggregations: {
     min_price: number;
     max_price: number;
@@ -20,9 +20,87 @@ export interface ProductSearchResult {
   };
 }
 
-export interface ProductGetResult extends ProductBase {
-  variants: Record<string, ProductVariation>[] | ProductVariation[];
+export type ProductGroup = Partial<{
+  active: boolean;
+  available: boolean;
+  category_tags: string[];
+  description: string;
+  discount_id: number;
+  html_description: string;
+  id: number | string;
+  image_url: string;
+  installments: Installment[] | number[];
+  min_quantity: number;
+  name: string;
+  on_sale: boolean;
+  plain_description: string;
+  price: number;
+  product_type: string;
+  rating: Rating;
+  reference: string;
+  sale_price: number;
+  slug: string;
+  tag_names: string[];
+  updated_at: Date;
+  url: string;
+  variants: Array<Record<string, ProductVariant>> | ProductVariant[];
+  discount_rule: {
+    type: "fixed" | "percentage";
+    amount: number;
+  };
+  attributes: Record<string, Attribute>;
   tags: RelatedItemTag[];
+}>;
+
+export interface Attribute {
+  name: string;
+  mandatory: boolean;
+  values: string[];
+}
+
+export interface Rating {
+  votes: string;
+  rating: string;
+}
+
+export type ProductVariant =
+  & Partial<{
+    full_name: string;
+    id: number;
+    main: boolean;
+    available: boolean;
+    sku: string;
+    name: string;
+    slug: string;
+    min_quantity: number;
+    quantity: number;
+    quantity_sold: number;
+    stock: number;
+    custom_attributes: unknown | null;
+    properties: Record<string, Property>;
+    updated_at: Date;
+    sku_lowercase: string;
+    price: number;
+    installments: Installment[] | number[];
+    available_quantity: number;
+    weight: number;
+    width: number;
+    height: number;
+    length: number;
+    handling_days: number;
+    inventories: Inventory[];
+    sale_price: number;
+    image_url: string;
+    product_id: number;
+    norder: number;
+    barcode: null | string;
+  }>
+  & Record<string, Attribute>;
+
+export interface Property {
+  name: string;
+  value: null | string;
+  defining: boolean;
 }
 
 export interface Cart {
@@ -32,45 +110,7 @@ export interface Cart {
   coupon?: Coupon;
 }
 
-export interface ProductBase {
-  id: number;
-  active: boolean;
-  available: boolean;
-  description: string;
-  discount_id: number;
-  image_url: string;
-  installments: ProductInstallments[] | number[];
-  name: string;
-  on_sale: number;
-  price: number;
-  sale_price: number;
-  reference: string;
-  slug: string;
-  url: string;
-  discount_rule: {
-    type: "fixed" | "percentage";
-    amount: number;
-  };
-}
-
-export interface ProductVariation extends ProductBase {
-  available_quantity: number;
-  installments: number[];
-  main: boolean;
-  min_quantity: number;
-  properties: Record<
-    string,
-    { name: string; value: string; defining: boolean }
-  >;
-  quantity: number;
-  quantity_sold: number;
-  sku: string;
-  stock: number;
-  sku_lowercase: string;
-  full_name: string;
-}
-
-interface ProductInstallments {
+export interface Installment {
   number: number;
   price: number;
   interest: boolean;
@@ -89,7 +129,7 @@ export interface TagsSearchParams {
 }
 
 export interface ProductGetParams {
-  id?: string;
+  id: string | number;
 }
 
 export interface ProductSearchParams {
@@ -111,16 +151,14 @@ export interface OrderForm {
   coupon_code: null;
   discount: null;
   discount_price: number;
-  // deno-lint-ignore no-explicit-any
-  extra: Record<any, string>;
+  extra: Record<string, string>;
   id: number;
   installments: number[];
   items: Item[];
   items_count: number;
   shipping_address_id: null;
   shipping_method: null;
-  // deno-lint-ignore no-explicit-any
-  shipping_methods: any[];
+  shipping_methods: unknown[];
   shipping_price: number;
   subtotal: number;
   subtotal_discount: number;
@@ -139,8 +177,7 @@ export interface OrderForm {
 
 export interface Item {
   delivery_days: number;
-  // deno-lint-ignore no-explicit-any
-  extra: Record<any, string>;
+  extra: Record<string, string>;
   id: number;
   place_id: null;
   price: number;
@@ -156,27 +193,15 @@ export interface Item {
   has_customizations: boolean;
   available_quantity: number;
   image_url: string;
-  // deno-lint-ignore no-explicit-any
-  variant_attributes: Record<any, string>;
+  variant_attributes: Record<string, string>;
   variant_min_quantity: number;
   variant_name: string;
   variant_price: number;
   variant_intl_price: number;
-  variant_properties: VariantProperties;
+  variant_properties: Record<string, Property>;
   variant_sku: string;
   seller: null;
   seller_name: null;
-}
-
-export interface VariantProperties {
-  property1: Property;
-  property2: Property;
-}
-
-export interface Property {
-  name: string;
-  value: string;
-  defining: boolean;
 }
 
 export interface ShippingMethod {

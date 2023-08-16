@@ -54,7 +54,7 @@ export const mapProductToAnalyticsItem = (
     discount: Number((price && listPrice ? listPrice - price : 0).toFixed(2)),
     item_name: isVariantOf?.name ?? name ?? "",
     item_variant: name,
-    item_brand: product.brand ?? "",
+    item_brand: product.brand?.name ?? "",
     ...categories,
   };
 };

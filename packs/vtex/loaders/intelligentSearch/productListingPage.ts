@@ -149,7 +149,7 @@ const searchArgsOf = (props: Props, url: URL) => {
   const currentPageoffset = props.pageOffset ?? 1;
   const page = Math.min(
     url.searchParams.get("page")
-      ? Number(url.searchParams.get("page")) - (currentPageoffset)
+      ? Number(url.searchParams.get("page")) - currentPageoffset
       : 0,
     VTEX_MAX_PAGES - currentPageoffset,
   );

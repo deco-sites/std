@@ -1,17 +1,6 @@
 import { SortOption } from "deco-sites/std/commerce/types.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
-import { paramsToQueryString } from "./utils/queryBuilder.ts";
 import { Account as ConfigVNDA } from "./accounts/vnda.ts";
-import {
-  Banner,
-  ProductGetParams,
-  ProductGetResult,
-  ProductSearchParams,
-  ProductSearchResult,
-  RelatedItemTag,
-  SEO,
-  TagsSearchParams,
-} from "./types.ts";
 import {
   BASE_URL_PROD,
   BASE_URL_SANDBOX,
@@ -20,6 +9,16 @@ import {
   PAGINATION_HEADER,
   USER_AGENT_HEADER,
 } from "./constants.ts";
+import {
+  Banner,
+  ProductGroup,
+  ProductSearchParams,
+  ProductSearchResult,
+  RelatedItemTag,
+  SEO,
+  TagsSearchParams,
+} from "./types.ts";
+import { paramsToQueryString } from "./utils/queryBuilder.ts";
 
 export const VNDA_SORT_OPTIONS: SortOption[] = [
   { value: "", label: "Relevância" },
@@ -52,10 +51,9 @@ export const createClient = (params: ConfigVNDA) => {
     });
   };
 
-  const getProduct = async (params: ProductGetParams) => {
+  const getProduct = async (id: string | number) => {
     try {
-      const endpoint = `products/${params.id}`;
-      return await fetcher<ProductGetResult>(endpoint);
+      return await fetcher<ProductGroup>(`products/${id}`);
     } catch {
       // the VNDA's API does not returns "ok" when a product is not found.
       // so this try/catch is needed to avoid crashes
@@ -103,12 +101,12 @@ export const createClient = (params: ConfigVNDA) => {
 
   const getSEO = (type: "Product" | "Page" | "Tag") =>
   (
-    resourceId: string,
+    resourceId: string | number,
   ) => {
     const qs = new URLSearchParams();
     qs.set("resource_type", type);
-    if (type !== "Tag") qs.set("resource_id", resourceId);
-    if (type === "Tag") qs.set(`code`, resourceId);
+    if (type !== "Tag") qs.set("resource_id", `${resourceId}`);
+    if (type === "Tag") qs.set(`code`, `${resourceId}`);
     qs.set("type", "category");
 
     return fetcher<SEO[]>(

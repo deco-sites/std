@@ -2,17 +2,15 @@ import {
   Filter,
   Offer,
   Product,
-  ProductLeaf,
   PropertyValue,
   Seo,
   UnitPriceSpecification,
 } from "deco-sites/std/commerce/types.ts";
-
 import {
-  ProductBase,
-  ProductGetResult,
+  Installment,
+  ProductGroup,
   ProductSearchResult,
-  ProductVariation,
+  ProductVariant,
   SEO,
 } from "../types.ts";
 
@@ -22,269 +20,231 @@ interface ProductOptions {
   priceCurrency: string;
 }
 
-export function getProductCategoryTag(product: ProductGetResult) {
-  return product.tags.filter(({ type }) => type === "categoria")[0];
-}
+export const getProductCategoryTag = ({ tags }: ProductGroup) =>
+  tags?.filter(({ type }) => type === "categoria")[0];
 
-export function getSEOFromTag(
+export const getSEOFromTag = (
   tag: Pick<SEO, "title" | "description">,
   req: Request,
-): Seo {
+): Seo => ({
+  title: tag.title || "",
+  description: tag.description || "",
+  canonical: req.url,
+});
+
+export const parseSlug = (slug: string) => {
+  const segments = slug.split("-");
+  const id = Number(segments.at(-1));
+
+  if (!id) {
+    throw new Error("Malformed slug. Expecting {slug}-{id} format");
+  }
+
   return {
-    title: tag.title || "",
-    description: tag.description || "",
-    canonical: req.url,
+    slug: segments.slice(0, -1).join("-"),
+    id: Number(segments.at(-1)),
   };
-}
+};
 
-function getProductURL(
-  url: URL,
-  product: ProductBase,
-  skuId?: string,
-  parentUrlData?: { slug: string; productId: string },
-) {
-  const slug = parentUrlData?.slug || product.slug;
-  const productId = parentUrlData?.productId || product.id;
+const pickVariant = (product: ProductGroup, variantId: string | null) => {
+  const variants = normalizeVariants(product.variants);
+  const [head] = variants;
 
-  const params = new URLSearchParams();
-  params.set("id", productId.toString());
-  if (skuId) params.set("skuId", skuId);
+  let [target, main, available]: Array<
+    ProductVariant | null
+  > = [null, head, null];
 
-  return new URL(
-    `/${slug}/p?${params.toString()}`,
-    url.origin,
-  ).href;
-}
-
-function isProductGetResultVNDA(
-  product: ProductBase,
-): product is ProductGetResult {
-  return "variants" in product;
-}
-
-function getVariants(product: ProductGetResult, options: ProductOptions) {
-  return product.variants.map((variant) => {
-    const normalizedVariant = normalizeProductVariationVNDA(variant);
-    const { id, slug } = product;
-    const productId = id.toString();
-    return toProduct(normalizedVariant, options, { slug, productId });
-  });
-}
-
-function getSku(product: ProductGetResult | ProductVariation) {
-  if (isProductGetResultVNDA(product)) {
-    const firstVariant = product.variants[0];
-    if (!firstVariant) return product.id.toString();
-
-    const normalizedVariant = normalizeProductVariationVNDA(firstVariant);
-    return normalizedVariant.sku;
+  for (const variant of variants) {
+    if (variant.sku === variantId) target = variant;
+    else if (variant.main) main = variant;
+    else if (variant.available && !available) available = variant;
   }
 
-  return product.sku;
-}
+  const fallback = !available || main!.available ? main : available;
 
-function getProperties(product: ProductGetResult | ProductVariation) {
-  if (isProductGetResultVNDA(product)) {
-    return toPropertyValue(product);
+  return target || fallback || head;
+};
+
+const normalizeInstallments = (installments: Installment[] | number[] = []) => {
+  if (typeof installments[0] === "number") {
+    const total = (installments as number[]).reduce((acc, curr) => acc + curr);
+
+    return [{
+      number: installments.length,
+      price: installments[0],
+      total,
+    }];
   }
 
-  return toLeafPropertyValue(product);
-}
+  return (installments as Installment[]).map(({ number, price, total }) => ({
+    number,
+    price,
+    total,
+  }));
+};
 
-function toOffer(product: ProductBase): Offer {
-  const numberInstallments = product.installments as number[];
-  const sumNumbers = () => numberInstallments.reduce((acc, i) => (acc + i), 0);
-  const isInstallmentNumbersOnly = typeof product.installments === "number";
-  const totalInstallments = isInstallmentNumbersOnly ? sumNumbers() : null;
+const toURL = (src: string) => src.startsWith("//") ? `https:${src}` : src;
 
-  const installments = product.installments?.map(
-    (installment, index): UnitPriceSpecification => {
-      if (typeof installment === "number") {
-        return {
-          "@type": "UnitPriceSpecification" as const,
-          priceType: "https://schema.org/SalePrice",
-          priceComponentType: "https://schema.org/Installment",
-          name: "INSTALLMENT",
-          description: "INSTALLMENT",
-          billingDuration: index,
-          billingIncrement: installment,
-          price: totalInstallments!,
-        };
-      }
+const toOffer = ({
+  price,
+  sale_price,
+  available_quantity,
+  available,
+  installments = [],
+}: ProductVariant): Offer | null => {
+  if (!price || !sale_price) {
+    return null;
+  }
 
-      return {
-        "@type": "UnitPriceSpecification" as const,
-        priceType: "https://schema.org/SalePrice",
-        priceComponentType: "https://schema.org/Installment",
-        name: "INSTALLMENT",
-        description: "INSTALLMENT",
-        billingDuration: installment.number,
-        billingIncrement: installment.price,
-        price: installment.total,
-      };
-    },
-  ) || [];
+  const priceSpecification: UnitPriceSpecification[] = [{
+    "@type": "UnitPriceSpecification",
+    priceType: "https://schema.org/SalePrice",
+    price: sale_price,
+  }];
+
+  if (price > sale_price) {
+    priceSpecification.push({
+      "@type": "UnitPriceSpecification",
+      priceType: "https://schema.org/ListPrice",
+      price,
+    });
+  }
+
+  for (const installment of normalizeInstallments(installments)) {
+    priceSpecification.push({
+      "@type": "UnitPriceSpecification",
+      priceType: "https://schema.org/SalePrice",
+      priceComponentType: "https://schema.org/Installment",
+      name: "INSTALLMENT",
+      description: "INSTALLMENT",
+      billingDuration: installment.number,
+      billingIncrement: installment.price,
+      price: installment.total,
+    });
+  }
 
   return {
     "@type": "Offer",
     seller: "VNDA",
-    inventoryLevel: { value: undefined },
-    price: product.price,
-    priceSpecification: [
-      {
-        "@type": "UnitPriceSpecification",
-        priceType: "https://schema.org/ListPrice",
-        price: product.price,
-      },
-      {
-        "@type": "UnitPriceSpecification",
-        priceType: "https://schema.org/SalePrice",
-        price: product.sale_price,
-      },
-      ...installments,
-    ],
-    availability: product.available
+    price,
+    priceSpecification,
+    inventoryLevel: {
+      value: available_quantity,
+    },
+    availability: available
       ? "https://schema.org/InStock"
       : "https://schema.org/OutOfStock",
   };
-}
+};
 
-function toPropertyValue(product: ProductGetResult): PropertyValue[] {
-  return product.variants.flatMap(toLeafPropertyValue);
-}
+const toPropertyValue = (variant: ProductVariant): PropertyValue[] =>
+  Object.values(variant.properties ?? {})
+    .filter(Boolean)
+    .map(({ value, name }) =>
+      value && ({
+        "@type": "PropertyValue",
+        name,
+        value,
+        valueReference: "SPECIFICATION",
+      } as PropertyValue)
+    ).filter((x): x is PropertyValue => Boolean(x));
 
-function toLeafPropertyValue(
-  maybeProduct: Record<string, ProductVariation> | ProductVariation,
-): PropertyValue[] {
-  const product = normalizeProductVariationVNDA(maybeProduct);
-  const keys = Object.keys(product.properties);
-  const validKeys = keys.filter((key) => Boolean(product.properties[key]));
+// deno-lint-ignore no-explicit-any
+const isProductVariant = (p: any): p is ProductVariant =>
+  typeof p.id === "number";
 
-  return validKeys.map((key) => ({
-    "@type": "PropertyValue",
-    value: product.properties[key].value,
-    name: product.properties[key].name,
-    valueReference: "SPECIFICATION",
-  }));
-}
+const normalizeVariants = (
+  variants: ProductGroup["variants"] = [],
+): ProductVariant[] =>
+  variants.flatMap((v) => isProductVariant(v) ? [v] : Object.values(v));
 
-function isProductVariationVNDA(
-  variation: Record<string, ProductVariation> | ProductVariation,
-): variation is ProductVariation {
-  const variationKeys = Object.keys(variation);
-  return variationKeys.length > 1;
-}
-
-function normalizeProductVariationVNDA(
-  variation: Record<string, ProductVariation> | ProductVariation,
-): ProductVariation {
-  if (!isProductVariationVNDA(variation)) {
-    const variationKeys = Object.keys(variation);
-    return variation[variationKeys[0]];
-  }
-
-  return variation;
-}
-
-export function toProduct(
-  product: ProductGetResult | ProductVariation,
+export const toProduct = (
+  product: ProductGroup,
+  variantId: string | null,
   options: ProductOptions,
-  parentUrlData?: { slug: string; productId: string },
-): Product {
+  level = 0,
+): Product => {
   const { url, priceCurrency } = options;
-  const productSku = getSku(product);
-  const productUrl = getProductURL(url, product, productSku, parentUrlData);
+  const variant = pickVariant(product, variantId);
+  const variants = normalizeVariants(product.variants);
+  const variantUrl = new URL(
+    `/produto/${product.slug}-${product.id}?skuId=${variant.sku}`,
+    url.origin,
+  ).href;
+  const productUrl = new URL(
+    `/produto/${product.slug}-${product.id}`,
+    url.origin,
+  ).href;
+  const productID = `${variant.sku}`;
+  const productGroupID = `${product.id}`;
+  const offer = toOffer(variant);
+  const offers = offer ? [offer] : [];
 
   return {
     "@type": "Product",
-    productID: product.id.toString(),
-    url: productUrl,
+    productID,
+    sku: productID,
+    url: variantUrl,
     name: product.name,
     description: product.description,
-    sku: productSku,
-    additionalProperty: getProperties(product),
+    additionalProperty: toPropertyValue(variant),
+    inProductGroupWithID: productGroupID,
+    gtin: product.reference,
     isVariantOf: {
       "@type": "ProductGroup",
-      productGroupID: product.id.toString(),
-      hasVariant: isProductGetResultVNDA(product)
-        ? getVariants(product, options)
-        : [],
+      productGroupID,
       url: productUrl,
       name: product.name,
-      additionalProperty: getProperties(product),
       model: product.reference,
+      additionalProperty: variants.flatMap(toPropertyValue),
+      hasVariant: level === 0
+        ? variants.map((v) => toProduct(product, v.sku!, options, 1))
+        : [],
     },
     image: [{
-      "@type": "ImageObject" as const,
+      "@type": "ImageObject",
       alternateName: product.name ?? "",
-      url: `https://${product.image_url}`,
+      url: toURL(product.image_url ?? ""),
     }],
     offers: {
-      "@type": "AggregateOffer" as const,
+      "@type": "AggregateOffer",
       priceCurrency: priceCurrency,
-      highPrice: product.sale_price,
-      lowPrice: product.sale_price,
-      offerCount: 1,
-      offers: [toOffer(product)],
+      highPrice: product.price!,
+      lowPrice: product.sale_price!,
+      offerCount: offers.length,
+      offers: offers,
     },
   };
-}
+};
 
-/**
- * It's not possible to get a product by sku, so this function
- * simulates the default behavior of other e-commerces platforms
- * by simply copying the variation data to the parent product level.
- */
-export function useVariant(
-  product: Product,
-  variantSkuId?: string | null,
-): Product {
-  const variantFilter = (variant: ProductLeaf) => variant.sku === variantSkuId;
-  const chosenVariant = product.isVariantOf?.hasVariant.find(variantFilter);
-  if (!chosenVariant) return product;
-
-  return {
-    ...product,
-    productID: chosenVariant.productID,
-    url: chosenVariant.url,
-    sku: chosenVariant.sku,
-    image: chosenVariant.image,
-    offers: chosenVariant.offers,
-  };
-}
-
-function isFilterSelected(
+const isFilterSelected = (
   typeTagsInUse: { key: string; value: string }[],
   filter: { key: string; value: string },
-) {
-  return Boolean(typeTagsInUse.find((inUse) =>
+) =>
+  Boolean(typeTagsInUse.find((inUse) =>
     inUse.key === filter.key &&
     inUse.value === filter.value
   ));
-}
 
-function addFilter(
+const addFilter = (
   typeTagsInUse: { key: string; value: string }[],
   filter: { key: string; value: string },
-) {
-  return [...typeTagsInUse, filter];
-}
+) => [...typeTagsInUse, filter];
 
-function removeFilter(
+const removeFilter = (
   typeTagsInUse: { key: string; value: string }[],
   filter: { key: string; value: string },
-) {
-  return typeTagsInUse.filter((inUse) =>
+) =>
+  typeTagsInUse.filter((inUse) =>
     inUse.key !== filter.key &&
     inUse.value !== filter.value
   );
-}
 
-export function toFilters(
+export const toFilters = (
   aggregations: ProductSearchResult["aggregations"],
   typeTagsInUse: { key: string; value: string }[],
   cleanUrl: URL,
-): Filter[] {
+): Filter[] => {
   const priceRange = {
     "@type": "FilterRange" as const,
     label: "Valor",
@@ -331,9 +291,9 @@ export function toFilters(
     priceRange,
     ...types,
   ];
-}
+};
 
-export function typeTagExtractor(url: URL) {
+export const typeTagExtractor = (url: URL) => {
   const keysToDestroy: string[] = [];
   const typeTags: { key: string; value: string }[] = [];
   const typeTagRegex = /\btype_tags\[(\S+)\]\[\]/;
@@ -354,4 +314,4 @@ export function typeTagExtractor(url: URL) {
     typeTags,
     cleanUrl: url,
   };
-}
+};
