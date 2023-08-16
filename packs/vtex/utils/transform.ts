@@ -546,8 +546,9 @@ export const legacyFacetToFilter = (
 
 export const filtersToSearchParams = (
   selectedFacets: SelectedFacet[],
+  paramsToPersist?: URLSearchParams,
 ) => {
-  const searchParams = new URLSearchParams();
+  const searchParams = new URLSearchParams(paramsToPersist);
 
   for (const { key, value } of selectedFacets) {
     searchParams.append(`filter.${key}`, value);
@@ -611,39 +612,42 @@ const isValueRange = (
   // deno-lint-ignore no-explicit-any
   Boolean((facet as any).range);
 
-const facetToToggle =
-  (selectedFacets: SelectedFacet[], key: string, query?: string) =>
-  (item: FacetValueRange | FacetValueBoolean): FilterToggleValue => {
-    const { quantity, selected } = item;
-    const isRange = isValueRange(item);
+const facetToToggle = (
+  selectedFacets: SelectedFacet[],
+  key: string,
+  paramsToPersist?: URLSearchParams,
+) =>
+(item: FacetValueRange | FacetValueBoolean): FilterToggleValue => {
+  const { quantity, selected } = item;
+  const isRange = isValueRange(item);
 
-    const value = isRange
-      ? formatRange(item.range.from, item.range.to)
-      : item.value;
-    const label = isRange ? value : item.name;
-    const facet = { key, value };
+  const value = isRange
+    ? formatRange(item.range.from, item.range.to)
+    : item.value;
+  const label = isRange ? value : item.name;
+  const facet = { key, value };
 
-    const filters = selected
-      ? selectedFacets.filter((f) => f.key !== key || f.value !== value)
-      : [...selectedFacets, facet];
+  const filters = selected
+    ? selectedFacets.filter((f) => f.key !== key || f.value !== value)
+    : [...selectedFacets, facet];
 
-    return {
-      value,
-      quantity,
-      selected,
-      url: `?${filtersToSearchParams(filters)}${query ? "&q=" + query : ""}`,
-      label,
-    };
+  return {
+    value,
+    quantity,
+    selected,
+    url: `?${filtersToSearchParams(filters, paramsToPersist)}`,
+    label,
   };
+};
 
 export const toFilter =
-  (selectedFacets: SelectedFacet[], query?: string) =>
+  (selectedFacets: SelectedFacet[], paramsToPersist?: URLSearchParams) =>
   ({ key, name, quantity, values }: FacetVTEX): Filter => ({
     "@type": "FilterToggle",
     key,
     label: name,
     quantity: quantity,
-    values: values.map(facetToToggle(selectedFacets, key, query)),
+    values: values.map(facetToToggle(selectedFacets, key, paramsToPersist)),
   });
 
 function nodeToNavbar(node: Category): Navbar {
