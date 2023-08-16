@@ -313,8 +313,11 @@ const loader = async (
     ),
   );
 
+  const paramsToPersist = new URLSearchParams();
+  args.query && paramsToPersist.set("q", args.query);
+  args.sort && paramsToPersist.set("sort", args.sort);
   const filters = facets.filter((f) => !f.hidden).map(
-    toFilter(selectedFacets, args.query),
+    toFilter(selectedFacets, paramsToPersist),
   );
   const pageTypes = await pageTypesPromise;
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
