@@ -152,14 +152,14 @@ const searchArgsOf = (props: Props, url: URL) => {
   const hideUnavailableItems = props.hideUnavailableItems;
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
-  const currentPageoffset = props.pageOffset ?? 1;
+  const currentPageOffset = props.pageOffset ?? 1;
   const page = Math.min(
     props.page
-      ? props.page - currentPageoffset
+      ? props.page - currentPageOffset
       : url.searchParams.get("page")
-      ? Number(url.searchParams.get("page")) - currentPageoffset
+      ? Number(url.searchParams.get("page")) - currentPageOffset
       : 0,
-    VTEX_MAX_PAGES - currentPageoffset,
+    VTEX_MAX_PAGES - currentPageOffset,
   );
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
