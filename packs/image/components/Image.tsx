@@ -17,7 +17,7 @@ type Props =
     fetchPriority?: "high" | "low" | "auto";
   };
 
-const FACTORS = [1, 1.5, 2];
+const FACTORS = [1, 2];
 
 export const getOptimizedMediaUrl = (
   { originalSrc, width, height, factor }: {
