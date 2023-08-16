@@ -94,9 +94,12 @@ const IS_TO_LEGACY: Record<string, LegacySort> = {
   "relevance:desc": "OrderByScoreDESC",
 };
 
+export const removeForwardSlash = (str: string) =>
+  str.slice(str.startsWith("/") ? 1 : 0);
+
 const getTerm = (path: string, map: string) => {
   const mapSegments = map.split(",");
-  const pathSegments = path.replace(/^\/.*/, "").split("/");
+  const pathSegments = removeForwardSlash(path).split("/");
 
   return pathSegments.slice(0, mapSegments.length).join("/");
 };
