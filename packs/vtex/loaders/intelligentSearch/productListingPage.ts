@@ -153,14 +153,16 @@ const searchArgsOf = (props: Props, url: URL) => {
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const currentPageOffset = props.pageOffset ?? 1;
-  const page = Math.min(
-    props.page
-      ? props.page - currentPageOffset
-      : url.searchParams.get("page")
-      ? Number(url.searchParams.get("page")) - currentPageOffset
-      : 0,
-    VTEX_MAX_PAGES - currentPageOffset,
-  );
+  // Choses the page number from the props or the url and offsets it by the pageOffset
+  const pageFromProps = typeof props.page === "number"
+    ? props.page - currentPageOffset
+    : undefined;
+  const pageFromUrl = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - currentPageOffset
+    : undefined;
+  const currentPage = pageFromProps ?? pageFromUrl ?? 0;
+
+  const page = Math.min(currentPage, VTEX_MAX_PAGES - currentPageOffset);
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
     sortOptions[0].value;
