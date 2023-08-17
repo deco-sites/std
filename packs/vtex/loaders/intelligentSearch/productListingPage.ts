@@ -162,7 +162,11 @@ const searchArgsOf = (props: Props, url: URL) => {
     : undefined;
   const currentPage = pageFromProps ?? pageFromUrl ?? 0;
 
-  const page = Math.min(currentPage, VTEX_MAX_PAGES - currentPageOffset);
+  const page = Math.max(
+    Math.min(currentPage, VTEX_MAX_PAGES - currentPageOffset),
+    0,
+  );
+
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
     sortOptions[0].value;
