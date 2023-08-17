@@ -116,6 +116,12 @@ export interface Props {
   hideUnavailableItems?: boolean;
 
   /**
+   * @title Starting page query parameter.
+   * @description Set the starting page. Overrides the parameter in the URL.
+   */
+  page?: number;
+
+  /**
    * @title Starting page query parameter offset.
    * @description Set the starting page offset. Default to 1.
    */
@@ -146,13 +152,21 @@ const searchArgsOf = (props: Props, url: URL) => {
   const hideUnavailableItems = props.hideUnavailableItems;
   const count = props.count ?? 12;
   const query = props.query ?? url.searchParams.get("q") ?? "";
-  const currentPageoffset = props.pageOffset ?? 1;
-  const page = Math.min(
-    url.searchParams.get("page")
-      ? Number(url.searchParams.get("page")) - currentPageoffset
-      : 0,
-    VTEX_MAX_PAGES - currentPageoffset,
+  const currentPageOffset = props.pageOffset ?? 1;
+  // Choses the page number from the props or the url and offsets it by the pageOffset
+  const pageFromProps = typeof props.page === "number"
+    ? props.page - currentPageOffset
+    : undefined;
+  const pageFromUrl = url.searchParams.get("page")
+    ? Number(url.searchParams.get("page")) - currentPageOffset
+    : undefined;
+  const currentPage = pageFromProps ?? pageFromUrl ?? 0;
+
+  const page = Math.max(
+    Math.min(currentPage, VTEX_MAX_PAGES - currentPageOffset),
+    0,
   );
+
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
     sortOptions[0].value;
