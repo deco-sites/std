@@ -83,11 +83,13 @@ export const pickSku = <T extends ProductVTEX | LegacyProductVTEX>(
   product: T,
   maybeSkuId?: string,
 ): T["items"][number] => {
-  const skuId = maybeSkuId ??
-    findFirstAvailable(product.items)?.itemId ??
-    product.items[0]?.itemId;
+  const items = product.items ?? [];
 
-  for (const item of product.items) {
+  const skuId = maybeSkuId ??
+    findFirstAvailable(items)?.itemId ??
+    items[0]?.itemId;
+
+  for (const item of items) {
     if (item.itemId === skuId) {
       return item;
     }
