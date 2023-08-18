@@ -1,3 +1,5 @@
+/** @format */
+
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type {
@@ -10,29 +12,12 @@ import type {
   SelectedFacet,
   Sort,
 } from "deco-sites/std/packs/vtex/types.ts";
-import {
-  toPath,
-  withDefaultFacets,
-  withDefaultParams,
-} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
-import {
-  pageTypesFromPathname,
-  pageTypesToBreadcrumbList,
-  pageTypesToSeo,
-} from "deco-sites/std/packs/vtex/utils/legacy.ts";
+import { toPath, withDefaultFacets, withDefaultParams } from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
+import { pageTypesFromPathname, pageTypesToBreadcrumbList, pageTypesToSeo } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import {
-  getSegment,
-  setSegment,
-  withSegmentCookie,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
+import { getSegment, setSegment, withSegmentCookie } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import { slugify } from "deco-sites/std/packs/vtex/utils/slugify.ts";
-import {
-  filtersFromURL,
-  mergeFacets,
-  toFilter,
-  toProduct,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
+import { filtersFromURL, mergeFacets, toFilter, toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import { parseRange } from "deco-sites/std/utils/filters.ts";
 import { withIsSimilarTo } from "../../utils/similars.ts";
@@ -67,9 +52,7 @@ const LEGACY_TO_IS: Record<string, Sort> = {
   OrderByBestDiscountDESC: "discount:desc",
 };
 
-const mapLabelledFuzzyToFuzzy = (
-  labelledFuzzy?: LabelledFuzzy,
-): Fuzzy | undefined => {
+const mapLabelledFuzzyToFuzzy = (labelledFuzzy?: LabelledFuzzy): Fuzzy | undefined => {
   switch (labelledFuzzy) {
     case "automatic":
       return "auto";
@@ -128,18 +111,13 @@ export interface Props {
 }
 
 // TODO (mcandeia) investigating bugs related to returning the same set of products but different queries.
-const _singleFlightKey = (
-  props: Props,
-  { request }: { request: Request },
-) => {
+const _singleFlightKey = (props: Props, { request }: { request: Request }) => {
   const url = new URL(request.url);
-  const { query, count, sort, page, selectedFacets, fuzzy } = searchArgsOf(
-    props,
-    url,
-  );
-  return `${query}${count}${sort}${page}${fuzzy}${
-    selectedFacets.map((f) => `${f.key}${f.value}`).sort().join("")
-  }`;
+  const { query, count, sort, page, selectedFacets, fuzzy } = searchArgsOf(props, url);
+  return `${query}${count}${sort}${page}${fuzzy}${selectedFacets
+    .map((f) => `${f.key}${f.value}`)
+    .sort()
+    .join("")}`;
 };
 
 const searchArgsOf = (props: Props, url: URL) => {
@@ -148,20 +126,13 @@ const searchArgsOf = (props: Props, url: URL) => {
   const query = props.query ?? url.searchParams.get("q") ?? "";
   const currentPageoffset = props.pageOffset ?? 1;
   const page = Math.min(
-    url.searchParams.get("page")
-      ? Number(url.searchParams.get("page")) - currentPageoffset
-      : 0,
-    VTEX_MAX_PAGES - currentPageoffset,
+    url.searchParams.get("page") ? Number(url.searchParams.get("page")) - currentPageoffset : 0,
+    VTEX_MAX_PAGES - currentPageoffset
   );
-  const sort = url.searchParams.get("sort") as Sort ??
-    LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
-    sortOptions[0].value;
-  const selectedFacets = mergeFacets(
-    props.selectedFacets ?? [],
-    filtersFromURL(url),
-  );
-  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
-    url.searchParams.get("fuzzy") as Fuzzy;
+  const sort =
+    (url.searchParams.get("sort") as Sort) ?? LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ?? sortOptions[0].value;
+  const selectedFacets = mergeFacets(props.selectedFacets ?? [], filtersFromURL(url));
+  const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ?? (url.searchParams.get("fuzzy") as Fuzzy);
 
   return {
     query,
@@ -201,10 +172,13 @@ const filtersFromPathname = (pages: PageType[]) =>
         return;
       }
 
-      return key && page.name && {
-        key,
-        value: slugify(page.name),
-      };
+      return (
+        key &&
+        page.name && {
+          key,
+          value: slugify(page.name),
+        }
+      );
     })
     .filter((facet): facet is { key: string; value: string } => Boolean(facet));
 
@@ -237,11 +211,7 @@ const selectPriceFacet = (facets: Facet[], selectedFacets: SelectedFacet[]) => {
  * @title VTEX Intelligent Search - Product Listing page
  * @description Returns data ready for search pages like category,brand pages
  */
-const loader = async (
-  props: Props,
-  req: Request,
-  ctx: Context,
-): Promise<ProductListingPage | null> => {
+const loader = async (props: Props, req: Request, ctx: Context): Promise<ProductListingPage | null> => {
   const { url: baseUrl } = req;
   const { configVTEX: config } = ctx;
   const url = new URL(baseUrl);
@@ -249,73 +219,70 @@ const loader = async (
   const segment = getSegment(req);
   const search = vtex.api.io._v.api["intelligent-search"];
   const currentPageoffset = props.pageOffset ?? 1;
-  const {
-    selectedFacets: baseSelectedFacets,
-    page,
-    ...args
-  } = searchArgsOf(props, url);
+  const { selectedFacets: baseSelectedFacets, page, ...args } = searchArgsOf(props, url);
   const pageTypesPromise = pageTypesFromPathname(url.pathname, ctx);
-  const selectedFacets = baseSelectedFacets.length === 0
-    ? filtersFromPathname(await pageTypesPromise)
-    : baseSelectedFacets;
+  const selectedFacets = baseSelectedFacets.length === 0 ? filtersFromPathname(await pageTypesPromise) : baseSelectedFacets;
+  const sort = props.sort;
 
   const selected = withDefaultFacets(selectedFacets, ctx);
   const fselected = selected.filter((f) => f.key !== "price");
   const params = withDefaultParams({ ...args, page }, ctx);
   // search products on VTEX. Feel free to change any of these parameters
   const [productsResult, facetsResult] = await Promise.all([
-    fetchAPI<ProductSearchResult>(
-      `${search.product_search.facets(toPath(selected))}?${params}`,
-      { withProxyCache: true, headers: withSegmentCookie(segment) },
-    ),
-    fetchAPI<FacetSearchResult>(
-      `${search.facets.facets(toPath(fselected))}?${params}`,
-      { withProxyCache: true, headers: withSegmentCookie(segment) },
-    ),
+    fetchAPI<ProductSearchResult>(`${search.product_search.facets(toPath(selected))}?${params}`, {
+      withProxyCache: true,
+      headers: withSegmentCookie(segment),
+    }),
+    fetchAPI<FacetSearchResult>(`${search.facets.facets(toPath(fselected))}?${params}`, {
+      withProxyCache: true,
+      headers: withSegmentCookie(segment),
+    }),
   ]);
 
   /** Intelligent search API analytics. Fire and forget 🔫 */
   const fullTextTerm = params.get("query");
   if (fullTextTerm) {
-    ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
-      type: "session.ping",
-    }).then(() =>
-      ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
-        type: "search.query",
-        text: fullTextTerm,
-        misspelled: productsResult.correction?.misspelled ?? false,
-        match: productsResult.recordsFiltered,
-        operator: productsResult.operator,
-        locale: config?.defaultLocale,
+    ctx
+      .invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
+        type: "session.ping",
       })
-    ).catch(console.error);
+      .then(() =>
+        ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
+          type: "search.query",
+          text: fullTextTerm,
+          misspelled: productsResult.correction?.misspelled ?? false,
+          match: productsResult.recordsFiltered,
+          operator: productsResult.operator,
+          locale: config?.defaultLocale,
+        })
+      )
+      .catch(console.error);
   }
 
-  const { products: vtexProducts, pagination, recordsFiltered } =
-    productsResult;
+  const { products: vtexProducts, pagination, recordsFiltered } = productsResult;
   const facets = selectPriceFacet(facetsResult.facets, selectedFacets);
 
   // Transform VTEX product format into schema.org's compatible format
   // If a property is missing from the final `products` array you can add
   // it in here
   const products = await Promise.all(
-    vtexProducts.map((p) =>
-      toProduct(p, p.items[0], 0, {
-        baseUrl: baseUrl,
-        priceCurrency: config!.defaultPriceCurrency,
-      })
-    ).map((product) =>
-      props.similars
-        ? withIsSimilarTo(ctx, product, {
-          hideUnavailableItems: props.hideUnavailableItems,
+    vtexProducts
+      .map((p) =>
+        toProduct(p, p.items[0], 0, {
+          baseUrl: baseUrl,
+          priceCurrency: config!.defaultPriceCurrency,
         })
-        : product
-    ),
+      )
+      .map((product) =>
+        props.similars
+          ? withIsSimilarTo(ctx, product, {
+              hideUnavailableItems: props.hideUnavailableItems,
+            })
+          : product
+      )
   );
 
-  const filters = facets.filter((f) => !f.hidden).map(
-    toFilter(selectedFacets, args.query),
-  );
+  const filters = facets.filter((f) => !f.hidden).map(toFilter(selectedFacets, args.query));
   const pageTypes = await pageTypesPromise;
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
@@ -349,6 +316,7 @@ const loader = async (
       currentPage: page + currentPageoffset,
       records: recordsFiltered,
       recordPerPage: pagination.perPage,
+      sort,
     },
     sortOptions,
     seo: pageTypesToSeo(pageTypes, req),
