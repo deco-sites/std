@@ -1,7 +1,6 @@
-import type {
-  Filter,
-  ProductListingPage,
-} from "deco-sites/std/commerce/types.ts";
+/** @format */
+
+import type { Filter, ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { LegacySort } from "deco-sites/std/packs/vtex/types.ts";
 import {
@@ -12,15 +11,8 @@ import {
   toSegmentParams,
 } from "deco-sites/std/packs/vtex/utils/legacy.ts";
 import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import {
-  getSegment,
-  setSegment,
-  withSegmentCookie,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
-import {
-  legacyFacetToFilter,
-  toProduct,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
+import { getSegment, setSegment, withSegmentCookie } from "deco-sites/std/packs/vtex/utils/segment.ts";
+import { legacyFacetToFilter, toProduct } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
 import type { LegacyFacets, LegacyProduct } from "../../types.ts";
 import { withIsSimilarTo } from "../../utils/similars.ts";
@@ -105,11 +97,7 @@ const getTerm = (path: string, map: string) => {
  * @title VTEX Catalog - Product Listing Page
  * @description Returns data ready for search pages like category,brand pages
  */
-const loader = async (
-  props: Props,
-  req: Request,
-  ctx: Context,
-): Promise<ProductListingPage | null> => {
+const loader = async (props: Props, req: Request, ctx: Context): Promise<ProductListingPage | null> => {
   const { configVTEX: config } = ctx;
   const { url: baseUrl } = req;
   const url = new URL(baseUrl);
@@ -117,20 +105,19 @@ const loader = async (
   const params = toSegmentParams(segment);
   const search = paths(config!).api.catalog_system.pub;
   const currentPageoffset = props.pageOffset ?? 1;
+  const sort = props?.sort;
 
   const filtersBehavior = props.filters || "dynamic";
   const count = props.count ?? 12;
   const maybeMap = props.map || url.searchParams.get("map") || undefined;
   const maybeTerm = props.term || url.pathname || "";
-  const page = url.searchParams.get("page")
-    ? Number(url.searchParams.get("page")) - currentPageoffset
-    : 0;
-  const O = url.searchParams.get("O") as LegacySort ??
+  const page = url.searchParams.get("page") ? Number(url.searchParams.get("page")) - currentPageoffset : 0;
+  const O =
+    (url.searchParams.get("O") as LegacySort) ??
     IS_TO_LEGACY[url.searchParams.get("sort") ?? ""] ??
     props.sort ??
     sortOptions[0].value;
-  const ft = props.ft || url.searchParams.get("ft") ||
-    url.searchParams.get("q") || "";
+  const ft = props.ft || url.searchParams.get("ft") || url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
   const _from = `${page * count}`;
   const _to = `${(page + 1) * count - 1}`;
@@ -142,9 +129,7 @@ const loader = async (
   }
 
   const missingParams = typeof maybeMap !== "string" || !maybeTerm;
-  const [map, term] = missingParams
-    ? getMapAndTerm(pageTypes)
-    : [maybeMap, maybeTerm];
+  const [map, term] = missingParams ? getMapAndTerm(pageTypes) : [maybeMap, maybeTerm];
   const fmap = url.searchParams.get("fmap") ?? map;
   const args = { map, _from, _to, O, ft, fq };
 
@@ -155,17 +140,14 @@ const loader = async (
   fmap && fParams.set("map", fmap);
 
   const [vtexProductsResponse, vtexFacets] = await Promise.all([
-    fetchSafe(
-      `${search.products.search.term(getTerm(term, map))}?${pParams}`,
-      { withProxyCache: true, headers: withSegmentCookie(segment) },
-    ),
-    fetchAPI<LegacyFacets>(
-      `${search.facets.search.term(getTerm(term, fmap))}?${fParams}`,
-      { withProxyCache: true },
-    ),
+    fetchSafe(`${search.products.search.term(getTerm(term, map))}?${pParams}`, {
+      withProxyCache: true,
+      headers: withSegmentCookie(segment),
+    }),
+    fetchAPI<LegacyFacets>(`${search.facets.search.term(getTerm(term, fmap))}?${fParams}`, { withProxyCache: true }),
   ]);
 
-  const vtexProducts = await vtexProductsResponse.json() as LegacyProduct[];
+  const vtexProducts = (await vtexProductsResponse.json()) as LegacyProduct[];
   const resources = vtexProductsResponse.headers.get("resources") ?? "";
   const [, _total] = resources.split("/");
 
@@ -173,31 +155,28 @@ const loader = async (
   // If a property is missing from the final `products` array you can add
   // it in here
   const products = await Promise.all(
-    vtexProducts.map((p) =>
-      toProduct(p, p.items[0], 0, {
-        baseUrl,
-        priceCurrency: config!.defaultPriceCurrency,
-      })
-    ).map((product) =>
-      props.similars ? withIsSimilarTo(ctx, product) : product
-    ),
+    vtexProducts
+      .map((p) =>
+        toProduct(p, p.items[0], 0, {
+          baseUrl,
+          priceCurrency: config!.defaultPriceCurrency,
+        })
+      )
+      .map((product) => (props.similars ? withIsSimilarTo(ctx, product) : product))
   );
   const filters = Object.entries({
     Departments: vtexFacets.Departments,
     Brands: vtexFacets.Brands,
     ...vtexFacets.SpecificationFilters,
-  }).map(([name, facets]) =>
-    legacyFacetToFilter(name, facets, url, map, filtersBehavior)
-  )
+  })
+    .map(([name, facets]) => legacyFacetToFilter(name, facets, url, map, filtersBehavior))
     .flat()
     .filter((x): x is Filter => Boolean(x));
   const itemListElement = pageTypesToBreadcrumbList(pageTypes, baseUrl);
 
   const hasMoreResources = parseInt(_to, 10) < parseInt(_total, 10) - 1;
 
-  const hasNextPage = Boolean(
-    page < MAX_ALLOWED_PAGES && hasMoreResources,
-  );
+  const hasNextPage = Boolean(page < MAX_ALLOWED_PAGES && hasMoreResources);
 
   const hasPreviousPage = page > 0;
 
@@ -229,6 +208,7 @@ const loader = async (
       currentPage: page + currentPageoffset,
       records: parseInt(_total, 10),
       recordPerPage: count,
+      sort,
     },
     sortOptions,
     seo: pageTypesToSeo(pageTypes, req),
