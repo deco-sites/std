@@ -1,4 +1,9 @@
-/** Used at the top-level node to indicate the context for the JSON-LD objects used. The context provided in this type is compatible with the keys and URLs in the rest of this generated file. */
+/**
+ * Used at the top-level node to indicate the context for the JSON-LD objects used. The context provided in this type is compatible with the keys and URLs in the rest of this generated file.
+ *
+ * @format
+ */
+
 export declare type WithContext<T extends Things> = T & {
   "@context": "https://schema.org";
 };
@@ -129,8 +134,7 @@ export interface PriceSpecification extends Omit<Thing, "@type"> {
   priceCurrency?: string;
 }
 
-export interface UnitPriceSpecification
-  extends Omit<PriceSpecification, "@type"> {
+export interface UnitPriceSpecification extends Omit<PriceSpecification, "@type"> {
   "@type": "UnitPriceSpecification";
   /** Identifies a price component (for example, a line item on an invoice), part of the total price for an offer. */
   priceComponentType?: PriceComponentTypeEnumeration;
@@ -386,6 +390,7 @@ export interface ProductListingPage {
     previousPage: string | undefined;
     records?: number | undefined;
     recordPerPage?: number | undefined;
+    sort?: string;
   };
   sortOptions: SortOption[];
   seo?: Seo | null;
