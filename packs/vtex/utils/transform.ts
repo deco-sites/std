@@ -245,7 +245,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
-  console.log(referenceId);
+
   const referenceIdAdditionalProperty = toAdditionalPropertyReferenceId(
     referenceId,
   );
