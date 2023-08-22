@@ -210,7 +210,7 @@ const toAdditionalPropertyClusters = <
 };
 
 const toAdditionalPropertyReferenceId = (
-  referenceId: Array<{ Key: string; Value: string }>,
+  referenceId: Array<{ Key: string; Value: string }> = [],
 ): Product["additionalProperty"] => {
   return referenceId.map(({ Key, Value }) => ({
     "@type": "PropertyValue" as const,
@@ -245,6 +245,7 @@ export const toProduct = <P extends LegacyProductVTEX | ProductVTEX>(
   const specificationsAdditionalProperty = isLegacySku(sku)
     ? toAdditionalPropertiesLegacy(sku)
     : toAdditionalProperties(sku);
+
   const referenceIdAdditionalProperty = toAdditionalPropertyReferenceId(
     referenceId,
   );
