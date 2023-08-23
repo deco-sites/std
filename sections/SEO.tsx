@@ -1,1 +1,1 @@
-export { default, Preview } from "../components/seo/Metatags.tsx";
+export { default, loader, Preview } from "../components/seo/Metatags.tsx";

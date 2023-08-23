@@ -27,7 +27,14 @@ function removeHTMLTags(str?: string) {
   return str?.replace(/<[^>]*>/g, "");
 }
 
-const SeoPDP = (props: Props) => {
+export const loader = (
+  props: Props,
+  req: Request,
+): Props & { url: string } => {
+  return { ...props, url: req.url };
+};
+
+const SeoPDP = (props: Props & { url: string }) => {
   const context = (function prepareProductForStructuredData() {
     if (!props.page?.product) {
       return props.page;
