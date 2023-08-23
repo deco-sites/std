@@ -64,8 +64,11 @@ import * as $$$24 from "./loaders/nuvemShop/nuvemShopProductList.ts";
 import * as $$$25 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
 import * as $$$26 from "./loaders/x/image.ts";
 import * as $$$27 from "./loaders/x/redirectsFromCsv.ts";
-import * as $$$28 from "./loaders/x/redirects.ts";
-import * as $$$29 from "./loaders/x/font.ts";
+import * as $$$28 from "./loaders/x/extension.ts";
+import * as $$$29 from "./loaders/x/redirects.ts";
+import * as $$$30 from "./loaders/x/font.ts";
+import * as $$$31 from "./loaders/x/productExt.ts";
+import * as $$$32 from "./loaders/x/productDetailsExt.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -214,9 +217,12 @@ const manifest = {
     "deco-sites/std/loaders/vtex/proxy.ts": $$$11,
     "deco-sites/std/loaders/vtex/user.ts": $$$17,
     "deco-sites/std/loaders/vtex/wishlist.ts": $$$9,
-    "deco-sites/std/loaders/x/font.ts": $$$29,
+    "deco-sites/std/loaders/x/extension.ts": $$$28,
+    "deco-sites/std/loaders/x/font.ts": $$$30,
     "deco-sites/std/loaders/x/image.ts": $$$26,
-    "deco-sites/std/loaders/x/redirects.ts": $$$28,
+    "deco-sites/std/loaders/x/productDetailsExt.ts": $$$32,
+    "deco-sites/std/loaders/x/productExt.ts": $$$31,
+    "deco-sites/std/loaders/x/redirects.ts": $$$29,
     "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$27,
   },
   "routes": {
@@ -281,6 +287,7 @@ const manifest = {
     "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$15,
     "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$14,
   },
+  "name": "deco-sites/std",
   "pages": {
     "$live/pages/LivePage.tsx": i1$$$0,
   },
