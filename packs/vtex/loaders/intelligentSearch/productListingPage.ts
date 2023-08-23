@@ -84,6 +84,11 @@ const mapLabelledFuzzyToFuzzy = (
 
 export interface Props {
   /**
+   * @description Check this if you're creating a custom query page
+   */
+  ignoreUrlPath?: boolean;
+
+  /**
    * @description overides the query term
    */
   query?: string;
@@ -170,10 +175,12 @@ const searchArgsOf = (props: Props, url: URL) => {
   const sort = url.searchParams.get("sort") as Sort ??
     LEGACY_TO_IS[url.searchParams.get("O") ?? ""] ?? props.sort ??
     sortOptions[0].value;
+
   const selectedFacets = mergeFacets(
     props.selectedFacets ?? [],
-    filtersFromURL(url),
+    props.ignoreUrlPath ? [] : filtersFromURL(url),
   );
+
   const fuzzy = mapLabelledFuzzyToFuzzy(props.fuzzy) ??
     url.searchParams.get("fuzzy") as Fuzzy;
 
@@ -268,8 +275,12 @@ const loader = async (
     page,
     ...args
   } = searchArgsOf(props, url);
+
   const pageTypesPromise = pageTypesFromPathname(url.pathname, ctx);
-  const selectedFacets = baseSelectedFacets.length === 0
+
+  const shouldGetFacetsFromFetch = baseSelectedFacets.length === 0 &&
+    props.ignoreUrlPath;
+  const selectedFacets = shouldGetFacetsFromFetch
     ? filtersFromPathname(await pageTypesPromise)
     : baseSelectedFacets;
 
