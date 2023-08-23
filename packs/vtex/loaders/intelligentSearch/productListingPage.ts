@@ -279,7 +279,8 @@ const loader = async (
   const pageTypesPromise = pageTypesFromPathname(url.pathname, ctx);
 
   const shouldGetFacetsFromFetch = baseSelectedFacets.length === 0 &&
-    props.ignoreUrlPath;
+    !props.ignoreUrlPath;
+
   const selectedFacets = shouldGetFacetsFromFetch
     ? filtersFromPathname(await pageTypesPromise)
     : baseSelectedFacets;
