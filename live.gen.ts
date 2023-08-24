@@ -281,6 +281,7 @@ const manifest = {
     "deco-sites/std/actions/vtex/wishlist/addItem.ts": $$$$$$$$$$$15,
     "deco-sites/std/actions/vtex/wishlist/removeItem.ts": $$$$$$$$$$$14,
   },
+  "name": "deco-sites/std",
   "pages": {
     "$live/pages/LivePage.tsx": i1$$$0,
   },
