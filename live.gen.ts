@@ -45,27 +45,28 @@ import * as $$$5 from "./loaders/vtex/legacy/productList.ts";
 import * as $$$6 from "./loaders/vtex/legacy/productDetailsPage.ts";
 import * as $$$7 from "./loaders/vtex/legacy/productListingPage.ts";
 import * as $$$8 from "./loaders/vtex/legacy/relatedProductsLoader.ts";
-import * as $$$9 from "./loaders/vtex/wishlist.ts";
-import * as $$$10 from "./loaders/vtex/navbar.ts";
-import * as $$$11 from "./loaders/vtex/proxy.ts";
-import * as $$$12 from "./loaders/vtex/intelligentSearch/productList.ts";
-import * as $$$13 from "./loaders/vtex/intelligentSearch/productDetailsPage.ts";
-import * as $$$14 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
-import * as $$$15 from "./loaders/vtex/intelligentSearch/suggestions.ts";
-import * as $$$16 from "./loaders/vtex/cart.ts";
-import * as $$$17 from "./loaders/vtex/user.ts";
-import * as $$$18 from "./loaders/vnda/productList.ts";
-import * as $$$19 from "./loaders/vnda/productDetailsPage.ts";
-import * as $$$20 from "./loaders/vnda/productListingPage.ts";
-import * as $$$21 from "./loaders/vnda/proxy.ts";
-import * as $$$22 from "./loaders/vnda/cart.ts";
-import * as $$$23 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
-import * as $$$24 from "./loaders/nuvemShop/nuvemShopProductList.ts";
-import * as $$$25 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
-import * as $$$26 from "./loaders/x/image.ts";
-import * as $$$27 from "./loaders/x/redirectsFromCsv.ts";
-import * as $$$28 from "./loaders/x/redirects.ts";
-import * as $$$29 from "./loaders/x/font.ts";
+import * as $$$9 from "./loaders/vtex/legacy/suggestions.ts";
+import * as $$$10 from "./loaders/vtex/wishlist.ts";
+import * as $$$11 from "./loaders/vtex/navbar.ts";
+import * as $$$12 from "./loaders/vtex/proxy.ts";
+import * as $$$13 from "./loaders/vtex/intelligentSearch/productList.ts";
+import * as $$$14 from "./loaders/vtex/intelligentSearch/productDetailsPage.ts";
+import * as $$$15 from "./loaders/vtex/intelligentSearch/productListingPage.ts";
+import * as $$$16 from "./loaders/vtex/intelligentSearch/suggestions.ts";
+import * as $$$17 from "./loaders/vtex/cart.ts";
+import * as $$$18 from "./loaders/vtex/user.ts";
+import * as $$$19 from "./loaders/vnda/productList.ts";
+import * as $$$20 from "./loaders/vnda/productDetailsPage.ts";
+import * as $$$21 from "./loaders/vnda/productListingPage.ts";
+import * as $$$22 from "./loaders/vnda/proxy.ts";
+import * as $$$23 from "./loaders/vnda/cart.ts";
+import * as $$$24 from "./loaders/nuvemShop/nuvemShopProductDetailsPage.ts";
+import * as $$$25 from "./loaders/nuvemShop/nuvemShopProductList.ts";
+import * as $$$26 from "./loaders/nuvemShop/nuvemShopProductListingPage.ts";
+import * as $$$27 from "./loaders/x/image.ts";
+import * as $$$28 from "./loaders/x/redirectsFromCsv.ts";
+import * as $$$29 from "./loaders/x/redirects.ts";
+import * as $$$30 from "./loaders/x/font.ts";
 import * as $$$$0 from "./routes/404.tsx";
 import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
@@ -191,33 +192,34 @@ const manifest = {
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": $$$4,
     "deco-sites/std/loaders/linxImpulse/products/similarItems.ts": $$$0,
     "deco-sites/std/loaders/linxImpulse/search.ts": $$$1,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$23,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$24,
-    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$25,
-    "deco-sites/std/loaders/vnda/cart.ts": $$$22,
-    "deco-sites/std/loaders/vnda/productDetailsPage.ts": $$$19,
-    "deco-sites/std/loaders/vnda/productList.ts": $$$18,
-    "deco-sites/std/loaders/vnda/productListingPage.ts": $$$20,
-    "deco-sites/std/loaders/vnda/proxy.ts": $$$21,
-    "deco-sites/std/loaders/vtex/cart.ts": $$$16,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductDetailsPage.ts": $$$24,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductList.ts": $$$25,
+    "deco-sites/std/loaders/nuvemShop/nuvemShopProductListingPage.ts": $$$26,
+    "deco-sites/std/loaders/vnda/cart.ts": $$$23,
+    "deco-sites/std/loaders/vnda/productDetailsPage.ts": $$$20,
+    "deco-sites/std/loaders/vnda/productList.ts": $$$19,
+    "deco-sites/std/loaders/vnda/productListingPage.ts": $$$21,
+    "deco-sites/std/loaders/vnda/proxy.ts": $$$22,
+    "deco-sites/std/loaders/vtex/cart.ts": $$$17,
     "deco-sites/std/loaders/vtex/intelligentSearch/productDetailsPage.ts":
-      $$$13,
-    "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$12,
-    "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts":
       $$$14,
-    "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts": $$$15,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productList.ts": $$$13,
+    "deco-sites/std/loaders/vtex/intelligentSearch/productListingPage.ts":
+      $$$15,
+    "deco-sites/std/loaders/vtex/intelligentSearch/suggestions.ts": $$$16,
     "deco-sites/std/loaders/vtex/legacy/productDetailsPage.ts": $$$6,
     "deco-sites/std/loaders/vtex/legacy/productList.ts": $$$5,
     "deco-sites/std/loaders/vtex/legacy/productListingPage.ts": $$$7,
     "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts": $$$8,
-    "deco-sites/std/loaders/vtex/navbar.ts": $$$10,
-    "deco-sites/std/loaders/vtex/proxy.ts": $$$11,
-    "deco-sites/std/loaders/vtex/user.ts": $$$17,
-    "deco-sites/std/loaders/vtex/wishlist.ts": $$$9,
-    "deco-sites/std/loaders/x/font.ts": $$$29,
-    "deco-sites/std/loaders/x/image.ts": $$$26,
-    "deco-sites/std/loaders/x/redirects.ts": $$$28,
-    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$27,
+    "deco-sites/std/loaders/vtex/legacy/suggestions.ts": $$$9,
+    "deco-sites/std/loaders/vtex/navbar.ts": $$$11,
+    "deco-sites/std/loaders/vtex/proxy.ts": $$$12,
+    "deco-sites/std/loaders/vtex/user.ts": $$$18,
+    "deco-sites/std/loaders/vtex/wishlist.ts": $$$10,
+    "deco-sites/std/loaders/x/font.ts": $$$30,
+    "deco-sites/std/loaders/x/image.ts": $$$27,
+    "deco-sites/std/loaders/x/redirects.ts": $$$29,
+    "deco-sites/std/loaders/x/redirectsFromCsv.ts": $$$28,
   },
   "routes": {
     "./routes/_app.tsx": $$$$2,

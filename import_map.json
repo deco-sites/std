@@ -1,6 +1,7 @@
 {
   "imports": {
     "deco-sites/std/": "./",
+    "deco-cx/apps/": "https://denopkg.com/deco-cx/apps@0.1.1/",
     "$live/": "https://denopkg.com/deco-cx/live@1.29.10/",
     "partytown/": "https://deno.land/x/partytown@0.3.4/",
     "$fresh/": "https://denopkg.com/deco-cx/fresh@1.3.3/",
