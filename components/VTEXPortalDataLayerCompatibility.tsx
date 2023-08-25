@@ -145,7 +145,7 @@ export function ProductDetailsTemplate(
   const departament = product.additionalProperty?.find((p) =>
     p.name === "category"
   );
-  const category = product.additionalProperty?.findLast((p) =>
+  const category = product.additionalProperty?.slice().reverse().find((p) =>
     p.name === "category"
   );
 
