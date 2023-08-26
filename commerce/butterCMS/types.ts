@@ -1,4 +1,4 @@
-import { LiveState } from "$live/types.ts";
+import { LiveState } from "deco/types.ts";
 import { ConfigButterCMS } from "./client.ts";
 
 export type StateButterCMS = LiveState<{ configButterCMS?: ConfigButterCMS }>;

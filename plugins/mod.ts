@@ -1,6 +1,6 @@
 import type { Plugin } from "$fresh/server.ts";
-import { AppManifest } from "$live/mod.ts";
-import decoPlugin, { Options } from "$live/plugins/deco.ts";
+import { AppManifest } from "deco/mod.ts";
+import decoPlugin, { Options } from "deco/plugins/deco.ts";
 import * as colors from "std/fmt/colors.ts";
 import { plugin as tailwindPlugin } from "./tailwind/mod.ts";
 

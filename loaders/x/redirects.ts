@@ -1,4 +1,4 @@
-import { Route } from "$live/flags/audience.ts";
+import { Route } from "deco/mod.ts";
 
 /** @titleBy from */
 export interface Redirect {

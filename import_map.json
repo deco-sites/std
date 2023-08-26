@@ -1,7 +1,7 @@
 {
   "imports": {
     "deco-sites/std/": "./",
-    "$live/": "https://denopkg.com/deco-cx/live@1.29.10/",
+    "deco/": "../deco/",
     "partytown/": "https://deno.land/x/partytown@0.3.4/",
     "$fresh/": "https://denopkg.com/deco-cx/fresh@1.3.3/",
     "preact": "https://esm.sh/preact@10.15.1",
@@ -9,6 +9,7 @@
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.1.0",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
     "@preact/signals-core": "https://esm.sh/@preact/signals-core@1.3.0",
-    "std/": "https://deno.land/std@0.182.0/"
+    "std/": "https://deno.land/std@0.182.0/",
+    "$live/": "https://denopkg.com/deco-cx/deco@1.30.5/"
   }
 }

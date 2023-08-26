@@ -1,4 +1,3 @@
-import type { LoaderReturnType } from "$live/types.ts";
 import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
@@ -17,7 +16,7 @@ export interface Props {
   description?: string;
   /** @description Recommended: 16 x 16 px */
   favicon?: LiveImage;
-  page: LoaderReturnType<ProductDetailsPage | null>;
+  page: ProductDetailsPage | null;
   structuredData?: {
     useDataFromSEO?: boolean;
   };

@@ -1,4 +1,4 @@
-import { Account } from "$live/blocks/account.ts";
+import { Account } from "deco/blocks/account.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
 import {
   CategorySearchResult,

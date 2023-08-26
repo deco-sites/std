@@ -7,8 +7,8 @@
  */
 import "./plugins/tailwind/bundler.ts";
 
-import dev from "$live/dev.ts";
-import liveManifest from "$live/live.gen.ts";
+import dev from "deco/dev.ts";
+import liveManifest from "deco/live.gen.ts";
 
 await dev(import.meta.url, "./main.ts", {
   imports: [liveManifest],

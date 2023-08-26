@@ -1,5 +1,4 @@
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
-import type { LoaderReturnType } from "$live/types.ts";
 import type {
   ProductDetailsPage,
   ProductListingPage,
@@ -36,10 +35,9 @@ export interface Props {
    * @description In testing, you can use this to prevent search engines from indexing your site
    */
   noIndexNoFollow?: boolean;
-
   context?:
-    | LoaderReturnType<ProductDetailsPage | null>
-    | LoaderReturnType<ProductListingPage | null>;
+    | ProductDetailsPage | null
+    | ProductListingPage | null;
 }
 
 export interface PreviewProps {

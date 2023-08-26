@@ -1,4 +1,4 @@
-import type { FunctionContext, LoaderFunction } from "$live/types.ts";
+import type { FunctionContext, LoaderFunction } from "deco/types.ts";
 
 export type RequestURLParam = string;
 

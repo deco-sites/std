@@ -1,4 +1,4 @@
-import type { LiveState, LoaderFunction } from "$live/types.ts";
+import type { LiveState, LoaderFunction } from "deco/types.ts";
 import type {
   Product,
   ProductDetailsPage,

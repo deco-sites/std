@@ -1,4 +1,4 @@
-import { Route } from "$live/flags/audience.ts";
+import { Route } from "deco/mod.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 const PATHS_TO_PROXY = [

@@ -1,4 +1,4 @@
-import { context } from "$live/live.ts";
+import { context } from "deco/live.ts";
 import GoogleTagManager from "partytown/integrations/GTM.tsx";
 import GoogleTagScript from "partytown/integrations/GTAG.tsx";
 import Script from "partytown/Script.tsx";

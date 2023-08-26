@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
+import type { LiveState } from "deco/types.ts";
 
 import { toProductPage } from "../commerce/occ/transform.ts";
 import { ConfigOCC, createClient } from "../commerce/occ/client.ts";

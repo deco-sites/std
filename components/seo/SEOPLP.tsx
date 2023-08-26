@@ -1,10 +1,9 @@
-import type { LoaderReturnType } from "$live/types.ts";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 import type { ProductListingPage } from "../../commerce/types.ts";
 import Metatags from "./Metatags.tsx";
 
 export interface Props {
-  page: LoaderReturnType<ProductListingPage | null>;
+  page: ProductListingPage | null;
   /**
    * @title Title template
    * @description add a %s whenever you want it to be replaced with the product name

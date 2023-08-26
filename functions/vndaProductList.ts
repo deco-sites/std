@@ -1,7 +1,7 @@
 import productListLoader, {
   Props,
 } from "deco-sites/std/packs/vnda/loaders/productList.ts";
-import type { LoaderFunction } from "$live/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
 import { Product } from "deco-sites/std/commerce/types.ts";
 import { StateVNDA } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 
