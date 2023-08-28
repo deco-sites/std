@@ -33,9 +33,10 @@ import * as $$1 from "./accounts/linxImpulse.ts";
 import * as $$2 from "./accounts/vnda.ts";
 import * as $$3 from "./accounts/nuvemShop.ts";
 import * as $$4 from "./accounts/yourViews.ts";
-import * as $$5 from "./accounts/vtex.ts";
-import * as $$6 from "./accounts/shopify.ts";
-import * as $$7 from "./accounts/occ.ts";
+import * as $$5 from "./accounts/linx.ts";
+import * as $$6 from "./accounts/vtex.ts";
+import * as $$7 from "./accounts/shopify.ts";
+import * as $$8 from "./accounts/occ.ts";
 import * as $$$0 from "./loaders/linxImpulse/products/similarItems.ts";
 import * as $$$1 from "./loaders/linxImpulse/search.ts";
 import * as $$$2 from "./loaders/linxImpulse/autocompletes/popular.ts";
@@ -173,12 +174,13 @@ const manifest = {
   },
   "accounts": {
     "deco-sites/std/accounts/butterCMS.ts": $$0,
+    "deco-sites/std/accounts/linx.ts": $$5,
     "deco-sites/std/accounts/linxImpulse.ts": $$1,
     "deco-sites/std/accounts/nuvemShop.ts": $$3,
-    "deco-sites/std/accounts/occ.ts": $$7,
-    "deco-sites/std/accounts/shopify.ts": $$6,
+    "deco-sites/std/accounts/occ.ts": $$8,
+    "deco-sites/std/accounts/shopify.ts": $$7,
     "deco-sites/std/accounts/vnda.ts": $$2,
-    "deco-sites/std/accounts/vtex.ts": $$5,
+    "deco-sites/std/accounts/vtex.ts": $$6,
     "deco-sites/std/accounts/yourViews.ts": $$4,
   },
   "loaders": {
