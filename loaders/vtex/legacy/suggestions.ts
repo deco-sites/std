@@ -1,5 +1,5 @@
-import _suggestions from "deco-cx/apps/vtex/loaders/legacy/suggestions.ts";
-import type { Props } from "deco-cx/apps/vtex/loaders/legacy/suggestions.ts";
+import _suggestions from "https://denopkg.com/deco-cx/apps@0.1.1/vtex/loaders/legacy/suggestions.ts";
+import type { Props } from "https://denopkg.com/deco-cx/apps@0.1.1/vtex/loaders/legacy/suggestions.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 
 const loader = (
