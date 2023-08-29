@@ -204,7 +204,7 @@ export const toProduct = (
     image: product.images?.length ?? 0 > 1
       ? product.images?.map((img) => ({
         "@type": "ImageObject" as const,
-        alternateName: img.id.toString() ?? "",
+        alternateName: img.id?.toString() ?? "",
         url: toURL(img.url),
       }))
       : [
