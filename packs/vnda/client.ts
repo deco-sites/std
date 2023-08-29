@@ -53,7 +53,9 @@ export const createClient = (params: ConfigVNDA) => {
 
   const getProduct = async (id: string | number) => {
     try {
-      return await fetcher<ProductGroup>(`products/${id}`);
+      return await fetcher<ProductGroup>(
+        `products/${id}?include_images=true`,
+      );
     } catch {
       // the VNDA's API does not returns "ok" when a product is not found.
       // so this try/catch is needed to avoid crashes
