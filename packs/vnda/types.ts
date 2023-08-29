@@ -50,6 +50,12 @@ export type ProductGroup = Partial<{
   };
   attributes: Record<string, Attribute>;
   tags: RelatedItemTag[];
+  images?: {
+    id: number;
+    updated_at: string;
+    url: string;
+    variant_ids: unknown[];
+  }[];
 }>;
 
 export interface Attribute {

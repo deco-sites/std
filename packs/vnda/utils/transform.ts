@@ -201,11 +201,20 @@ export const toProduct = (
         ? variants.map((v) => toProduct(product, v.sku!, options, 1))
         : [],
     },
-    image: [{
-      "@type": "ImageObject",
-      alternateName: product.name ?? "",
-      url: toURL(product.image_url ?? ""),
-    }],
+    image: product.images?.length ?? 0 > 1
+      ? product.images?.map((img) => ({
+        "@type": "ImageObject" as const,
+        alternateName: img.id?.toString() ?? "",
+        url: toURL(img.url),
+      }))
+      : [
+        {
+          "@type": "ImageObject",
+          alternateName: product.name ?? "",
+          url: toURL(product.image_url ?? ""),
+        },
+      ],
+    // images:
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: priceCurrency,
