@@ -1,23 +1,14 @@
-import { parseCookie } from "../utils/vtexId.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
+import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
+import base from "https://denopkg.com/deco-cx/apps@0.2.1/vtex/loaders/user.ts";
 
 export interface User {
   id: string;
   email: string;
 }
 
-function loader(_props: unknown, req: Request, ctx: Context): User | null {
-  const { configVTEX: config } = ctx;
-  const { payload } = parseCookie(req.headers, config!.account);
-
-  if (!payload?.sub || !payload?.userId) {
-    return null;
-  }
-
-  return {
-    id: payload.userId,
-    email: payload.sub,
-  };
+function loader(props: unknown, req: Request, ctx: Context): User | null {
+  return base(props, req, transform(ctx));
 }
 
 export default loader;

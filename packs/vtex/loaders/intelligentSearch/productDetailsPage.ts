@@ -1,144 +1,21 @@
 import type { ProductDetailsPage } from "deco-sites/std/commerce/types.ts";
-import type { RequestURLParam } from "deco-sites/std/functions/requestToParam.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
-import {
-  toPath,
-  withDefaultFacets,
-  withDefaultParams,
-} from "deco-sites/std/packs/vtex/utils/intelligentSearch.ts";
-import { pageTypesToSeo } from "deco-sites/std/packs/vtex/utils/legacy.ts";
-import { paths } from "deco-sites/std/packs/vtex/utils/paths.ts";
-import {
-  getSegment,
-  setSegment,
-  withSegmentCookie,
-} from "deco-sites/std/packs/vtex/utils/segment.ts";
-import {
-  pickSku,
-  toProductPage,
-} from "deco-sites/std/packs/vtex/utils/transform.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
-import type {
-  PageType,
-  Product as VTEXProduct,
-  ProductSearchResult,
-} from "../../types.ts";
-import { withIsSimilarTo } from "../../utils/similars.ts";
-
-export interface Props {
-  slug: RequestURLParam;
-  /**
-   * @description Include similar products
-   */
-  similars?: boolean;
-}
-
-/**
- * When there's no ?skuId querystring, we need to figure out the product id
- * from the pathname. For this, we use the pageType api
- */
-const getProductID = (page: PageType) => {
-  if (page.pageType !== "Product") {
-    return null;
-  }
-
-  return page.id!;
-};
+import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
+import base, {
+  Props,
+} from "https://denopkg.com/deco-cx/apps@0.2.1/vtex/loaders/intelligentSearch/productDetailsPage.ts";
+export type {
+  Props,
+} from "https://denopkg.com/deco-cx/apps@0.2.1/vtex/loaders/intelligentSearch/productDetailsPage.ts";
 
 /**
  * @title VTEX Intelligent Search - Product Details Page
  * @description Works on routes of type /:slug/p
  */
-const loader = async (
+const loader = (
   props: Props,
   req: Request,
   ctx: Context,
-): Promise<ProductDetailsPage | null> => {
-  const { configVTEX: config } = ctx;
-  const { url: baseUrl } = req;
-  const { slug } = props;
-  const vtex = paths(config!);
-  const segment = getSegment(req);
-
-  const pageTypePromise = fetchAPI<PageType>(
-    vtex.api.catalog_system.pub.portal.pagetype.term(`${slug}/p`),
-    { withProxyCache: true },
-  );
-
-  const url = new URL(baseUrl);
-  const skuId = url.searchParams.get("skuId");
-  const productId = !skuId && getProductID(await pageTypePromise);
-
-  /**
-   * Fetch the exact skuId. If no one was provided, try fetching the product
-   * and return the first sku
-   */
-  const query = skuId
-    ? `sku:${skuId}`
-    : productId
-    ? `product:${productId}`
-    : null;
-
-  // In case we dont have the skuId or the productId, 404
-  if (!query) {
-    return null;
-  }
-
-  const search = vtex.api.io._v.api["intelligent-search"].product_search;
-  const facets = withDefaultFacets([], ctx);
-  const params = withDefaultParams({ query, count: 1 }, ctx);
-
-  const { products: [product] } = await fetchAPI<ProductSearchResult>(
-    `${search.facets(toPath(facets))}?${params}`,
-    {
-      withProxyCache: true,
-      headers: withSegmentCookie(segment),
-    },
-  );
-
-  // Product not found, return the 404 status code
-  if (!product) {
-    return null;
-  }
-
-  const sku = pickSku(product, skuId?.toString());
-
-  let kitItems: VTEXProduct[] = [];
-  if (sku.isKit && sku.kitItems) {
-    const params = withDefaultParams({
-      query: `sku:${sku.kitItems.join(";")}`,
-      count: sku.kitItems.length,
-    }, ctx);
-
-    const result = await fetchAPI<ProductSearchResult>(
-      `${search.facets(toPath(facets))}?${params}`,
-      {
-        withProxyCache: true,
-        headers: withSegmentCookie(segment),
-      },
-    );
-
-    kitItems = result.products;
-  }
-
-  const pageType = await pageTypePromise;
-
-  setSegment(segment, ctx.response.headers);
-
-  const page = toProductPage(product, sku, kitItems, {
-    baseUrl,
-    priceCurrency: config!.defaultPriceCurrency,
-  });
-
-  return {
-    ...page,
-    product: props.similars
-      ? await withIsSimilarTo(ctx, page.product)
-      : page.product,
-    seo: pageType.pageType === "Product"
-      ? pageTypesToSeo([pageType], req)
-      : null,
-  };
-};
+): Promise<ProductDetailsPage | null> => base(props, req, transform(ctx));
 
 export default loader;

@@ -734,7 +734,7 @@ export interface Item {
   nameComplete: string;
   complementName: string;
   ean: string;
-  referenceId: Array<{ Key: string; Value: string }>;
+  referenceId?: Array<{ Key: string; Value: string }>;
   measurementUnit: string;
   unitMultiplier: number;
   modalType: unknown | null;
