@@ -29,9 +29,14 @@ const processFetch = async (
     if (url.searchParams.has(qsToSanatize)) {
       const searchParams = url.searchParams;
       const testParamValues = searchParams.getAll(qsToSanatize);
-      const updatedTestParamValues = testParamValues.map((paramValue) =>
-        paramValue.replace(/\+/g, "").replaceAll(" ", "")
-      );
+      const updatedTestParamValues = testParamValues.map((paramValue) => {
+        const removedPlus = paramValue.replace(/\+/g, "").replaceAll(" ", "");
+        const normalized = removedPlus.normalize("NFD").replace(
+          /[\u0300-\u036f]/g,
+          "",
+        );
+        return normalized;
+      });
       searchParams.delete(qsToSanatize);
       updatedTestParamValues.forEach((updatedValue) =>
         searchParams.append(qsToSanatize, updatedValue)
@@ -39,6 +44,7 @@ const processFetch = async (
     }
   });
 
+  console.log(url.toString());
   return await _fetch(url.toString(), init);
 };
 
