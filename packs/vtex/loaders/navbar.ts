@@ -3,7 +3,7 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.2.1/vtex/loaders/navbar.ts";
+} from "https://denopkg.com/deco-cx/apps@0.2.2/vtex/loaders/navbar.ts";
 
 const loader = (
   props: Props,
