@@ -19,6 +19,7 @@ import {
 } from "deco-sites/std/packs/vtex/utils/segment.ts";
 import {
   legacyFacetToFilter,
+  normalizeFq,
   toProduct,
 } from "deco-sites/std/packs/vtex/utils/transform.ts";
 import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetchVTEX.ts";
@@ -135,6 +136,8 @@ const loader = async (
   const ft = props.ft || url.searchParams.get("ft") ||
     url.searchParams.get("q") || "";
   const fq = props.fq || url.searchParams.get("fq") || "";
+  const normalizedFq = normalizeFq(fq);
+  const hasPreSelectedFq = props.fq;
   const _from = `${page * count}`;
   const _to = `${(page + 1) * count - 1}`;
 
@@ -149,7 +152,7 @@ const loader = async (
     ? getMapAndTerm(pageTypes)
     : [maybeMap, maybeTerm];
   const fmap = url.searchParams.get("fmap") ?? map;
-  const args = { map, _from, _to, O, ft, fq };
+  const args = { map, _from, _to, O, ft, fq: normalizedFq };
 
   const pParams = new URLSearchParams(params);
   Object.entries(args).map(([key, value]) => value && pParams.set(key, value));
@@ -188,9 +191,10 @@ const loader = async (
   const filters = Object.entries({
     Departments: vtexFacets.Departments,
     Brands: vtexFacets.Brands,
+    PriceRanges: !hasPreSelectedFq ? vtexFacets.PriceRanges : [],
     ...vtexFacets.SpecificationFilters,
   }).map(([name, facets]) =>
-    legacyFacetToFilter(name, facets, url, map, filtersBehavior)
+    legacyFacetToFilter(name, facets, url, map, fq, filtersBehavior)
   )
     .flat()
     .filter((x): x is Filter => Boolean(x));

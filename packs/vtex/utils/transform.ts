@@ -493,6 +493,7 @@ export const legacyFacetToFilter = (
   facets: LegacyFacet[],
   url: URL,
   map: string,
+  fq: string,
   behavior: "dynamic" | "static",
 ): Filter | null => {
   const mapSegments = map.split(",");
@@ -503,10 +504,82 @@ export const legacyFacetToFilter = (
   const mapSet = new Set(mapSegments);
   const pathSet = new Set(pathSegments);
 
+  const isPriceRangeSelected = (facet: LegacyFacet) => {
+    const isCurrentPriceRange = fq.startsWith("P:[") && fq.includes("+TO+");
+
+    const isPriceRangeFacet = name == "PriceRanges";
+
+    const [currentMin, currentMax] = isCurrentPriceRange
+      ? getMinAndMaxPrices(fq)
+      : [0, 0];
+    const [facetMin, facetMax] = isPriceRangeFacet
+      ? getMinAndMaxPrices(facet.Slug)
+      : [0, 0];
+
+    const isSelectedPrice = isCurrentPriceRange && (currentMin == facetMin) &&
+      (currentMax == facetMax);
+
+    return isSelectedPrice;
+  };
+
+  const getMinAndMaxPrices = (param: string) => {
+    const separator1 = "P:[";
+    const separator2 = "+TO+";
+    const separator3 = "]";
+
+    const separator4 = "de-";
+    const separator5 = "-a-";
+
+    if (param.startsWith(separator1) && param.endsWith(separator3)) {
+      const values = param.substring(
+        separator1.length,
+        param.length - separator3.length,
+      ).split(separator2);
+
+      if (values.length === 2) {
+        const min = parseFloat(values[0]);
+        const max = parseFloat(values[1]);
+
+        const isValidNumbers = !isNaN(min) && !isNaN(max);
+        if (isValidNumbers) {
+          return [min, max];
+        }
+      }
+    }
+
+    if (param.startsWith(separator4) && param.includes(separator5)) {
+      const values = param.substring(separator4.length).split(separator5);
+      if (values.length === 2) {
+        const min = parseFloat(values[0]);
+        const max = parseFloat(values[1]);
+
+        const isValidNumbers = !isNaN(min) && !isNaN(max);
+        if (isValidNumbers) {
+          return [min, max];
+        }
+      }
+    }
+
+    return [0, 0];
+  };
+
   const getLink = (facet: LegacyFacet, selected: boolean) => {
     // Do not allow removing root facet to avoid going back to home page
     if (mapSegments.length === 1) {
       return `${url.pathname}${url.search}`;
+    }
+
+    if (name == "PriceRanges") {
+      const link = new URL(`/${pathSegments.join("/")}`, url);
+      link.searchParams.set("map", mapSegments.join(","));
+
+      const [min, max] = getMinAndMaxPrices(facet.Slug);
+
+      if (min && max && !selected) {
+        link.searchParams.set("fq", `P:[${min}+TO+${max}]`);
+      }
+
+      return `${link.pathname}${link.search}`;
     }
 
     const index = pathSegments.findIndex((s) => s === facet.Value);
@@ -523,6 +596,10 @@ export const legacyFacetToFilter = (
       link.searchParams.set("fmap", url.searchParams.get("fmap") || map);
     }
 
+    if (fq) {
+      link.searchParams.set("fq", fq);
+    }
+
     return `${link.pathname}${link.search}`;
   };
 
@@ -532,7 +609,8 @@ export const legacyFacetToFilter = (
     label: name,
     key: name,
     values: facets.map((facet) => {
-      const selected = mapSet.has(facet.Map) && pathSet.has(facet.Value);
+      const selected = (mapSet.has(facet.Map) && pathSet.has(facet.Value)) ||
+        isPriceRangeSelected(facet);
 
       return ({
         value: facet.Value,
@@ -663,3 +741,9 @@ function nodeToNavbar(node: Category): Navbar {
 
 export const categoryTreeToNavbar = (tree: Category[]): Navbar[] =>
   tree.map(nodeToNavbar);
+
+export const normalizeFq = (fq: string) => {
+  const decodedFq = decodeURI(fq);
+  const fqWithoutSpaces = decodedFq.split("+").join("%20");
+  return fqWithoutSpaces;
+};
