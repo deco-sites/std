@@ -2,9 +2,7 @@
 
 Welcome to the `deco-sites/std` repository. Please note that this repository is currently in **maintenance** mode and is no longer actively developed. All future enhancements and features are being directed to the new repository, [deco-cx/apps](https://github.com/deco-cx/apps).
 
-## Maintenance Mode Overview
-
-This repository, `deco-sites/std`, is now in maintenance mode, which means that it will not receive active updates or new features. We are grateful for the contributions and support from the community that have brought this repository to where it is today. However, in our ongoing efforts to provide a more modular and flexible approach, we have transitioned to a new development model focused on the [deco-cx/apps](https://github.com/deco-cx/apps) repository.
+We are grateful for the contributions and support from the community that have brought this repository to where it is today. However, in our ongoing efforts to provide a more modular and flexible approach, we have transitioned to a new development model focused on the [deco-cx/apps](https://github.com/deco-cx/apps) repository.
 
 ## Transition to deco-cx/apps
 
