@@ -302,6 +302,7 @@ const loader = async (
 
   /** Intelligent search API analytics. Fire and forget 🔫 */
   const fullTextTerm = params.get("query");
+  console.log({ fullTextTerm });
   if (fullTextTerm) {
     ctx.invoke("deco-sites/std/actions/vtex/analytics/sendEvent.ts", {
       type: "session.ping",

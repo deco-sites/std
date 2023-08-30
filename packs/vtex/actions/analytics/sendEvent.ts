@@ -36,6 +36,7 @@ const action = async (
 
   const { anonymous, session } = getOrSetISCookie(req, ctx.response.headers);
 
+  console.log({ ...props, agent: "deco-sites/std", anonymous, session });
   await fetchSafe(
     paths(config!)["event-api"].v1.account.event,
     {
@@ -50,7 +51,7 @@ const action = async (
         "content-type": "application/json",
       },
     },
-  );
+  ).then(console.log).then(console.log);
 
   return null;
 };
