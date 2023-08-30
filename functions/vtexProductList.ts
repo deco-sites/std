@@ -49,7 +49,8 @@ const loaderV0: LoaderFunction<
   const p = query ? { query } : { collection: collection?.[0] };
 
   const data = await loader(
-    { ...p, count, sort },
+    // deno-lint-ignore no-explicit-any
+    { ...p, count, sort } as any,
     req,
     ctx.state,
   );
