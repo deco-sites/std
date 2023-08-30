@@ -32,7 +32,10 @@ export type Context = FnContext<{
   configVNDA?: Account;
 }, Manifest>;
 
-export type StateVNDA = FnContext<{ global: { configVTEX: Account } }>;
+export type StateVNDA = FnContext<
+  { global: { configVTEX: Account } },
+  Manifest
+>;
 
 function account(acc: Account) {
   return acc;

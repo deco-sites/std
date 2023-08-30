@@ -1,5 +1,6 @@
 import type { Account } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type { FnContext } from "$live/types.ts";
+import type { Manifest } from "../../live.gen.ts";
 
 /** @description Equivalent to sku ID in VTEX platform */
 export type ProductID = string;
@@ -1068,7 +1069,10 @@ export interface Segment {
   channelPrivacy: "public" | "private";
 }
 
-export type StateVTEX = FnContext<{ global: { configVTEX: Account } }>;
+export type StateVTEX = FnContext<
+  { global: { configVTEX: Account } },
+  Manifest
+>;
 
 export interface WishlistItem {
   id: string;
