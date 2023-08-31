@@ -1,6 +1,6 @@
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
-import base from "https://denopkg.com/deco-cx/apps@0.2.2/vtex/loaders/user.ts";
+import base from "https://denopkg.com/deco-cx/apps@0.2.3/vtex/loaders/user.ts";
 
 export interface User {
   id: string;
