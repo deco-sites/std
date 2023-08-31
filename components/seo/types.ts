@@ -12,6 +12,8 @@ export interface Dimensions {
   height: number;
 }
 
+type TwitterCard = "summary" | "summary_large_image";
+
 export interface Props {
   title?: string;
   /**
@@ -31,6 +33,8 @@ export interface Props {
   themeColor?: string;
   /** @title Canonical URL */
   canonical?: string;
+  /** @title Twitter Card */
+  twitterCard?: TwitterCard;
   /**
    * @title Disable indexing
    * @description In testing, you can use this to prevent search engines from indexing your site

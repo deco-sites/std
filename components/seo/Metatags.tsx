@@ -9,8 +9,14 @@ import Preview from "./components/Preview.tsx";
 import type { Props } from "./types.ts";
 
 function Metatags(props: Props) {
-  const { titleTemplate = "", context, type, themeColor, favicon } = props;
-  const twitterCard = type === "website" ? "summary" : "summary_large_image";
+  const {
+    titleTemplate = "",
+    context,
+    type,
+    themeColor,
+    favicon,
+    twitterCard,
+  } = props;
 
   const tags = context?.["@type"] === "ProductDetailsPage"
     ? tagsFromProduct(context, titleTemplate)
@@ -23,24 +29,40 @@ function Metatags(props: Props) {
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="theme-color" content={themeColor} />
-        <link rel="icon" href={favicon} />
+        {title && (
+          <>
+            <title>{title}</title>
+            <meta property="og:title" content={title} />
+          </>
+        )}
 
-        {/* Twitter tags */}
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={image} />
-        <meta property="twitter:card" content={twitterCard} />
-        {/* OpenGraph tags */}
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content={type} />
-        <meta property="og:image" content={image} />
+        {description && (
+          <>
+            <meta name="description" content={description} />
+            <meta property="og:description" content={description} />
+          </>
+        )}
 
-        {/* Link tags */}
-        {canonical && <link rel="canonical" href={canonical} />}
+        {image && (
+          <>
+            <meta property="og:image" content={image} />
+          </>
+        )}
+
+        {themeColor && <meta name="theme-color" content={themeColor} />}
+
+        {favicon && <link rel="icon" href={favicon} />}
+
+        {twitterCard && <meta property="twitter:card" content={twitterCard} />}
+
+        {type && <meta property="og:type" content={type} />}
+
+        {canonical && (
+          <>
+            <meta property="og:url" content={canonical} />
+            <link rel="canonical" href={canonical} />
+          </>
+        )}
 
         {/* No index, no follow */}
         {props?.noIndexNoFollow && (
