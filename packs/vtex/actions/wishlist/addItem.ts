@@ -3,7 +3,7 @@ import type { WishlistItem } from "deco-sites/std/packs/vtex/types.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.2.5/vtex/actions/wishlist/addItem.ts";
+} from "https://denopkg.com/deco-cx/apps@0.2.8/vtex/actions/wishlist/addItem.ts";
 
 const action = (
   props: Props,

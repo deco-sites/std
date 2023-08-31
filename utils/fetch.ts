@@ -1,4 +1,4 @@
-import * as fetcher from "https://denopkg.com/deco-cx/apps@0.2.5/utils/fetch.ts";
+import * as fetcher from "https://denopkg.com/deco-cx/apps@0.2.8/utils/fetch.ts";
 
 export interface FetchOptions {
   withProxyCache?: boolean;
