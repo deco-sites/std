@@ -1,4 +1,4 @@
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
 import { Ratings, Reviews } from "./types.ts";
 
 export type ClientYourViews = ReturnType<typeof createClient>;

@@ -1,4 +1,4 @@
-import { fetchSafe } from "deco-sites/std/utils/fetch.ts";
+import { fetchSafe } from "deco-sites/std/utils/fetch.server.ts";
 
 const ALLOWED_ORIGINS = new Set(["https://fonts.gstatic.com"]);
 

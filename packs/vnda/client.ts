@@ -1,5 +1,5 @@
 import { SortOption } from "deco-sites/std/commerce/types.ts";
-import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.server.ts";
 import { Account as ConfigVNDA } from "./accounts/vnda.ts";
 import {
   BASE_URL_PROD,

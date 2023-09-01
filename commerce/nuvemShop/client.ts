@@ -1,5 +1,5 @@
 import { Account } from "./types.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
 import {
   ProductBaseNuvemShop,
   ProductSearchParams,

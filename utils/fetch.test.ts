@@ -3,7 +3,10 @@ import {
   assertSpyCalls,
   spy,
 } from "https://deno.land/std@0.187.0/testing/mock.ts";
-import { CONNECTION_CLOSED_MESSAGE, retryExceptionOr500 } from "./fetch.ts";
+import {
+  CONNECTION_CLOSED_MESSAGE,
+  retryExceptionOr500,
+} from "./fetch.server.ts";
 import { assertEquals } from "https://deno.land/std@0.187.0/testing/asserts.ts";
 
 Deno.test("retry handler", async (t) => {
