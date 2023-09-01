@@ -1,5 +1,5 @@
 import { HttpError } from "deco-sites/std/utils/HttpError.ts";
-import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI, fetchSafe } from "deco-sites/std/utils/fetch.server.ts";
 import { getSetCookies, setCookie } from "std/http/mod.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import { DECO_USER_AGENT, USER_AGENT_HEADER } from "../../constants.ts";

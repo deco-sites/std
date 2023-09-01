@@ -1,4 +1,4 @@
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
 import type { Context } from "../../accounts/vnda.ts";
 import type { Cart, OrderForm } from "../../types.ts";
 import { paths } from "../../utils/paths.ts";

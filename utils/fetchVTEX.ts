@@ -1,8 +1,8 @@
-import { FetchOptions } from "./fetch.ts";
+import { FetchOptions } from "./fetch.server.ts";
 import {
   fetchAPI as fetchAPIBase,
   fetchSafe as fetchSafeBase,
-} from "./fetch.ts";
+} from "./fetch.server.ts";
 
 const processFetch = async (
   _fetch: (

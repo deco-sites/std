@@ -1,5 +1,5 @@
 import { HttpError } from "deco-sites/std/utils/HttpError.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
 import type { Context } from "../accounts/vnda.ts";
 import type { Cart, OrderForm, RelatedItem } from "../types.ts";
 import { paths } from "../utils/paths.ts";

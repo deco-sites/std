@@ -6,7 +6,7 @@ import {
 } from "deco-sites/std/packs/linxImpulse/utils/transform.ts";
 import { paths } from "deco-sites/std/packs/linxImpulse/utils/path.ts";
 import type { Context } from "deco-sites/std/packs/linxImpulse/accounts/linxImpulse.ts";
-import { fetchAPI } from "deco-sites/std/utils/fetch.ts";
+import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
 
 interface AutocompletesPopularReponse {
   requestId: string;
