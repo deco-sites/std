@@ -2,17 +2,14 @@
   "lock": false,
   "tasks": {
     "start": "deno run -A --watch=sections/,functions/,loaders/,actions/,workflows/,accounts/ dev.ts",
-    "component": "deno eval 'import \"$live/scripts/component.ts\"'",
+    "component": "deno eval 'import \"deco/scripts/component.ts\"'",
     "check": "deno fmt && deno lint && deno check dev.ts main.ts",
-    "release": "deno eval 'import \"$live/scripts/release.ts\"'"
+    "release": "deno eval 'import \"deco/scripts/release.ts\"'"
   },
   "githooks": {
     "pre-commit": "check"
   },
-  "exclude": [
-    "static",
-    "README.md"
-  ],
+  "exclude": ["static", "README.md"],
   "importMap": "./import_map.json",
   "compilerOptions": {
     "jsx": "react-jsx",
