@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "$live/types.ts";
 import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/productList.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
 import type { Product } from "../commerce/types.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 

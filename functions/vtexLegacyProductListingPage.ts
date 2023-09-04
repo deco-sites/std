@@ -1,9 +1,9 @@
 import loader, {
   Props,
 } from "deco-sites/std/packs/vtex/loaders/legacy/productListingPage.ts";
-import type { LoaderFunction } from "$live/types.ts";
-import type { ProductListingPage } from "../commerce/types.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
+import type { ProductListingPage } from "../commerce/types.ts";
 
 /**
  * @title VTEX Catalog - Product Listing Page (deprecated)

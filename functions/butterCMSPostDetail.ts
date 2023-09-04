@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "$live/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
 import { createClient } from "../commerce/butterCMS/client.ts";
 import { toBlogPost } from "../commerce/butterCMS/transform.ts";
 import type { BlogPost, StateButterCMS } from "../commerce/butterCMS/types.ts";

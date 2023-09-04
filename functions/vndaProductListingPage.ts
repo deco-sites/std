@@ -1,9 +1,9 @@
+import { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import { StateVNDA } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
 import productListingPageLoader, {
   Props,
 } from "deco-sites/std/packs/vnda/loaders/productListingPage.ts";
-import type { LoaderFunction } from "$live/types.ts";
-import { ProductListingPage } from "deco-sites/std/commerce/types.ts";
-import { StateVNDA } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
+import type { LoaderFunction } from "deco/types.ts";
 
 const productListingPage: LoaderFunction<
   Props,

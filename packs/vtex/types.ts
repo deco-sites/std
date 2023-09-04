@@ -1,5 +1,5 @@
 import type { Account } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
-import type { FnContext } from "$live/types.ts";
+import type { FnContext } from "deco/types.ts";
 import type { Manifest } from "../../live.gen.ts";
 
 /** @description Equivalent to sku ID in VTEX platform */

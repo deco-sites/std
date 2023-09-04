@@ -1,7 +1,7 @@
-import type { Handler } from "$live/blocks/handler.ts";
-import type { Resolvable } from "$live/engine/core/resolver.ts";
-import { isResolvable } from "$live/engine/core/resolver.ts";
-import { Route } from "$live/flags/audience.ts";
+import type { Handler } from "deco/blocks/handler.ts";
+import type { Resolvable } from "deco/engine/core/resolver.ts";
+import { isResolvable } from "deco/engine/core/resolver.ts";
+import { Route } from "deco/flags/audience.ts";
 import { ConnInfo } from "std/http/server.ts";
 
 const isPage = (handler: Resolvable<Handler>) =>

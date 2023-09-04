@@ -3,10 +3,10 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.2.8/vtex/loaders/legacy/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@0.2.21/vtex/loaders/legacy/productListingPage.ts";
 export type {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.2.8/vtex/loaders/legacy/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@0.2.21/vtex/loaders/legacy/productListingPage.ts";
 
 /**
  * @title VTEX Catalog - Product Listing Page

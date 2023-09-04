@@ -1,7 +1,7 @@
 import loader from "deco-sites/std/packs/vtex/loaders/navbar.ts";
-import type { Navbar } from "../commerce/types.ts";
-import type { LoaderFunction } from "$live/types.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
+import type { Navbar } from "../commerce/types.ts";
 
 export interface Props {
   /**

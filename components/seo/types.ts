@@ -1,5 +1,5 @@
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
-import type { LoaderReturnType } from "$live/types.ts";
+import type { LoaderReturnType } from "deco/types.ts";
 import type {
   ProductDetailsPage,
   ProductListingPage,

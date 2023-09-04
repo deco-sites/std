@@ -1,8 +1,8 @@
 import loader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/suggestions.ts";
-import { LoaderFunction } from "$live/types.ts";
+import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
+import { LoaderFunction } from "deco/types.ts";
 import { Suggestion } from "../commerce/types.ts";
 import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
 
 export interface Props {
   query?: string;

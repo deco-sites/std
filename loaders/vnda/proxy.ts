@@ -1,5 +1,5 @@
-import { Route } from "$live/flags/audience.ts";
 import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
+import { Route } from "deco/flags/audience.ts";
 
 const PAGE_PATHS = [
   "/admin",

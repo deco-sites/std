@@ -1,4 +1,4 @@
-import { LoaderFunction } from "$live/types.ts";
+import { LoaderFunction } from "deco/types.ts";
 import { HttpError } from "../../utils/HttpError.ts";
 
 const message = `

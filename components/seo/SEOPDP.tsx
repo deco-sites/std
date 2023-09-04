@@ -1,6 +1,6 @@
-import type { LoaderReturnType } from "$live/types.ts";
 import { DEFAULT_CATEGORY_SEPARATOR } from "deco-sites/std/commerce/utils.ts";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
+import type { LoaderReturnType } from "deco/types.ts";
 import type { ProductDetailsPage } from "../../commerce/types.ts";
 import Metatags from "./Metatags.tsx";
 

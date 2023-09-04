@@ -1,9 +1,9 @@
-import wishlistLoader from "deco-sites/std/packs/vtex/loaders/wishlist.ts";
 import productsLoader from "deco-sites/std/packs/vtex/loaders/intelligentSearch/productListingPage.ts";
-import { withISFallback } from "../commerce/vtex/withISFallback.ts";
-import type { LoaderFunction } from "$live/types.ts";
+import wishlistLoader from "deco-sites/std/packs/vtex/loaders/wishlist.ts";
 import type { StateVTEX } from "deco-sites/std/packs/vtex/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
 import type { ProductListingPage } from "../commerce/types.ts";
+import { withISFallback } from "../commerce/vtex/withISFallback.ts";
 
 export interface Props {
   /**
