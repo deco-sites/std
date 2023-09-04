@@ -1,4 +1,4 @@
-import { Account } from "$live/blocks/account.ts";
+import { Account } from "deco/blocks/account.ts";
 import { fetchAPI } from "../../utils/fetch.server.ts";
 import { CategoriesData, Page, PostData, PostsData } from "./types.ts";
 

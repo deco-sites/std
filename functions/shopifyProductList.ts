@@ -1,8 +1,7 @@
-import type { LoaderFunction } from "$live/types.ts";
-import type { LiveState } from "$live/types.ts";
+import type { LiveState, LoaderFunction } from "deco/types.ts";
 
-import { toProduct } from "../commerce/shopify/transform.ts";
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
+import { toProduct } from "../commerce/shopify/transform.ts";
 import type { Product } from "../commerce/types.ts";
 
 export interface Props {

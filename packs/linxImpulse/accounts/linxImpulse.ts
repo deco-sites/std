@@ -1,5 +1,5 @@
-import type { FnContext } from "$live/types.ts";
-import type { Account as AccountBlock } from "$live/blocks/account.ts";
+import type { Account as AccountBlock } from "deco/blocks/account.ts";
+import type { FnContext } from "deco/types.ts";
 
 export interface Account extends AccountBlock {
   /**

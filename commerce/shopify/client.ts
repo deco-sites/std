@@ -1,5 +1,5 @@
-import { Account } from "$live/blocks/account.ts";
 import { fetchAPI } from "deco-sites/std/utils/fetch.server.ts";
+import { Account } from "deco/blocks/account.ts";
 import { Product } from "./types.ts";
 
 const gql = (x: TemplateStringsArray) => x.toString().trim();

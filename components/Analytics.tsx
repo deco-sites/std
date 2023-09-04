@@ -1,7 +1,7 @@
-import { context } from "$live/live.ts";
-import GoogleTagManager from "partytown/integrations/GTM.tsx";
-import GoogleTagScript from "partytown/integrations/GTAG.tsx";
+import { context } from "deco/live.ts";
 import Script from "partytown/Script.tsx";
+import GoogleTagScript from "partytown/integrations/GTAG.tsx";
+import GoogleTagManager from "partytown/integrations/GTM.tsx";
 import { sendAnalyticsEvent } from "../commerce/sdk/sendAnalyticsEvent.ts";
 
 export interface Props {

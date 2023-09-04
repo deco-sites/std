@@ -1,5 +1,5 @@
 import type { Handlers, Plugin } from "$fresh/server.ts";
-import { context } from "$live/live.ts";
+import { context } from "deco/live.ts";
 import { createWorker } from "../../utils/worker.ts";
 
 export const TO = "./static/tailwind.css";

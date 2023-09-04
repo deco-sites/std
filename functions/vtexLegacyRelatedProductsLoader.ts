@@ -1,5 +1,5 @@
 import loader from "deco-sites/std/packs/vtex/loaders/legacy/relatedProductsLoader.ts";
-import type { LoaderFunction } from "$live/types.ts";
+import type { LoaderFunction } from "deco/types.ts";
 import type { Product } from "../commerce/types.ts";
 import type {
   CrossSellingType,

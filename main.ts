@@ -4,7 +4,7 @@
 /// <reference lib="esnext" />
 
 import { start } from "$fresh/server.ts";
-import { $live } from "$live/mod.ts";
+import { $live } from "deco/mod.ts";
 import partytownPlugin from "partytown/mod.ts";
 import manifest from "./live.gen.ts";
 import plugins from "./plugins/mod.ts";
