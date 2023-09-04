@@ -2,8 +2,8 @@
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import type {
   AppContext,
-} from "https://denopkg.com/deco-cx/apps@0.2.21/vtex/mod.ts";
-import App from "https://denopkg.com/deco-cx/apps@0.2.21/vtex/mod.ts";
+} from "https://denopkg.com/deco-cx/apps@0.3.2/vtex/mod.ts";
+import App from "https://denopkg.com/deco-cx/apps@0.3.2/vtex/mod.ts";
 
 export const transform = (ctx: Context): AppContext =>
   ({
