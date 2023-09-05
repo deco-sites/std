@@ -23,10 +23,14 @@ export interface Props {
    * @description run GTM directly on the main thread, without Partytown. This is useful for debugging purposes. Default: false
    */
   dangerouslyRunOnMainThread?: boolean;
+  /**
+   * @description turns defer attribute on script true or false. Default: false
+   */
+  isDeferActiveOnScript?: boolean;
 }
 
 export default function Analtyics(
-  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds }: Props,
+  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds, isDeferActiveOnScript }: Props,
 ) {
   const isDeploy = !!context.isDeploy;
   return (
@@ -67,7 +71,7 @@ export default function Analtyics(
       <script
         type="module"
         id="analytics-script"
-        defer
+        defer={isDeferActiveOnScript}
         dangerouslySetInnerHTML={{
           __html:
             `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
