@@ -67,6 +67,7 @@ export default function Analtyics(
       <script
         type="module"
         id="analytics-script"
+        defer
         dangerouslySetInnerHTML={{
           __html:
             `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
