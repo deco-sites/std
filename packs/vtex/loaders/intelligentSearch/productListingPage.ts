@@ -3,10 +3,10 @@ import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.3.3/vtex/loaders/intelligentSearch/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@0.3.4/vtex/loaders/intelligentSearch/productListingPage.ts";
 export type {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.3.3/vtex/loaders/intelligentSearch/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@0.3.4/vtex/loaders/intelligentSearch/productListingPage.ts";
 
 /**
  * @title VTEX Intelligent Search - Product Listing page
