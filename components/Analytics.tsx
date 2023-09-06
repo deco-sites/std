@@ -24,13 +24,13 @@ export interface Props {
    */
   dangerouslyRunOnMainThread?: boolean;
   /**
-   * @description turns defer attribute on script true or false. Default: false
+   * @description turns async attribute on script true or false. Default: false
    */
-  isDeferActiveOnScript?: boolean;
+  isAsyncAttributeActiveOnScript?: boolean;
 }
 
 export default function Analtyics(
-  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds, isDeferActiveOnScript }: Props,
+  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds, isAsyncAttributeActiveOnScript }: Props,
 ) {
   const isDeploy = !!context.isDeploy;
   return (
@@ -71,7 +71,7 @@ export default function Analtyics(
       <script
         type="module"
         id="analytics-script"
-        defer={isDeferActiveOnScript}
+        async={isAsyncAttributeActiveOnScript}
         dangerouslySetInnerHTML={{
           __html:
             `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
