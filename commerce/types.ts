@@ -304,7 +304,7 @@ export interface Product extends Omit<Thing, "@type"> {
   /** The release date of a product or product model. This can be used to distinguish the exact variant of a product. */
   releaseDate?: string;
   /** A review of the item. */
-  review?: Review;
+  review?: Review[];
   /** The Stock Keeping Unit (SKU), i.e. a merchant-specific identifier for a product or service, or the product to which the offer refers. */
   sku: string;
   /** A pointer to another product (or multiple products) for which this product is an accessory or spare part. */
