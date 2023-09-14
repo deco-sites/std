@@ -3,7 +3,7 @@ import type { OrderForm } from "deco-sites/std/packs/vtex/types.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.6.4/vtex/actions/cart/getInstallment.ts";
+} from "https://denopkg.com/deco-cx/apps@0.6.7/vtex/actions/cart/getInstallment.ts";
 
 /**
  * @docs https://developers.vtex.com/docs/api-reference/checkout-api#get-/api/checkout/pub/orderForm/-orderFormId-/installments
