@@ -34,15 +34,18 @@ export function tagsFromProduct(
 
 export function tagsFromListing(
   page: ProductListingPage | null,
-  template: string,
+  titleTemplate: string,
+  descriptionTemplate: string,
 ) {
   if (!page) return null;
 
   const { seo, breadcrumb } = page;
-  const title = seo?.title && template
-    ? template.replace("%s", seo.title || "")
+  const title = seo?.title && titleTemplate
+    ? titleTemplate.replace("%s", seo.title || "")
     : seo?.title;
-  const description = seo?.description;
+  const description = seo?.description && descriptionTemplate
+    ? descriptionTemplate.replace("%s", seo.description || "")
+    : seo?.description;
   const canonical = seo?.canonical ||
     (breadcrumb && canonicalFromBreadcrumblist(breadcrumb));
 
