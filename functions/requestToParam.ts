@@ -1,5 +1,5 @@
 import type { FunctionContext, LoaderFunction } from "deco/types.ts";
-import type { RequestURLParam } from "https://denopkg.com/deco-cx/apps@0.7.4/website/functions/requestToParam.ts";
+import type { RequestURLParam } from "https://denopkg.com/deco-cx/apps@0.9.0/website/functions/requestToParam.ts";
 
 export type { RequestURLParam };
 export interface Props {

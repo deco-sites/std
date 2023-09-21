@@ -3,7 +3,7 @@ import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import {
   default as base,
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.7.4/vtex/handlers/sitemap.ts";
+} from "https://denopkg.com/deco-cx/apps@0.9.0/vtex/handlers/sitemap.ts";
 
 /**
  * @title Sitemap Proxy
