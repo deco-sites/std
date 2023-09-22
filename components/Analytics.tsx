@@ -23,10 +23,14 @@ export interface Props {
    * @description run GTM directly on the main thread, without Partytown. This is useful for debugging purposes. Default: false
    */
   dangerouslyRunOnMainThread?: boolean;
+  /**
+   * @description turns async attribute on script true or false. Default: false
+   */
+  isAsyncAttributeActiveOnScript?: boolean;
 }
 
 export default function Analtyics(
-  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds }: Props,
+  { trackingIds, src, dangerouslyRunOnMainThread, googleAnalyticsIds, isAsyncAttributeActiveOnScript }: Props,
 ) {
   const isDeploy = !!context.isDeploy;
   return (
@@ -67,6 +71,7 @@ export default function Analtyics(
       <script
         type="module"
         id="analytics-script"
+        async={isAsyncAttributeActiveOnScript}
         dangerouslySetInnerHTML={{
           __html:
             `window.DECO_SITES_STD = { sendAnalyticsEvent: ${sendAnalyticsEvent.toString()} }`,
