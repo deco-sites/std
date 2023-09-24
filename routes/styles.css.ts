@@ -9,7 +9,7 @@ Tailwind setup has changed and we now offer it via a Fresh Plugin! This file wil
 1. Remove routes/styles.css.ts from your routes folder
 2. Change main.ts to:
 
-  import tailwindPlugin from "deco-sites/std/plugins/tailwind/mod.ts";
+  import { plugin as tailwindPlugin } from "deco-sites/std/plugins/tailwind/mod.ts";
 
   await start($live(manifest, site), {
     plugins: [
