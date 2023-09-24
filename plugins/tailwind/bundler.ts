@@ -25,7 +25,10 @@ export const bundle = async ({ to, from }: { to: string; from: string }) => {
     toFileUrl(join(Deno.cwd(), "tailwind.config.ts")).href
   )
     .then((mod) => mod.default)
-    .catch(() => DEFAULT_OPTIONS);
+    .catch((error) => {
+      console.error(error);
+      return DEFAULT_OPTIONS;
+    });
 
   const processor = postcss([
     // deno-lint-ignore no-explicit-any
