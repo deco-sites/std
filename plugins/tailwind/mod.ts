@@ -16,7 +16,7 @@ const generate = async () => {
    *
    * TODO: Remove this env var once this issue is fixed
    */
-  Deno.env.set("NO_COLOR", "true");
+  // Deno.env.set("NO_COLOR", "true");
 
   const worker = await createWorker(new URL("./bundler.ts", import.meta.url), {
     type: "module",
