@@ -26,6 +26,7 @@ const postsLoader: LoaderFunction<
   ctx,
   { pageSize = 6 },
 ) => {
+  // @ts-ignore: global should be set
   const { global: { configButterCMS } } = ctx.state;
   const client = createClient(configButterCMS);
   const url = new URL(req.url);

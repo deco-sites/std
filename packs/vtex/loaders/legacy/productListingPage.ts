@@ -1,12 +1,11 @@
-import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 import type { Context } from "deco-sites/std/packs/vtex/accounts/vtex.ts";
 import { transform } from "deco-sites/std/packs/vtex/utils/future.ts";
 import base, {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.9.0/vtex/loaders/legacy/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@8a0b1e23cef3f10071d539d2df70bbaf5c2392df/vtex/loaders/legacy/productListingPage.ts";
 export type {
   Props,
-} from "https://denopkg.com/deco-cx/apps@0.9.0/vtex/loaders/legacy/productListingPage.ts";
+} from "https://denopkg.com/deco-cx/apps@8a0b1e23cef3f10071d539d2df70bbaf5c2392df/vtex/loaders/legacy/productListingPage.ts";
 
 /**
  * @title VTEX Catalog - Product Listing Page
@@ -16,6 +15,6 @@ const loader = (
   props: Props,
   req: Request,
   ctx: Context,
-): Promise<ProductListingPage | null> => base(props, req, transform(ctx));
+) => base(props, req, transform(ctx));
 
 export default loader;

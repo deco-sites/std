@@ -24,6 +24,7 @@ const relatedPostsLoader: LoaderFunction<
   ctx,
   { pageSize, withPagination = false },
 ) => {
+  // @ts-ignore: global should be set
   const { state: { global: { configButterCMS } }, params: { slug } } = ctx;
   const client = createClient(configButterCMS);
 

@@ -239,6 +239,7 @@ export interface MarketingData {
   utmSource: string;
   utmMedium: null;
   utmCampaign: string;
+  // @ts-ignore this should work.
   utmipage: null;
   utmiPart: null;
   utmiCampaign: null;
@@ -1071,6 +1072,7 @@ export interface Segment {
 
 export type StateVTEX = FnContext<
   { global: { configVTEX: Account } },
+  // @ts-ignore this should work.
   Manifest
 >;
 

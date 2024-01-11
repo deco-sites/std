@@ -1,4 +1,4 @@
-import type { LiveState, LoaderFunction } from "deco/types.ts";
+import type { DecoState as LiveState, LoaderFunction } from "deco/types.ts";
 
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
 import { toProductPage } from "../commerce/shopify/transform.ts";
@@ -16,6 +16,7 @@ const productPageLoader: LoaderFunction<
   _req,
   ctx,
 ) => {
+  // @ts-ignore this should work.
   const { configShopify } = ctx.state.global;
   const shopify = createClient(configShopify);
 

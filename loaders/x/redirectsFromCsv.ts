@@ -1,4 +1,4 @@
-import { Route } from "deco/flags/audience.ts";
+import { Route } from "deco/types.ts";
 import { join } from "std/path/mod.ts";
 
 /** @titleBy from */

@@ -13,5 +13,8 @@ export const sendAnalyticsEvent = <T extends AnalyticsEvent>(
     ecommerce: event.params,
   });
 
-  window.jitsu && window.jitsu("track", "ecommerce", event);
+  // deno-lint-ignore no-explicit-any
+  const w = window as unknown as { jitsu: any };
+
+  w.jitsu && w.jitsu("track", "ecommerce", event);
 };
