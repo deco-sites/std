@@ -1,5 +1,5 @@
 import type { Context } from "deco-sites/std/packs/vnda/accounts/vnda.ts";
-import { Route } from "deco/flags/audience.ts";
+import { Route } from "deco/types.ts";
 
 const PAGE_PATHS = [
   "/admin",

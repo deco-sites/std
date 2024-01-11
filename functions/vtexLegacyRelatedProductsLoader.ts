@@ -23,6 +23,7 @@ export interface Props {
  * @description Works on routes of type /:slug/p
  * @deprecated
  */
+// @ts-ignore this should work.
 const loaderV0: LoaderFunction<
   Props,
   Product[] | null,

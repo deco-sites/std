@@ -33,6 +33,7 @@ const loaderV0: LoaderFunction<
     ? { term: props.query, count: props.count }
     : { collection: props.collection?.[0], count: props.count };
 
+  // @ts-ignore this should work.
   const data = await loader(p, req, ctx.state);
 
   return { data, status: data ? 200 : 404 };

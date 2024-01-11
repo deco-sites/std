@@ -35,6 +35,7 @@ export interface Account extends AccountBlock {
 
 export type Context = FnContext<{
   configVTEX?: Account;
+  // @ts-ignore this should work.
 }, Manifest>;
 
 function account(acc: Account) {

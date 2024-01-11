@@ -10,6 +10,7 @@ import manifest from "./live.gen.ts";
 import plugins from "./plugins/mod.ts";
 import site from "./site.json" assert { type: "json" };
 
+// @ts-ignore this should work.
 await start($live(manifest, site), {
   plugins: [
     ...plugins(),

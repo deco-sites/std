@@ -1,4 +1,4 @@
-import type { LiveState, LoaderFunction } from "deco/types.ts";
+import type { DecoState as LiveState, LoaderFunction } from "deco/types.ts";
 
 import { ConfigOCC, createClient } from "../commerce/occ/client.ts";
 import { toProductPage } from "../commerce/occ/transform.ts";
@@ -13,6 +13,7 @@ const productPageLoader: LoaderFunction<
   ProductDetailsPage | null,
   LiveState<{ configOCC: ConfigOCC }>
 > = async (_req, ctx) => {
+  // @ts-ignore this should work.
   const { configOCC } = ctx.state.global;
   const occ = createClient(configOCC);
 

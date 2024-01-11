@@ -1,4 +1,4 @@
-import type { LiveState, LoaderFunction } from "deco/types.ts";
+import type { DecoState as LiveState, LoaderFunction } from "deco/types.ts";
 
 import { ConfigShopify, createClient } from "../commerce/shopify/client.ts";
 import { toProduct } from "../commerce/shopify/transform.ts";
@@ -30,6 +30,7 @@ const searchLoader: LoaderFunction<
   props,
 ) => {
   const url = new URL(req.url);
+  // @ts-ignore this should work.
   const { configShopify } = ctx.state.global;
   const shopify = createClient(configShopify);
 

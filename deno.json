@@ -1,9 +1,9 @@
 {
   "lock": false,
   "tasks": {
-    "start": "deno run -A --watch=sections/,functions/,loaders/,actions/,workflows/,accounts/ dev.ts",
+    "start": "deno run -A --watch=sections/,functions/,loaders/,actions/,workflows/,accounts/ main.ts",
     "component": "deno eval 'import \"deco/scripts/component.ts\"'",
-    "check": "deno fmt && deno lint && deno check dev.ts main.ts",
+    "check": "deno fmt && deno lint && deno check main.ts",
     "release": "deno eval 'import \"deco/scripts/release.ts\"'"
   },
   "githooks": {

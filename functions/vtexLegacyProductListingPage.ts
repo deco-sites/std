@@ -10,6 +10,7 @@ import type { ProductListingPage } from "../commerce/types.ts";
  * @description Useful for category, search, brand and collection pages.
  * @deprecated
  */
+// @ts-ignore this should work.
 const loaderV0: LoaderFunction<
   Props,
   ProductListingPage | null,

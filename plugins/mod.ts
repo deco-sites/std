@@ -27,7 +27,7 @@ export const plugin = (): Plugin => {
 const plugins = <TManifest extends AppManifest = AppManifest>(
   opts?: Options<TManifest>,
 ): Plugin[] => {
-  return [tailwindPlugin, decoPlugin(opts)];
+  return [tailwindPlugin, decoPlugin(opts!)];
 };
 
 export default plugins;

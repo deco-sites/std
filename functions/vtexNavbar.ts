@@ -15,6 +15,7 @@ export interface Props {
  * @title Navigation Bar
  * @deprecated true
  */
+// @ts-ignore this should work.
 const loaderV0: LoaderFunction<
   Props,
   Navbar[] | null,

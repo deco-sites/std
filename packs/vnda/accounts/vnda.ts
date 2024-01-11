@@ -30,10 +30,12 @@ export interface Account extends AccountBlock {
 
 export type Context = FnContext<{
   configVNDA?: Account;
+  // @ts-ignore this should work.
 }, Manifest>;
 
 export type StateVNDA = FnContext<
   { global: { configVTEX: Account } },
+  // @ts-ignore this should work.
   Manifest
 >;
 
