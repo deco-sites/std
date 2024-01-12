@@ -1,7 +1,7 @@
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
 import postcss from "npm:postcss@8.4.27";
-import tailwindcss from "npm:tailwindcss@3.3.3";
+import tailwindcss from "npm:tailwindcss@3.4.1";
 import { cyan } from "std/fmt/colors.ts";
 import { ensureFile } from "std/fs/mod.ts";
 import { join, toFileUrl } from "std/path/mod.ts";
