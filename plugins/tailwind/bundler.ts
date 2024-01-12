@@ -17,7 +17,9 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
-export const bundle = async ({ to, from }: { to: string; from: string }) => {
+export const bundle = async (
+  { to, from, release }: { to: string; from: string; release: string },
+) => {
   const start = performance.now();
 
   // Try to recover config from default file, a.k.a tailwind.config.ts
@@ -26,6 +28,15 @@ export const bundle = async ({ to, from }: { to: string; from: string }) => {
   )
     .then((mod) => mod.default)
     .catch(() => DEFAULT_OPTIONS);
+
+  if (Array.isArray(config.content)) {
+    config.content.push({
+      raw: release,
+      extension: "json",
+    });
+  } else {
+    console.warn("TailwindCSS generation from decofile disabled");
+  }
 
   const processor = postcss([
     // deno-lint-ignore no-explicit-any
