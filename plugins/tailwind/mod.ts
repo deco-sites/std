@@ -1,11 +1,20 @@
 import type { Handlers, Plugin } from "$fresh/server.ts";
-import { context } from "deco/live.ts";
+import { Context, context } from "deco/deco.ts";
 import { createWorker } from "../../utils/worker.ts";
 
 export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
+let current: string | undefined = "";
+
 const generate = async () => {
+  const active = Context.active();
+  const revision = await active.release?.revision();
+
+  if (revision === current) {
+    return;
+  }
+
   /**
    * Here be capybaras! 🐁🐁🐁
    *
@@ -22,16 +31,21 @@ const generate = async () => {
     type: "module",
   });
 
-  await worker.bundle({ to: TO, from: FROM });
+  await worker.bundle({
+    to: TO,
+    from: FROM,
+    release: JSON.stringify(await active.release?.state()),
+  });
 
   worker.dispose();
+  current = revision;
 };
 
-const bundle = context.isDeploy ? Promise.resolve() : generate();
+const bundle = context.isDeploy ? () => Promise.resolve() : generate;
 
 export const handler: Handlers = {
   GET: async () => {
-    await bundle;
+    await bundle();
 
     try {
       const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
