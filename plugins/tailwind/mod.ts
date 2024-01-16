@@ -1,20 +1,13 @@
 import type { Handlers, Plugin } from "$fresh/server.ts";
 import { Context, context } from "deco/deco.ts";
 import { createWorker } from "../../utils/worker.ts";
+import { watcher } from "./bundler.ts";
+import { ensureFile } from "std/fs/mod.ts";
 
 export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
-let current: string | undefined = "";
-
 const generate = async () => {
-  const active = Context.active();
-  const revision = await active.release?.revision();
-
-  if (revision === current) {
-    return;
-  }
-
   /**
    * Here be capybaras! 🐁🐁🐁
    *
@@ -31,21 +24,19 @@ const generate = async () => {
     type: "module",
   });
 
-  await worker.bundle({
-    to: TO,
-    from: FROM,
-    release: JSON.stringify(await active.release?.state()),
-  });
+  const css = await worker.bundle({ from: FROM });
+
+  await ensureFile(TO);
+  await Deno.writeTextFile(TO, css, { create: true });
 
   worker.dispose();
-  current = revision;
 };
 
-const bundle = context.isDeploy ? () => Promise.resolve() : generate;
+const bundler = context.isDeploy ? () => Promise.resolve() : generate;
 
 export const handler: Handlers = {
   GET: async () => {
-    await bundle();
+    await bundler();
 
     try {
       const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
@@ -67,12 +58,63 @@ export const handler: Handlers = {
   },
 };
 
+const styles = new WeakMap();
+
+const { process, setChangedContent } = await watcher({ from: FROM });
+
+export const dynamic: Handlers = {
+  GET: async () => {
+    try {
+      const active = Context.active();
+      const state = await active.release?.state({ forceFresh: true });
+
+      // config: {
+      //   content: [{ raw: JSON.stringify(state), extension: "json" }],
+      // },
+
+      if (!state) {
+        return new Response(null, { status: 404 });
+      }
+
+      if (!styles.has(state)) {
+        setChangedContent({
+          content: JSON.stringify(state),
+          extension: "json",
+        });
+
+        const css = await process();
+
+        styles.set(state, css);
+      }
+
+      return new Response(styles.get(state), {
+        headers: {
+          "Cache-Control": "public, max-age=31536000, immutable",
+          "Content-Type": "text/css; charset=utf-8",
+        },
+      });
+    } catch (error) {
+      console.error(error);
+
+      if (error instanceof Deno.errors.NotFound) {
+        return new Response(null, { status: 404 });
+      }
+
+      return new Response(null, { status: 500 });
+    }
+  },
+};
+
 export const plugin: Plugin = {
   name: "tailwind",
   routes: [
     {
       path: "/styles.css",
       handler,
+    },
+    {
+      path: "/styles/:revision/main.css",
+      handler: dynamic,
     },
   ],
 };
