@@ -10,7 +10,6 @@ import {
 
 export type { Config } from "./bundler.ts";
 
-let mode: "prod" | "dev" = "prod";
 const root: string = Deno.cwd();
 
 const FROM = "./tailwind.css";
@@ -57,6 +56,33 @@ const LRU = (size: number) => {
 
 const lru = LRU(10);
 
+const migration = `
+🚀 Upgrade to the Latest TailwindCSS Plugin Version
+
+You're currently using the compatibility mode of the TailwindCSS plugin, follow these steps to seamlessly migrate to the new version:
+
+1. Open your "fresh.config.ts" file and replace its content with the following:
+// fresh.config.ts
+import { defineConfig } from "$fresh/server.ts";
+import plugins from "../std/plugins/mod.ts";
+import manifest from "./manifest.gen.ts";
+import tailwind from "./tailwind.config.ts";
+
+export default defineConfig({
+  plugins: plugins({
+    manifest,
+    // deno-lint-ignore no-explicit-any
+    tailwind: tailwind as any,
+  }),
+});
+
+
+2. Remove the existing 'tailwind.css' file from the 'static' directory using the command:
+rm static/tailwind.css
+
+👏 That's it! You've successfully migrated to the new version. Thank you for keeping your project up-to-date! 
+`;
+
 /**
  * Since Deno Deploy does not allow dynamic import, importing the config file
  * automatically is not yet possible.
@@ -67,45 +93,63 @@ const lru = LRU(10);
 export const plugin = (config?: Config): Plugin => {
   const routes: Plugin["routes"] = [];
 
+  if (!config) {
+    console.warn(migration);
+  }
+
   return {
     name: "tailwind",
     routes,
     configResolved: async (fresh) => {
-      mode = fresh.dev ? "dev" : "prod";
+      const mode = fresh.dev ? "dev" : "prod";
+      const ctx = Context.active();
+
+      const withReleaseContent = async (config: Config) => {
+        const state = await ctx.release?.state({ forceFresh: true });
+
+        return {
+          ...config,
+          content: Array.isArray(config.content)
+            ? [...config.content, {
+              raw: JSON.stringify(state),
+              extension: "json",
+            }]
+            : config.content,
+        };
+      };
 
       if (config) {
         await expandConfigContent(config, root);
-      } else if (!context.isDeploy) {
-        const revision = await Context.active().release?.revision() || "";
-        const config = await loadTailwindConfig(root);
-        const css = await bundle({ from: FROM, mode: "prod", config });
-        lru.set(revision, css);
       }
+
+      const css =
+        // We have built on CI
+        (await Deno.readTextFile(TO).catch(() => null)) ||
+        // We are on localhost
+        (await bundle({
+          from: FROM,
+          mode,
+          config: config
+            ? await withReleaseContent(config)
+            : await loadTailwindConfig(root),
+        }).catch(() => ""));
+
+      // Set the default revision CSS so we don't have to rebuild what CI has built
+      lru.set(await ctx.release?.revision() || "", css);
 
       routes.push({
         path: "/styles.css",
         handler: safe(async () => {
-          const release = Context.active().release;
-          const revision = await release?.revision() || "";
+          const revision = await ctx.release?.revision() || "";
 
-          let css = lru.get(revision) ||
-            await Deno.readTextFile(TO).catch(() => null);
+          let css = lru.get(revision);
 
           // Generate styles dynamically
           if (!css && config) {
-            const state = await release?.state({ forceFresh: true });
-
-            const content = Array.isArray(config.content)
-              ? [...config.content, {
-                raw: JSON.stringify(state),
-                extension: "json",
-              }]
-              : config.content;
-
             css = await bundle({
               from: FROM,
               mode,
-              config: { ...config, content },
+              config: await withReleaseContent(config),
             });
 
             lru.set(revision, css);
@@ -122,8 +166,11 @@ export const plugin = (config?: Config): Plugin => {
     },
     // Compatibility mode. Only runs when config is not set directly
     buildStart: async () => {
-      const config = await loadTailwindConfig(root);
-      const css = await bundle({ from: FROM, mode: "prod", config });
+      const css = await bundle({
+        from: FROM,
+        mode: "prod",
+        config: config || await loadTailwindConfig(root),
+      });
       await Deno.writeTextFile(TO, css);
     },
   };
