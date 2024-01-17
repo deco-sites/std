@@ -1,12 +1,14 @@
 import { Context } from "deco/deco.ts";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
-import postcss from "npm:postcss@8.4.27";
+import postcss, { type AcceptedPlugin } from "npm:postcss@8.4.27";
 import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
 import { cyan } from "std/fmt/colors.ts";
 import { walk } from "std/fs/walk.ts";
 import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
 import { extname, join, toFileUrl } from "std/path/mod.ts";
+
+export { type Config } from "npm:tailwindcss@3.4.1";
 
 const DEFAULT_CONFIG: Config = {
   content: ["./**/*.tsx"],
@@ -19,15 +21,13 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
-const root = Deno.cwd();
-
 // Try to recover config from default file, a.k.a tailwind.config.ts
-const loadConfig = (): Promise<Config> =>
+export const loadTailwindConfig = (root: string): Promise<Config> =>
   import(toFileUrl(join(root, "tailwind.config.ts")).href)
     .then((mod) => mod.default)
     .catch(() => DEFAULT_CONFIG);
 
-const setContextContent = async (config: Config) => {
+export const expandConfigContent = async (config: Config, root: string) => {
   if (!Array.isArray(config.content)) {
     console.warn(
       "TailwindCSS config.content is not an array. Skipping deco.cx optimizations and 'files' integration",
@@ -36,67 +36,69 @@ const setContextContent = async (config: Config) => {
     return;
   }
 
-  const active = Context.active();
-  const state = await active.release?.state({ forceFresh: true });
-
-  const content: Config["content"] = [{
-    raw: JSON.stringify(state),
-    extension: "json",
-  }];
+  const content: Config["content"] = [];
 
   // Expands glob and read file contents. It's faster this way than letting tailwind do this
   for (const c of config.content) {
-    if (typeof c === "string") {
-      const glob = globToRegExp(normalizeGlob(c), {
-        globstar: true,
-      });
+    if (typeof c !== "string") {
+      content.push(c);
 
-      const paths: string[] = [];
-      for await (const entry of walk(root)) {
-        if (entry.isFile && glob.test(entry.path)) {
-          paths.push(entry.path);
-        }
-      }
+      continue;
+    }
 
-      const cs = await Promise.all(paths.map(async (path) => {
-        const text = await Deno.readTextFile(path);
+    const glob = globToRegExp(normalizeGlob(c), {
+      globstar: true,
+    });
 
-        return {
-          raw: text,
-          extension: extname(path).slice(1),
-        };
-      }));
+    const walker = walk(root, {
+      includeDirs: false,
+      includeFiles: true,
+      match: [glob],
+    });
+    const paths: string[] = [];
+    for await (const entry of walker) {
+      paths.push(entry.path);
+    }
 
-      for (const c of cs) {
-        content.push(c);
-      }
-    } else {
+    const cs = await Promise.all(paths.map(async (path) => ({
+      raw: await Deno.readTextFile(path),
+      extension: extname(path).slice(1),
+    })));
+
+    for (const c of cs) {
       content.push(c);
     }
   }
-  console.log({ config });
 
   config.content = content;
 };
 
 export const bundle = async (
-  { from }: { from: string },
+  { from, mode, config }: {
+    from: string;
+    mode: "dev" | "prod";
+    config: Config;
+  },
 ) => {
   const start = performance.now();
 
-  const config = await loadConfig();
-
-  // Read file contents and merge with it with release
-  await setContextContent(config);
-
-  const processor = postcss([
+  const plugins: AcceptedPlugin[] = [
     tailwindcss(config),
     autoprefixer(),
-    cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
-  ]);
+  ];
 
-  const css = await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS);
-  const content = await processor.process(css, { from });
+  if (mode === "prod") {
+    plugins.push(
+      cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
+    );
+  }
+
+  const processor = postcss(plugins);
+
+  const content = await processor.process(
+    await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS),
+    { from: undefined },
+  );
 
   console.info(
     ` 🎨 Tailwind css ready in ${
