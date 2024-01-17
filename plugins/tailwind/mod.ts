@@ -14,8 +14,7 @@ let mode: "prod" | "dev" = "prod";
 const root: string = Deno.cwd();
 
 const FROM = "./tailwind.css";
-const TO = (revision: string) =>
-  join(root, "static", FROM.replace(".css", `${revision}.css`));
+const TO = join(root, "static", FROM);
 
 const safe = (cb: () => Promise<Response>) => async () => {
   try {
@@ -68,13 +67,6 @@ const lru = LRU(10);
 export const plugin = (config?: Config): Plugin => {
   const routes: Plugin["routes"] = [];
 
-  const build = async () => {
-    const revision = await Context.active().release?.revision() || "";
-    const config = await loadTailwindConfig(root);
-    const css = await bundle({ from: FROM, mode: "prod", config });
-    await Deno.writeTextFile(TO(revision), css);
-  };
-
   return {
     name: "tailwind",
     routes,
@@ -84,7 +76,10 @@ export const plugin = (config?: Config): Plugin => {
       if (config) {
         await expandConfigContent(config, root);
       } else if (!context.isDeploy) {
-        await build();
+        const revision = await Context.active().release?.revision() || "";
+        const config = await loadTailwindConfig(root);
+        const css = await bundle({ from: FROM, mode: "prod", config });
+        lru.set(revision, css);
       }
 
       routes.push({
@@ -94,7 +89,7 @@ export const plugin = (config?: Config): Plugin => {
           const revision = await release?.revision() || "";
 
           let css = lru.get(revision) ||
-            await Deno.readTextFile(TO(revision)).catch(() => null);
+            await Deno.readTextFile(TO).catch(() => null);
 
           // Generate styles dynamically
           if (!css && config) {
@@ -126,6 +121,10 @@ export const plugin = (config?: Config): Plugin => {
       });
     },
     // Compatibility mode. Only runs when config is not set directly
-    buildStart: build,
+    buildStart: async () => {
+      const config = await loadTailwindConfig(root);
+      const css = await bundle({ from: FROM, mode: "prod", config });
+      await Deno.writeTextFile(TO, css);
+    },
   };
 };
