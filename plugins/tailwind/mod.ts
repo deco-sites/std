@@ -8,7 +8,7 @@ export type { Config } from "./bundler.ts";
 const root: string = Deno.cwd();
 
 const FROM = "./tailwind.css";
-const TO = join(root, "static", FROM);
+const TO = join("static", FROM);
 
 const safe = (cb: () => Promise<Response>) => async () => {
   try {
