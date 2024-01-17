@@ -52,7 +52,9 @@ export const handler: Handlers = {
         return new Response(null, { status: 404 });
       }
 
-      return new Response(Deno.inspect(error), { status: 500 });
+      return new Response(Deno.inspect(error, { colors: false, depth: 100 }), {
+        status: 500,
+      });
     }
   },
 };
