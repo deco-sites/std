@@ -1,12 +1,7 @@
 import type { Plugin } from "$fresh/server.ts";
-import { Context, context } from "deco/deco.ts";
+import { Context } from "deco/deco.ts";
 import { join } from "std/path/mod.ts";
-import {
-  bundle,
-  Config,
-  expandConfigContent,
-  loadTailwindConfig,
-} from "./bundler.ts";
+import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
 
 export type { Config } from "./bundler.ts";
 
@@ -117,10 +112,6 @@ export const plugin = (config?: Config): Plugin => {
             : config.content,
         };
       };
-
-      if (config) {
-        await expandConfigContent(config, root);
-      }
 
       const css =
         // We have built on CI

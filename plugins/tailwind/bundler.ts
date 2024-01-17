@@ -26,52 +26,6 @@ export const loadTailwindConfig = (root: string): Promise<Config> =>
     .then((mod) => mod.default)
     .catch(() => DEFAULT_CONFIG);
 
-export const expandConfigContent = async (config: Config, root: string) => {
-  if (!Array.isArray(config.content)) {
-    console.warn(
-      "TailwindCSS config.content is not an array. Skipping deco.cx optimizations and 'files' integration",
-    );
-
-    return;
-  }
-
-  const content: Config["content"] = [];
-
-  // Expands glob and read file contents. It's faster this way than letting tailwind do this
-  for (const c of config.content) {
-    if (typeof c !== "string") {
-      content.push(c);
-
-      continue;
-    }
-
-    const glob = globToRegExp(normalizeGlob(c), {
-      globstar: true,
-    });
-
-    const walker = walk(root, {
-      includeDirs: false,
-      includeFiles: true,
-      match: [glob],
-    });
-    const paths: string[] = [];
-    for await (const entry of walker) {
-      paths.push(entry.path);
-    }
-
-    const cs = await Promise.all(paths.map(async (path) => ({
-      raw: await Deno.readTextFile(path),
-      extension: extname(path).slice(1),
-    })));
-
-    for (const c of cs) {
-      content.push(c);
-    }
-  }
-
-  config.content = content;
-};
-
 export const bundle = async (
   { from, mode, config }: {
     from: string;
