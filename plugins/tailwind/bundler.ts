@@ -74,7 +74,7 @@ const setContextContent = async (config: Config) => {
       content.push(c);
     }
   }
-  console.log({ content });
+  console.log({ config });
 
   config.content = content;
 };
