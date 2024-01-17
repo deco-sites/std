@@ -14,7 +14,7 @@ let mode: "prod" | "dev" = "prod";
 const root: string = Deno.cwd();
 
 const FROM = "./tailwind.css";
-const TO = () => join(root, "static", FROM);
+const TO = join(root, "static", FROM);
 
 const safe = (cb: () => Promise<Response>) => async () => {
   try {
@@ -32,10 +32,7 @@ const safe = (cb: () => Promise<Response>) => async () => {
 
 export const handler: Handlers = {
   GET: safe(async () => {
-    const [stats, file] = await Promise.all([
-      Deno.lstat(TO()),
-      Deno.open(TO()),
-    ]);
+    const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
 
     return new Response(file.readable, {
       headers: {
@@ -75,18 +72,27 @@ const createHandler = async (config: Config): Promise<Handlers> => {
 
   const lru = LRU(10);
 
+  // Use current tailwind.css file as cache for initial revision
+  // This avoid rebuilding unecessary files on Deno Deploy
+  if (context.isDeploy) {
+    lru.set(
+      await Context.active().release?.revision() || "",
+      await Deno.readTextFile(TO),
+    );
+  }
+
   // Reads all files into memory
   await expandConfigContent(config, root);
 
   return {
     GET: safe(async () => {
-      const active = Context.active();
-      const revision = await active.release?.revision() || "";
+      const release = Context.active().release;
+      const revision = await release?.revision() || "";
 
       let css = lru.get(revision);
 
       if (!css) {
-        const state = await active.release?.state({ forceFresh: true });
+        const state = await release?.state({ forceFresh: true });
 
         const content = Array.isArray(config.content)
           ? [...config.content, {
@@ -127,7 +133,7 @@ export const plugin = (config?: Config): Plugin => {
   const build = async () => {
     const config = await loadTailwindConfig(root);
     const css = await bundle({ from: FROM, mode: "prod", config });
-    await Deno.writeTextFile(TO(), css);
+    await Deno.writeTextFile(TO, css);
   };
 
   return {
