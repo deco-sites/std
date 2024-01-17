@@ -1,4 +1,3 @@
-import { Context } from "deco/deco.ts";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
 import postcss, { type AcceptedPlugin } from "npm:postcss@8.4.27";
