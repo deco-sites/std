@@ -1,14 +1,14 @@
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
-import postcss from "npm:postcss@8.4.27";
+import postcss, { PluginCreator } from "npm:postcss@8.4.27";
 import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
 import processTailwindFeatures from "npm:tailwindcss@3.4.1/lib/processTailwindFeatures.js";
 import resolveConfig from "npm:tailwindcss@3.4.1/lib/public/resolve-config.js";
+import { validateConfig } from "npm:tailwindcss@3.4.1/lib/util/validateConfig.js";
 import { cyan } from "std/fmt/colors.ts";
-import { join, toFileUrl } from "std/path/mod.ts";
-import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
 import { walk } from "std/fs/walk.ts";
-import { extname } from "std/path/mod.ts";
+import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
+import { extname, join, toFileUrl } from "std/path/mod.ts";
 
 const DEFAULT_CONFIG: Config = {
   content: ["./**/*.tsx"],
@@ -21,9 +21,11 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
+const root = Deno.cwd();
+
 // Try to recover config from default file, a.k.a tailwind.config.ts
 const loadConfig = () =>
-  import(toFileUrl(join(Deno.cwd(), "tailwind.config.ts")).href)
+  import(toFileUrl(join(root, "tailwind.config.ts")).href)
     .then((mod) => mod.default)
     .catch(() => DEFAULT_CONFIG);
 
@@ -54,70 +56,110 @@ export const bundle = async ({ from }: Options) => {
   return content.css;
 };
 
-export const watcher = async ({ from }: Options) => {
-  const config = resolveConfig.default(await loadConfig());
+type Content = { file: string; extension: string } | {
+  content: string;
+  extension: string;
+};
 
-  const state = { context: null };
+const resolveContent = async (config: Config) => {
+  const resolved: Content[] = [];
 
-  let changedContent = [];
+  const content = Array.isArray(config.content)
+    ? config.content
+    : config.content.files;
 
-  const tailwindPlugin = () => ({
-    postcssPlugin: "tailwindcss",
-    async Once(root, { result }) {
-      console.time("Compiling CSS");
-
-      const glob = globToRegExp(normalizeGlob("./**/*.tsx"), {
+  for (const c of content) {
+    if (typeof c === "string") {
+      const glob = globToRegExp(normalizeGlob(c), {
         globstar: true,
       });
-      for await (const entry of walk(Deno.cwd())) {
+
+      for await (const entry of walk(root)) {
         if (entry.isFile && glob.test(entry.path)) {
-          changedContent.push({
+          resolved.push({
             file: entry.path,
             extension: extname(entry.name).slice(1),
           });
         }
       }
+    } else {
+      resolved.push({ content: c.raw, extension: c.extension || "html" });
+    }
+  }
 
-      await processTailwindFeatures.default(({ createContext }) => {
-        console.log(changedContent.length);
+  return resolved;
+};
 
-        state.context = createContext(config, changedContent);
+let w: undefined | {
+  process: () => Promise<string>;
+  setChangedContent: (c: Content[]) => void;
+};
 
-        changedContent = [];
+export const watcher = async ({ from }: Options) => {
+  if (!w) {
+    const config = validateConfig(resolveConfig.default(await loadConfig()));
 
-        return () => state.context;
-      })(root, result);
+    let queue = Promise.resolve<string>("");
+    const initialContent = await resolveContent(config);
 
-      console.timeEnd("Compiling CSS");
-    },
-  });
+    // deno-lint-ignore no-explicit-any
+    let context: undefined | any;
 
-  tailwindPlugin.postcss = true;
+    const tailwindPlugin: PluginCreator<void> = () => ({
+      postcssPlugin: "tailwindcss",
+      async Once(root, { result }) {
+        await processTailwindFeatures.default(
+          (
+            { createContext }: {
+              createContext: (c: Config, cc: Content[]) => unknown;
+            },
+          ) => {
+            context ||= createContext(config, initialContent);
 
-  const processor = postcss([
-    tailwindPlugin,
-    autoprefixer(),
-    cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
-  ]);
+            return () => context;
+          },
+        )(root, result);
+      },
+    });
+    tailwindPlugin.postcss = true;
 
-  const css = await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS);
+    const processor = postcss([
+      tailwindPlugin,
+      autoprefixer(),
+      cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
+    ]);
 
-  return {
-    process: async () => {
-      const start = performance.now();
+    const css = await Deno.readTextFile(from).catch((_) =>
+      DEFAULT_TAILWIND_CSS
+    );
 
-      const res = await processor.process(css, { from }).then((res) => res.css);
+    w = {
+      setChangedContent: (c: Content[]) => {
+        if (!context) {
+          return;
+        }
 
-      console.info(
-        ` 🎨 Tailwind css ready in ${
-          cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
-        }`,
-      );
+        context.changedContent = c;
+      },
+      process: () => {
+        queue = queue.catch(() => null).then(async () => {
+          const start = performance.now();
 
-      return res;
-    },
-    setChangedContent: (cc) => {
-      changedContent.push(cc);
-    },
-  };
+          const sheet = await processor.process(css, { from });
+
+          console.info(
+            ` 🎨 Tailwind css ready in ${
+              cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
+            }`,
+          );
+
+          return sheet.css;
+        });
+
+        return queue;
+      },
+    };
+  }
+
+  return w;
 };

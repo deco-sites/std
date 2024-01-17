@@ -7,6 +7,8 @@ import { ensureFile } from "std/fs/mod.ts";
 export const TO = "./static/tailwind.css";
 export const FROM = "./tailwind.css";
 
+let bundle: undefined | Promise<void>;
+
 const generate = async () => {
   /**
    * Here be capybaras! 🐁🐁🐁
@@ -32,11 +34,15 @@ const generate = async () => {
   worker.dispose();
 };
 
-const bundler = context.isDeploy ? () => Promise.resolve() : generate;
-
 export const handler: Handlers = {
   GET: async () => {
-    await bundler();
+    bundle = context.isDeploy
+      ? Promise.resolve()
+      : !bundle
+      ? generate()
+      : bundle;
+
+    await bundle;
 
     try {
       const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
@@ -60,30 +66,25 @@ export const handler: Handlers = {
 
 const styles = new WeakMap();
 
-const { process, setChangedContent } = await watcher({ from: FROM });
-
 export const dynamic: Handlers = {
   GET: async () => {
     try {
       const active = Context.active();
       const state = await active.release?.state({ forceFresh: true });
 
-      // config: {
-      //   content: [{ raw: JSON.stringify(state), extension: "json" }],
-      // },
-
       if (!state) {
         return new Response(null, { status: 404 });
       }
 
       if (!styles.has(state)) {
-        setChangedContent({
+        const { process, setChangedContent } = await watcher({ from: FROM });
+
+        setChangedContent([{
           content: JSON.stringify(state),
           extension: "json",
-        });
+        }]);
 
         const css = await process();
-
         styles.set(state, css);
       }
 
