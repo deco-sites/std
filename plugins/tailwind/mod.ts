@@ -1,4 +1,4 @@
-import type { Handlers, Plugin } from "$fresh/server.ts";
+import type { Plugin } from "$fresh/server.ts";
 import { Context, context } from "deco/deco.ts";
 import { join } from "std/path/mod.ts";
 import {
@@ -14,7 +14,8 @@ let mode: "prod" | "dev" = "prod";
 const root: string = Deno.cwd();
 
 const FROM = "./tailwind.css";
-const TO = join(root, "static", FROM);
+const TO = (revision: string) =>
+  join(root, "static", FROM.replace(".css", `${revision}.css`));
 
 const safe = (cb: () => Promise<Response>) => async () => {
   try {
@@ -30,95 +31,32 @@ const safe = (cb: () => Promise<Response>) => async () => {
   }
 };
 
-export const handler: Handlers = {
-  GET: safe(async () => {
-    const [stats, file] = await Promise.all([Deno.lstat(TO), Deno.open(TO)]);
-
-    return new Response(file.readable, {
-      headers: {
-        "Cache-Control": "public, max-age=31536000, immutable",
-        "Content-Type": "text/css; charset=utf-8",
-        "Content-Length": `${stats.size}`,
-      },
-    });
-  }),
-};
-
-const createHandler = async (config: Config): Promise<Handlers> => {
-  // Magical LRU implementation using JavaScript internals
-  const LRU = (size: number) => {
-    const cache = new Map<string, string>();
-
-    return {
-      get: (key: string): string | undefined => {
-        const value = cache.get(key);
-
-        // Update LRU index
-        if (value) {
-          cache.set(key, value);
-        }
-
-        return value;
-      },
-      set: (key: string, value: string) => {
-        // Housekeep index
-        if (cache.size >= size && !cache.has(key)) {
-          cache.delete(cache.keys().next().value);
-        }
-        cache.set(key, value);
-      },
-    };
-  };
-
-  const lru = LRU(10);
-
-  // Use current tailwind.css file as cache for initial revision
-  // This avoid rebuilding unecessary files on Deno Deploy
-  if (context.isDeploy) {
-    lru.set(
-      await Context.active().release?.revision() || "",
-      await Deno.readTextFile(TO),
-    );
-  }
-
-  // Reads all files into memory
-  await expandConfigContent(config, root);
+// Magical LRU implementation using JavaScript internals
+const LRU = (size: number) => {
+  const cache = new Map<string, string>();
 
   return {
-    GET: safe(async () => {
-      const release = Context.active().release;
-      const revision = await release?.revision() || "";
+    get: (key: string): string | undefined => {
+      const value = cache.get(key);
 
-      let css = lru.get(revision);
-
-      if (!css) {
-        const state = await release?.state({ forceFresh: true });
-
-        const content = Array.isArray(config.content)
-          ? [...config.content, {
-            raw: JSON.stringify(state),
-            extension: "json",
-          }]
-          : config.content;
-
-        css = await bundle({
-          from: FROM,
-          mode,
-          config: { ...config, content },
-        });
-
-        lru.set(revision, css);
+      // Update LRU index
+      if (value) {
+        cache.set(key, value);
       }
 
-      return new Response(css, {
-        headers: {
-          "Cache-Control": "public, max-age=31536000, immutable",
-          "Content-Type": "text/css; charset=utf-8",
-        },
-      });
-    }),
+      return value;
+    },
+    set: (key: string, value: string) => {
+      // Housekeep index
+      if (cache.size >= size && !cache.has(key)) {
+        cache.delete(cache.keys().next().value);
+      }
+      cache.set(key, value);
+    },
   };
 };
+
+const lru = LRU(10);
 
 /**
  * Since Deno Deploy does not allow dynamic import, importing the config file
@@ -131,9 +69,10 @@ export const plugin = (config?: Config): Plugin => {
   const routes: Plugin["routes"] = [];
 
   const build = async () => {
+    const revision = await Context.active().release?.revision() || "";
     const config = await loadTailwindConfig(root);
     const css = await bundle({ from: FROM, mode: "prod", config });
-    await Deno.writeTextFile(TO, css);
+    await Deno.writeTextFile(TO(revision), css);
   };
 
   return {
@@ -142,18 +81,48 @@ export const plugin = (config?: Config): Plugin => {
     configResolved: async (fresh) => {
       mode = fresh.dev ? "dev" : "prod";
 
-      // Compatiblity mode on localhost
-      if (!context.isDeploy && !config) {
+      if (config) {
+        await expandConfigContent(config, root);
+      } else if (!context.isDeploy) {
         await build();
       }
 
       routes.push({
         path: "/styles.css",
-        handler: config
-          // New dynamic generation
-          ? await createHandler(config)
-          // Compatiblity mode
-          : handler,
+        handler: safe(async () => {
+          const release = Context.active().release;
+          const revision = await release?.revision() || "";
+
+          let css = lru.get(revision) ||
+            await Deno.readTextFile(TO(revision)).catch(() => null);
+
+          // Generate styles dynamically
+          if (!css && config) {
+            const state = await release?.state({ forceFresh: true });
+
+            const content = Array.isArray(config.content)
+              ? [...config.content, {
+                raw: JSON.stringify(state),
+                extension: "json",
+              }]
+              : config.content;
+
+            css = await bundle({
+              from: FROM,
+              mode,
+              config: { ...config, content },
+            });
+
+            lru.set(revision, css);
+          }
+
+          return new Response(css, {
+            headers: {
+              "Cache-Control": "public, max-age=31536000, immutable",
+              "Content-Type": "text/css; charset=utf-8",
+            },
+          });
+        }),
       });
     },
     // Compatibility mode. Only runs when config is not set directly
