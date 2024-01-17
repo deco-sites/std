@@ -1,10 +1,8 @@
+import { Context } from "deco/deco.ts";
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
-import postcss, { PluginCreator } from "npm:postcss@8.4.27";
+import postcss from "npm:postcss@8.4.27";
 import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
-import processTailwindFeatures from "npm:tailwindcss@3.4.1/lib/processTailwindFeatures.js";
-import resolveConfig from "npm:tailwindcss@3.4.1/lib/public/resolve-config.js";
-import { validateConfig } from "npm:tailwindcss@3.4.1/lib/util/validateConfig.js";
 import { cyan } from "std/fmt/colors.ts";
 import { walk } from "std/fs/walk.ts";
 import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
@@ -24,19 +22,71 @@ const DEFAULT_TAILWIND_CSS = `
 const root = Deno.cwd();
 
 // Try to recover config from default file, a.k.a tailwind.config.ts
-const loadConfig = () =>
+const loadConfig = (): Promise<Config> =>
   import(toFileUrl(join(root, "tailwind.config.ts")).href)
     .then((mod) => mod.default)
     .catch(() => DEFAULT_CONFIG);
 
-interface Options {
-  from: string;
-}
+const setContextContent = async (config: Config) => {
+  if (!Array.isArray(config.content)) {
+    console.warn(
+      "TailwindCSS config.content is not an array. Skipping deco.cx optimizations and 'files' integration",
+    );
 
-export const bundle = async ({ from }: Options) => {
+    return;
+  }
+
+  const active = Context.active();
+  const state = await active.release?.state({ forceFresh: true });
+
+  const content: Config["content"] = [{
+    raw: JSON.stringify(state),
+    extension: "json",
+  }];
+
+  // Expands glob and read file contents. It's faster this way than letting tailwind do this
+  for (const c of config.content) {
+    if (typeof c === "string") {
+      const glob = globToRegExp(normalizeGlob(c), {
+        globstar: true,
+      });
+
+      const paths: string[] = [];
+      for await (const entry of walk(root)) {
+        if (entry.isFile && glob.test(entry.path)) {
+          paths.push(entry.path);
+        }
+      }
+
+      const cs = await Promise.all(paths.map(async (path) => {
+        const text = await Deno.readTextFile(path);
+
+        return {
+          raw: text,
+          extension: extname(path).slice(1),
+        };
+      }));
+
+      for (const c of cs) {
+        content.push(c);
+      }
+    } else {
+      content.push(c);
+    }
+  }
+
+  config.content = content;
+};
+
+export const bundle = async (
+  { from }: { from: string },
+) => {
   const start = performance.now();
 
   const config = await loadConfig();
+
+  // Read file contents and merge with it with release
+  await setContextContent(config);
 
   const processor = postcss([
     tailwindcss(config),
@@ -54,112 +104,4 @@ export const bundle = async ({ from }: Options) => {
   );
 
   return content.css;
-};
-
-type Content = { file: string; extension: string } | {
-  content: string;
-  extension: string;
-};
-
-const resolveContent = async (config: Config) => {
-  const resolved: Content[] = [];
-
-  const content = Array.isArray(config.content)
-    ? config.content
-    : config.content.files;
-
-  for (const c of content) {
-    if (typeof c === "string") {
-      const glob = globToRegExp(normalizeGlob(c), {
-        globstar: true,
-      });
-
-      for await (const entry of walk(root)) {
-        if (entry.isFile && glob.test(entry.path)) {
-          resolved.push({
-            file: entry.path,
-            extension: extname(entry.name).slice(1),
-          });
-        }
-      }
-    } else {
-      resolved.push({ content: c.raw, extension: c.extension || "html" });
-    }
-  }
-
-  return resolved;
-};
-
-let w: undefined | {
-  process: () => Promise<string>;
-  setChangedContent: (c: Content[]) => void;
-};
-
-export const watcher = async ({ from }: Options) => {
-  if (!w) {
-    const config = validateConfig(resolveConfig.default(await loadConfig()));
-
-    let queue = Promise.resolve<string>("");
-    const initialContent = await resolveContent(config);
-
-    // deno-lint-ignore no-explicit-any
-    let context: undefined | any;
-
-    const tailwindPlugin: PluginCreator<void> = () => ({
-      postcssPlugin: "tailwindcss",
-      async Once(root, { result }) {
-        await processTailwindFeatures.default(
-          (
-            { createContext }: {
-              createContext: (c: Config, cc: Content[]) => unknown;
-            },
-          ) => {
-            context ||= createContext(config, initialContent);
-
-            return () => context;
-          },
-        )(root, result);
-      },
-    });
-    tailwindPlugin.postcss = true;
-
-    const processor = postcss([
-      tailwindPlugin,
-      autoprefixer(),
-      cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
-    ]);
-
-    const css = await Deno.readTextFile(from).catch((_) =>
-      DEFAULT_TAILWIND_CSS
-    );
-
-    w = {
-      setChangedContent: (c: Content[]) => {
-        if (!context) {
-          return;
-        }
-
-        context.changedContent = c;
-      },
-      process: () => {
-        queue = queue.catch(() => null).then(async () => {
-          const start = performance.now();
-
-          const sheet = await processor.process(css, { from });
-
-          console.info(
-            ` 🎨 Tailwind css ready in ${
-              cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
-            }`,
-          );
-
-          return sheet.css;
-        });
-
-        return queue;
-      },
-    };
-  }
-
-  return w;
 };
