@@ -3,9 +3,7 @@ import cssnano from "npm:cssnano@6.0.1";
 import postcss, { type AcceptedPlugin } from "npm:postcss@8.4.27";
 import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
 import { cyan } from "std/fmt/colors.ts";
-import { walk } from "std/fs/walk.ts";
-import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
-import { extname, join, toFileUrl } from "std/path/mod.ts";
+import { join, toFileUrl } from "std/path/mod.ts";
 
 export { type Config } from "npm:tailwindcss@3.4.1";
 
