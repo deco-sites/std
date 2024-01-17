@@ -68,7 +68,6 @@ import * as $$$28 from "./loaders/x/redirectsFromCsv.ts";
 import * as $$$29 from "./loaders/x/redirects.ts";
 import * as $$$30 from "./loaders/x/font.ts";
 import * as $$$$0 from "./routes/404.tsx";
-import * as $$$$1 from "./routes/styles.css.ts";
 import * as $$$$2 from "./routes/_app.tsx";
 import * as $$$$$$0 from "./handlers/vtex/sitemap.ts";
 import * as $$$$$$1 from "./handlers/sitemap.ts";
@@ -183,7 +182,6 @@ const manifest = {
   "routes": {
     "./routes/_app.tsx": $$$$2,
     "./routes/404.tsx": $$$$0,
-    "./routes/styles.css.ts": $$$$1,
   },
   "handlers": {
     "deco-sites/std/handlers/sitemap.ts": $$$$$$1,

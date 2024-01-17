@@ -1,12 +1,15 @@
 import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
-import postcss from "npm:postcss@8.4.27";
-import tailwindcss from "npm:tailwindcss@3.4.1";
+import postcss, { type AcceptedPlugin } from "npm:postcss@8.4.27";
+import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
 import { cyan } from "std/fmt/colors.ts";
-import { ensureFile } from "std/fs/mod.ts";
-import { join, toFileUrl } from "std/path/mod.ts";
+import { walk } from "std/fs/walk.ts";
+import { globToRegExp, normalizeGlob } from "std/path/glob.ts";
+import { extname, join, toFileUrl } from "std/path/mod.ts";
 
-const DEFAULT_OPTIONS = {
+export { type Config } from "npm:tailwindcss@3.4.1";
+
+const DEFAULT_CONFIG: Config = {
   content: ["./**/*.tsx"],
   theme: {},
 };
@@ -17,43 +20,44 @@ const DEFAULT_TAILWIND_CSS = `
 @tailwind utilities;
 `;
 
+// Try to recover config from default file, a.k.a tailwind.config.ts
+export const loadTailwindConfig = (root: string): Promise<Config> =>
+  import(toFileUrl(join(root, "tailwind.config.ts")).href)
+    .then((mod) => mod.default)
+    .catch(() => DEFAULT_CONFIG);
+
 export const bundle = async (
-  { to, from, release }: { to: string; from: string; release: string },
+  { from, mode, config }: {
+    from: string;
+    mode: "dev" | "prod";
+    config: Config;
+  },
 ) => {
   const start = performance.now();
 
-  // Try to recover config from default file, a.k.a tailwind.config.ts
-  const config = await import(
-    toFileUrl(join(Deno.cwd(), "tailwind.config.ts")).href
-  )
-    .then((mod) => mod.default)
-    .catch(() => DEFAULT_OPTIONS);
+  const plugins: AcceptedPlugin[] = [
+    tailwindcss(config),
+    autoprefixer(),
+  ];
 
-  if (Array.isArray(config.content)) {
-    config.content.push({
-      raw: release,
-      extension: "json",
-    });
-  } else {
-    console.warn("TailwindCSS generation from decofile disabled");
+  if (mode === "prod") {
+    plugins.push(
+      cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
+    );
   }
 
-  const processor = postcss([
-    // deno-lint-ignore no-explicit-any
-    (tailwindcss as any)(config),
-    autoprefixer(),
-    cssnano({ preset: ["default", { cssDeclarationSorter: false }] }),
-  ]);
+  const processor = postcss(plugins);
 
-  const css = await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS);
-  const content = await processor.process(css, { from, to });
-
-  await ensureFile(to);
-  await Deno.writeTextFile(to, content.css, { create: true });
+  const content = await processor.process(
+    await Deno.readTextFile(from).catch((_) => DEFAULT_TAILWIND_CSS),
+    { from: undefined },
+  );
 
   console.info(
     ` 🎨 Tailwind css ready in ${
       cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
     }`,
   );
+
+  return content.css;
 };
