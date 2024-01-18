@@ -93,7 +93,7 @@ export const plugin = (config?: Config): Plugin => {
   }
 
   return {
-    name: "tailwind",
+    name: "deco-tailwind",
     routes,
     configResolved: async (fresh) => {
       const mode = fresh.dev ? "dev" : "prod";
