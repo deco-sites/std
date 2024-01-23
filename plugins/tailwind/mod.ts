@@ -100,7 +100,7 @@ export const plugin = (config?: Config): Plugin => {
       const ctx = Context.active();
 
       const withReleaseContent = async (config: Config) => {
-        const state = await ctx.release?.state({ forceFresh: true });
+        const state = await ctx.release?.state();
 
         return {
           ...config,
