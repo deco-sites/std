@@ -25,7 +25,8 @@ export const plugin = ({ tailwind }: { tailwind: Config }): Plugin => {
 };
 
 const plugins = <TManifest extends AppManifest = AppManifest>(
-  { tailwind, ...opts }: Options<TManifest> & { tailwind?: Config },
+  opts: Options<TManifest>,
+  tailwind?: Config,
 ): Plugin[] => [tailwindPlugin(tailwind), decoPlugin(opts)];
 
 export default plugins;
