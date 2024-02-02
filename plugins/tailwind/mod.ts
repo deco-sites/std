@@ -98,7 +98,6 @@ export const plugin = (config?: Config): Plugin => {
     routes,
     configResolved: async (fresh) => {
       const mode = fresh.dev ? "dev" : "prod";
-      const ctx = Context.active();
 
       const withReleaseContent = (config: Config) => {
         const ctx = Context.active();
@@ -135,6 +134,7 @@ export const plugin = (config?: Config): Plugin => {
             : await loadTailwindConfig(root),
         }).catch(() => ""));
 
+      const ctx = Context.active();
       // Set the default revision CSS so we don't have to rebuild what CI has built
       lru.set(await ctx.release?.revision() || "", css);
 
