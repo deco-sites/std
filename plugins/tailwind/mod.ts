@@ -2,6 +2,7 @@ import type { Plugin } from "$fresh/server.ts";
 import { Context } from "deco/deco.ts";
 import { join } from "std/path/mod.ts";
 import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
+import { VFS } from "deco/runtime/fs/mod.ts";
 
 export type { Config } from "./bundler.ts";
 
@@ -102,7 +103,7 @@ export const plugin = (config?: Config): Plugin => {
       const withReleaseContent = (config: Config) => {
         const ctx = Context.active();
         const vfs = ctx.fs;
-        if (!vfs) {
+        if (!vfs || !(vfs instanceof VFS)) {
           return config;
         }
 
