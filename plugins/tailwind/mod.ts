@@ -2,6 +2,7 @@ import type { Plugin } from "$fresh/server.ts";
 import { Context } from "deco/deco.ts";
 import { join } from "std/path/mod.ts";
 import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
+import { VFS } from "deco/runtime/fs/mod.ts";
 
 export type { Config } from "./bundler.ts";
 
@@ -99,17 +100,26 @@ export const plugin = (config?: Config): Plugin => {
       const mode = fresh.dev ? "dev" : "prod";
       const ctx = Context.active();
 
-      const withReleaseContent = async (config: Config) => {
-        const state = await ctx.release?.state({ forceFresh: true });
+      const withReleaseContent = (config: Config) => {
+        const ctx = Context.active();
+        const vfs = ctx.fs;
+        if (!vfs || !(vfs instanceof VFS)) {
+          return config;
+        }
+
+        const allTsxFiles = [];
+        for (const [path, file] of Object.entries(vfs.fileSystem)) {
+          if (path.endsWith(".tsx") && file.content) {
+            allTsxFiles.push(file.content);
+          }
+        }
 
         return {
           ...config,
-          content: Array.isArray(config.content)
-            ? [...config.content, {
-              raw: JSON.stringify(state),
-              extension: "json",
-            }]
-            : config.content,
+          content: allTsxFiles.map((content) => ({
+            raw: content,
+            extension: "tsx",
+          })),
         };
       };
 
@@ -121,7 +131,7 @@ export const plugin = (config?: Config): Plugin => {
           from: FROM,
           mode,
           config: config
-            ? await withReleaseContent(config)
+            ? withReleaseContent(config)
             : await loadTailwindConfig(root),
         }).catch(() => ""));
 
@@ -131,6 +141,7 @@ export const plugin = (config?: Config): Plugin => {
       routes.push({
         path: "/styles.css",
         handler: safe(async () => {
+          const ctx = Context.active();
           const revision = await ctx.release?.revision() || "";
 
           let css = lru.get(revision);
@@ -140,7 +151,7 @@ export const plugin = (config?: Config): Plugin => {
             css = await bundle({
               from: FROM,
               mode,
-              config: await withReleaseContent(config),
+              config: withReleaseContent(config),
             });
 
             lru.set(revision, css);
