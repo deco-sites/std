@@ -1,4 +1,4 @@
-import autoprefixer from "npm:autoprefixer@10.4.14";
+// import autoprefixer from "npm:autoprefixer@10.4.14";
 import cssnano from "npm:cssnano@6.0.1";
 import postcss, { type AcceptedPlugin } from "npm:postcss@8.4.27";
 import tailwindcss, { type Config } from "npm:tailwindcss@3.4.1";
@@ -35,7 +35,7 @@ export const bundle = async (
 
   const plugins: AcceptedPlugin[] = [
     tailwindcss(config),
-    autoprefixer(),
+    // autoprefixer(),
   ];
 
   if (mode === "prod") {
