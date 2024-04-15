@@ -67,7 +67,7 @@ function addVTEXPortalDataSnippet(accountName: string) {
   if (pageType === "productView") {
     props.pageCategory = "Product";
     props.pageDepartment = department?.name || null;
-    const product = window.datalayer_product || {};
+    const product = globalThis.window.datalayer_product || {};
     Object.assign(props, product);
   }
 
@@ -96,9 +96,9 @@ function addVTEXPortalDataSnippet(accountName: string) {
     props.pageCategory = pathNames.pop() || null;
   }
 
-  props.shelfProductIds = window.shelfProductIds || [];
+  props.shelfProductIds = globalThis.window.shelfProductIds || [];
 
-  window.dataLayer = window.dataLayer || [];
+  globalThis.window.dataLayer = globalThis.window.dataLayer || [];
   // VTEX Default position is first...
   window.dataLayer.unshift(props);
   // But GTM handles .push function

@@ -7,8 +7,9 @@ import { AnalyticsEvent } from "../types.ts";
 export const sendAnalyticsEvent = <T extends AnalyticsEvent>(
   event: T,
 ) => {
-  window.dataLayer && window.dataLayer.push({ ecommerce: null });
-  window.dataLayer && window.dataLayer.push({
+  globalThis.window.dataLayer &&
+    globalThis.window.dataLayer.push({ ecommerce: null });
+  globalThis.window.dataLayer && globalThis.window.dataLayer.push({
     event: event.name,
     ecommerce: event.params,
   });

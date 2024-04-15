@@ -8,7 +8,7 @@ import { $live } from "deco/mod.ts";
 import partytownPlugin from "partytown/mod.ts";
 import manifest from "./live.gen.ts";
 import plugins from "./plugins/mod.ts";
-import site from "./site.json" assert { type: "json" };
+import site from "./site.json" with { type: "json" };
 
 // @ts-ignore this should work.
 await start($live(manifest, site), {

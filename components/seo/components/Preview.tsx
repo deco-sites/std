@@ -9,7 +9,7 @@ import Telegram from "./Telegram.tsx";
 import Google from "./Google.tsx";
 import Twitter from "./Twitter.tsx";
 import Slack from "./Slack.tsx";
-import instructions from "./instructions.json" assert { type: "json" };
+import instructions from "./instructions.json" with { type: "json" };
 import type { PreviewItens, Props } from "../types.ts";
 
 const tailwind = {
