@@ -114,10 +114,11 @@ export const plugin = (config?: Config): Plugin => {
             const entry of walk(Deno.cwd(), {
               includeDirs: false,
               includeFiles: true,
-              exts: [".tsx"],
             })
           ) {
-            roots.add(toFileUrl(entry.path).href);
+            if (entry.path.endsWith(".tsx") || entry.path.includes("/apps/")) {
+              roots.add(toFileUrl(entry.path).href);
+            }
           }
 
           await resolveDeps([...roots.values()], allTsxFiles);

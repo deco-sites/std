@@ -3,10 +3,14 @@ import {
   ImportMapBuilder,
   ImportMapResolver,
 } from "deco/engine/importmap/builder.ts";
+import type { ParsedSource } from "deco/engine/schema/deps.ts";
 import { initLoader, parsePath } from "deco/engine/schema/parser.ts";
 import { join, toFileUrl } from "std/path/mod.ts";
 
-const visit = (program: any, visitor: Record<string, (node: any) => void>) => {
+const visit = (
+  program: ParsedSource,
+  visitor: Record<string, (node: any) => void>,
+) => {
   for (const value of Object.values(program)) {
     const nodeType = (value as any)?.type;
 
@@ -30,7 +34,13 @@ const importsFrom = async (path: string): Promise<string[]> => {
   const imports = new Set<string>();
 
   visit(program, {
-    // Resovles static "import from" statements
+    // Resolves export { default } from '....'
+    ExportNamedDeclaration: (node: any) => {
+      if (node.source?.type === "StringLiteral") {
+        imports.add(node.source.value);
+      }
+    },
+    // Resolves static "import from" statements
     ImportDeclaration: (node: any) => {
       const specifier = node.source.value;
 
@@ -46,18 +56,20 @@ const importsFrom = async (path: string): Promise<string[]> => {
 
       const arg0 = node.arguments?.[0]?.expression;
       if (arg0.type !== "StringLiteral") {
-        console.warn([
-          `Invalid import statement`,
-          `TailwindCSS will not load classes from dependencies of ${path}`,
-          "To fix this issue, make sure you are following the patterns:",
-          `  Statically evaluated imports WORK`,
-          `      import("path/to/file")`,
-          `      lazy(() => import("path/to/file"))`,
-          `  Dinamically evaluated imports FAIL`,
-          `      import(\`path/to/file\`)`,
-          `      lazy((variable) => import(\`path/to/file/\${variable}\`))`,
-          "",
-        ].join("\n"));
+        if (path.endsWith(".tsx")) {
+          console.warn([
+            `Invalid import statement`,
+            `TailwindCSS will not load classes from dependencies of ${path}`,
+            "To fix this issue, make sure you are following the patterns:",
+            `  Statically evaluated imports WORK`,
+            `      import("path/to/file")`,
+            `      lazy(() => import("path/to/file"))`,
+            `  Dinamically evaluated imports FAIL`,
+            `      import(\`path/to/file\`)`,
+            `      lazy((variable) => import(\`path/to/file/\${variable}\`))`,
+            "",
+          ].join("\n"));
+        }
 
         return;
       }
@@ -69,6 +81,23 @@ const importsFrom = async (path: string): Promise<string[]> => {
   return [...imports.values()];
 };
 
+const localAppsFolder = `${Deno.cwd()}/apps`;
+
+const skipPath = (path: string) => {
+  if (path.endsWith(".tsx")) {
+    return false;
+  }
+
+  if (
+    path.endsWith("manifest.gen.ts") || path.endsWith("mod.ts") ||
+    path.includes(localAppsFolder)
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 const resolveRecursively = async (
   path: string,
   context: string,
@@ -78,7 +107,7 @@ const resolveRecursively = async (
 ) => {
   const resolvedPath = importMapResolver.resolve(path, context);
 
-  if (!resolvedPath?.endsWith(".tsx") || cache.has(resolvedPath)) {
+  if (!resolvedPath || skipPath(resolvedPath) || cache.has(resolvedPath)) {
     return;
   }
 
