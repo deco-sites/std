@@ -1,9 +1,10 @@
 import type { Plugin } from "$fresh/server.ts";
+import { resolveDeps } from "./deno.ts";
 import { Context } from "deco/deco.ts";
-import { join } from "std/path/mod.ts";
-import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
 import { VFS } from "deco/runtime/fs/mod.ts";
-
+import { walk } from "std/fs/walk.ts";
+import { join, toFileUrl } from "std/path/mod.ts";
+import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
 export type { Config } from "./bundler.ts";
 
 const root: string = Deno.cwd();
@@ -100,23 +101,38 @@ export const plugin = (config?: Config): Plugin => {
       const mode = fresh.dev ? "dev" : "prod";
       const ctx = Context.active();
 
-      const withReleaseContent = (config: Config) => {
+      const withReleaseContent = async (config: Config) => {
         const ctx = Context.active();
+        const allTsxFiles = new Map<string, string>();
+
         const vfs = ctx.fs;
         if (!vfs || !(vfs instanceof VFS)) {
-          return config;
-        }
+          // init search graph with local FS
+          const roots = new Set<string>();
 
-        const allTsxFiles = [];
-        for (const [path, file] of Object.entries(vfs.fileSystem)) {
-          if (path.endsWith(".tsx") && file.content) {
-            allTsxFiles.push(file.content);
+          for await (
+            const entry of walk(Deno.cwd(), {
+              includeDirs: false,
+              includeFiles: true,
+              exts: [".tsx"],
+            })
+          ) {
+            roots.add(toFileUrl(entry.path).href);
+          }
+
+          await resolveDeps([...roots.values()], allTsxFiles);
+        } else {
+          // init search graph with virtual FS
+          for (const [path, file] of Object.entries(vfs.fileSystem)) {
+            if (path.endsWith(".tsx") && file.content) {
+              allTsxFiles.set(path, file.content);
+            }
           }
         }
 
         return {
           ...config,
-          content: allTsxFiles.map((content) => ({
+          content: [...allTsxFiles.values()].map((content) => ({
             raw: content,
             extension: "tsx",
           })),
@@ -131,7 +147,7 @@ export const plugin = (config?: Config): Plugin => {
           from: FROM,
           mode,
           config: config
-            ? withReleaseContent(config)
+            ? await withReleaseContent(config)
             : await loadTailwindConfig(root),
         }).catch(() => ""));
 
@@ -151,7 +167,7 @@ export const plugin = (config?: Config): Plugin => {
             css = await bundle({
               from: FROM,
               mode,
-              config: withReleaseContent(config),
+              config: await withReleaseContent(config),
             });
 
             lru.set(revision, css);
