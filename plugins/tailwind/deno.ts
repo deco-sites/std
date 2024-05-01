@@ -69,6 +69,22 @@ const importsFrom = async (path: string): Promise<string[]> => {
   return [...imports.values()];
 };
 
+const skipPath = (path: string) => {
+  if (path.endsWith(".tsx")) {
+    return false;
+  }
+
+  if (path.includes("/apps/")) {
+    return false;
+  }
+
+  if (path.includes("manifest.gen.ts")) {
+    return false;
+  }
+
+  return true;
+};
+
 const resolveRecursively = async (
   path: string,
   context: string,
@@ -78,7 +94,7 @@ const resolveRecursively = async (
 ) => {
   const resolvedPath = importMapResolver.resolve(path, context);
 
-  if (!resolvedPath?.endsWith(".tsx") || cache.has(resolvedPath)) {
+  if (!resolvedPath || skipPath(resolvedPath) || cache.has(resolvedPath)) {
     return;
   }
 
