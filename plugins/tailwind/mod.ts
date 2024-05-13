@@ -1,10 +1,9 @@
 import type { Plugin } from "$fresh/server.ts";
-import { resolveDeps } from "./deno.ts";
 import { Context } from "deco/deco.ts";
-import { VFS } from "deco/runtime/fs/mod.ts";
 import { walk } from "std/fs/walk.ts";
 import { join, toFileUrl } from "std/path/mod.ts";
 import { bundle, Config, loadTailwindConfig } from "./bundler.ts";
+import { resolveDeps } from "./deno.ts";
 export type { Config } from "./bundler.ts";
 
 const root: string = Deno.cwd();
@@ -102,34 +101,23 @@ export const plugin = (config?: Config): Plugin => {
       const ctx = Context.active();
 
       const withReleaseContent = async (config: Config) => {
-        const ctx = Context.active();
         const allTsxFiles = new Map<string, string>();
 
-        const vfs = ctx.fs;
-        if (!vfs || !(vfs instanceof VFS)) {
-          // init search graph with local FS
-          const roots = new Set<string>();
+        // init search graph with local FS
+        const roots = new Set<string>();
 
-          for await (
-            const entry of walk(Deno.cwd(), {
-              includeDirs: false,
-              includeFiles: true,
-            })
-          ) {
-            if (entry.path.endsWith(".tsx") || entry.path.includes("/apps/")) {
-              roots.add(toFileUrl(entry.path).href);
-            }
-          }
-
-          await resolveDeps([...roots.values()], allTsxFiles);
-        } else {
-          // init search graph with virtual FS
-          for (const [path, file] of Object.entries(vfs.fileSystem)) {
-            if (path.endsWith(".tsx") && file.content) {
-              allTsxFiles.set(path, file.content);
-            }
+        for await (
+          const entry of walk(Deno.cwd(), {
+            includeDirs: false,
+            includeFiles: true,
+          })
+        ) {
+          if (entry.path.endsWith(".tsx") || entry.path.includes("/apps/")) {
+            roots.add(toFileUrl(entry.path).href);
           }
         }
+
+        await resolveDeps([...roots.values()], allTsxFiles);
 
         return {
           ...config,
