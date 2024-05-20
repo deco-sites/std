@@ -24,7 +24,10 @@ const visit = (
   }
 };
 
-const importsFrom = async (path: string): Promise<string[]> => {
+const importsFrom = async (
+  path: string,
+  verbose: boolean,
+): Promise<string[]> => {
   const program = await parsePath(path);
 
   if (!program) {
@@ -56,7 +59,7 @@ const importsFrom = async (path: string): Promise<string[]> => {
 
       const arg0 = node.arguments?.[0]?.expression;
       if (arg0.type !== "StringLiteral") {
-        if (path.endsWith(".tsx")) {
+        if (path.endsWith(".tsx") && verbose) {
           console.warn([
             `Invalid import statement`,
             `TailwindCSS will not load classes from dependencies of ${path}`,
@@ -104,6 +107,7 @@ const resolveRecursively = async (
   loader: (specifier: string) => Promise<string | undefined>,
   importMapResolver: ImportMapResolver,
   cache: Map<string, string>,
+  verbose: boolean,
 ) => {
   const resolvedPath = importMapResolver.resolve(path, context);
 
@@ -113,7 +117,7 @@ const resolveRecursively = async (
 
   const [content, imports] = await Promise.all([
     loader(resolvedPath),
-    importsFrom(resolvedPath),
+    importsFrom(resolvedPath, verbose),
   ]);
 
   if (!content) {
@@ -129,6 +133,7 @@ const resolveRecursively = async (
       loader,
       importMapResolver,
       cache,
+      verbose,
     )
   ));
 };
@@ -154,6 +159,7 @@ const readImportMap = async () => {
 export const resolveDeps = async (
   entries: string[],
   cache: Map<string, string>,
+  verbose = false,
 ) => {
   const importMap = await readImportMap();
   const loader = initLoader();
@@ -170,6 +176,7 @@ export const resolveDeps = async (
       loader,
       importMapResolver,
       cache,
+      verbose,
     );
   }
 };

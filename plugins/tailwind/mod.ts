@@ -86,7 +86,7 @@ rm static/tailwind.css
  * Pass the config directly to use the new dynamic features. Pass undefined
  * if you wish to have the old behavior
  */
-export const plugin = (config?: Config): Plugin => {
+export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
   const routes: Plugin["routes"] = [];
 
   if (!config) {
@@ -117,7 +117,7 @@ export const plugin = (config?: Config): Plugin => {
           }
         }
 
-        await resolveDeps([...roots.values()], allTsxFiles);
+        await resolveDeps([...roots.values()], allTsxFiles, config.verbose);
 
         return {
           ...config,
@@ -159,7 +159,7 @@ export const plugin = (config?: Config): Plugin => {
               config: await withReleaseContent(config),
             });
 
-            lru.set(revision, css);
+            lru.set(revision, css!);
           }
 
           return new Response(css, {
