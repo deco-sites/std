@@ -126,6 +126,10 @@ const resolveRecursively = async (
 
   cache.set(resolvedPath, content);
 
+  if (verbose) {
+    console.log(`TailwindCSS plugin is resolving: [${imports.join(", ")}]`);
+  }
+
   await Promise.all(imports.map((imp) =>
     resolveRecursively(
       imp,
