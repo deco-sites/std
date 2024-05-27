@@ -24,10 +24,7 @@ const visit = (
   }
 };
 
-const importsFrom = async (
-  path: string,
-  verbose: boolean,
-): Promise<string[]> => {
+const importsFrom = async (path: string): Promise<string[]> => {
   const program = await parsePath(path);
 
   if (!program) {
@@ -59,21 +56,6 @@ const importsFrom = async (
 
       const arg0 = node.arguments?.[0]?.expression;
       if (arg0.type !== "StringLiteral") {
-        if (path.endsWith(".tsx") && verbose) {
-          console.warn([
-            `Invalid import statement`,
-            `TailwindCSS will not load classes from dependencies of ${path}`,
-            "To fix this issue, make sure you are following the patterns:",
-            `  Statically evaluated imports WORK`,
-            `      import("path/to/file")`,
-            `      lazy(() => import("path/to/file"))`,
-            `  Dinamically evaluated imports FAIL`,
-            `      import(\`path/to/file\`)`,
-            `      lazy((variable) => import(\`path/to/file/\${variable}\`))`,
-            "",
-          ].join("\n"));
-        }
-
         return;
       }
 
@@ -107,7 +89,6 @@ const resolveRecursively = async (
   loader: (specifier: string) => Promise<string | undefined>,
   importMapResolver: ImportMapResolver,
   cache: Map<string, string>,
-  verbose: boolean,
 ) => {
   const resolvedPath = importMapResolver.resolve(path, context);
 
@@ -117,7 +98,7 @@ const resolveRecursively = async (
 
   const [content, imports] = await Promise.all([
     loader(resolvedPath),
-    importsFrom(resolvedPath, verbose),
+    importsFrom(resolvedPath),
   ]);
 
   if (!content) {
@@ -126,10 +107,6 @@ const resolveRecursively = async (
 
   cache.set(resolvedPath, content);
 
-  if (verbose) {
-    console.log(`TailwindCSS plugin is resolving: [${imports.join(", ")}]`);
-  }
-
   await Promise.all(imports.map((imp) =>
     resolveRecursively(
       imp,
@@ -137,7 +114,6 @@ const resolveRecursively = async (
       loader,
       importMapResolver,
       cache,
-      verbose,
     )
   ));
 };
@@ -163,7 +139,6 @@ const readImportMap = async () => {
 export const resolveDeps = async (
   entries: string[],
   cache: Map<string, string>,
-  verbose = false,
 ) => {
   const importMap = await readImportMap();
   const loader = initLoader();
@@ -180,7 +155,6 @@ export const resolveDeps = async (
       loader,
       importMapResolver,
       cache,
-      verbose,
     );
   }
 };

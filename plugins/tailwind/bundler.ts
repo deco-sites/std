@@ -52,7 +52,7 @@ export const bundle = async (
   );
 
   console.info(
-    ` 🎨 Tailwind css ready in ${
+    ` 🎨 TailwindCSS ready in ${
       cyan(`${((performance.now() - start) / 1e3).toFixed(1)}s`)
     }`,
   );

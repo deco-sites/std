@@ -97,7 +97,8 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
     name: "deco-tailwind",
     routes,
     configResolved: async (fresh) => {
-      const mode = fresh.dev ? "dev" : "prod";
+      const isDev = fresh.dev || Deno.env.get("DECO_PREVIEW");
+      const mode = isDev ? "dev" : "prod";
       const ctx = Context.active();
 
       const withReleaseContent = async (config: Config) => {
@@ -117,7 +118,16 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
           }
         }
 
-        await resolveDeps([...roots.values()], allTsxFiles, config.verbose);
+        const start = performance.now();
+        await resolveDeps([...roots.values()], allTsxFiles);
+        const duration = (performance.now() - start).toFixed(0);
+
+        if (config.verbose) {
+          console.log(
+            ` 🔍 TailwindCSS resolved ${allTsxFiles.size} dependencies in ${duration}ms`,
+          );
+          console.log([...allTsxFiles.keys()].join("\n"));
+        }
 
         return {
           ...config,
