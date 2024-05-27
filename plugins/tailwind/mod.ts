@@ -122,12 +122,9 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
         await resolveDeps([...roots.values()], allTsxFiles);
         const duration = (performance.now() - start).toFixed(0);
 
-        if (config.verbose) {
-          console.log(
-            ` 🔍 TailwindCSS resolved ${allTsxFiles.size} dependencies in ${duration}ms`,
-          );
-          console.log([...allTsxFiles.keys()].join("\n"));
-        }
+        console.log(
+          ` 🔍 TailwindCSS resolved ${allTsxFiles.size} dependencies in ${duration}ms`,
+        );
 
         return {
           ...config,
