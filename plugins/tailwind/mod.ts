@@ -137,7 +137,10 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
 
       const css =
         // We have built on CI
-        (await Deno.readTextFile(TO).catch(() => null)) ||
+        (await Deno.readTextFile(TO).catch((e) => {
+          console.error(e);
+          return null;
+        })) ||
         // We are on localhost
         (await bundle({
           from: TAILWIND_FILE,
@@ -147,8 +150,12 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
             : await loadTailwindConfig(root),
         }).catch(() => ""));
 
+      const revision = await ctx.release?.revision() || "";
+
+      console.log({ revision, css });
+
       // Set the default revision CSS so we don't have to rebuild what CI has built
-      lru.set(await ctx.release?.revision() || "", css);
+      lru.set(revision, css);
 
       routes.push({
         path: "/styles.css",
@@ -157,6 +164,8 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
           const revision = await ctx.release?.revision() || "";
 
           let css = lru.get(revision);
+
+          console.log({ css, revision });
 
           // Generate styles dynamically
           if (!css && config) {
