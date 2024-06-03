@@ -130,17 +130,16 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
   return {
     name: "deco-tailwind",
     routes,
-    configResolved: async (fresh) => {
+    configResolved: (fresh) => {
       const TO = join(fresh.staticDir, TAILWIND_FILE);
       const isDev = fresh.dev || Deno.env.get("DECO_PREVIEW");
       const mode = isDev ? "dev" : "prod";
 
       // Set the default revision CSS so we don't have to rebuild what CI has built
-      const prodCSS = await Deno.readTextFile(TO).catch(() =>
-        mode === "prod"
-          ? `Missing TailwindCSS file in production. Make sure you are building the file on the CI`
-          : null
-      );
+      const getCSSEager = () =>
+        Deno.readTextFile(TO).catch(() =>
+          `Missing TailwindCSS file in production. Make sure you are building the file on the CI`
+        );
 
       const getCSSLazy = async () => {
         const ctx = Context.active();
@@ -159,10 +158,12 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
         return lru.get(revision)!;
       };
 
+      const getCSS = mode === "prod" ? getCSSEager : getCSSLazy;
+
       routes.push({
         path: "/styles.css",
         handler: safe(async () =>
-          new Response(mode === "prod" ? prodCSS : await getCSSLazy(), {
+          new Response(await getCSS(), {
             headers: {
               "Cache-Control": "public, max-age=31536000, immutable",
               "Content-Type": "text/css; charset=utf-8",
