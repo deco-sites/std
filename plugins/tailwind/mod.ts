@@ -29,6 +29,7 @@ const LRU = (size: number) => {
   const cache = new Map<string, string>();
 
   return {
+    has: (key: string) => cache.has(key),
     get: (key: string): string | undefined => {
       const value = cache.get(key);
 
@@ -78,6 +79,40 @@ rm static/tailwind.css
 👏 That's it! You've successfully migrated to the new version. Thank you for keeping your project up-to-date! 
 `;
 
+const withReleaseContent = async (config: Config) => {
+  const allTsxFiles = new Map<string, string>();
+
+  // init search graph with local FS
+  const roots = new Set<string>();
+
+  for await (
+    const entry of walk(Deno.cwd(), {
+      includeDirs: false,
+      includeFiles: true,
+    })
+  ) {
+    if (entry.path.endsWith(".tsx") || entry.path.includes("/apps/")) {
+      roots.add(toFileUrl(entry.path).href);
+    }
+  }
+
+  const start = performance.now();
+  await resolveDeps([...roots.values()], allTsxFiles);
+  const duration = (performance.now() - start).toFixed(0);
+
+  console.log(
+    ` 🔍 TailwindCSS resolved ${allTsxFiles.size} dependencies in ${duration}ms`,
+  );
+
+  return {
+    ...config,
+    content: [...allTsxFiles.values()].map((content) => ({
+      raw: content,
+      extension: "tsx",
+    })),
+  };
+};
+
 /**
  * Since Deno Deploy does not allow dynamic import, importing the config file
  * automatically is not yet possible.
@@ -99,92 +134,41 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
       const TO = join(fresh.staticDir, TAILWIND_FILE);
       const isDev = fresh.dev || Deno.env.get("DECO_PREVIEW");
       const mode = isDev ? "dev" : "prod";
-      const ctx = Context.active();
-
-      const withReleaseContent = async (config: Config) => {
-        const allTsxFiles = new Map<string, string>();
-
-        // init search graph with local FS
-        const roots = new Set<string>();
-
-        for await (
-          const entry of walk(Deno.cwd(), {
-            includeDirs: false,
-            includeFiles: true,
-          })
-        ) {
-          if (entry.path.endsWith(".tsx") || entry.path.includes("/apps/")) {
-            roots.add(toFileUrl(entry.path).href);
-          }
-        }
-
-        const start = performance.now();
-        await resolveDeps([...roots.values()], allTsxFiles);
-        const duration = (performance.now() - start).toFixed(0);
-
-        console.log(
-          ` 🔍 TailwindCSS resolved ${allTsxFiles.size} dependencies in ${duration}ms`,
-        );
-
-        return {
-          ...config,
-          content: [...allTsxFiles.values()].map((content) => ({
-            raw: content,
-            extension: "tsx",
-          })),
-        };
-      };
-
-      const css =
-        // We have built on CI
-        (await Deno.readTextFile(TO).catch((e) => {
-          console.error(e);
-          return null;
-        })) ||
-        // We are on localhost
-        (await bundle({
-          from: TAILWIND_FILE,
-          mode,
-          config: config
-            ? await withReleaseContent(config)
-            : await loadTailwindConfig(root),
-        }).catch(() => ""));
-
-      const revision = await ctx.release?.revision() || "";
-
-      console.log({ revision, css });
 
       // Set the default revision CSS so we don't have to rebuild what CI has built
-      lru.set(revision, css);
+      const prodCSS = await Deno.readTextFile(TO).catch(() =>
+        mode === "prod"
+          ? `Missing TailwindCSS file in production. Make sure you are building the file on the CI`
+          : null
+      );
+
+      const getCSSLazy = async () => {
+        const ctx = Context.active();
+        const revision = await ctx.release?.revision() || "";
+
+        if (!lru.has(revision) && config) {
+          const css = await bundle({
+            from: TAILWIND_FILE,
+            mode,
+            config: await withReleaseContent(config),
+          });
+
+          lru.set(revision, css);
+        }
+
+        return lru.get(revision)!;
+      };
 
       routes.push({
         path: "/styles.css",
-        handler: safe(async () => {
-          const ctx = Context.active();
-          const revision = await ctx.release?.revision() || "";
-
-          let css = lru.get(revision);
-
-          console.log({ css, revision });
-
-          // Generate styles dynamically
-          if (!css && config) {
-            css = await bundle({
-              from: TAILWIND_FILE,
-              mode,
-              config: await withReleaseContent(config),
-            });
-
-            lru.set(revision, css!);
-          }
-
-          return new Response(css, {
+        handler: safe(async () =>
+          new Response(mode === "prod" ? prodCSS : await getCSSLazy(), {
             headers: {
               "Cache-Control": "public, max-age=31536000, immutable",
               "Content-Type": "text/css; charset=utf-8",
             },
-          });
-        }),
+          })
+        ),
       });
     },
     // Compatibility mode. Only runs when config is not set directly
