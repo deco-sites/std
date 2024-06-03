@@ -8,8 +8,7 @@ export type { Config } from "./bundler.ts";
 
 const root: string = Deno.cwd();
 
-const FROM = "./tailwind.css";
-const TO = join("static", FROM);
+const TAILWIND_FILE = "./tailwind.css";
 
 const safe = (cb: () => Promise<Response>) => async () => {
   try {
@@ -97,6 +96,7 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
     name: "deco-tailwind",
     routes,
     configResolved: async (fresh) => {
+      const TO = join(fresh.staticDir, TAILWIND_FILE);
       const isDev = fresh.dev || Deno.env.get("DECO_PREVIEW");
       const mode = isDev ? "dev" : "prod";
       const ctx = Context.active();
@@ -140,7 +140,7 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
         (await Deno.readTextFile(TO).catch(() => null)) ||
         // We are on localhost
         (await bundle({
-          from: FROM,
+          from: TAILWIND_FILE,
           mode,
           config: config
             ? await withReleaseContent(config)
@@ -161,7 +161,7 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
           // Generate styles dynamically
           if (!css && config) {
             css = await bundle({
-              from: FROM,
+              from: TAILWIND_FILE,
               mode,
               config: await withReleaseContent(config),
             });
@@ -179,13 +179,13 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
       });
     },
     // Compatibility mode. Only runs when config is not set directly
-    buildStart: async () => {
+    buildStart: async ({ staticDir }) => {
       const css = await bundle({
-        from: FROM,
+        from: TAILWIND_FILE,
         mode: "prod",
         config: config || await loadTailwindConfig(root),
       });
-      await Deno.writeTextFile(TO, css);
+      await Deno.writeTextFile(join(staticDir, TAILWIND_FILE), css);
     },
   };
 };
