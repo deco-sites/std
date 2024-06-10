@@ -18,7 +18,9 @@ const safe = (cb: () => Promise<Response>) => async () => {
       return new Response(null, { status: 404 });
     }
 
-    return new Response(Deno.inspect(error, { colors: false, depth: 100 }), {
+    const errStack = Deno.inspect(error, { colors: false, depth: 100 });
+    console.error(`error generating styles`, errStack);
+    return new Response(errStack, {
       status: 500,
     });
   }
