@@ -176,11 +176,14 @@ export const plugin = (config?: Config & { verbose?: boolean }): Plugin => {
     },
     // Compatibility mode. Only runs when config is not set directly
     buildStart: async ({ staticDir }) => {
+      const cfg = config || await loadTailwindConfig(root);
+
       const css = await bundle({
         from: TAILWIND_FILE,
         mode: "prod",
-        config: config || await loadTailwindConfig(root),
+        config: await withReleaseContent(cfg),
       });
+
       await Deno.writeTextFile(join(staticDir, TAILWIND_FILE), css);
     },
   };
